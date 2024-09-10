@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 typedef struct {
-	double perfect, nice, bad, score, norma, soul;
+	float perfect, nice, bad, score, norma, soul;
 
 }GAUGE_T;
 

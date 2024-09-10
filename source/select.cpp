@@ -137,9 +137,9 @@ void load_file_list(const char* path) {
 
 void set_genres() {
 
-	for (int i = 0; i < GenreNumber; i++) {
+	for (int i = 0; i < GenreNumber; ++i) {
 
-		for (int j = 0; j < SongNumber; j++) {
+		for (int j = 0; j < SongNumber; ++j) {
 
 			if (strstr(List[j].path, Genre[i].path) != NULL) List[j].genre = i;
 		}
@@ -167,7 +167,7 @@ void disp_file_list() {
 
 	ClosedSongNumber = 0;
 
-	for (int i = 0; i < SongNumber; i++) {
+	for (int i = 0; i < SongNumber; ++i) {
 
 		isGenre = false;
 
@@ -231,10 +231,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_DAN;
 				level = List[i].level[COURSE_DAN];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_DAN]);
@@ -249,10 +249,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_TOWER;
 				level = List[i].level[COURSE_TOWER];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_TOWER]);
@@ -267,10 +267,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_EDIT;
 				level = List[i].level[COURSE_EDIT];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_EDIT]);
@@ -285,10 +285,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_ONI;
 				level = List[i].level[COURSE_ONI];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_ONI]);
@@ -303,10 +303,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_HARD;
 				level = List[i].level[COURSE_HARD];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_HARD]);
@@ -321,10 +321,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_NORMAL;
 				level = List[i].level[COURSE_NORMAL];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_NORMAL]);
@@ -339,10 +339,10 @@ void disp_file_list() {
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_EASY;
 				level = List[i].level[COURSE_EASY];
 				if (level > 10) level = 10;
-				for (int j = 0; j < level; j++) {
+				for (int j = 0; j < level; ++j) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 				}
-				for (int j = 0; j < (10 - level); j++) {
+				for (int j = 0; j < (10 - level); ++j) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 				}
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_EASY]);
@@ -458,7 +458,7 @@ void draw_option_text(float x, float y, const char* text, bool state, float* wid
 
 void get_SelectedId(LIST_T* TMP, int* arg) {
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; ++i) {
 		TMP->course[i] = List[SelectedId].course[i];
 		TMP->course_exist[i] = List[SelectedId].course_exist[i];
 		TMP->level[i] = List[SelectedId].level[i];

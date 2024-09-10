@@ -549,7 +549,6 @@ void init_option() {
 	Option.offset = 0;
 	Option.fixroll = false;
 	Option.special = 0;
-	Option.exse = false;
 	Option.judge_range_perfect = DEFAULT_JUDGE_RANGE_PERFECT;
 	Option.judge_range_nice = DEFAULT_JUDGE_RANGE_NICE;
 	Option.judge_range_bad = DEFAULT_JUDGE_RANGE_BAD;

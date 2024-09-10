@@ -181,7 +181,7 @@ typedef struct {
 
 	int lang,buffer_size,Voice,special;
 	bool isAuto, isStelth,isSwap,dispFps,fixroll,exse;
-	double speed, random,offset,blacktext,
+	float speed, random,offset,blacktext,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
 	int KEY_A, KEY_B, KEY_DRIGHT, KEY_DLEFT, KEY_DUP, KEY_DDOWN, KEY_R, KEY_L, KEY_X, KEY_Y,
 		KEY_ZL, KEY_ZR, KEY_CSTICK_RIGHT, KEY_CSTICK_LEFT, KEY_CSTICK_UP, KEY_CSTICK_DOWN,

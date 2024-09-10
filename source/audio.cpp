@@ -38,7 +38,7 @@ void load_sound() {
 		"romfs:/failed.ogg",
 	};
 
-	for (int i = 0; i < SOUND_NUMBER; i++) {
+	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
@@ -121,7 +121,7 @@ void sd_load_sound() {
 		"sdmc:/tjafiles/theme/failed.ogg",
 	};
 
-	for (int i = 0; i < SOUND_NUMBER; i++) {
+	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
@@ -212,7 +212,7 @@ int play_sound(int id) {
 void exit_music() {
 
 	ndspChnWaveBufClear(sound[0].audiochannel);
-	for (int i = 0; i < SOUND_NUMBER; i++) {
+	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		ndspChnWaveBufClear(sound[i].audiochannel);
 		linearFree(sound[i].data);
 	}

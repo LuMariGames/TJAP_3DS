@@ -15,6 +15,8 @@
 #include "vorbis.h"
 
 extern int course, courselife, TotalBadCount;
+extern float NowBPM;
+extern bool isGOGO;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
@@ -44,6 +46,8 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
+	gfxSetWide(true);
+	//osSetSpeedupEnable(true);
 }
 
 void exit_main() {
@@ -69,7 +73,7 @@ void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int key) {
 		KEY_A,KEY_B,KEY_X,KEY_Y,KEY_R,KEY_ZR,KEY_L,KEY_ZL,KEY_DUP,KEY_DDOWN,KEY_DRIGHT,KEY_DLEFT,
 		KEY_CPAD_UP,KEY_CPAD_DOWN,KEY_CPAD_RIGHT,KEY_CPAD_LEFT,KEY_CSTICK_UP,KEY_CSTICK_DOWN,KEY_CSTICK_RIGHT,KEY_CSTICK_LEFT};
 
-	for (int i = 0; i < numKeys;i++) {
+	for (int i = 0; i < numKeys;++i) {
 		if (key & keys[i]) {
 			if (Optionkeys[i] == KEY_DON) *isDon = true;
 			else if (Optionkeys[i] == KEY_KATSU) *isKatsu = true;
@@ -231,6 +235,15 @@ int main() {
 
 		case SCENE_MAINGAME:		//メイン
 
+
+			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
+
+			if (time_count(CurrentTimeMain) == true && isGOGO == false) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0]);
+			else if (time_count(CurrentTimeMain) == false && isGOGO == false) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_1]);
+			else if (time_count(CurrentTimeMain) == true && isGOGO == true) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_2]);
+			else if (time_count(CurrentTimeMain) == false && isGOGO == true) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_3]);
+
+			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 			draw_title();
 			draw_emblem(sprites);
@@ -245,7 +258,7 @@ int main() {
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 
 			if (Option.dispFps == true) draw_fps();
-			if (Option.dispFps == true && debugmode == true) debug_score();
+			if (debugmode == true) debug_score();
 
 			//譜面が先
 			if (offset > 0 && (isNotesStart == false || isMusicStart == false)) {
@@ -411,7 +424,7 @@ void load_sprites() {
 	}
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
 
-	for (int i = 0; i < SPRITES_NUMER; i++) {
+	for (int i = 0; i < SPRITES_NUMER; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
@@ -422,13 +435,19 @@ void load_sprites() {
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
-	for (int i = 0; i < 4; i++) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
+	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH / 2, TOP_HEIGHT / 2);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH / 2, 43);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH / 2, 200);
 	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH / 2, BOTTOM_HEIGHT / 2);
-	for (int i = 0; i < 7; i++)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], 76, 51);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], 76, 51);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], 84, 45);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], 84, 45);
+	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 }
 
 bool get_isPause() {
@@ -460,7 +479,7 @@ int powi(int x, int y) {	//なぜかpowのキャストが上手くいかない�
 
 	int ans = 1;
 
-	for (int i = 0; i < y; i++) {
+	for (int i = 0; i < y; ++i) {
 		ans = ans * x;
 	}
 	return ans;
@@ -525,4 +544,9 @@ int exist_file(const char* path) {
 
     fclose(fp);
     return 1;
+}
+bool time_count(double TIME) {
+
+	if ((int)floor(TIME / NowBPM) % 2 == 1) return true;
+	else return false;
 }

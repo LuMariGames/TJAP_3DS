@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <ctype.h>
 
-#define VERSION "1.4.0(A)"
+#define VERSION "1.4.1"
 #define DEFAULT_DIR	"sdmc:/tjafiles/"
 #define NOTDEF_DIR	"romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
@@ -25,7 +25,7 @@
 #define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
 #define MEASURE_MAX 8192
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
-#define NOTES_JUDGE_X 93	//判定枠の中心のX座標
+#define NOTES_JUDGE_X 93.0	//判定枠の中心のX座標
 #define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
 
 #define TOP_WIDTH  400
@@ -33,17 +33,17 @@
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
 
-#define SPRITES_NUMER 85
+#define SPRITES_NUMER 91
 
 #define NOTES_MAX 512
-#define BARLINE_MAX 512
+#define BARLINE_MAX 96
 #define ROLL_MAX 512
 #define BALLOON_MAX 512
 
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
 
-#define DEFAULT_BUFFER_SIZE 8192
+#define DEFAULT_BUFFER_SIZE 7840
 
 enum NOTES_KND {
 
@@ -63,8 +63,8 @@ enum NOTES_KND {
 
 enum SPRITE_NOTES_KND {	//スプライト用
 
-	SPRITE_TOP = 0,
-	SPRITE_BOTTOM,
+	SPRITE_TOP = 0,			//音符を表示するレーン部分,上画面で表示する画像
+	SPRITE_BOTTOM,			//タッチ太鼓,下画面に表示する画像
 	SPRITE_DON,
 	SPRITE_KATSU,
 	SPRITE_BIG_DON,
@@ -76,29 +76,29 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_BIG_ROLL_INT,
 	SPRITE_BIG_ROLL_END,
 	SPRITE_BALLOON,
-	SPRITE_BALLOON_1,
-	SPRITE_BALLOON_2,
-	SPRITE_BALLOON_3,
-	SPRITE_BALLOON_4,
-	SPRITE_BALLOON_5,
-	SPRITE_BALLOON_6,
-	SPRITE_JUDGE_PERFECT,
-	SPRITE_JUDGE_NICE,
-	SPRITE_JUDGE_BAD,
-	SPRITE_JUDGE_CIRCLE,
-	SPRITE_CHART_NORMAL,
-	SPRITE_CHART_EXPERT,
-	SPRITE_CHART_MASTER,
-	SPRITE_LANE_EXPERT,
-	SPRITE_LANE_MASTER,
-	SPRITE_EFFECT_PERFECT,
-	SPRITE_EFFECT_SPECIAL_PERFECT,
-	SPRITE_EFFECT_NICE,
-	SPRITE_EFFECT_SPECIAL_NICE,
-	SPRITE_SOUL_ON,
-	SPRITE_SOUL_OFF,
-	SPRITE_SOUL_EFFECT,
-	SPRITE_EFFECT_GOGO,
+	SPRITE_BALLOON_1,		//風船音符を叩く時に使う画像①
+	SPRITE_BALLOON_2,		//風船音符を叩く時に使う画像②
+	SPRITE_BALLOON_3,		//風船音符を叩く時に使う画像③
+	SPRITE_BALLOON_4,		//風船音符を叩く時に使う画像④
+	SPRITE_BALLOON_5,		//風船音符を叩く時に使う画像⑤
+	SPRITE_BALLOON_6,		//風船音符を叩き終わる時に使う画像
+	SPRITE_JUDGE_PERFECT,		//良
+	SPRITE_JUDGE_NICE,		//可
+	SPRITE_JUDGE_BAD,		//不可
+	SPRITE_JUDGE_CIRCLE,		//判定枠
+	SPRITE_CHART_NORMAL,		//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_EXPERT,		//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_MASTER,		//譜面分岐がある譜面で使う画像
+	SPRITE_LANE_EXPERT,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
+	SPRITE_LANE_MASTER,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
+	SPRITE_EFFECT_PERFECT,		//赤花火,良で叩いた時に表示する画像
+	SPRITE_EFFECT_SPECIAL_PERFECT,	//特大赤花火,特良で叩いた時に表示する画像
+	SPRITE_EFFECT_NICE,		//白花火,可で叩いた時に表示する画像
+	SPRITE_EFFECT_SPECIAL_NICE,	//特大白花火,特可で叩いた時に表示する画像
+	SPRITE_SOUL_ON,			//魂ゲージが最大値である時に表示する画像
+	SPRITE_SOUL_OFF,		//魂ゲージが最大値ではない時に表示する画像
+	SPRITE_SOUL_EFFECT,		//魂ゲージが最大値である時に表示する画像
+	SPRITE_EFFECT_GOGO,		//GOGOである時に表示する画像
 	SPRITE_SCORE_0,
 	SPRITE_SCORE_1,
 	SPRITE_SCORE_2,
@@ -146,11 +146,14 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_HARD,
 	SPRITE_EMBLEM_ONI,
 	SPRITE_EMBLEM_EDIT,
-	SPRITE_EMBLEM_TOWER,
-	SPRITE_EMBLEM_DAN,
-	SPRITE_TOP2,
-	SPRITE_DONCHAN_1,
-	SPRITE_DONCHAN_2,
+	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
+	SPRITE_EMBLEM_DAN,		//段位道場の画像
+	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
+	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
+	SPRITE_DONCHAN_0,		//どんちゃんの画像,GOGOでは無い①
+	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い②
+	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである①(8px右にずれてるので注意)
+	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである②(8px右にずれてるので注意)
 };
 
 enum COMMAND_KND {

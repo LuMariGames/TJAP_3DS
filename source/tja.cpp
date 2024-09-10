@@ -7,7 +7,7 @@
 #include "option.h"
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife, sproll;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 
@@ -19,7 +19,7 @@ void get_command_value(char* buf, COMMAND_T *Command);
 
 void init_measure_structure() {
 
-	for (int i = 0; i < MEASURE_MAX; i++) {
+	for (int i = 0; i < MEASURE_MAX; ++i) {
 
 		Measure[i].create_time = INT_MAX;
 		Measure[i].judge_time = INT_MAX;
@@ -45,7 +45,6 @@ void init_tja() {
 	MeasureMaxNumber = 0;
 	MainFirstMeasureTime = 0;
 	isBranch = false;
-	sproll = 0;
 }
 
 void load_tja_head(int course,LIST_T Song) {
@@ -335,7 +334,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	snprintf(List->title, sizeof(List->title), "No Title");
 	snprintf(List->wave, sizeof(List->wave), "audio.ogg");
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 5; ++i) {
 		List->level[i] = 0;
 		List->course[i] = false;
 	}
@@ -414,7 +413,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソート
 
-	for (int i = 1; i < array_size; i++) {
+	for (int i = 1; i < array_size; ++i) {
 
 		MEASURE_T temp = t[i];
 		if (t[i - 1].create_time > temp.create_time) {
@@ -433,7 +432,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 
 	int tmp = -1;
 
-	for (int i = 0; i < MEASURE_MAX; i++) {
+	for (int i = 0; i < MEASURE_MAX; ++i) {
 
 		if (Measure[i].flag == true && Measure[i].command == -1) {
 
@@ -678,7 +677,7 @@ void load_tja_notes(int course, LIST_T Song) {
 					FirstMultiMeasure = -1;
 					NotesCount = 0;
 
-					for (int i = 1; i < MeasureCount - Measure[MeasureCount].firstmeasure + 1; i++) {	//judge_timeの調整
+					for (int i = 1, j = MeasureCount - Measure[MeasureCount].firstmeasure + 1; i < j; ++i) {	//judge_timeの調整
 						
 						if (tja_notes[Measure[MeasureCount].notes][0] != '#') {	//複数行小節の最初の小節以外
 
@@ -713,7 +712,7 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		MeasureMaxNumber = tja_cnt;
 
-		for (int i = 0; i < MeasureMaxNumber; i++) {	//次の小節の判定時に発動する命令の調整
+		for (int i = 0; i < MeasureMaxNumber; ++i) {	//次の小節の判定時に発動する命令の調整
 
 			if (Measure[i].command == COMMAND_SECTION) {
 				int n = i + 1;
@@ -890,7 +889,7 @@ double get_FirstMeasureTime() {
 
 int get_MeasureId_From_OriginalId(int id) {
 
-	for (int i = 0; i < MEASURE_MAX; i++) {
+	for (int i = 0; i < MEASURE_MAX; ++i) {
 
 		if (Measure[i].original_id == id) return i;
 	}

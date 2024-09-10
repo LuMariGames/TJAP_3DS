@@ -262,7 +262,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 
 	//スコア
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < 7; ++i) {
 
 		if (TotalScore / powi(10, i) > 0) {
 			int n = TotalScore / powi(10, i) % 10;
@@ -274,10 +274,10 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	int j;
 
 	//コンボ
-	for (j = 0; j < 5; j++) {
+	for (j = 0; j < 5; ++j) {
 		if (combo / powi(10, j) == 0) break;
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; ++i) {
 
 		if (combo >= 10 && combo / powi(10, i) > 0) {
 
@@ -295,14 +295,14 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 
 	//連打
-	for (j = 0; j < 4; j++) {
+	for (j = 0; j < 4; ++j) {
 		if (CurrentRollCount / powi(10, j) == 0) break;
 	}
 	if (CurrentRollCount > 0) {
 		C2D_SpriteSetPos(&sprites[SPRITE_ROLL_COUNT], 110, 35);
 		C2D_DrawSprite(&sprites[SPRITE_ROLL_COUNT]);
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; ++i) {
 
 		if (CurrentRollCount / powi(10, i) > 0) {
 
@@ -313,14 +313,14 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 
 	//風船
-	for (j = 0; j < 4; j++) {
+	for (j = 0; j < 4; ++j) {
 		if (CurrentBalloonCount / powi(10, j) == 0) break;
 	}
 	if (CurrentBalloonCount > 0) {
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_COUNT], 110, 35);
 		C2D_DrawSprite(&sprites[SPRITE_BALLOON_COUNT]);
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; ++i) {
 
 		if (CurrentBalloonCount / powi(10, i) > 0) {
 
@@ -334,8 +334,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	courselife = Gauge.score;
-	int scores = (int)Gauge.score;
-	double gauge = 1.0 * (scores / 200) * 200 / Gauge.soul;
+	double gauge = 1.0 * ((int)Gauge.score / 200) * 200 / Gauge.soul;
 	if (Gauge.score > Gauge.soul) Gauge.score = Gauge.soul;
 	if (gauge > 1.0) gauge = 1.0;
 
@@ -349,7 +348,7 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		C2D_DrawRectSolid(123 + 250.0 * Gauge.norma / Gauge.soul, 67, 0, 250 * gauge - (250.0 * Gauge.norma / Gauge.soul), 17, C2D_Color32f(1, 1, 12.0 / 255, 1));
 
 	//魂
-	for (int i = 0; i < 2; i++) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 385, 75);
+	for (int i = 0; i < 2; ++i) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 385, 75);
 	C2D_SpriteSetPos(&sprites[SPRITE_SOUL_EFFECT], 395, 65);
 	if ((Gauge.score / 200) * 200 >= Gauge.soul) {
 		C2D_ImageTint Tint;
@@ -377,7 +376,7 @@ void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		C2D_DrawRectSolid(x_start + x_end * Gauge.norma / Gauge.soul, 67, 0, x_end * gauge - (x_end * Gauge.norma / Gauge.soul), 17, C2D_Color32f(1, 1, 12.0 / 255, 1));
 
 	//魂
-	for (int i = 0; i < 2; i++) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 385 - diff * 2, 75);
+	for (int i = 0; i < 2; ++i) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 385 - diff * 2, 75);
 	C2D_SpriteSetPos(&sprites[SPRITE_SOUL_EFFECT], 395 - diff * 2, 65);
 	if ((Gauge.score / 200) * 200 >= Gauge.soul) {
 		C2D_ImageTint Tint;
@@ -569,7 +568,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		if (Measure[i].firstmeasure != -1) NotesCountMax = Measure[Measure[i].firstmeasure].max_notes;
 		else NotesCountMax = NotesCount;
 
-		for (int j = 0; j < NotesCount; j++) {	//ノーツ
+		for (int j = 0; j < NotesCount; ++j) {	//ノーツ
 
 			int knd = ctoi(notes[i][j]);
 
@@ -793,14 +792,6 @@ void update_balloon_count(int arg) {
 void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	switch (TJA_Header.course) {
-	case COURSE_TOWER:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_TOWER]);
-		break;
-	case COURSE_DAN:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_DAN]);
-		break;
 	case COURSE_EASY:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EASY]);
@@ -820,6 +811,14 @@ void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	case COURSE_EDIT:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 34.0 / 255.0, 1, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EDIT]);
+		break;
+	case COURSE_TOWER:
+		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
+		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_TOWER]);
+		break;
+	case COURSE_DAN:
+		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
+		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_DAN]);
 		break;
 	}
 }

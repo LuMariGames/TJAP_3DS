@@ -58,7 +58,7 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
-	for (int n = 0; n < 4; n++) {
+	for (int n = 0; n < 4; ++n) {
 		msec[id][n] = 0;
 	}
 
@@ -112,9 +112,9 @@ double calc_vorbis_time(double CurrentTimeNotes) {
 
 void time_ini() {
 
-	for (int i = 0; i < TIME_NUM; i++) {
+	for (int i = 0; i < TIME_NUM; ++i) {
 
-		for (int n = 0; n < 4; n++) {
+		for (int n = 0; n < 4; ++n) {
 			msec[i][n] = 0;
 
 		}

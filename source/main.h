@@ -9,5 +9,6 @@ int powi(int x, int y);
 int pause_window(touchPosition tp, unsigned int key);
 int message_window(touchPosition tp, unsigned int key,int text);
 int exist_file(const char* path);
+bool time_count(double TIME);
 
 #define BUFFER_SIZE 160 //バッファ用文字列のサイズ
