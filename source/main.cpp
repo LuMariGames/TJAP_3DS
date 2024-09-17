@@ -47,7 +47,7 @@ void init_main() {
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	gfxSetWide(true);
-	//osSetSpeedupEnable(true);
+	osSetSpeedupEnable(true);
 }
 
 void exit_main() {
@@ -296,7 +296,7 @@ int main() {
 						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 						touch_cnt < 2) {
 						isDon = true;
-						touch_cnt++;
+						++touch_cnt;
 					}
 					else if (
 						(
@@ -305,7 +305,7 @@ int main() {
 							)&&
 						touch_cnt < 2) {
 						isKatsu = true;
-						touch_cnt++;
+						++touch_cnt;
 					}
 				}
 				else {
@@ -330,7 +330,7 @@ int main() {
 
 			if (isNotesStart == true) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (isPause == false) notes_cnt++;
+				if (isPause == false) ++notes_cnt;
 			}
 			draw_score(sprites);
 
@@ -407,7 +407,7 @@ int main() {
 
 		C2D_Flush();
 		C3D_FrameEnd(0);
-		if (isPause == false) cnt++;
+		if (isPause == false) ++cnt;
 	}
 
 	exit_main();

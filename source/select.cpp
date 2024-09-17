@@ -114,14 +114,14 @@ void load_file_list(const char* path) {
 						getcwd(List[SongCount].path, 256);
 						List[SongCount].genre = GENRE_MAX + 1;
 						load_tja_head_simple(&List[SongCount]);
-						SongCount++;
+						++SongCount;
 					}
 
 					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
 
 						getcwd(Genre[GenreCount].path, 256);
 						load_genre_file(GenreCount);
-						GenreCount++;
+						++GenreCount;
 					}
 				}
 			}
@@ -173,7 +173,7 @@ void disp_file_list() {
 
 		if (List[i].genre != GENRE_MAX + 1 && (i == 0 || List[i].genre != List[i - 1].genre)) {	//ジャンルの最初の曲
 
-			g++;
+			++g;
 			isGenre = true;
 		}
 
@@ -214,11 +214,11 @@ void disp_file_list() {
 
 		if (List[i].genre != GENRE_MAX + 1 && Genre[List[i].genre].isOpened == false) {
 
-			ClosedSongNumber++;
+			++ClosedSongNumber;
 			continue;
 		}
 
-		n++;
+		++n;
 
 		if (n + g-1 == (cursor * -1)) {
 
@@ -240,8 +240,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_DAN]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_DAN]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (List[i].course[COURSE_TOWER] == true) {
@@ -258,8 +258,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_TOWER]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_TOWER]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (List[i].course[COURSE_EDIT] == true) {
@@ -276,8 +276,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_EDIT]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_EDIT]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (List[i].course[COURSE_ONI] == true) {
@@ -294,8 +294,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_ONI]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_ONI]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (List[i].course[COURSE_HARD] == true) {
@@ -312,8 +312,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_HARD]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_HARD]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (List[i].course[COURSE_NORMAL] == true) {
@@ -330,8 +330,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_NORMAL]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_NORMAL]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (List[i].course[COURSE_EASY] == true) {
@@ -348,8 +348,8 @@ void disp_file_list() {
 				draw_select_text(80, (n + g + cursor) * 20 + 60, Text[get_lang()][TEXT_EASY]);
 				snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_EASY]);
 				draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-				n++;
-				course_count++;
+				++n;
+				++course_count;
 			}
 
 			if (isSelectCourse == true) {
@@ -370,13 +370,13 @@ void disp_file_list() {
 void update_cursor(int knd) {
 
 	if (knd == KEY_UP) {
-		if (isSelectCourse == false) cursor++;
-		else if (course_cursor > 0) course_cursor--;
+		if (isSelectCourse == false) ++cursor;
+		else if (course_cursor > 0) --course_cursor;
 		play_sound(SOUND_KATSU);
 	}
 	else if (knd == (int)KEY_DOWN) {
-		if (isSelectCourse == false) cursor--;
-		else if (course_cursor < (course_count - 1)) course_cursor++;
+		if (isSelectCourse == false) --cursor;
+		else if (course_cursor < (course_count - 1)) ++course_cursor;
 		play_sound(SOUND_KATSU);
 	}
 	else if (knd == KEY_RIGHT) {

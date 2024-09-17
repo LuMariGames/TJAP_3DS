@@ -89,7 +89,7 @@ void load_tja_head(int course,LIST_T Song) {
 		char* temp = NULL;
 		while (fgets(buf, 128, fp) != NULL) {
 
-			cnt++;
+			++cnt;
 			temp = (char *)malloc((strlen(buf) + 1));
 
 
@@ -171,7 +171,7 @@ void load_tja_head(int course,LIST_T Song) {
 					int cnt = 1;
 					while ((tp = strtok(NULL, ","))) {
 						Current_Header.balloon[cnt] = atoi(tp);
-						cnt++;
+						++cnt;
 					}
 				}
 				continue;
@@ -239,7 +239,7 @@ void load_tja_head(int course,LIST_T Song) {
 					while ((a = strtok(NULL, ","))) {
 						exam1[cnt] = a;
 						if (cnt == 1) redCdn[0] = atoi(a);
-						cnt++;
+						++cnt;
 					}
 				}
 				continue;
@@ -254,7 +254,7 @@ void load_tja_head(int course,LIST_T Song) {
 					while ((b = strtok(NULL, ","))) {
 						exam2[cnt] = b;
 						if (cnt == 1) redCdn[1] = atoi(b);
-						cnt++;
+						++cnt;
 					}
 				}
 				continue;
@@ -269,7 +269,7 @@ void load_tja_head(int course,LIST_T Song) {
 					while ((c = strtok(NULL, ","))) {
 						exam3[cnt] = c;
 						if (cnt == 1) redCdn[2] = atoi(c);
-						cnt++;
+						++cnt;
 					}
 				}
 				continue;
@@ -402,7 +402,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 				}
 				continue;
 			}
-			cnt++;
+			++cnt;
 		}
 	}
 
@@ -521,7 +521,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				//一文字目がコメントアウトの時スキップ
 				if (strstr(tja_notes[tja_cnt], "//") == tja_notes[tja_cnt] || strstr(tja_notes[tja_cnt], "\r") == tja_notes[tja_cnt]) {
 
-					tja_cnt++;
+					++tja_cnt;
 					continue;
 				}
 
@@ -593,7 +593,7 @@ void load_tja_notes(int course, LIST_T Song) {
 
 						Measure[MeasureCount].start_measure_count = NotesCount;
 						int i = 0;
-						while (tja_notes[tja_cnt][i] != '\n' && tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') i++;
+						while (tja_notes[tja_cnt][i] != '\n' && tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') ++i;
 						NotesCount += i - 1;
 						if (tja_notes[tja_cnt][i] == '/') NotesCount++;
 						if (tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') i--;
@@ -705,7 +705,7 @@ void load_tja_notes(int course, LIST_T Song) {
 					break;
 				}
 
-				tja_cnt++;
+				++tja_cnt;
 				MeasureCount++;
 			}
 		}
@@ -716,17 +716,17 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			if (Measure[i].command == COMMAND_SECTION) {
 				int n = i + 1;
-				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') n++;
+				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 			}
 			if (Measure[i].command == COMMAND_GOGOSTART) {
 				int n = i + 1;
-				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') n++;
+				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 			}
 			if (Measure[i].command == COMMAND_GOGOEND) {
 				int n = i + 1;
-				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') n++;
+				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 			}
 		}
@@ -862,7 +862,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			int i = 1;
 			while ((tp = strtok(NULL, ","))) {
 				Command->val[i] = strtod(tp, NULL);
-				i++;
+				++i;
 			}
 		}
 		else if (strcmp(command, "BRANCHEND") == 0) Command->knd = COMMAND_BRANCHEND;

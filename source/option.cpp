@@ -114,7 +114,7 @@ void calc_option_page(u16 px, u16 py, unsigned int key) {
 		x = 230, y = 205;
 		draw_option_text(x, y, "→", true, &width, &height, 2.5, 1.5);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			if (option_page < max_option_page) option_page++;
+			if (option_page < max_option_page) ++option_page;
 		}
 	}
 	snprintf(get_buffer(), BUFFER_SIZE, "%d/%d", option_page,max_option_page);
@@ -134,90 +134,90 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		draw_option_text(320, 0, get_buffer(), true, &width, &height);
 		draw_option_text(320-width, 0, get_buffer(), true, &width, &height);
 		//オート
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_AUTO], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.isAuto == false, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.isAuto = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.isAuto == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.isAuto = true;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//はやさ
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SPEED], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_X1], Option.speed == 1.0, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 1.0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_X2], Option.speed == 2.0, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 2.0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_X3], Option.speed == 3.0, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 3.0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_X4], Option.speed == 4.0, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 4.0;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//ステルス
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_STELTH], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.isStelth == false, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.isStelth = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.isStelth == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.isStelth = true;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//あべこべ
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SWAP], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.isSwap == false, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.isSwap = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.isSwap == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.isSwap = true;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//ランダム
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RANDOM], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.random == 0, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.random = 0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_R25], Option.random == 0.25, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.random = 0.25;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_R50], Option.random == 0.5, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.random = 0.5;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//言語
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_LANG], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_JP], Option.lang == LANG_JP, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.lang = LANG_JP;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_EN], Option.lang == LANG_EN, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.lang = LANG_EN;
-		x = XSense * XCnt + gap+10, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap+10, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ES], Option.lang == LANG_ES, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.lang = LANG_ES;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 		break;
 
 	case 2:
 		XSense = 65, YSense = 30, XCnt = 0, YCnt = 1, gap = 100;
 		//バッファ
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_BUFFERSIZE], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%d", get_buffer_size());
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
@@ -225,18 +225,18 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			if (Option.buffer_size < 1000) Option.buffer_size = 1000;
 			put_buffer_size(Option.buffer_size);
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.buffer_size = DEFAULT_BUFFER_SIZE;
 			put_buffer_size(Option.buffer_size);
 		}
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 		
 		//はやさ
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SPEED], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%.2f", Option.speed);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
@@ -244,15 +244,15 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			if (Option.speed > 10.0) Option.speed = 10.0;
 			if (Option.speed < 1.0) Option.speed = 1.0;
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 1.0;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//offset
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, "offset", true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		if (Option.offset == 0)snprintf(get_buffer(), BUFFER_SIZE, "±%.2f", Option.offset);
 		else if (Option.offset > 0)snprintf(get_buffer(), BUFFER_SIZE, "+%.2f", Option.offset);
 		else snprintf(get_buffer(), BUFFER_SIZE, "%.3f", Option.offset);
@@ -260,15 +260,15 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.offset = input_number_keyboard(6, true,true);
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.offset = 0;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//特殊
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SPECIAL], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		if (Option.special == 1) {
 			draw_option_text(x, y, Text[Option.lang][TEXT_KANPEKI], true, &width, &height);
 			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = 2;
@@ -281,91 +281,91 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
 			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = 1;
 		}
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//fps
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_DISP_FPS], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.dispFps == false, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.dispFps = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.dispFps == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.dispFps = true;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 		break;
 
 	case 3:
 		XSense = 65, YSense = 30, XCnt = 0, YCnt = 1, gap = 100;
 		//良
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_PERFECT], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%.3f", Option.judge_range_perfect);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.judge_range_perfect = input_number_keyboard(5, true, false);
 			adjust_judge_range();
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.judge_range_perfect = DEFAULT_JUDGE_RANGE_PERFECT;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//可
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_NICE], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%.3f", Option.judge_range_nice);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.judge_range_nice = input_number_keyboard(5, true, false);
 			adjust_judge_range();
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.judge_range_nice = DEFAULT_JUDGE_RANGE_NICE;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//不可
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_BAD], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%.3f", Option.judge_range_bad);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.judge_range_bad = input_number_keyboard(5, true, false);
 			adjust_judge_range();
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.judge_range_bad = DEFAULT_JUDGE_RANGE_BAD;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//連打速度(AUTO)
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_COMBO_VOICE], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.Voice);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.Voice = input_number_keyboard(3, false,false);
 		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.Voice = 2;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 
 		//はやさ(固定)
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_FIXROLL], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.fixroll == false, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.fixroll = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.fixroll == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.fixroll = true;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 		break;
 
 	case 4:
@@ -509,15 +509,15 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		XSense = 65, YSense = 30, XCnt = 0, YCnt = 1, gap = 100;
 
 		//外部効果音
-		x = XSense * XCnt, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_EXSE], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.exse == false, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.exse = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt++;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.exse == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.exse = true;
-		XCnt = 0, YCnt++;
+		XCnt = 0, ++YCnt;
 		break;
 
 

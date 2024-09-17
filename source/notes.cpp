@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, OneMeCount;
+int balloon[256], BalloonCount, TotalFailedCount, OneMeCount, NowMeCount;
 extern int isBranch, comboVoice, course, isBadCondition, stme;
 double bpm, offset;
 float NowBPM;
@@ -51,7 +51,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 			while (MeasureCount < MEASURE_MAX) {
 
-				MeasureCount++;
+				++MeasureCount;
 				break;
 			}
 			Branch.next = false;
@@ -63,7 +63,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 			if (Measure[MeasureCount].branch != Branch.course && Measure[MeasureCount].branch != -1) {
 
-				MeasureCount++;
+				++MeasureCount;
 				continue;
 			}
 
@@ -98,12 +98,12 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					}
 
 					NotesCount = 0;
-					MeasureCount++;
+					++MeasureCount;
 					if (Branch.wait == true) break;
 					else continue;
 				}
 
-				NotesCount++;
+				++NotesCount;
 			}
 
 			if (isNotesLoad == false || Branch.wait == true) break;
@@ -133,10 +133,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			for (int i = 0; i < NotesCount; ++i) {
 
 				int id = find_notes_id();
-				if (i == NotesCount - 1) OneMeCount = id + 1;
 
 				if (id != -1 && ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
+					OneMeCount = id + 1;
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL) && (PreNotesKnd == NOTES_ROLL || PreNotesKnd == NOTES_BIGROLL )) {	//55558のような表記に対応
@@ -267,14 +267,14 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 						break;
 					}
 
-					NotesNumber++;
+					++NotesNumber;
 				}
 				else if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) == 0){
 				PreNotesKnd = 0;
 				}
 			}
 
-			MeasureCount++;
+			++MeasureCount;
 			notes_sort();	//ソート
 		}
 
@@ -403,7 +403,7 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	if (isJudgeDisp == true) {
 
-		JudgeEffectCnt++;
+		++JudgeEffectCnt;
 
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 1.0 - JudgeEffectCnt * 1.0 / 20);
@@ -559,7 +559,7 @@ void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt) {
 			if (cnt % AUTO_ROLL_FRAME == 0) {
 
 				play_sound(SOUND_DON);
-				BalloonNotes[JudgeBalloonState].current_hit++;
+				++BalloonNotes[JudgeBalloonState].current_hit;
 
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
@@ -655,7 +655,7 @@ void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt) {
 
 		if (JudgeBalloonState != -1 && isDon == true) {	//風船
 
-			BalloonNotes[JudgeBalloonState].current_hit++;
+			++BalloonNotes[JudgeBalloonState].current_hit;
 
 			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
@@ -682,11 +682,11 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = OneMeCount; i < j; ++i) {	//計算
+	for (int i = 0; i < NOTES_MAX; ++i) {	//計算
 
 		if (Notes[i].flag == true) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (60.0 / Notes[i].bpm * 4);
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0 / Notes[i].bpm);
 
 			switch (Notes[i].knd) {
 
@@ -1077,7 +1077,7 @@ int make_balloon_start(int NotesId) {
 		else  BalloonNotes[id].need_hit = 5;
 		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
-		BalloonCount++;
+		++BalloonCount;
 		return id;
 	}
 	else return -1;
@@ -1260,6 +1260,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	}
 	NotesNumber = 0;
 	NotesCount = 0;
+	NowMeCount = 0;
 	RollState = 0;
 	MeasureCount = 0;
 	isNotesLoad = true;
@@ -1296,13 +1297,13 @@ double sign(double A) {	//正か負かの判別
 }
 int mcount() {
 
-	int B = -1, C = 0;
+	int B = NowMeCount, C = 0;
 	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
 		if ((BarLine[i].x * sign(BarLine[i].scroll)) <= NOTES_JUDGE_X && BarLine[i].flag == true) {
 			B = BarLine[i].measure - C;
+			NowMeCount = B;
 			break;
 		}
 	}
-	if (B < 1) B = 0;
 	return B;
 }

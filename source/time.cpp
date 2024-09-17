@@ -40,9 +40,9 @@ double get_current_time(int id) {
 
 		if (msec[id][MSEC_DIFF] < 0) msec[id][MSEC_DIFF] = 1000000 - msec[id][MSEC_DIFF] * -1;
 
-		if (msec[id][MSEC_LAST_DIFF] > msec[id][MSEC_DIFF]) sec[id]++;
+		if (msec[id][MSEC_LAST_DIFF] > msec[id][MSEC_DIFF]) ++sec[id];
 
-		cnt[id]++;
+		++cnt[id];
 		//printf("%04d:%06d\n", sec, msec[id][MSEC_DIFF]);
 		Time[id] = sec[id] + msec[id][MSEC_DIFF] / 1000000.0 + PreTime[id];
 	}
@@ -87,7 +87,7 @@ void draw_fps() {
 	fps_time[1] = get_current_time(TIME_FPS);
 
 	fps_sum += (fps_time[1] - fps_time[0]);
-	fps_cnt++;
+	++fps_cnt;
 
 	if (fps_cnt == FPS_SAMPLE) {
 		fps_cnt = 0;
