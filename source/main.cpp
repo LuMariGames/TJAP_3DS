@@ -10,6 +10,7 @@
 #include "score.h"
 #include "select.h"
 #include "option.h"
+#include "skin.h"
 #include "result.h"
 #include "main.h"
 #include "vorbis.h"
@@ -21,6 +22,7 @@ C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
+int dn_x, dn_y, dg_x, dg_y;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false, debugmode = false;
 char buffer[BUFFER_SIZE];
 
@@ -60,6 +62,7 @@ void exit_main() {
 	romfsExit();
 	exit_music();
 	exit_option();
+	exit_skin();
 }
 
 void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int key) {
@@ -105,6 +108,7 @@ int main() {
 	TJA_HEADER_T TJA_Header;
 	LIST_T SelectedSong;
 	OPTION_T Option;
+	SKIN_T Skin;
 
 	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0;
 
@@ -133,6 +137,9 @@ int main() {
 		case SCENE_SELECTLOAD:	//ロード画面
 
 			load_option();
+			load_skin();
+			get_skin(&Skin);
+			dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
@@ -238,10 +245,7 @@ int main() {
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
 
-			if (time_count(CurrentTimeMain) == true && isGOGO == false) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0]);
-			else if (time_count(CurrentTimeMain) == false && isGOGO == false) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_1]);
-			else if (time_count(CurrentTimeMain) == true && isGOGO == true) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_2]);
-			else if (time_count(CurrentTimeMain) == false && isGOGO == true) C2D_DrawSprite(&sprites[SPRITE_DONCHAN_3]);
+			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
@@ -443,10 +447,10 @@ void load_sprites() {
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH / 2, 43);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH / 2, 200);
 	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH / 2, BOTTOM_HEIGHT / 2);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], 76, 51);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], 76, 51);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], 84, 45);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], 84, 45);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], dn_x, dn_y);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
 	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 }
 
@@ -545,8 +549,8 @@ int exist_file(const char* path) {
     fclose(fp);
     return 1;
 }
-bool time_count(double TIME) {
+int time_count(double TIME) {
 
-	if ((int)floor(TIME / NowBPM) % 2 == 1) return true;
-	else return false;
+	if ((int)floor(TIME / NowBPM) % 2 == 1) return 1 + (isGOGO * 2);
+	else return 0 + (isGOGO * 2);
 }
