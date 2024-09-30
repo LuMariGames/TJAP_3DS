@@ -172,7 +172,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].x_ini = ((NOTES_AREA*Measure[MeasureCount].measure / NotesCountMax)*i + NOTES_JUDGE_RANGE)*Notes[id].scroll + NOTES_JUDGE_X;
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
-					Notes[i].x = Notes[i].x_ini;
+					Notes[id].x = Notes[id].x_ini;
 					//Notes[id].create_time = CurrentTimeNotes;
 					Notes[id].pop_time = Measure[MeasureCount].pop_time;
 					Notes[id].judge_time = Measure[MeasureCount].judge_time + 240.0 / Measure[MeasureCount].bpm * Measure[MeasureCount].measure * i / NotesCountMax;
@@ -1300,7 +1300,7 @@ int mcount() {
 
 	int B = NowMeCount, C = 0;
 	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
-		if ((BarLine[i].x * sign(BarLine[i].scroll)) <= NOTES_JUDGE_X && BarLine[i].flag == true) {
+		if ((BarLine[i].x * sign(BarLine[i].scroll)) <= NOTES_JUDGE_X && NowMeCount <= BarLine[i].measure) {
 			B = BarLine[i].measure - C;
 			NowMeCount = B;
 			break;
