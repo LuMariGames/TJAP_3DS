@@ -595,8 +595,8 @@ void load_tja_notes(int course, LIST_T Song) {
 						int i = 0;
 						while (tja_notes[tja_cnt][i] != '\n' && tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') ++i;
 						NotesCount += i - 1;
-						if (tja_notes[tja_cnt][i] == '/') NotesCount++;
-						if (tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') i--;
+						if (tja_notes[tja_cnt][i] == '/') ++NotesCount;
+						if (tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') --i;
 						Measure[MeasureCount].notes_count = i;
 
 					}

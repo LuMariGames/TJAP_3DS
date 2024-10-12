@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, OneMeCount, NowMeCount;
+int balloon[256], BalloonCount, TotalFailedCount, NowMeCount;
 extern int isBranch, comboVoice, course, isBadCondition, stme;
 double bpm, offset;
 float NowBPM;
@@ -136,7 +136,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 				if (id != -1 && ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
-					OneMeCount = id + 1;
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL) && (PreNotesKnd == NOTES_ROLL || PreNotesKnd == NOTES_BIGROLL )) {	//55558のような表記に対応
@@ -720,7 +719,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 				break;
 
 			case NOTES_BALLOON:
-				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
+				if (Notes[i].x * sign(Notes[i].scroll) <= NOTES_JUDGE_X) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
 				}
@@ -751,10 +750,10 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = 0, j = OneMeCount; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag == true &&
-			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 400 && Notes[i].scroll < 0)) &&
+			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
 			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
 			if (Notes[i].isThrough == false && 
@@ -782,7 +781,7 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = OneMeCount; i < j; ++i) {	//描画
+	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
 
 		if (Notes[i].flag == true) {
 
@@ -1199,10 +1198,7 @@ void draw_title() {
 	get_tja_header(&Header);
 	float width = 0, height = 0;
 
-	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) {
-
-		draw_notes_text(TOP_WIDTH, 20, Header.subtitle, &width, &height);
-	}
+	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) draw_notes_text(TOP_WIDTH, 20, Header.subtitle, &width, &height);
 	draw_notes_text(TOP_WIDTH, 0, Header.title, &width, &height);
 }
 
@@ -1298,10 +1294,10 @@ double sign(double A) {	//正か負かの判別
 }
 int mcount() {
 
-	int B = NowMeCount, C = 0;
+	int B = NowMeCount;
 	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
-		if ((BarLine[i].x * sign(BarLine[i].scroll)) <= NOTES_JUDGE_X && NowMeCount <= BarLine[i].measure) {
-			B = BarLine[i].measure - C;
+		if ((BarLine[i].x * sign(BarLine[i].scroll)) <= NOTES_JUDGE_X) {
+			B = BarLine[i].measure;
 			NowMeCount = B;
 			break;
 		}

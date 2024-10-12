@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <ctype.h>
 
-#define VERSION "1.4.3(A)"
+#define VERSION "1.4.3(B)"
 #define DEFAULT_DIR	"sdmc:/tjafiles/"
 #define NOTDEF_DIR	"romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
@@ -37,14 +37,14 @@
 #define SPRITES_NUMER 91
 
 #define NOTES_MAX 512
-#define BARLINE_MAX 96
+#define BARLINE_MAX 128
 #define ROLL_MAX 512
 #define BALLOON_MAX 512
 
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
 
-#define DEFAULT_BUFFER_SIZE 7840
+#define DEFAULT_BUFFER_SIZE 8192
 
 enum NOTES_KND {
 
@@ -153,8 +153,8 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
 	SPRITE_DONCHAN_0,		//どんちゃんの画像,GOGOでは無い①
 	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い②
-	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである①(8px右にずれてるので注意)
-	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである②(8px右にずれてるので注意)
+	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである①
+	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである②
 };
 
 enum COMMAND_KND {
