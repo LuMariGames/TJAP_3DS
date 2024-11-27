@@ -1,5 +1,5 @@
 name: Bug report
-about: 不具合やバグの修正 / Fixing bugs and bugs
+description: 不具合やバグの修正 / Fixing bugs and bugs
 title: "BUG: "
 labels: [bug]
 
