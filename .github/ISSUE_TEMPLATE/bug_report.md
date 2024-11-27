@@ -1,3 +1,4 @@
+---
 name: Bug report
 about: 不具合やバグの修正 / Fixing bugs and bugs
 title: "[Bug Report] (Content)"
@@ -60,3 +61,4 @@ body:
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
+---
