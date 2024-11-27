@@ -1,8 +1,7 @@
 name: Bug report
 about: 不具合やバグの修正 / Fixing bugs and bugs
-title: "[Bug Report] (Content)"
-labels: bug
-assignees: 
+title: "BUG: "
+labels: [bug]
 
 body: 
   - type: markdown
