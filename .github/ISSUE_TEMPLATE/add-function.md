@@ -1,7 +1,7 @@
 ---
-name: Dan-i Dojo
-about: 段位道場に関する要望はこちら / Click here for requests for the Dan-i dojo
-title: "[Dan-i Dojo / 段位道場]"
+name: Add Function
+about: 新機能や他シミュの命令文などの要望 / Requests for new features and other taiko simulator commands
+title: "[Add Function] (Content)"
 labels: enhancement
 assignees: LuMariGames
 
