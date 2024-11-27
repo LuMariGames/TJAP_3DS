@@ -53,4 +53,3 @@ bool get_notes_finish();
 void draw_title();
 void draw_condition();
 double sign(double A);
-int mcount();

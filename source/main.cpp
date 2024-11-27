@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 
 #include "header.h"
@@ -195,7 +195,6 @@ int main() {
 			if (key & KEY_A)		update_cursor(KEY_A);
 			if (key & KEY_B)		update_cursor(KEY_B);
 			if (key & KEY_X)		update_cursor(KEY_X);
-			if (key & KEY_SELECT)		debugmode = !debugmode;
 
 			disp_file_list();
 
@@ -259,9 +258,7 @@ int main() {
 			}
 			
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
-
 			if (Option.dispFps == true) draw_fps();
-			if (debugmode == true) debug_score();
 
 			//譜面が先
 			if (offset > 0 && (isNotesStart == false || isMusicStart == false)) {
@@ -550,6 +547,6 @@ int exist_file(const char* path) {
 }
 int time_count(double TIME) {
 
-	if ((int)floor(TIME / NowBPM) % 2 == 1) return 1 + (isGOGO * 2);
+	if ((int)floor(TIME / NowBPM) % (4 / (isGOGO * 2)) == 1) return 1 + (isGOGO * 2);
 	else return 0 + (isGOGO * 2);
 }

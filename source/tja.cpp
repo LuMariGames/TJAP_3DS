@@ -479,7 +479,7 @@ void load_tja_notes(int course, LIST_T Song) {
 		int MeasureCount = 0,CurrentCourse = -1;
 		double PreJudge = 0, FirstMeasureTime = 0;
 
-		FirstMeasureTime = (60.0 / bpm * 4 * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 60.0 / bpm * 4 * measure;
+		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
 		PreJudge = FirstMeasureTime;
 
 
@@ -608,9 +608,9 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].bpm = NextBpm;
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
-				Measure[MeasureCount].judge_time = 60.0 / bpm * 4 * measure * percent + PreJudge + delay;
-				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (60.0 / Measure[MeasureCount].bpm * 4)*(NOTES_JUDGE_RANGE / NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - (60.0 / Measure[MeasureCount].bpm * 4)*(NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(scroll)));
+				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
+				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 / Measure[MeasureCount].bpm)*(NOTES_JUDGE_RANGE / NOTES_AREA);
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - (240.0 / Measure[MeasureCount].bpm)*(NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 
@@ -706,7 +706,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				}
 
 				++tja_cnt;
-				MeasureCount++;
+				++MeasureCount;
 			}
 		}
 
