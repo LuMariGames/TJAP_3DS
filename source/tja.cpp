@@ -510,7 +510,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				continue;
 			}
 
-			if (isStart == false && isCourseMatch == true && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			if (isStart == false && isCourseMatch == true && strstr(tja_notes[tja_cnt], "#START 1P") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
