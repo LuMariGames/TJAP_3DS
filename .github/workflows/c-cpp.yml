@@ -19,5 +19,5 @@ jobs:
       with:
         name: Build
         path: |
-          FourthTube.3dsx
-          FourthTube.cia
+          TJAP_3DS.3dsx
+          TJAP_3DS.cia
