@@ -48,7 +48,7 @@ PRODUCT_CODE			:= CTR-HB-TJAP
 UNIQUE_ID				:= 0xB7655
 
 BANNER_AUDIO			:= resource/banner.wav
-BANNER_IMAGE			:= resource/banner.cgfx
+BANNER_IMAGE			:= resource/banner.png
 ICON        			:= resource/icon.png
 RSF_PATH				:= resource/app.rsf
 
