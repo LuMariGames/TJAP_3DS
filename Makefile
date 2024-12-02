@@ -172,7 +172,7 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-MAKEROM      ?= resource/makerom.exe
+MAKEROM      ?= makerom.exe
 MAKEROM_WIN      ?= resource/makerom.exe
 MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
 
@@ -183,7 +183,7 @@ ifneq ($(strip $(ROMFS)),)
 	MAKEROM_ARGS	+=	 -DAPP_ROMFS="$(ROMFS)"
 endif
 
-BANNERTOOL   ?= resource/bannertool.exe
+BANNERTOOL   ?= bannertool.exe
 BANNERTOOL_WIN   ?= resource/bannertool.exe
 
 
