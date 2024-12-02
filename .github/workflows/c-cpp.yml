@@ -15,7 +15,7 @@ jobs:
     - name: make
       run: make 3dsx
     - name: Upload binary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Build
         path: |
