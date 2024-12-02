@@ -1,6 +1,6 @@
-﻿#pragma once
+#pragma once
 
-const char Text[3][56][128] = {
+const char Text[3][60][128] = {
 	{
 		"ON",
 		"OFF",
@@ -58,6 +58,9 @@ const char Text[3][56][128] = {
 		"かんぺき",
 		"とっくん",
 		"外部効果音",
+		"ﾌﾟﾚｲﾔｰ(双打用)",
+		"1P",
+		"2P",
 	},
 	{
 		"ON",
@@ -116,6 +119,9 @@ const char Text[3][56][128] = {
 		"perfection",
 		"Training",
 		"External sound",
+		"Player",
+		"1P",
+		"2P",
 	},
 	{
 		"Sí",
@@ -174,12 +180,15 @@ const char Text[3][56][128] = {
 		"perfección",
 		"Capacitación",
 		"Sonido externo",
+		"Jugador",
+		"1P",
+		"2P",
 	}
 };
 
 typedef struct {
 
-	int lang,buffer_size,Voice,special;
+	int lang,buffer_size,Voice,special,player;
 	bool isAuto, isStelth,isSwap,dispFps,fixroll,exse;
 	float speed, random,offset,blacktext,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
@@ -257,6 +266,9 @@ enum Text_knd {
 	TEXT_KANPEKI,
 	TEXT_TOKUN,
 	TEXT_EXSE,
+	TEXT_PLAYER,
+	TEXT_1P,
+	TEXT_2P,
 };
 
 int get_lang();
