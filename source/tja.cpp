@@ -93,9 +93,15 @@ void load_tja_head(int course,LIST_T Song) {
 			temp = (char *)malloc((strlen(buf) + 1));
 
 
-			if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) break;
-			else if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) break;
-			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) break;
+			if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) {
+				break;
+			}
+			else if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
+				break;
+			}
+			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) {
+				break;
+			}
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {

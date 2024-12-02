@@ -110,9 +110,9 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, BottomY = BOTTOM_HEIGHT / 2;
+	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0;
 
-	double FirstMeasureTime = INT_MAX, BottomTIME = -1000,
+	double FirstMeasureTime = INT_MAX,
 		offset = 0,CurrentTimeMain = -1000;
 
 	while (aptMainLoop()) {
