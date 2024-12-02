@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: make
-      run: make all
+      run: make 3dsx
     - name: Upload binary
       uses: actions/upload-artifact@v3
       with:
