@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "header.h"
@@ -110,9 +110,9 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0;
+	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, BottomY = BOTTOM_HEIGHT / 2;
 
-	double FirstMeasureTime = INT_MAX,
+	double FirstMeasureTime = INT_MAX, BottomTIME = -1000,
 		offset = 0,CurrentTimeMain = -1000;
 
 	while (aptMainLoop()) {
@@ -336,8 +336,11 @@ int main() {
 
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
+			BottomTIME = CurrentTimeMain;
+			if (CurrentTimeMain - BottomTIME < 0.05) BottomY = 140 - (CurrentTimeMain - BottomTIME) * 200;
+			if (BottomY <= 120) BottomY = BOTTOM_HEIGHT / 2;
+			C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH / 2, BottomY);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
-			//debug_touch(tp.px,tp.py);
 
 			if (TotalBadCount > 0) {
 				switch (Option.special) {
@@ -453,16 +456,6 @@ void load_sprites() {
 bool get_isPause() {
 
 	return isPause;
-}
-
-void debug_touch(int x,int y) {
-
-	snprintf(buffer, sizeof(buffer), "%d:%d:%.1f\n%d:%d:%d", 
-		PreTouch_x-touch_x,
-		PreTouch_y-touch_y,
-		pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5), 
-		touch_x,touch_y,touch_cnt);
-	draw_debug(0, 0, buffer);
 }
 
 bool get_isMusicStart() {
