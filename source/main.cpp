@@ -288,6 +288,7 @@ int main() {
 
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
 					touch_x = tp.px, touch_y = tp.py;
+					BottomTIME = CurrentTimeMain;
 
 					if (
 						(key & KEY_TOUCH || 
@@ -336,7 +337,6 @@ int main() {
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
-			BottomTIME = CurrentTimeMain;
 			if (CurrentTimeMain - BottomTIME < 0.05) BottomY = 140 - (CurrentTimeMain - BottomTIME) * 200;
 			if (BottomY >= 120) BottomY = BOTTOM_HEIGHT / 2;
 			C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH / 2, BottomY);
