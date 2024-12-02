@@ -20,4 +20,3 @@ jobs:
         name: Build
         path: |
           TJAP_3DS.3dsx
-          TJAP_3DS.cia
