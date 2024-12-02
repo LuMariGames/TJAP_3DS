@@ -13,10 +13,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: make
-      run: make all
+      run: make 3dsx
     - name: Upload binary
       uses: actions/upload-artifact@v4
       with:
         name: Build
         path: |
           TJAP_3DS.3dsx
+          TJAP_3DS.cia
