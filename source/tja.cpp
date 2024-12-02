@@ -93,7 +93,7 @@ void load_tja_head(int course,LIST_T Song) {
 			temp = (char *)malloc((strlen(buf) + 1));
 
 
-			if (isCourseMatch == true && strstr(buf, "#START") == buf) {
+			if (isCourseMatch == true && strstr(buf, "#START P1") == buf) {
 				break;
 			}
 
