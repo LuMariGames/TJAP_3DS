@@ -52,6 +52,7 @@ void load_tja_head(int course,LIST_T Song) {
 	FILE *fp;
 	char buf[128];
 	bool isCourseMatch = true;
+	OPTION_T Option;
 
 	Current_Header.title = (char*)"No title";
 	Current_Header.subtitle = (char*)"";
