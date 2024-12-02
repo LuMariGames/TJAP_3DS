@@ -204,8 +204,8 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
 	@echo Building cia...
-	@bannertool makesmdh -s "TJAPlayer for 3DS" -l "Music game of the TJA file." -p "Togetoge" -i $(APP_ICON) -o $(BUILD)/icon.icn
 	@bannertool makebanner -ci $(BANNER_IMAGE) -a $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
+	@bannertool makesmdh -s "TJAPlayer for 3DS" -l "Music game of the TJA file." -p "Togetoge" -i $(APP_ICON) -o $(BUILD)/icon.icn
 	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER) -icon $(BUILD)/icon.bin -banner $(BUILD)banner.bin
 
 #---------------------------------------------------------------------------------
