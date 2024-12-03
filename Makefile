@@ -76,6 +76,7 @@ LIBS	:= -lcitro2d -lcitro3d -lctru -lm -lvorbisidec -logg -ljansson
 # include and lib
 #---------------------------------------------------------------------------------
 LIBDIRS := $(CTRULIB) $(PORTLIBS)
+LIBDIRS_DEVKITPRO := libctru portlibs/3ds
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
