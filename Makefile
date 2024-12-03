@@ -172,7 +172,21 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-MAKEROM      ?= makerom
+ifeq ($(OS),Windows_NT)
+	MAKEROM = $(TOPDIR)/resource/makerom.exe
+	BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
+else
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Linux)
+		MAKEROM = $(TOPDIR)/resource/makerom-linux
+		BANNERTOOL = $(TOPDIR)/resource/bannertool-linux
+	endif
+	ifeq ($(UNAME_S),Darwin)
+		MAKEROM = $(TOPDIR)/resource/makerom-mac
+		BANNERTOOL = $(TOPDIR)/resource/bannertool-mac
+	endif
+endif
+
 MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
 
 ifneq ($(strip $(LOGO)),)
@@ -181,8 +195,6 @@ endif
 ifneq ($(strip $(ROMFS)),)
 	MAKEROM_ARGS	+=	 -DAPP_ROMFS="$(ROMFS)"
 endif
-
-BANNERTOOL   ?= bannertool
 
 ifeq ($(suffix $(BANNER_IMAGE)),.cgfx)
 	BANNER_IMAGE_ARG := -ci
