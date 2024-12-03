@@ -238,7 +238,7 @@ void update_score(int knd) {
 	else CurrentPrecision = 0;
 }
 
-/*void debug_score() {
+void debug_score() {
 
 	snprintf(buf_score, sizeof(buf_score), "Scoremode:%d   Init:%d   Diff:%d", TJA_Header.scoremode, init, diff);
 	draw_debug(0, 10, buf_score);
@@ -256,7 +256,7 @@ void update_score(int knd) {
 		snprintf(buf_score, sizeof(buf_score), "GOGOTIME");
 		draw_debug(0, 190, buf_score);
 	}
-}*/
+}
 
 void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 

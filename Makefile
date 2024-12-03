@@ -40,17 +40,17 @@ GRAPHICS	:=	gfx
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
-APP_VER				:= 16 #1024.16.1?
-APP_TITLE			:= TJAPlayer for 3DS
+APP_VER					:= 16 #1024.16.1?
+APP_TITLE				:= TJAPlayer for 3DS
 APP_DESCRIPTION			:= TJAPlayer for 3DS - Music game of the TJA file.
-APP_AUTHOR			:= Togetoge
+APP_AUTHOR				:= Togetoge
 PRODUCT_CODE			:= CTR-HB-TJAP
-UNIQUE_ID			:= 0xB7655
+UNIQUE_ID				:= 0xB7655
 
 BANNER_AUDIO			:= resource/banner.wav
 BANNER_IMAGE			:= resource/banner.cgfx
 ICON        			:= resource/icon.png
-RSF_PATH			:= resource/app.rsf
+RSF_PATH				:= resource/app.rsf
 
 #---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
@@ -76,7 +76,6 @@ LIBS	:= -lcitro2d -lcitro3d -lctru -lm -lvorbisidec -logg -ljansson
 # include and lib
 #---------------------------------------------------------------------------------
 LIBDIRS := $(CTRULIB) $(PORTLIBS)
-LIBDIRS_DEVKITPRO := libctru portlibs/3ds
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -173,12 +172,7 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-# MAKEROM = $(TOPDIR)/resource/makerom.exe
-# BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
-
-MAKEROM = makerom
-BANNERTOOL = bannertool
-
+MAKEROM      ?= makerom
 MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
 
 ifneq ($(strip $(LOGO)),)
@@ -187,6 +181,8 @@ endif
 ifneq ($(strip $(ROMFS)),)
 	MAKEROM_ARGS	+=	 -DAPP_ROMFS="$(ROMFS)"
 endif
+
+BANNERTOOL   ?= bannertool
 
 ifeq ($(suffix $(BANNER_IMAGE)),.cgfx)
 	BANNER_IMAGE_ARG := -ci
@@ -205,12 +201,12 @@ endif
 
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@echo Building 3dsx...
-	@$(MAKE) -j10 -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
 	@echo Building cia...
-	$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
-	$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(APP_ICON) -o $(BUILD)/icon.icn
-	$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER) -icon $(BUILD)/icon.bin -banner $(BUILD)banner.bin
+	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
+	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p $(APP_AUTHOR) -i $(APP_ICON) -o $(BUILD)/icon.icn
+	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER)
 
 #---------------------------------------------------------------------------------
 3dsx: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)

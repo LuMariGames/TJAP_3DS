@@ -1,4 +1,4 @@
-#include "header.h"
+﻿#include "header.h"
 #include "option.h"
 #include "select.h"
 #include "main.h"
@@ -518,24 +518,6 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.exse == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.exse = true;
 		XCnt = 0, ++YCnt;
-
-		//特殊
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_PLAYER], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		if (Option.player == 1) {
-			draw_option_text(x, y, Text[Option.lang][TEXT_1P], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = 2;
-		}
-		else if (Option.player == 2) {
-			draw_option_text(x, y, Text[Option.lang][TEXT_2P], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = 0;
-		}
-		else {
-			draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = 1;
-		}
-		XCnt = 0, ++YCnt;
 		break;
 
 
@@ -615,7 +597,6 @@ void save_option() {
 	json_object_set(json, "blacktext", json_real(Option.blacktext));
 	json_object_set(json, "special", json_integer(Option.special));
 	json_object_set(json, "exse", json_boolean(Option.exse));
-	json_object_set(json, "player", json_integer(Option.player));
 
 	json_dump_file(json, SETTING_FILE, 0);
 }
@@ -665,7 +646,6 @@ void load_option() {
 		Option.blacktext = json_real_value(json_object_get(json, "blacktext"));
 		Option.special = json_integer_value(json_object_get(json, "special"));
 		Option.exse = json_boolean_value(json_object_get(json, "exse"));
-		Option.player = json_integer_value(json_object_get(json, "player"));
 		
 		adjust_judge_range();
 	}
@@ -720,7 +700,6 @@ void get_option(OPTION_T *TMP) {
 	TMP->blacktext = Option.blacktext;
 	TMP->special = Option.special;
 	TMP->exse = Option.exse;
-	TMP->player = Option.player;
 	black = Option.blacktext;
 	if (Option.Voice == 0) comboVoice = INT_MAX;
 	else comboVoice = Option.Voice;
