@@ -813,11 +813,11 @@ void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EDIT]);
 		break;
 	case COURSE_TOWER:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 86.0 / 255.0, 12.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_TOWER]);
 		break;
 	case COURSE_DAN:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(14.0 / 255.0, 88.0 / 255.0, 129.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_DAN]);
 		break;
 	}
