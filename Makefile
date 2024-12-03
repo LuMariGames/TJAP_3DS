@@ -172,13 +172,11 @@ endif
 .PHONY: all clean
 
 #---------------------------------------------------------------------------------
-ifeq ($(OS),Windows_NT)
-	MAKEROM = $(TOPDIR)/resource/makerom.exe
-	BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
-else
+#	MAKEROM = $(TOPDIR)/resource/makerom.exe
+#	BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
+
 	MAKEROM = $(TOPDIR)/resource/makerom-linux
 	BANNERTOOL = $(TOPDIR)/resource/bannertool-linux
-endif
 
 MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
 
