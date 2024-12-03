@@ -350,13 +350,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_judge(CurrentTimeNotes, sprites);
 
 	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
-		if ((BarLine[i].x * sign(BarLine[i].scroll)) <= NOTES_JUDGE_X) {
-			NowMeCount = BarLine[i].measure;
+		if (BarLine[i].x * sign(BarLine[i].scroll) <= NOTES_JUDGE_X) {
+			NowBPM = 60.0 / Measure[BarLine[i].measure].bpm;
 			break;
 		}
 	}
-
-	NowBPM = 60.0 / Measure[NowMeCount].bpm;
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
