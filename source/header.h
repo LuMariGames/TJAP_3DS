@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <ctype.h>
 
-#define VERSION "1.4.3(C)"
+#define VERSION "1.4.4"
 #define DEFAULT_DIR	"sdmc:/tjafiles/"
 #define NOTDEF_DIR	"romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
