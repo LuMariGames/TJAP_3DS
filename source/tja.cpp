@@ -52,8 +52,6 @@ void load_tja_head(int course,LIST_T Song) {
 	FILE *fp;
 	char buf[128];
 	bool isCourseMatch = true;
-	OPTION_T Option;
-	get_option(&Option);
 
 	Current_Header.title = (char*)"No title";
 	Current_Header.subtitle = (char*)"";
@@ -95,13 +93,7 @@ void load_tja_head(int course,LIST_T Song) {
 			temp = (char *)malloc((strlen(buf) + 1));
 
 
-			if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) {
-				break;
-			}
-			else if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
-				break;
-			}
-			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) {
+			if (isCourseMatch == true && strstr(buf, "#START") == buf) {
 				break;
 			}
 
@@ -487,7 +479,7 @@ void load_tja_notes(int course, LIST_T Song) {
 		int MeasureCount = 0,CurrentCourse = -1;
 		double PreJudge = 0, FirstMeasureTime = 0;
 
-		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
+		FirstMeasureTime = (60.0 / bpm * 4 * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 60.0 / bpm * 4 * measure;
 		PreJudge = FirstMeasureTime;
 
 
@@ -518,17 +510,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				continue;
 			}
 
-			if (isStart == false && isCourseMatch == true && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
-
-				isStart = true;
-				continue;
-			}
-			else if (isStart == false && isCourseMatch == true && Option.player == 1 && strstr(tja_notes[tja_cnt], "#START P1") == tja_notes[tja_cnt]) {
-
-				isStart = true;
-				continue;
-			}
-			else if (isStart == false && isCourseMatch == true && Option.player == 2 && strstr(tja_notes[tja_cnt], "#START P2") == tja_notes[tja_cnt]) {
+			if (isStart == false && isCourseMatch == true && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
@@ -626,9 +608,9 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].bpm = NextBpm;
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
-				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
-				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 / Measure[MeasureCount].bpm)*(NOTES_JUDGE_RANGE / NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - (240.0 / Measure[MeasureCount].bpm)*(NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(scroll)));
+				Measure[MeasureCount].judge_time = 60.0 / bpm * 4 * measure * percent + PreJudge + delay;
+				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (60.0 / Measure[MeasureCount].bpm * 4)*(NOTES_JUDGE_RANGE / NOTES_AREA);
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - (60.0 / Measure[MeasureCount].bpm * 4)*(NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 
@@ -724,7 +706,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				}
 
 				++tja_cnt;
-				++MeasureCount;
+				MeasureCount++;
 			}
 		}
 

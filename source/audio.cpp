@@ -6,8 +6,8 @@
 #include "header.h"
 #include "option.h"
 
-#define AUDIO_BUFFER_SIZE 4000
-#define STACKSIZE (4 * 1000)
+#define AUDIO_BUFFER_SIZE 4096
+#define STACKSIZE (4 * 1024)
 #define SOUND_NUMBER 4
 
 typedef struct {

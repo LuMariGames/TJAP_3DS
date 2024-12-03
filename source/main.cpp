@@ -195,6 +195,7 @@ int main() {
 			if (key & KEY_A)		update_cursor(KEY_A);
 			if (key & KEY_B)		update_cursor(KEY_B);
 			if (key & KEY_X)		update_cursor(KEY_X);
+			if (key & KEY_SELECT)		debugmode = !debugmode;
 
 			disp_file_list();
 
@@ -258,7 +259,9 @@ int main() {
 			}
 			
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
+
 			if (Option.dispFps == true) draw_fps();
+			if (debugmode == true) debug_score();
 
 			//譜面が先
 			if (offset > 0 && (isNotesStart == false || isMusicStart == false)) {
@@ -334,9 +337,10 @@ int main() {
 			}
 			draw_score(sprites);
 
-			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			//debug_touch(tp.px,tp.py);
 
 			if (TotalBadCount > 0) {
 				switch (Option.special) {
@@ -454,6 +458,16 @@ bool get_isPause() {
 	return isPause;
 }
 
+void debug_touch(int x,int y) {
+
+	snprintf(buffer, sizeof(buffer), "%d:%d:%.1f\n%d:%d:%d", 
+		PreTouch_x-touch_x,
+		PreTouch_y-touch_y,
+		pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5), 
+		touch_x,touch_y,touch_cnt);
+	draw_debug(0, 0, buffer);
+}
+
 bool get_isMusicStart() {
 
 	return isMusicStart;
@@ -536,6 +550,6 @@ int exist_file(const char* path) {
 }
 int time_count(double TIME) {
 
-	if ((int)floor(TIME / NowBPM) % (4 / (isGOGO * 2)) == 1) return 1 + (isGOGO * 2);
+	if ((int)floor(TIME / NowBPM) % 2 == 1) return 1 + (isGOGO * 2);
 	else return 0 + (isGOGO * 2);
 }
