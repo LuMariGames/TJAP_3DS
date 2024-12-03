@@ -175,7 +175,6 @@ endif
 # MAKEROM = $(TOPDIR)/resource/makerom.exe
 # BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
 
-sudo apt install bannertool-linux
 MAKEROM = makerom-linux
 BANNERTOOL = bannertool-linux
 
@@ -204,7 +203,7 @@ endif
 #---------------------------------------------------------------------------------
 
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
-	$ sudo apt update
+	$ sudo apt install bannertool-linux
 	@echo Building 3dsx...
 	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
