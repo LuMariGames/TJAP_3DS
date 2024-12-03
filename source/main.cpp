@@ -258,7 +258,8 @@ int main() {
 			}
 			draw_debug(0, 40, SONGNAME);
 			if (ndspChnIsPlaying(CHANNEL) == false && course == COURSE_DAN && SelectedSong.wave != SONGNAME) {
-				SelectedSong.wave = SONGNAME;
+				strncpy(SelectedSong.wave, SONGNAME, sizeof(SelectedSong.wave) - 1);
+				SelectedSong.wave[sizeof(SelectedSong.wave) - 1] = '\0';
 				play_main_music(&isPlayMain, SelectedSong);
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
