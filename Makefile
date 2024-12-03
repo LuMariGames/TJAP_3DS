@@ -200,6 +200,7 @@ endif
 #---------------------------------------------------------------------------------
 
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+	$ uname -a
 	@echo Building 3dsx...
 	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
