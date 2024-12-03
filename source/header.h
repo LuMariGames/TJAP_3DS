@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <ctype.h>
 
-#define VERSION "1.4.3(B)"
+#define VERSION "1.4.3(C)"
 #define DEFAULT_DIR	"sdmc:/tjafiles/"
 #define NOTDEF_DIR	"romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
@@ -19,9 +19,9 @@
 #define PATH_DSP1 "sdmc:/3ds/dspfirm.cdc"
 #define GENRE_FILE "genre.json"
 
-#define DEFAULT_JUDGE_RANGE_PERFECT	0.042
-#define DEFAULT_JUDGE_RANGE_NICE	0.108
-#define DEFAULT_JUDGE_RANGE_BAD		0.125
+#define DEFAULT_JUDGE_RANGE_PERFECT	0.040
+#define DEFAULT_JUDGE_RANGE_NICE	0.100
+#define DEFAULT_JUDGE_RANGE_BAD		0.120
 
 #define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
 #define MEASURE_MAX 8192
@@ -44,7 +44,7 @@
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
 
-#define DEFAULT_BUFFER_SIZE 8192
+#define DEFAULT_BUFFER_SIZE 8000
 
 enum NOTES_KND {
 
