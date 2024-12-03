@@ -213,10 +213,10 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER) -icon $(BUILD)/icon.bin -banner $(BUILD)banner.bin
 
 banner.bnr: $(BANNER_IMAGE_FILE) $(BANNER_AUDIO_FILE)
-	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_AUDIO_ARG) -o banner.bnr > /dev/null
+	@$(BANNERTOOL) makebanner -ci -a -o banner.bnr
 
 icon.icn: $(TOPDIR)/$(ICON)
-	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p "$(APP_AUTHOR)" -i $(TOPDIR)/$(ICON) -o icon.icn > /dev/nul
+	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p "$(APP_AUTHOR)" -i $(ICON) -o icon.icn
 
 #---------------------------------------------------------------------------------
 3dsx: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
