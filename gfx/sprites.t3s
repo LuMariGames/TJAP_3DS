@@ -1,6 +1,6 @@
 --atlas -f rgba8888 -z auto
 top.png
-bot.png
+bottom.png
 don.png
 katsu.png
 big_don.png
