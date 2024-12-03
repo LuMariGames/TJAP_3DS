@@ -565,7 +565,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						NextBpm = Command.val[0];
 						break;
 					case COMMAND_NEXTSONG:
-						SONGNAME = Command.val[0];
+						SONGNAME = Command.value_s;
 						break;
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
@@ -841,7 +841,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		}
 		else if (strcmp(command, "NEXTSONG") == 0) {
 			Command->knd = COMMAND_NEXTSONG;
-			Command->val[0] = strtod(value, NULL);
+			Command->value_s = value;
 		}
 		else if (strcmp(command, "GOGOSTART") == 0) Command->knd = COMMAND_GOGOSTART;
 		else if (strcmp(command, "GOGOEND") == 0) Command->knd = COMMAND_GOGOEND;
