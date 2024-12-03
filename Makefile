@@ -175,8 +175,8 @@ endif
 # MAKEROM = $(TOPDIR)/resource/makerom.exe
 # BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
 
-MAKEROM = makerom-linux
-BANNERTOOL = bannertool-linux
+MAKEROM = makerom
+BANNERTOOL = bannertool
 
 MAKEROM_ARGS := -elf "$(OUTPUT).elf" -rsf "$(RSF_PATH)" -banner "$(BUILD)/banner.bnr" -icon "$(BUILD)/icon.icn" -DAPP_TITLE="$(APP_TITLE)" -DAPP_PRODUCT_CODE="$(PRODUCT_CODE)" -DAPP_UNIQUE_ID="$(UNIQUE_ID)"
 
