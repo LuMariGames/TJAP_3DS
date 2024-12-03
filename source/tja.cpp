@@ -100,7 +100,7 @@ void load_tja_head(int course,LIST_T Song) {
 			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) {
 				break;
 			}
-			else if (isCourseMatch == true && strstr(buf, "#START") == buf) {
+			else if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) {
 				break;
 			}
 
@@ -527,7 +527,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				isStart = true;
 				continue;
 			}
-			else if (isStart == false && isCourseMatch == true && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			else if (isStart == false && isCourseMatch == true && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
