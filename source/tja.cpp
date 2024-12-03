@@ -94,14 +94,13 @@ void load_tja_head(int course,LIST_T Song) {
 			++cnt;
 			temp = (char *)malloc((strlen(buf) + 1));
 
-
-			if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) {
-				break;
-			}
-			else if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
+			if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
 				break;
 			}
 			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) {
+				break;
+			}
+			else if (isCourseMatch == true && strstr(buf, "#START") == buf) {
 				break;
 			}
 
@@ -518,17 +517,17 @@ void load_tja_notes(int course, LIST_T Song) {
 				continue;
 			}
 
-			if (isStart == false && isCourseMatch == true && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
-
-				isStart = true;
-				continue;
-			}
-			else if (isStart == false && isCourseMatch == true && Option.player == 1 && strstr(tja_notes[tja_cnt], "#START P1") == tja_notes[tja_cnt]) {
+			if (isStart == false && isCourseMatch == true && Option.player == 1 && strstr(tja_notes[tja_cnt], "#START P1") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
 			}
 			else if (isStart == false && isCourseMatch == true && Option.player == 2 && strstr(tja_notes[tja_cnt], "#START P2") == tja_notes[tja_cnt]) {
+
+				isStart = true;
+				continue;
+			}
+			else if (isStart == false && isCourseMatch == true && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
@@ -701,11 +700,11 @@ void load_tja_notes(int course, LIST_T Song) {
 
 							Measure[Measure[MeasureCount].firstmeasure + i].judge_time =
 								Measure[Measure[MeasureCount].firstmeasure + i - 1].judge_time +
-								(60.0 / Measure[Measure[MeasureCount].firstmeasure + i - 1].bpm * 4 * Measure[Measure[MeasureCount].firstmeasure + i - 1].measure)
+								(240.0 / Measure[Measure[MeasureCount].firstmeasure + i - 1].bpm * Measure[Measure[MeasureCount].firstmeasure + i - 1].measure)
 								* Measure[Measure[MeasureCount].firstmeasure + i - 1].notes_count / Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 							
-							Measure[Measure[MeasureCount].firstmeasure + i].pop_time    = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (60.0 / Measure[Measure[MeasureCount].firstmeasure + i].bpm * 4)*(NOTES_JUDGE_RANGE / (NOTES_AREA));
-							Measure[Measure[MeasureCount].firstmeasure + i].create_time = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (60.0 / Measure[Measure[MeasureCount].firstmeasure + i].bpm * 4)*(1.0*NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(Measure[Measure[MeasureCount].firstmeasure + i].scroll)));
+							Measure[Measure[MeasureCount].firstmeasure + i].pop_time    = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (240.0 / Measure[Measure[MeasureCount].firstmeasure + i].bpm)*(NOTES_JUDGE_RANGE / (NOTES_AREA));
+							Measure[Measure[MeasureCount].firstmeasure + i].create_time = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (240.0 / Measure[Measure[MeasureCount].firstmeasure + i].bpm)*(1.0*NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(Measure[Measure[MeasureCount].firstmeasure + i].scroll)));
 							percent = (double)Measure[Measure[MeasureCount].firstmeasure + i].notes_count / (double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 
 							Measure[Measure[MeasureCount].firstmeasure + i].isDispBarLine = false;	//最初の小節は小節線をオフにしない
