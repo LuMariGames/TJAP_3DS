@@ -536,6 +536,6 @@ int exist_file(const char* path) {
 }
 int time_count(double TIME) {
 
-	if ((int)floor(TIME / NowBPM) % (4 / (isGOGO * 2)) == 1) return 1 + (isGOGO * 2);
+	if ((int)floor(TIME / NowBPM) % 4 == 1) return 1 + (isGOGO * 2);
 	else return 0 + (isGOGO * 2);
 }
