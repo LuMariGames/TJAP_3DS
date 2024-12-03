@@ -264,6 +264,7 @@ int main() {
 					play_main_music(&isPlayMain, SelectedSong);
 				}
 				CurrentTimeMain = get_current_time(TIME_MAINGAME);
+			}
 			if (Option.dispFps == true) draw_fps();
 
 			//譜面が先
