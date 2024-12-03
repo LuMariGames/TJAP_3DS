@@ -6,7 +6,7 @@
 #include "select.h"
 #include "option.h"
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], *SONGNAME;
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], SONGNAME[256];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
