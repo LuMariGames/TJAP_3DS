@@ -797,7 +797,7 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 9;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
@@ -822,7 +822,7 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 9;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
