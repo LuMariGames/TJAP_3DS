@@ -256,7 +256,6 @@ int main() {
 				FirstMeasureTime = get_FirstMeasureTime();
 				play_main_music(&isPlayMain, SelectedSong);
 			}
-			draw_debug(0, 40, SONGNAME);
 			if (cnt >= 0) {
 				if (ndspChnIsPlaying(CHANNEL) == false && course == COURSE_DAN && SelectedSong.wave != SONGNAME) {
 					strncpy(SelectedSong.wave, SONGNAME, sizeof(SelectedSong.wave) - 1);
