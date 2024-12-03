@@ -40,17 +40,17 @@ GRAPHICS	:=	gfx
 ROMFS		:=	romfs
 GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
-APP_VER					:= 16 #1024.16.1?
-APP_TITLE				:= TJAPlayer for 3DS
+APP_VER				:= 16 #1024.16.1?
+APP_TITLE			:= TJAPlayer for 3DS
 APP_DESCRIPTION			:= TJAPlayer for 3DS - Music game of the TJA file.
-APP_AUTHOR				:= Togetoge
+APP_AUTHOR			:= Togetoge
 PRODUCT_CODE			:= CTR-HB-TJAP
-UNIQUE_ID				:= 0xB7655
+UNIQUE_ID			:= 0xB7655
 
 BANNER_AUDIO			:= resource/banner.wav
 BANNER_IMAGE			:= resource/banner.cgfx
 ICON        			:= resource/icon.png
-RSF_PATH				:= resource/app.rsf
+RSF_PATH			:= resource/app.rsf
 
 #---------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------
@@ -207,8 +207,8 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) -j10 -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
 	@echo Building cia...
-	$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
-	$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(APP_ICON) -o $(BUILD)/icon.icn
+	bannertool makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
+	bannertool makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p "$(APP_AUTHOR)" -i $(APP_ICON) -o $(BUILD)/icon.icn
 	$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER) -icon $(BUILD)/icon.bin -banner $(BUILD)banner.bin
 
 #---------------------------------------------------------------------------------
