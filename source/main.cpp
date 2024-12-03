@@ -18,7 +18,7 @@
 extern int course, courselife, TotalBadCount;
 extern float NowBPM;
 extern bool isGOGO;
-extern char *SONGNAME;
+extern char SONGNAME[256];
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
