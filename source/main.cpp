@@ -257,12 +257,13 @@ int main() {
 				play_main_music(&isPlayMain, SelectedSong);
 			}
 			draw_debug(0, 40, SONGNAME);
-			if (ndspChnIsPlaying(CHANNEL) == false && course == COURSE_DAN && SelectedSong.wave != SONGNAME) {
-				strncpy(SelectedSong.wave, SONGNAME, sizeof(SelectedSong.wave) - 1);
-				SelectedSong.wave[sizeof(SelectedSong.wave) - 1] = '\0';
-				play_main_music(&isPlayMain, SelectedSong);
-			}
-			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
+			if (cnt >= 0) {
+				if (ndspChnIsPlaying(CHANNEL) == false && course == COURSE_DAN && SelectedSong.wave != SONGNAME) {
+					strncpy(SelectedSong.wave, SONGNAME, sizeof(SelectedSong.wave) - 1);
+					SelectedSong.wave[sizeof(SelectedSong.wave) - 1] = '\0';
+					play_main_music(&isPlayMain, SelectedSong);
+				}
+				CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if (Option.dispFps == true) draw_fps();
 
 			//譜面が先
