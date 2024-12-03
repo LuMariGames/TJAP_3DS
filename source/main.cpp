@@ -18,12 +18,13 @@
 extern int course, courselife, TotalBadCount;
 extern float NowBPM;
 extern bool isGOGO;
+extern char *SONGNAME;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 int dn_x, dn_y, dg_x, dg_y;
-bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false, debugmode = false;
+bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
 char buffer[BUFFER_SIZE];
 
 void load_sprites();
@@ -249,14 +250,17 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 			draw_title();
 			draw_emblem(sprites);
-			if (course == COURSE_DAN && debugmode == false) draw_condition();
+			if (course == COURSE_DAN) draw_condition();
 
 			if (cnt == 0) {
-
 				FirstMeasureTime = get_FirstMeasureTime();
 				play_main_music(&isPlayMain, SelectedSong);
 			}
-			
+			draw_debug(0, 40, SONGNAME);
+			if (ndspChnIsPlaying(CHANNEL) == false && course == COURSE_DAN && SelectedSong.wave != SONGNAME) {
+				SelectedSong.wave = SONGNAME;
+				play_main_music(&isPlayMain, SelectedSong);
+			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if (Option.dispFps == true) draw_fps();
 
