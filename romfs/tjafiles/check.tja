@@ -1,11 +1,9 @@
-TITLE:SDカードのtjafilesフォルダに譜面データを入れて下さい。
+TITLE:tjafilesフォルダに譜面と音源を入れて下さい。
 BPM:120
-WAVE:Donut_End.ogg
 OFFSET:0
 
 COURSE:9
 LEVEL:1
-BALLOON:
 
 #START
 0000,
