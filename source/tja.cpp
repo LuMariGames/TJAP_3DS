@@ -6,7 +6,7 @@
 #include "select.h"
 #include "option.h"
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], *SONGNAME;
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
@@ -563,9 +563,6 @@ void load_tja_notes(int course, LIST_T Song) {
 					case COMMAND_BPMCHANGE:
 						NextBpm = Command.val[0];
 						break;
-					case COMMAND_NEXTSONG:
-						SONGNAME = Command.value_s;
-						break;
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
 						break;
@@ -837,10 +834,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "BPMCHANGE") == 0) {
 			Command->knd = COMMAND_BPMCHANGE;
 			Command->val[0] = strtod(value, NULL);
-		}
-		else if (strcmp(command, "NEXTSONG") == 0) {
-			Command->knd = COMMAND_NEXTSONG;
-			Command->value_s = value;
 		}
 		else if (strcmp(command, "GOGOSTART") == 0) Command->knd = COMMAND_GOGOSTART;
 		else if (strcmp(command, "GOGOEND") == 0) Command->knd = COMMAND_GOGOEND;
