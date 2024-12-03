@@ -175,6 +175,7 @@ endif
 # MAKEROM = $(TOPDIR)/resource/makerom.exe
 # BANNERTOOL = $(TOPDIR)/resource/bannertool.exe
 
+sudo apt install bannertool-linux
 MAKEROM = makerom-linux
 BANNERTOOL = bannertool-linux
 
