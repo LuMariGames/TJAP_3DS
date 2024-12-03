@@ -18,7 +18,6 @@
 extern int course, courselife, TotalBadCount;
 extern float NowBPM;
 extern bool isGOGO;
-extern char *SONGNAME;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
@@ -256,14 +255,7 @@ int main() {
 				FirstMeasureTime = get_FirstMeasureTime();
 				play_main_music(&isPlayMain, SelectedSong);
 			}
-			if (cnt >= 0) {
-				if (ndspChnIsPlaying(CHANNEL) == false && course == COURSE_DAN && SelectedSong.wave != SONGNAME) {
-					strncpy(SelectedSong.wave, SONGNAME, sizeof(SelectedSong.wave) - 1);
-					SelectedSong.wave[sizeof(SelectedSong.wave) - 1] = '\0';
-					play_main_music(&isPlayMain, SelectedSong);
-				}
-				CurrentTimeMain = get_current_time(TIME_MAINGAME);
-			}
+			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if (Option.dispFps == true) draw_fps();
 
 			//譜面が先
