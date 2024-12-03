@@ -6,7 +6,7 @@
 #include "select.h"
 #include "option.h"
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], *SONGNAME;
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
@@ -485,7 +485,6 @@ void load_tja_notes(int course, LIST_T Song) {
 		tja_cnt = 0;
 		int MeasureCount = 0,CurrentCourse = -1;
 		double PreJudge = 0, FirstMeasureTime = 0;
-		char *SONGNAME;
 
 		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
 		PreJudge = FirstMeasureTime;
