@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "header.h"
@@ -334,10 +334,9 @@ int main() {
 			}
 			draw_score(sprites);
 
-			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
-			//debug_touch(tp.px,tp.py);
 
 			if (TotalBadCount > 0) {
 				switch (Option.special) {
@@ -453,16 +452,6 @@ void load_sprites() {
 bool get_isPause() {
 
 	return isPause;
-}
-
-void debug_touch(int x,int y) {
-
-	snprintf(buffer, sizeof(buffer), "%d:%d:%.1f\n%d:%d:%d", 
-		PreTouch_x-touch_x,
-		PreTouch_y-touch_y,
-		pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5), 
-		touch_x,touch_y,touch_cnt);
-	draw_debug(0, 0, buffer);
 }
 
 bool get_isMusicStart() {

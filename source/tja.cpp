@@ -52,6 +52,8 @@ void load_tja_head(int course,LIST_T Song) {
 	FILE *fp;
 	char buf[128];
 	bool isCourseMatch = true;
+	OPTION_T Option;
+	get_option(&Option);
 
 	Current_Header.title = (char*)"No title";
 	Current_Header.subtitle = (char*)"";
@@ -93,7 +95,13 @@ void load_tja_head(int course,LIST_T Song) {
 			temp = (char *)malloc((strlen(buf) + 1));
 
 
-			if (isCourseMatch == true && strstr(buf, "#START") == buf) {
+			if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) {
+				break;
+			}
+			else if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
+				break;
+			}
+			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) {
 				break;
 			}
 
@@ -510,7 +518,17 @@ void load_tja_notes(int course, LIST_T Song) {
 				continue;
 			}
 
-			if (isStart == false && isCourseMatch == true && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			if (isStart == false && isCourseMatch == true && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+
+				isStart = true;
+				continue;
+			}
+			else if (isStart == false && isCourseMatch == true && Option.player == 1 && strstr(tja_notes[tja_cnt], "#START P1") == tja_notes[tja_cnt]) {
+
+				isStart = true;
+				continue;
+			}
+			else if (isStart == false && isCourseMatch == true && Option.player == 2 && strstr(tja_notes[tja_cnt], "#START P2") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
