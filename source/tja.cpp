@@ -485,6 +485,7 @@ void load_tja_notes(int course, LIST_T Song) {
 		tja_cnt = 0;
 		int MeasureCount = 0,CurrentCourse = -1;
 		double PreJudge = 0, FirstMeasureTime = 0;
+		char *SONGNAME;
 
 		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
 		PreJudge = FirstMeasureTime;
@@ -562,6 +563,9 @@ void load_tja_notes(int course, LIST_T Song) {
 					switch (Command.knd) {
 					case COMMAND_BPMCHANGE:
 						NextBpm = Command.val[0];
+						break;
+					case COMMAND_NEXTSONG:
+						SONGNAME = Command.val[0];
 						break;
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
@@ -833,6 +837,10 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "END") == 0) Command->knd = COMMAND_END;
 		else if (strcmp(command, "BPMCHANGE") == 0) {
 			Command->knd = COMMAND_BPMCHANGE;
+			Command->val[0] = strtod(value, NULL);
+		}
+		else if (strcmp(command, "NEXTSONG") == 0) {
+			Command->knd = COMMAND_NEXTSONG;
 			Command->val[0] = strtod(value, NULL);
 		}
 		else if (strcmp(command, "GOGOSTART") == 0) Command->knd = COMMAND_GOGOSTART;
