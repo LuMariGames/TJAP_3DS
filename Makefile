@@ -203,7 +203,6 @@ endif
 #---------------------------------------------------------------------------------
 
 all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
-	$ sudo apt install bannertool-linux
 	@echo Building 3dsx...
 	@$(MAKE) -j10 -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
