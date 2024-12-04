@@ -210,7 +210,7 @@ enum KEY_KND {
 };
 
 enum Text_knd {
-	TEXT_ON,
+	TEXT_ON = 0,
 	TEXT_OFF,
 	TEXT_EASY,
 	TEXT_NORMAL,
