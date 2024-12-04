@@ -269,18 +269,10 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SPECIAL], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		if (Option.special == 1) {
-			draw_option_text(x, y, Text[Option.lang][TEXT_KANPEKI], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = 2;
-		}
-		else if (Option.special == 2) {
-			draw_option_text(x, y, Text[Option.lang][TEXT_TOKUN], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = 0;
-		}
-		else {
-			draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = 1;
-		}
+		if (Option.special == 1) draw_option_text(x, y, Text[Option.lang][TEXT_KANPEKI], true, &width, &height);
+		else if (Option.special == 2) draw_option_text(x, y, Text[Option.lang][TEXT_TOKUN], true, &width, &height);
+		else draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = ++Option.special % 3;
 		XCnt = 0, ++YCnt;
 
 		//fps
@@ -523,18 +515,10 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_PLAYER], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		if (Option.player == 1) {
-			draw_option_text(x, y, Text[Option.lang][TEXT_1P], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = 2;
-		}
-		else if (Option.player == 2) {
-			draw_option_text(x, y, Text[Option.lang][TEXT_2P], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = 0;
-		}
-		else {
-			draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
-			if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = 1;
-		}
+		if (Option.player == 1) draw_option_text(x, y, Text[Option.lang][TEXT_1P], true, &width, &height);
+		else if (Option.player == 2) draw_option_text(x, y, Text[Option.lang][TEXT_2P], true, &width, &height);
+		else draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = ++Option.player % 3;
 		XCnt = 0, ++YCnt;
 		break;
 
