@@ -436,10 +436,10 @@ void load_sprites() {
 
 	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
 
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH / 2, TOP_HEIGHT / 2);
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH / 2, 43);
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH / 2, 200);
-	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH / 2, BOTTOM_HEIGHT / 2);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH * 0.5, 200);
+	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH * 0.5, BOTTOM_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], dn_x, dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
