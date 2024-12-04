@@ -124,8 +124,7 @@ void calc_option_page(u16 px, u16 py, unsigned int key) {
 void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NUMER]) {
 	
 	float width,height,x,y;
-	int XSense=65, YSense=30,XCnt = 0,YCnt = 1,gap = 25;
-	int x2, y2, key_interval = 30;
+	int XSense=65, YSense=30,XCnt = 0,YCnt = 1,gap = 25, opv = 0, x2, y2, key_interval = 30;
 
 	switch (option_page) {
 
@@ -272,7 +271,10 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		if (Option.special == 1) draw_option_text(x, y, Text[Option.lang][TEXT_KANPEKI], true, &width, &height);
 		else if (Option.special == 2) draw_option_text(x, y, Text[Option.lang][TEXT_TOKUN], true, &width, &height);
 		else draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.special = ++Option.special % 3;
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			opv = ++Option.special % 3;
+			Option.special = opv;
+		}
 		XCnt = 0, ++YCnt;
 
 		//fps
@@ -518,7 +520,10 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		if (Option.player == 1) draw_option_text(x, y, Text[Option.lang][TEXT_1P], true, &width, &height);
 		else if (Option.player == 2) draw_option_text(x, y, Text[Option.lang][TEXT_2P], true, &width, &height);
 		else draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.player = ++Option.player % 3;
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			opv = ++Option.player % 3;
+			Option.player = opv;
+		}
 		XCnt = 0, ++YCnt;
 		break;
 
