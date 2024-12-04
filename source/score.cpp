@@ -402,7 +402,7 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 			break;
 
 		case COMMAND_E:
-			C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(43.0 / 255.0, 82.0 / 255.0, 103.0 / 255.0, 1));
+			C2D_DrawRectSolid(62, 86, 1, 338, 46, C2D_Color32f(43.0 / 255.0, 82.0 / 255.0, 103.0 / 255.0, 1));
 			C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 350, 110);
 			C2D_DrawSprite(&sprites[SPRITE_CHART_EXPERT]);
 			break;
