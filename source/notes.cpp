@@ -1198,7 +1198,7 @@ void draw_condition() {
 	char *Cdn1[3] {(char*)exam1[0], (char*)exam2[0], (char*)exam3[0]}, *Cdn2[3] {(char*)exam1[1], (char*)exam2[1], (char*)exam3[1]}, *Cdn3[3]{(char*)exam1[3], (char*)exam2[3], (char*)exam3[3]}, *text = (char*)"%";
 	float width = 0, height = 0, tx = 0;
 
-	for (int j = 0; j < 3; j++) {
+	for (int j = 0; j < 3; ++j) {
 		if (strcmp(Cdn1[j], "jb") == 0) draw_condition_text(50, 160+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
 		else if (strcmp(Cdn1[j], "jg") == 0) draw_condition_text(50, 160+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
 		else if (strcmp(Cdn1[j], "jp") == 0) draw_condition_text(50, 160+20*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
