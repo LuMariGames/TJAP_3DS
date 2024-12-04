@@ -447,18 +447,13 @@ void load_sprites() {
 	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 }
 
-inline bool get_isPause() {
-
+bool get_isPause() {
 	return isPause;
 }
-
-inline bool get_isMusicStart() {
-
+bool get_isMusicStart() {
 	return isMusicStart;
 }
-
-inline char *get_buffer() {
-
+char *get_buffer() {
 	return buffer;
 }
 
