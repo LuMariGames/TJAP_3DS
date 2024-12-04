@@ -848,22 +848,22 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					C2D_SpriteSetScale(&sprites[SPRITE_BALLOON], sign(Notes[i].scroll), 1);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 1 / 5) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_1], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_1]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 2 / 5) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_2], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_2]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 3 / 5) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_3], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_3]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 4 / 5) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_4], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_4]);
