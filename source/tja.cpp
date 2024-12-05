@@ -10,7 +10,7 @@ char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
-
+float mix[12];
 
 TJA_HEADER_T Current_Header;
 MEASURE_T Measure[MEASURE_MAX];
@@ -54,6 +54,7 @@ void load_tja_head(int course,LIST_T Song) {
 	bool isCourseMatch = true;
 	OPTION_T Option;
 	get_option(&Option);
+	memset(mix, 0, sizeof(mix));
 
 	Current_Header.title = (char*)"No title";
 	Current_Header.subtitle = (char*)"";
@@ -94,6 +95,8 @@ void load_tja_head(int course,LIST_T Song) {
 			++cnt;
 			temp = (char *)malloc((strlen(buf) + 1));
 
+			mix[0] = Current_Header.songvol / 100;
+			mix[1] = Current_Header.songvol / 100;
 			if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
 				break;
 			}
@@ -909,12 +912,4 @@ int get_MeasureId_From_OriginalId(int id) {
 
 bool get_isBranch() {
 	return isBranch;
-}
-
-float MusicVolue() {
-	float mix[12];
-	memset(mix, 0, sizeof(mix));
-	mix[0] = Current_Header.songvol;
-	mix[1] = Current_Header.songvol;
-	return mix;
 }
