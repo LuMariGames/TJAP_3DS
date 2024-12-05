@@ -9,6 +9,7 @@
 	free((void*) ptr); ptr = NULL
 
 static volatile bool stop = true;
+extern float mix[12];
 
 bool togglePlayback(void){
 
@@ -142,7 +143,7 @@ void playFile(void* infoIn){
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);
-	ndspChnSetMix(CHANNEL, MusicVolue());
+	ndspChnSetMix(CHANNEL, mix);
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
