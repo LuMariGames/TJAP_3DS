@@ -332,9 +332,7 @@ int main() {
 			}
 			draw_score(sprites);
 			if (ndspChnIsPlaying(CHANNEL) == true) {
-				std::string floatString = std::to_string(ndspChnGetRate(CHANNEL));
-				const char* myString = floatString.c_str();
-				draw_debug(0, 0, myString);
+				draw_debug(0, 0, (char*)ndspChnGetRate(CHANNEL));
 			}
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
