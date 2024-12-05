@@ -331,10 +331,6 @@ int main() {
 				if (isPause == false) ++notes_cnt;
 			}
 			draw_score(sprites);
-			if (ndspChnIsPlaying(CHANNEL) == true) {
-				snprintf(get_buffer(), BUFFER_SIZE, "%f", ndspChnGetRate(CHANNEL));
-				draw_debug(0, 0, get_buffer());
-			}
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
