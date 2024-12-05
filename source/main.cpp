@@ -332,7 +332,8 @@ int main() {
 			}
 			draw_score(sprites);
 			if (ndspChnIsPlaying(CHANNEL) == true) {
-				draw_debug(0, 0, (char*)ndspChnGetRate(CHANNEL));
+				snprintf(get_buffer(), BUFFER_SIZE, "%f", ndspChnGetRate(CHANNEL));
+				draw_debug(0, 0, get_buffer());
 			}
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
