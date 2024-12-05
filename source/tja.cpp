@@ -910,3 +910,11 @@ int get_MeasureId_From_OriginalId(int id) {
 bool get_isBranch() {
 	return isBranch;
 }
+
+float MusicVolue() {
+	float mix[12];
+	memset(mix, 0, sizeof(mix));
+	mix[0] = Current_Header.songvol;
+	mix[1] = Current_Header.songvol;
+	return mix;
+}
