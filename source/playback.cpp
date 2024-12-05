@@ -142,6 +142,7 @@ void playFile(void* infoIn){
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);
+	ndspChnSetMix(CHANNEL, MusicVolue());
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
