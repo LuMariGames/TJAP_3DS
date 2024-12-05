@@ -331,7 +331,11 @@ int main() {
 				if (isPause == false) ++notes_cnt;
 			}
 			draw_score(sprites);
-			if (ndspChnIsPlaying(CHANNEL) == true) draw_debug(0, 0, (const char*)ndspChnGetRate(CHANNEL));
+			if (ndspChnIsPlaying(CHANNEL) == true) {
+				std::string floatString = std::to_string(myFloat);
+				const char* myString = floatString.c_str();
+				draw_debug(0, 0, ndspChnGetRate(myString));
+			}
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
