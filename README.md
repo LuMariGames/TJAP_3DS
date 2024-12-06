@@ -18,7 +18,7 @@ AC15から常連モード、条件を達成しないとノルマ失敗！？「�
 見た目を自由に変更！「カスタムスキン」  
 
 ## それ以外の内容  
-ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。
+ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。  
 
 # TJAP_3DS (English)
 TJAP_3DS is a fork of [TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS) produced by Mr. [togetg](https://github.com/togetg)
@@ -41,3 +41,18 @@ Feel free to change the appearance! "Custom skin"
 
 ## Other contents
 Except for the information described here, it is almost the same as the original work, so please check the original [Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README_en.md) for details.
+
+# 対応表 / Complete the table
+> `✅` = full supported, `⚠️` = Incorrect behavior, `❌` = Not supported or Ignored,
+
+|命令文 / commands|Supported?|Comment|
+|---|---|---|
+|`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`, `MEASURE`|✅||
+|`SECTION`, `BRANCHSTART`, `BRANCHEND`, |⚠️|譜面分岐開始時の挙動がまだ不安定|
+|`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`|✅||
+|`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌|技術的に難しい|
+
+|metadata|Supported?|Comment|
+|---|---|---|
+|COURSE:0~5|✅||
+|COURSE:6|⚠️|`NEXTSONG`が非対応の為TJAP3等で作られた段位は出来ない。|
