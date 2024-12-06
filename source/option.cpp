@@ -530,7 +530,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_MUSICSPEED], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.judge_range_bad);
+		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.musicspeed);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.musicspeed = input_number_keyboard(1, false, false);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
