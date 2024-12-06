@@ -102,7 +102,7 @@ void playFile(void* infoIn){
 	int				ret = -1;
 	const char*		file = info->file;
 	bool			isNdspInit = false;
-	int				speed = mspeed();
+	long unsigned int	speed = mspeed();
 
 	/* Reset previous stop command */
 	stop = false;
@@ -141,7 +141,7 @@ void playFile(void* infoIn){
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_POLYPHASE);
-	ndspChnSetRate(CHANNEL, (*decoder.rate) * speed);
+	ndspChnSetRate(CHANNEL, (*decoder.rate));
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);
