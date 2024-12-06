@@ -374,7 +374,7 @@ void update_cursor(int knd) {
 		else if (course_cursor > 0) --course_cursor;
 		play_sound(SOUND_KATSU);
 	}
-	else if (knd == (int)KEY_DOWN) {
+	else if (knd == KEY_DOWN) {
 		if (isSelectCourse == false) --cursor;
 		else if (course_cursor < (course_count - 1)) ++course_cursor;
 		play_sound(SOUND_KATSU);
