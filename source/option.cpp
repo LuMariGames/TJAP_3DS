@@ -513,7 +513,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.exse = true;
 		XCnt = 0, ++YCnt;
 
-		//特殊
+		//双打用
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_PLAYER], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
@@ -524,6 +524,18 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			opv = ++Option.player % 3;
 			Option.player = opv;
 		}
+		XCnt = 0, ++YCnt;
+
+		//音楽速度
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_MUSICSPEED], true, &width, &height);
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.judge_range_bad);
+		draw_option_text(x, y, get_buffer(), true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.musicspeed = input_number_keyboard(1, false, false);
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.musicspeed = 1;
 		XCnt = 0, ++YCnt;
 		break;
 
@@ -537,6 +549,10 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 
 int get_lang() {
 	return Option.lang;
+}
+
+int mspeed() {
+	return Option.musicspeed;
 }
 
 void toggle_auto() {

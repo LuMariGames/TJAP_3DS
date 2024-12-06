@@ -61,6 +61,7 @@ const char Text[3][60][128] = {
 		"ﾌﾟﾚｲﾔｰ(双打用)",
 		"1P",
 		"2P",
+		"音楽速度",
 	},
 	{
 		"ON",
@@ -122,6 +123,7 @@ const char Text[3][60][128] = {
 		"Player",
 		"1P",
 		"2P",
+		"Music Speed",
 	},
 	{
 		"Sí",
@@ -183,12 +185,13 @@ const char Text[3][60][128] = {
 		"Jugador",
 		"1P",
 		"2P",
+		"Velocidad música",
 	}
 };
 
 typedef struct {
 
-	int lang,buffer_size,Voice,special,player;
+	int lang,buffer_size,Voice,special,player,musicspeed;
 	bool isAuto, isStelth,isSwap,dispFps,fixroll,exse;
 	float speed, random,offset,blacktext,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
@@ -269,9 +272,11 @@ enum Text_knd {
 	TEXT_PLAYER,
 	TEXT_1P,
 	TEXT_2P,
+	TEXT_MUSICSPEED,
 };
 
 int get_lang();
+int mspeed();
 void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]);
 void toggle_auto();
 void get_option(OPTION_T *TMP);
