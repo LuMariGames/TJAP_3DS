@@ -1,4 +1,4 @@
-﻿#include <cstdio>
+#include <cstdio>
 
 #include "header.h"
 #include "vorbis.h"
@@ -101,6 +101,7 @@ void playFile(void* infoIn){
 	int				ret = -1;
 	const char*		file = info->file;
 	bool			isNdspInit = false;
+	float			speed = mspeed();
 
 	/* Reset previous stop command */
 	stop = false;
@@ -132,14 +133,14 @@ void playFile(void* infoIn){
 		goto err;
 	}
 	testtest = 99;
-	buffer1 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer2 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer1 = (int16_t*)linearAlloc((decoder.vorbis_buffer_size * speed) * sizeof(int16_t));
+	buffer2 = (int16_t*)linearAlloc((decoder.vorbis_buffer_size * speed) * sizeof(int16_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_POLYPHASE);
-	ndspChnSetRate(CHANNEL, (*decoder.rate)());
+	ndspChnSetRate(CHANNEL, (*decoder.rate) * speed);
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);
