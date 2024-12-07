@@ -293,11 +293,11 @@ void sd_load_combo() {
 			}
 			//printf("%ld %d\n", ret, currentSection);
 		}
-		memset(&waveBuf[j], 0, sizeof(ndspWaveBuf));
-		waveBuf[j].data_vaddr = sound[j].data;
-		waveBuf[j].nsamples = sound[j].nsamples;
-		waveBuf[j].looping = sound[j].loop;
-		waveBuf[j].status = NDSP_WBUF_FREE;
+		memset(&waveBuf[id], 0, sizeof(ndspWaveBuf));
+		waveBuf[id].data_vaddr = sound[j].data;
+		waveBuf[id].nsamples = sound[j].nsamples;
+		waveBuf[id].looping = sound[j].loop;
+		waveBuf[id].status = NDSP_WBUF_FREE;
 		DSP_FlushDataCache(sound[j].data, sound[j].size);
 		//linearFree(&sound[j].ovf);
 		ov_clear(&sound[j].ovf);
