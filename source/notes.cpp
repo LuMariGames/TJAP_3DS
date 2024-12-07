@@ -460,7 +460,6 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	OPTION_T Option;
 	get_option(&Option);
 
-	int BeforeCombo = 0;
 	int CurrentJudgeNotes[2] = { -1,-1 };		//現在判定すべきノーツ ドン,カツ
 	double CurrentJudgeNotesLag[2] = { -1,-1 };	//判定すべきノーツの誤差(s)
 
@@ -676,12 +675,6 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 		play_sound(SOUND_BALLOONBREAK);
 		update_balloon_count(0);
 	}
-
-	if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50)) {
-		sd_load_combo((int)(combo / 100));
-		play_sound(SOUND_COMBO);
-	}
-	BeforeCombo = combo;
 }
 
 void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]) {
