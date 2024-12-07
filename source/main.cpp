@@ -250,10 +250,10 @@ int main() {
 			draw_title();
 			draw_emblem(sprites);
 			if (course == COURSE_DAN) draw_condition();
-			if (ndspChnIsPlaying(CHANNEL) == true) {
+/*			if (ndspChnIsPlaying(CHANNEL) == true) {
 				snprintf(get_buffer(), BUFFER_SIZE, "%.8f", ndspChnGetRate(CHANNEL));
 				draw_debug(0, 0, get_buffer());
-			}
+			}*/
 
 			if (cnt == 0) {
 				FirstMeasureTime = get_FirstMeasureTime();
