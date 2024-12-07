@@ -553,7 +553,7 @@ void init_option() {
 	Option.dispFps = false;
 	Option.random = 0;
 	Option.speed = 1.0;
-	Option.musicspeed = 1.0
+	Option.musicspeed = 1.0;
 	Option.isSwap = false;
 	Option.lang = LANG_JP;
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
