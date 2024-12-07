@@ -470,7 +470,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,
+	double bpm = Current_Header.bpm * mspeed(),
 		NextBpm = bpm,
 		measure = 1,
 		scroll = 1,
@@ -564,7 +564,7 @@ void load_tja_notes(int course, LIST_T Song) {
 					Measure[MeasureCount].command = Command.knd;
 					switch (Command.knd) {
 					case COMMAND_BPMCHANGE:
-						NextBpm = Command.val[0];
+						NextBpm = Command.val[0] * mspeed();
 						break;
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
