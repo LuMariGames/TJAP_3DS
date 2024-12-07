@@ -182,7 +182,7 @@ void sd_load_sound() {
 
 void sd_load_combo(int i) {
 
-	int j = SOUND_NUMBER+1;
+	int j = SOUND_NUMBER;
 	ndspInit();
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspSetOutputCount(1);
