@@ -154,6 +154,7 @@ int main() {
 			get_option(&Option);
 			if (Option.exse == false) load_sound();
 			else if (Option.exse == true) sd_load_sound();
+			sd_load_combo();
 			break;
 
 		case SCENE_WARNING:		//警告画面
@@ -333,10 +334,7 @@ int main() {
 			}
 			draw_score(sprites);
 
-			if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50) && combo <= 5000) {
-				sd_load_combo((int)(combo / 100));
-				play_sound(SOUND_COMBO);
-			}
+			if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50) && combo <= 5000) play_combo((int)(combo / 100));
 			BeforeCombo = combo;
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
