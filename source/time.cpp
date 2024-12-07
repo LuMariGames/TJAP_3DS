@@ -48,7 +48,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id];
+	return Time[id] * mspeed();
 }
 
 void restart_time(int id) {
