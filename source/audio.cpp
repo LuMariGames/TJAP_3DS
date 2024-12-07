@@ -24,7 +24,7 @@ typedef struct {
 	OggVorbis_File ovf;
 } Sound;
 Sound sound[SOUND_NUMBER + 1];
-ndspWaveBuf waveBuf[SOUND_NUMBER + 1];
+ndspWaveBuf waveBuf[SOUND_NUMBER + 51];
 
 void load_sound() {
 
