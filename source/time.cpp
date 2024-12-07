@@ -3,6 +3,7 @@
 #include "vorbis.h"
 #include "tja.h"
 #include "time.h"
+#include "option.h"
 #include <sys/time.h>
 
 enum msec_status {
