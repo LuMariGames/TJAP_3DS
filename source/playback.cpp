@@ -1,9 +1,10 @@
-﻿#include <cstdio>
+#include <cstdio>
 
 #include "header.h"
 #include "vorbis.h"
 #include "main.h"
 #include "select.h"
+#include "option.h"
 
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
@@ -139,7 +140,7 @@ void playFile(void* infoIn){
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_POLYPHASE);
-	ndspChnSetRate(CHANNEL, 44100);
+	ndspChnSetRate(CHANNEL, ((int)*decoder.rate) * (mspeed()));
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);

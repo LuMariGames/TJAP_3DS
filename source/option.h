@@ -13,10 +13,7 @@ const char Text[3][60][128] = {
 		"段位道場",
 		"オート",
 		"はやさ",
-		"x1",
-		"x2",
-		"x3",
-		"x4",
+		"曲のはやさ",
 		"ステルス",
 		"あべこべ",
 		"ランダム",
@@ -74,10 +71,7 @@ const char Text[3][60][128] = {
 		"Dan-i Dojo",
 		"Auto",
 		"Speed",
-		"x1",
-		"x2",
-		"x3",
-		"x4",
+		"Music Speed",
 		"Vanish",
 		"Inverse",
 		"Random",
@@ -91,7 +85,7 @@ const char Text[3][60][128] = {
 		"Reset",
 		"Display fps",
 		"RollSpeed",
-		"Speed(Fixed)",
+		"Fixed Speed",
 		"Button mapping",
 		"Score",
 		"MAX Combo",
@@ -135,10 +129,7 @@ const char Text[3][60][128] = {
 		"Dan-i Dojo",
 		"Auto",
 		"Velocidad",
-		"x1",
-		"x2",
-		"x3",
-		"x4",
+		"canciones Velocidad",
 		"Invisible",
 		"Inversa",
 		"Random",
@@ -152,7 +143,7 @@ const char Text[3][60][128] = {
 		"Reiniciar",
 		"Mostrar fps",
 		"Redoblevelocidad",
-		"Velocidad(Fijo)",
+		"Velocidad fija",
 		"Mapeo de botones",
 		"Puntuación",
 		"Combo máximo",
@@ -190,7 +181,7 @@ typedef struct {
 
 	int lang,buffer_size,Voice,special,player;
 	bool isAuto, isStelth,isSwap,dispFps,fixroll,exse;
-	float speed, random,offset,blacktext,
+	float speed, random,offset,blacktext,musicspeed,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
 	int KEY_A, KEY_B, KEY_DRIGHT, KEY_DLEFT, KEY_DUP, KEY_DDOWN, KEY_R, KEY_L, KEY_X, KEY_Y,
 		KEY_ZL, KEY_ZR, KEY_CSTICK_RIGHT, KEY_CSTICK_LEFT, KEY_CSTICK_UP, KEY_CSTICK_DOWN,
@@ -210,7 +201,7 @@ enum KEY_KND {
 };
 
 enum Text_knd {
-	TEXT_ON = 0,
+	TEXT_ON,
 	TEXT_OFF,
 	TEXT_EASY,
 	TEXT_NORMAL,
@@ -221,10 +212,7 @@ enum Text_knd {
 	TEXT_DAN,
 	TEXT_AUTO,
 	TEXT_SPEED,
-	TEXT_X1,
-	TEXT_X2,
-	TEXT_X3,
-	TEXT_X4,
+	TEXT_MUSICSPEED,
 	TEXT_STELTH,
 	TEXT_SWAP,
 	TEXT_RANDOM,
@@ -272,8 +260,5 @@ enum Text_knd {
 };
 
 int get_lang();
-void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]);
-void toggle_auto();
-void get_option(OPTION_T *TMP);
-void init_option();
-void load_option(),exit_option(),save_option();
+float mspeed();
+void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]),toggle_auto(),get_option(OPTION_T *TMP),init_option(),load_option(),exit_option(),save_option();

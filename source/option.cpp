@@ -147,17 +147,16 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SPEED], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_X1], Option.speed == 1.0, &width, &height);
+		snprintf(get_buffer(), BUFFER_SIZE, "%.2f", Option.speed);
+		draw_option_text(x, y, get_buffer(), true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			Option.speed = input_number_keyboard(5, true,false);
+			if (Option.speed > 10.0) Option.speed = 10.0;
+			else if (Option.speed < 0.5) Option.speed = 1.0;
+		}
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 1.0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_X2], Option.speed == 2.0, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 2.0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_X3], Option.speed == 3.0, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 3.0;
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_X4], Option.speed == 4.0, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 4.0;
 		XCnt = 0, ++YCnt;
 
 		//ステルス
@@ -232,20 +231,20 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		}
 		XCnt = 0, ++YCnt;
 		
-		//はやさ
+		//曲のはやさ
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_SPEED], true, &width, &height);
+		draw_option_text(x, y, Text[Option.lang][TEXT_MUSICSPEED], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%.2f", Option.speed);
+		snprintf(get_buffer(), BUFFER_SIZE, "%.2f", Option.musicspeed);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.speed = input_number_keyboard(5, true,false);
-			if (Option.speed > 10.0) Option.speed = 10.0;
-			if (Option.speed < 1.0) Option.speed = 1.0;
+			if (Option.musicspeed > 2.0) Option.musicspeed = 2.0;
+			if (Option.musicspeed < 0.1) Option.musicspeed = 0.1;
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.speed = 1.0;
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.musicspeed = 1.0;
 		XCnt = 0, ++YCnt;
 
 		//offset
@@ -513,7 +512,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.exse = true;
 		XCnt = 0, ++YCnt;
 
-		//双打用
+		//特殊
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_PLAYER], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
@@ -539,6 +538,10 @@ int get_lang() {
 	return Option.lang;
 }
 
+float mspeed() {
+	return Option.musicspeed;
+}
+
 void toggle_auto() {
 	Option.isAuto = !Option.isAuto;
 }
@@ -550,6 +553,7 @@ void init_option() {
 	Option.dispFps = false;
 	Option.random = 0;
 	Option.speed = 1.0;
+	Option.musicspeed = 1.0
 	Option.isSwap = false;
 	Option.lang = LANG_JP;
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
@@ -677,6 +681,7 @@ void get_option(OPTION_T *TMP) {
 	TMP->isStelth = Option.isStelth;
 	TMP->random = Option.random;
 	TMP->speed = Option.speed;
+	TMP->musicspeed = Option.musicspeed;
 	TMP->offset = Option.offset;
 	TMP->isSwap = Option.isSwap;
 	TMP->lang = Option.lang;
