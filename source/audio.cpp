@@ -336,7 +336,7 @@ int play_combo(int id) {
 	ndspChnSetInterp(sound[4].audiochannel, sound[4].interp);
 	ndspChnSetRate(sound[4].audiochannel, sound[4].rate);
 	ndspChnSetFormat(sound[4].audiochannel, NDSP_CHANNELS(sound[4].channels) | NDSP_ENCODING(sound[4].encoding));
-	ndspChnWaveBufAdd(sound[4].audiochannel, &waveBuf[id]);
+	ndspChnWaveBufAdd(sound[4].audiochannel, &waveBuf[id + 4]);
 
 	return 0;
 }
