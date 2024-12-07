@@ -539,7 +539,7 @@ int get_lang() {
 }
 
 float mspeed() {
-	return Option.musicspeed;
+	return Option.musicspeed * 0.01;
 }
 
 void toggle_auto() {
