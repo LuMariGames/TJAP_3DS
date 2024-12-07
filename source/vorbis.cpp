@@ -16,7 +16,7 @@ size_t		vorbis_buffer_size = DEFAULT_BUFFER_SIZE;// 8 * 4096;
 
 void setVorbis(struct decoder_fn* decoder){
 	decoder->init = &initVorbis;
-	decoder->rate = &rateVorbis * mspeed();
+	decoder->rate = &rateVorbis;
 	decoder->channels = &channelVorbis;
 	decoder->vorbis_buffer_size = vorbis_buffer_size;
 	decoder->decode = &decodeVorbis;
