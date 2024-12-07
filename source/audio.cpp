@@ -23,8 +23,8 @@ typedef struct {
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[SOUND_NUMBER];
-ndspWaveBuf waveBuf[SOUND_NUMBER];
+Sound sound[SOUND_NUMBER + 1];
+ndspWaveBuf waveBuf[SOUND_NUMBER + 1];
 
 void load_sound() {
 
