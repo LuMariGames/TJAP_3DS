@@ -7,6 +7,7 @@
 #include "main.h"
 #include "vorbis.h"
 #include "header.h"
+#include "option.h"
 
 static OggVorbis_File	vorbisFile;
 static vorbis_info		*vi;
