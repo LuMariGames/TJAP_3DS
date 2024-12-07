@@ -139,7 +139,7 @@ void playFile(void* infoIn){
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_POLYPHASE);
-	ndspChnSetRate(CHANNEL, (44100)());
+	ndspChnSetRate(CHANNEL, 44100);
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);
