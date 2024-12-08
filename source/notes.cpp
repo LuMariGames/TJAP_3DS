@@ -579,7 +579,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 		if (isDon == true && CurrentJudgeNotes[0] != -1) {	//ドン
 
-			if (CurrentJudgeNotesLag[0] <= Option.judge_range_perfect) {			//良
+			if (CurrentJudgeNotesLag[0] <= Option.judge_range_perfect * Option.musicspeed) {			//良
 				delete_notes(CurrentJudgeNotes[0]);
 				if (isBig == true) {
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
@@ -590,7 +590,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					update_score(PERFECT);
 				}
 			}
-			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_nice) {	//可
+			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_nice * Option.musicspeed) {	//可
 				make_judge(1, CurrentTimeNotes);
 				delete_notes(CurrentJudgeNotes[0]);
 				if (isBig == true) {
@@ -602,7 +602,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					update_score(NICE);
 				}
 			}
-			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_bad) {	//不可
+			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_bad * Option.musicspeed) {	//不可
 				make_judge(BAD, CurrentTimeNotes);
 				delete_notes(CurrentJudgeNotes[0]);
 				update_score(BAD);
@@ -611,7 +611,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 		if (isKatsu == true && CurrentJudgeNotes[1] != -1) {	//カツ
 
-			if (CurrentJudgeNotesLag[1] <= Option.judge_range_perfect) {			//良
+			if (CurrentJudgeNotesLag[1] <= Option.judge_range_perfect * Option.musicspeed) {			//良
 				delete_notes(CurrentJudgeNotes[1]);
 				if (isBig == true) {
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
@@ -622,7 +622,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					update_score(PERFECT);
 				}
 			}
-			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_nice) {	//可
+			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_nice * Option.musicspeed) {	//可
 				make_judge(1, CurrentTimeNotes);
 				delete_notes(CurrentJudgeNotes[1]);
 				if (isBig == true) {
@@ -634,7 +634,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					update_score(NICE);
 				}
 			}
-			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_bad) {	//不可
+			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_bad * Option.musicspeed) {	//不可
 				make_judge(BAD, CurrentTimeNotes);
 				delete_notes(CurrentJudgeNotes[1]);
 				update_score(BAD);
@@ -726,7 +726,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			case NOTES_KATSU:
 			case NOTES_BIGDON:
 			case NOTES_BIGKATSU:
-				if (CurrentTimeNotes - Notes[i].judge_time > Option.judge_range_bad && Notes[i].isThrough == false) {
+				if (CurrentTimeNotes - Notes[i].judge_time > (Option.judge_range_bad * Option.musicspeed) && Notes[i].isThrough == false) {
 					update_score(THROUGH);
 					Notes[i].isThrough = true;
 				}
