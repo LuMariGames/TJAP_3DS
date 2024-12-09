@@ -180,7 +180,7 @@ void sd_load_sound() {
 	}
 }
 
-void sd_load_combo() {
+/*void sd_load_combo() {
 
 	int j = SOUND_NUMBER;
 	ndspInit();
@@ -303,7 +303,7 @@ void sd_load_combo() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-}
+}*/
 
 int play_sound(int id) {
 
@@ -326,7 +326,7 @@ int play_sound(int id) {
 void exit_music() {
 
 	ndspChnWaveBufClear(sound[0].audiochannel);
-	for (int i = 0; i < SOUND_NUMBER+1; ++i) {
+	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		ndspChnWaveBufClear(sound[i].audiochannel);
 		linearFree(sound[i].data);
 	}
