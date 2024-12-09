@@ -1,8 +1,8 @@
-﻿#pragma once
+#pragma once
 
 #include "select.h"
 
-#define CHANNEL 6
+#define CHANNEL 7
 
 enum file_types{
 	FILE_TYPE_ERROR = -1,

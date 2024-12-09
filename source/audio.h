@@ -1,7 +1,9 @@
-﻿#pragma once
+#pragma once
 void load_sound();
 void sd_load_sound();
+void sd_load_combo();
 int play_sound(int id);
+int play_combo(int id);
 void exit_music();
 int music_SamplePos(int id);
 int ogg_check();
