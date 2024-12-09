@@ -240,11 +240,11 @@ void sd_load_combo() {
 		"sdmc:/tjafiles/theme/5000combo.ogg",
 	};
 
-	for (int i = 0; i < 51; ++i) {
+	for (int i = 4; i < 55; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
-		FILE * file = fopen(sound_address[i], "rb");
+		FILE * file = fopen(sound_address[i-4], "rb");
 		if (file == 0) {
 			printf("no file\n");
 			while (1);
