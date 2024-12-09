@@ -15,7 +15,7 @@
 #include "main.h"
 #include "vorbis.h"
 
-extern int course, courselife, TotalBadCount; //combo;
+extern int course, courselife, TotalBadCount, combo;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
@@ -228,7 +228,7 @@ int main() {
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
 			CurrentTimeMain = -1000;
-			//BeforeCombo = 0;
+			BeforeCombo = 0;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
