@@ -334,8 +334,8 @@ int main() {
 			}
 			draw_score(sprites);
 
-			if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50) && combo <= 5000) play_sound(((int)(combo / 100))+4);
-			BeforeCombo = combo;
+/*			if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50) && combo <= 5000) play_sound(((int)(combo / 100))+4);
+			BeforeCombo = combo;*/
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
