@@ -468,25 +468,29 @@ void send_gogotime(bool arg) {
 }
 
 void dan_condition() {
-	isBadCondition = 0;
-	if ((strcmp(exam1[0], "jb") == 0 && strcmp(exam1[3], "l") == 0 && TotalBadCount >= redCdn[0]) || (strcmp(exam2[0], "jb") == 0 && strcmp(exam2[3], "l") == 0 && TotalBadCount >= redCdn[1]) || (strcmp(exam3[0], "jb") == 0 && strcmp(exam3[3], "l") == 0 && TotalBadCount >= redCdn[2])) ++isBadCondition;
-	if ((strcmp(exam1[0], "jg") == 0 && strcmp(exam1[3], "l") == 0 && TotalNiceCount >= redCdn[0]) || (strcmp(exam2[0], "jg") == 0 && strcmp(exam2[3], "l") == 0 && TotalNiceCount >= redCdn[1]) || (strcmp(exam3[0], "jg") == 0 && strcmp(exam3[3], "l") == 0 && TotalNiceCount >= redCdn[2])) ++isBadCondition;
-	if ((strcmp(exam1[0], "jp") == 0 && strcmp(exam1[3], "l") == 0 && TotalPerfectCount >= redCdn[0]) || (strcmp(exam2[0], "jp") == 0 && strcmp(exam2[3], "l") == 0 && TotalNiceCount >= redCdn[1]) || (strcmp(exam3[0], "jp") == 0 && strcmp(exam3[3], "l") == 0 && TotalPerfectCount >= redCdn[2])) ++isBadCondition;
-	if ((strcmp(exam1[0], "s") == 0 && strcmp(exam1[3], "l") == 0 && TotalScore >= redCdn[0]) || (strcmp(exam2[0], "s") == 0 && strcmp(exam2[3], "l") == 0 && TotalScore >= redCdn[1]) || (strcmp(exam3[0], "s") == 0 && strcmp(exam3[3], "l") == 0 && TotalScore >= redCdn[2])) ++isBadCondition;
-	if ((strcmp(exam1[0], "r") == 0 && strcmp(exam1[3], "l") == 0 && TotalRollCount >= redCdn[0]) || (strcmp(exam2[0], "r") == 0 && strcmp(exam2[3], "l") == 0 && TotalRollCount >= redCdn[1]) || (strcmp(exam3[0], "r") == 0 && strcmp(exam3[3], "l") == 0 && TotalRollCount >= redCdn[2])) ++isBadCondition;
-	if ((strcmp(exam1[0], "h") == 0 && strcmp(exam1[3], "l") == 0 && TotalCount >= redCdn[0]) || (strcmp(exam2[0], "h") == 0 && strcmp(exam2[3], "l") == 0 && TotalCount >= redCdn[1]) || (strcmp(exam3[0], "h") == 0 && strcmp(exam3[3], "l") == 0 && TotalCount >= redCdn[2])) ++isBadCondition;
-	if ((strcmp(exam1[0], "g") == 0 && strcmp(exam1[3], "l") == 0 && (Gauge.norma / Gauge.soul) * 100 >= redCdn[0]) || (strcmp(exam2[0], "g") == 0 && strcmp(exam2[3], "l") == 0 && (Gauge.norma / Gauge.soul) * 100 >= redCdn[1]) || (strcmp(exam3[0], "g") == 0 && strcmp(exam3[3], "l") == 0 && (Gauge.norma / Gauge.soul) * 100 >= redCdn[2])) ++isBadCondition;
-//条件に以上がある場合、曲が終わるまで判定しない
-	if (get_notes_finish() == true) {
-		if ((strcmp(exam1[0], "jb") == 0 && strcmp(exam1[3], "m") == 0 && TotalBadCount <= redCdn[0]) || (strcmp(exam2[0], "jb") == 0 && strcmp(exam2[3], "m") == 0 && TotalBadCount <= redCdn[1]) || (strcmp(exam3[0], "jb") == 0 && strcmp(exam3[3], "m") == 0 && TotalBadCount <= redCdn[2])) ++isBadCondition;
-		if ((strcmp(exam1[0], "jg") == 0 && strcmp(exam1[3], "m") == 0 && TotalNiceCount <= redCdn[0]) || (strcmp(exam2[0], "jg") == 0 && strcmp(exam2[3], "m") == 0 && TotalNiceCount <= redCdn[1]) || (strcmp(exam3[0], "jg") == 0 && strcmp(exam3[3], "m") == 0 && TotalNiceCount <= redCdn[2])) ++isBadCondition;
-		if ((strcmp(exam1[0], "jp") == 0 && strcmp(exam1[3], "m") == 0 && TotalPerfectCount <= redCdn[0]) || (strcmp(exam2[0], "jp") == 0 && strcmp(exam2[3], "m") == 0 && TotalNiceCount <= redCdn[1]) || (strcmp(exam3[0], "jp") == 0 && strcmp(exam3[3], "m") == 0 && TotalPerfectCount <= redCdn[2])) ++isBadCondition;
-		if ((strcmp(exam1[0], "s") == 0 && strcmp(exam1[3], "m") == 0 && TotalScore <= redCdn[0]) || (strcmp(exam2[0], "s") == 0 && strcmp(exam2[3], "m") == 0 && TotalScore <= redCdn[1]) || (strcmp(exam3[0], "s") == 0 && strcmp(exam3[3], "m") == 0 && TotalScore <= redCdn[2])) ++isBadCondition;
-		if ((strcmp(exam1[0], "r") == 0 && strcmp(exam1[3], "m") == 0 && TotalRollCount <= redCdn[0]) || (strcmp(exam2[0], "r") == 0 && strcmp(exam2[3], "m") == 0 && TotalRollCount <= redCdn[1]) || (strcmp(exam3[0], "r") == 0 && strcmp(exam3[3], "m") == 0 && TotalRollCount <= redCdn[2])) ++isBadCondition;
-		if ((strcmp(exam1[0], "h") == 0 && strcmp(exam1[3], "m") == 0 && TotalCount <= redCdn[0]) || (strcmp(exam2[0], "h") == 0 && strcmp(exam2[3], "m") == 0 && TotalCount <= redCdn[1]) || (strcmp(exam3[0], "h") == 0 && strcmp(exam3[3], "m") == 0 && TotalCount <= redCdn[2])) ++isBadCondition;
-		if ((strcmp(exam1[0], "g") == 0 && strcmp(exam1[3], "m") == 0 && (Gauge.norma / Gauge.soul) * 100 <= redCdn[0]) || (strcmp(exam2[0], "g") == 0 && strcmp(exam2[3], "m") == 0 && (Gauge.norma / Gauge.soul) * 100 <= redCdn[1]) || (strcmp(exam3[0], "g") == 0 && strcmp(exam3[3], "m") == 0 && (Gauge.norma / Gauge.soul) * 100 <= redCdn[2])) ++isBadCondition;
-	}
+    isBadCondition = 0; //ここで何回条件に反しているかをリセットする
+    const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
+    int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (Gauge.norma / Gauge.soul) * 100};
+    
+    for (int i = 0; i < 7; ++i) {
+        if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "l") == 0 && counts[i] >= redCdn[0]) ||
+            (strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "l") == 0 && counts[i] >= redCdn[1]) ||
+            (strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "l") == 0 && counts[i] >= redCdn[2])) {
+            ++isBadCondition;
+        }
+    }
+
+    if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
+        for (int i = 0; i < 7; ++i) {
+            if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "m") == 0 && counts[i] <= redCdn[0]) ||
+                (strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "m") == 0 && counts[i] <= redCdn[1]) ||
+                (strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2])) {
+                ++isBadCondition;
+            }
+        }
+    }
 }
+
 
 int round_down(int arg) {
 	int temp = arg % 10;
