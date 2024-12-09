@@ -192,7 +192,7 @@ void sd_load_combo() {
 		"sdmc:/tjafiles/theme/200combo.ogg",
 		"sdmc:/tjafiles/theme/300combo.ogg",
 		"sdmc:/tjafiles/theme/400combo.ogg",
-		"sdmc:/tjafiles/theme/300combo.ogg",
+		"sdmc:/tjafiles/theme/500combo.ogg",
 		"sdmc:/tjafiles/theme/600combo.ogg",
 		"sdmc:/tjafiles/theme/700combo.ogg",
 		"sdmc:/tjafiles/theme/800combo.ogg",
