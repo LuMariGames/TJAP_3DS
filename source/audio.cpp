@@ -180,7 +180,7 @@ void sd_load_sound() {
 	}
 }
 
-/*void sd_load_combo() {
+void sd_load_combo() {
 
 	int j = SOUND_NUMBER;
 	ndspInit();
@@ -303,7 +303,7 @@ void sd_load_sound() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-}*/
+}
 
 int play_sound(int id) {
 
