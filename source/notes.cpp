@@ -845,7 +845,6 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (BalloonNotes[Notes[i].roll_id].current_hit == 0) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON], Notes[i].x, notes_y);
-					C2D_SpriteSetScale(&sprites[SPRITE_BALLOON], sign(Notes[i].scroll), 1);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON]);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2) {
