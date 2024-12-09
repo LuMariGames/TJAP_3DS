@@ -349,9 +349,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
-		if (BarLine[i].x * sign(BarLine[i].scroll) <= NOTES_JUDGE_X) {
-			NowBPM = 60.0 / Measure[BarLine[i].measure].bpm;
+	for (int i = 1; i < BARLINE_MAX; ++i) {
+		if (Measure[i].pop_time > CurrentTimeNotes) {
+			NowBPM = 60.0 / Measure[i-1].bpm;
 			break;
 		}
 	}
