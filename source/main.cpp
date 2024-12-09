@@ -110,7 +110,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
+	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, BeforeCombo = 0;
 
 	double FirstMeasureTime = INT_MAX,
 		offset = 0,CurrentTimeMain = -1000;
@@ -154,7 +154,7 @@ int main() {
 			get_option(&Option);
 			if (Option.exse == false) load_sound();
 			else if (Option.exse == true) sd_load_sound();
-			//sd_load_combo();
+			sd_load_combo();
 			break;
 
 		case SCENE_WARNING:		//警告画面
