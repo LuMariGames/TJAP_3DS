@@ -19,12 +19,12 @@ typedef struct {
 	char* data;
 	bool loop;
 	int audiochannel;
-	float mix[12];
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[SOUND_NUMBER + 1];
-ndspWaveBuf waveBuf[SOUND_NUMBER + 1];
+Sound sound[SOUND_NUMBER + 51];
+ndspWaveBuf waveBuf[SOUND_NUMBER + 51];
+float mix[12]{1,1,0,0,0,0,0,0,0,0,0,0};
 
 void load_sound() {
 
@@ -40,8 +40,6 @@ void load_sound() {
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
-		sound[i].mix[0] = 1.0f;
-		sound[i].mix[1] = 1.0f;
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
@@ -117,8 +115,6 @@ void sd_load_sound() {
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
-		sound[i].mix[0] = 1.0f;
-		sound[i].mix[1] = 1.0f;
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
@@ -241,35 +237,33 @@ void sd_load_combo() {
 	};
 
 	for (int i = 0; i < 51; ++i) {
-		memset(&sound[j], 0, sizeof(sound[j]));
-		sound[j].mix[0] = 1.0f;
-		sound[j].mix[1] = 1.0f;
+		memset(&sound[i], 0, sizeof(sound[i]));
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
 			while (1);
 		}
-		if (ov_open(file, &sound[j].ovf, NULL, 0) < 0) {
+		if (ov_open(file, &sound[i].ovf, NULL, 0) < 0) {
 			printf("ogg vorbis file error\n");
 			while (1);
 		}
-		vorbis_info * vorbisInfo = ov_info(&sound[j].ovf, -1);
+		vorbis_info * vorbisInfo = ov_info(&sound[i].ovf, -1);
 		if (vorbisInfo == NULL) {
 			printf("could not retrieve ogg audio stream information\n");
 			while (1);
 		}
-		sound[j].rate = (float)vorbisInfo->rate;
-		sound[j].channels = (u32)vorbisInfo->channels;
-		sound[j].encoding = NDSP_ENCODING_PCM16;
-		sound[j].nsamples = (u32)ov_pcm_total(&sound[j].ovf, -1);
-		sound[j].size = sound[j].nsamples * sound[j].channels * 2;
-		sound[j].audiochannel = j;
-		sound[j].interp = NDSP_INTERP_NONE;
-		sound[j].loop = false;
-		if (linearSpaceFree() < sound[j].size) {
-			printf("not enough linear memory available %ld\n", sound[j].size);
+		sound[i].rate = (float)vorbisInfo->rate;
+		sound[i].channels = (u32)vorbisInfo->channels;
+		sound[i].encoding = NDSP_ENCODING_PCM16;
+		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
+		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
+		sound[i].audiochannel = j;
+		sound[i].interp = NDSP_INTERP_NONE;
+		sound[i].loop = false;
+		if (linearSpaceFree() < sound[i].size) {
+			printf("not enough linear memory available %ld\n", sound[i].size);
 		}
-		sound[j].data = (char*)linearAlloc(sound[j].size);
+		sound[i].data = (char*)linearAlloc(sound[i].size);
 		if (sound[j].data == 0) {
 			printf("null\n");
 			while (1);
@@ -278,13 +272,13 @@ void sd_load_combo() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[j].ovf, &sound[j].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
 			else if (ret < 0) {
-				ov_clear(&sound[j].ovf);
-				linearFree(sound[j].data);
+				ov_clear(&sound[i].ovf);
+				linearFree(sound[i].data);
 				printf("error in the ogg vorbis stream\n");
 				while (1);
 			}
@@ -294,13 +288,13 @@ void sd_load_combo() {
 			//printf("%ld %d\n", ret, currentSection);
 		}
 		memset(&waveBuf[i], 0, sizeof(ndspWaveBuf));
-		waveBuf[i].data_vaddr = sound[j].data;
-		waveBuf[i].nsamples = sound[j].nsamples;
-		waveBuf[i].looping = sound[j].loop;
+		waveBuf[i].data_vaddr = sound[i].data;
+		waveBuf[i].nsamples = sound[i].nsamples;
+		waveBuf[i].looping = sound[i].loop;
 		waveBuf[i].status = NDSP_WBUF_FREE;
-		DSP_FlushDataCache(sound[j].data, sound[j].size);
+		DSP_FlushDataCache(sound[i].data, sound[i].size);
 		//linearFree(&sound[j].ovf);
-		ov_clear(&sound[j].ovf);
+		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
 }
@@ -314,7 +308,7 @@ int play_sound(int id) {
 	ndspChnWaveBufClear(sound[id].audiochannel);
 	ndspChnReset(sound[id].audiochannel);
 	ndspChnInitParams(sound[id].audiochannel);
-	ndspChnSetMix(sound[id].audiochannel, sound[id].mix);
+	ndspChnSetMix(sound[id].audiochannel, mix);
 	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
 	ndspChnSetRate(sound[id].audiochannel, sound[id].rate);
 	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
@@ -325,18 +319,18 @@ int play_sound(int id) {
 
 int play_combo(int id) {
 
-	if (sound[4].audiochannel == -1) {
+	if (sound[id].audiochannel == -1) {
 		printf("No available audio channel\n");
 		return -1;
 	}
-	ndspChnWaveBufClear(sound[4].audiochannel);
-	ndspChnReset(sound[4].audiochannel);
-	ndspChnInitParams(sound[4].audiochannel);
-	ndspChnSetMix(sound[4].audiochannel, sound[4].mix);
-	ndspChnSetInterp(sound[4].audiochannel, sound[4].interp);
-	ndspChnSetRate(sound[4].audiochannel, sound[4].rate);
-	ndspChnSetFormat(sound[4].audiochannel, NDSP_CHANNELS(sound[4].channels) | NDSP_ENCODING(sound[4].encoding));
-	ndspChnWaveBufAdd(sound[4].audiochannel, &waveBuf[id + 4]);
+	ndspChnWaveBufClear(sound[id].audiochannel);
+	ndspChnReset(sound[id].audiochannel);
+	ndspChnInitParams(sound[id].audiochannel);
+	ndspChnSetMix(sound[id].audiochannel, mix);
+	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
+	ndspChnSetRate(sound[id].audiochannel, sound[id].rate);
+	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
+	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id + 4]);
 
 	return 0;
 }
