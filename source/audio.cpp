@@ -326,9 +326,16 @@ int play_sound(int id) {
 void exit_music() {
 
 	ndspChnWaveBufClear(sound[0].audiochannel);
-	for (int i = 0; i < SOUND_NUMBER+1; ++i) {
-		ndspChnWaveBufClear(sound[i].audiochannel);
+	ndspChnWaveBufClear(sound[1].audiochannel);
+	ndspChnWaveBufClear(sound[2].audiochannel);
+	ndspChnWaveBufClear(sound[3].audiochannel);
+	ndspChnWaveBufClear(sound[4].audiochannel);
+	for (int i = 0; i < 55; i += 5) {
 		linearFree(sound[i].data);
+		linearFree(sound[i+1].data);
+		linearFree(sound[i+2].data);
+		linearFree(sound[i+3].data);
+		linearFree(sound[i+4].data);
 	}
 	ndspExit();
 }
