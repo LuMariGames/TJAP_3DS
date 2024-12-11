@@ -6,7 +6,7 @@
 #include "select.h"
 #include "option.h"
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], Nextsong[3];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
@@ -461,7 +461,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 void load_tja_notes(int course, LIST_T Song) {
 
 	int FirstMultiMeasure = -1,	//複数行の小節の最初の小節id 複数出ない場合は-1
-		NotesCount = 0, BranchCourse = -1,
+		NotesCount = 0, BranchCourse = -1,songnum = 0,
 		BeforeBranchFirstMultiMeasure = -1, BeforeBranchNotesCount = 0;
 	bool isStart = false, isEnd = false, isDispBarLine = true, isNoComma = false, isCourseMatch = false,
 		BeforeBranchIsDispBarLine = true, BeforeBranchIsNoComma = false;
@@ -565,6 +565,10 @@ void load_tja_notes(int course, LIST_T Song) {
 					switch (Command.knd) {
 					case COMMAND_BPMCHANGE:
 						NextBpm = Command.val[0];
+						break;
+					case COMMAND_NEXTSONG:
+						Nextsong[songnum] = Command.value_s;
+						++songnum;
 						break;
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
@@ -738,6 +742,7 @@ void load_tja_notes(int course, LIST_T Song) {
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
+			case COMMAND_NEXTSONG:
 				int n = i + 1;
 				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') n++;
 				Measure[i].judge_time = Measure[n].judge_time;
@@ -831,6 +836,10 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "BPMCHANGE") == 0) {
 			Command->knd = COMMAND_BPMCHANGE;
 			Command->val[0] = strtod(value, NULL);
+		}
+		else if (strcmp(command, "NEXTSONG") == 0) {
+			Command->knd = COMMAND_NEXTSONG;
+			Command->value_s = value;
 		}
 		else if (strcmp(command, "GOGOSTART") == 0) Command->knd = COMMAND_GOGOSTART;
 		else if (strcmp(command, "GOGOEND") == 0) Command->knd = COMMAND_GOGOEND;
