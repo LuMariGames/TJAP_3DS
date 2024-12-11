@@ -23,8 +23,8 @@ typedef struct {
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[SOUND_NUMBER + 51];
-ndspWaveBuf waveBuf[SOUND_NUMBER + 51];
+Sound sound[SOUND_NUMBER];
+ndspWaveBuf waveBuf[SOUND_NUMBER];
 
 void load_sound() {
 
@@ -180,7 +180,7 @@ void sd_load_sound() {
 	}
 }
 
-void sd_load_combo() {
+/*void sd_load_combo() {
 
 	int j = SOUND_NUMBER;
 	ndspInit();
@@ -303,7 +303,7 @@ void sd_load_combo() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-}
+}*/
 
 int play_sound(int id) {
 
@@ -329,14 +329,18 @@ void exit_music() {
 	ndspChnWaveBufClear(sound[1].audiochannel);
 	ndspChnWaveBufClear(sound[2].audiochannel);
 	ndspChnWaveBufClear(sound[3].audiochannel);
-	ndspChnWaveBufClear(sound[4].audiochannel);
-	for (int i = 0; i < 55; i += 5) {
+	linearFree(sound[0].data);
+	linearFree(sound[1].data);
+	linearFree(sound[2].data);
+	linearFree(sound[3].data);
+	/*ndspChnWaveBufClear(sound[4].audiochannel);
+	for (int i = 0; i < ; i += 5) {
 		linearFree(sound[i].data);
 		linearFree(sound[i+1].data);
 		linearFree(sound[i+2].data);
 		linearFree(sound[i+3].data);
 		linearFree(sound[i+4].data);
-	}
+	}*/
 	ndspExit();
 }
 
