@@ -39,6 +39,11 @@ typedef struct {
 
 }BRANCH_T;
 
+typedef struct {
+	char *musicname[3];
+
+}MUSIC_T;
+
 void notes_main(
 	bool isDon,
 	bool isKatsu,
