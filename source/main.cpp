@@ -154,7 +154,7 @@ int main() {
 			get_option(&Option);
 			if (Option.exse == false) load_sound();
 			else if (Option.exse == true) sd_load_sound();
-			sd_load_combo();
+			//sd_load_combo();
 			break;
 
 		case SCENE_WARNING:		//警告画面
