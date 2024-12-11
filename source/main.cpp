@@ -15,7 +15,7 @@
 #include "main.h"
 #include "vorbis.h"
 
-extern int course, courselife, TotalBadCount, combo;
+extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
@@ -110,7 +110,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, BeforeCombo = 0;
+	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
 
 	double FirstMeasureTime = INT_MAX,
 		offset = 0,CurrentTimeMain = -1000;
@@ -228,7 +228,7 @@ int main() {
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
 			CurrentTimeMain = -1000;
-			BeforeCombo = 0;
+			//BeforeCombo = 0;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
@@ -334,8 +334,8 @@ int main() {
 			}
 			draw_score(sprites);
 
-			if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50) && combo <= 5000 && combo != 0) play_sound(((int)(combo / 100))+4);
-			BeforeCombo = combo;
+			/*if (combo != BeforeCombo && ((combo % 100) == 0 || combo == 50) && combo <= 5000 && combo != 0) play_sound(((int)(combo / 100))+4);
+			BeforeCombo = combo;*/
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
