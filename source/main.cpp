@@ -18,6 +18,7 @@
 extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
+extern char *Nextsong[3];
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
@@ -110,7 +111,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
+	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, songnumber = 0; //BeforeCombo = 0;
 
 	double FirstMeasureTime = INT_MAX,
 		offset = 0,CurrentTimeMain = -1000;
@@ -228,6 +229,7 @@ int main() {
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
 			CurrentTimeMain = -1000;
+			songnumber = 0;
 			//BeforeCombo = 0;
 
 			tmp = check_wave(SelectedSong);
@@ -260,6 +262,7 @@ int main() {
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if (Option.dispFps == true) draw_fps();
 
+			if (course == COURSE_DAN && ndspChnIsPlaying(CHANNEL) == false && cnt > 0) musicchange(LIST_T *TMP);
 			//譜面が先
 			if (offset > 0 && (isNotesStart == false || isMusicStart == false)) {
 
@@ -460,6 +463,13 @@ bool get_isMusicStart() {
 }
 char *get_buffer() {
 	return buffer;
+}
+
+void musicchange(LIST_T *TMP) {
+	isPlayMain = false;
+	TMP->wave = Nextsong[songnumber];
+	play_main_music(&isPlayMain, SelectedSong);
+	++songnumber;
 }
 
 int powi(int x, int y) {	//なぜかpowのキャストが上手くいかないので整数用powを自作
