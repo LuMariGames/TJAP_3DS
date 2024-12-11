@@ -5,8 +5,8 @@
 #include "score.h"
 #include "result.h"
 
-extern int gaugelife, redCdn[3];
-extern char *exam1[4], *exam2[4], *exam3[4];
+extern int gaugelife, redCdn[4];
+extern char *exam1[4], *exam2[4], *exam3[4] *exam[4];
 bool isGOGO;
 int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, isBadCondition,
 CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalPerfectCount, TotalNiceCount, TotalBadCount, TotalCount,
@@ -468,27 +468,25 @@ void send_gogotime(bool arg) {
 }
 
 void dan_condition() {
-    isBadCondition = 0; //ここで何回条件に反しているかをリセットする
-    const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
-    int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
+	isBadCondition = 0; //ここで何回条件に反しているかをリセットする
+	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
+	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
     
-    for (int i = 0; i < 7; ++i) {
-        if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "l") == 0 && counts[i] >= redCdn[0]) ||
-            (strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "l") == 0 && counts[i] >= redCdn[1]) ||
-            (strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "l") == 0 && counts[i] >= redCdn[2])) {
-            ++isBadCondition;
-        }
-    }
+	for (int i = 0; i < 7; ++i) {
+		if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "l") == 0 && counts[i] >= redCdn[0]) ||
+		(strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "l") == 0 && counts[i] >= redCdn[1]) ||
+		(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "l") == 0 && counts[i] >= redCdn[2]) ||
+		(strcmp(exam4[0], types[i]) == 0 && strcmp(exam4[3], "l") == 0 && counts[i] >= redCdn[3])) ++isBadCondition;
+	}
 
-    if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
-        for (int i = 0; i < 7; ++i) {
-            if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "m") == 0 && counts[i] <= redCdn[0]) ||
-                (strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "m") == 0 && counts[i] <= redCdn[1]) ||
-                (strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2])) {
-                ++isBadCondition;
-            }
-        }
-    }
+	if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
+		for (int i = 0; i < 7; ++i) {
+			if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "m") == 0 && counts[i] <= redCdn[0]) ||
+			(strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "m") == 0 && counts[i] <= redCdn[1]) ||
+			(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2]) ||
+			(strcmp(exam4[0], types[i]) == 0 && strcmp(exam4[3], "m") == 0 && counts[i] <= redCdn[3])) ++isBadCondition;
+		}
+	}
 }
 
 
