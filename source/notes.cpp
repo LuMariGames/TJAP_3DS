@@ -373,24 +373,16 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0; i < NOTES_MAX - 1; i += 4) {
-
+	for (int i = 0; i < NOTES_MAX - 1; ++i) {
 		if (Notes[i].flag == false) return i;
-		else if (Notes[i+1].flag == false) return i+1;
-		else if (Notes[i+2].flag == false) return i+2;
-		else if (Notes[i+3].flag == false) return i+3;
 	}
 	return -1;
 }
 
 int find_line_id() {
 
-	for (int i = 0; i < BARLINE_MAX - 1; i += 4) {
-
+	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
 		if (BarLine[i].flag == false) return i;
-		else if (BarLine[i+1].flag == false) return i+1;
-		else if (BarLine[i+2].flag == false) return i+2;
-		else if (BarLine[i+3].flag == false) return i+3;
 	}
 	return -1;
 }
@@ -519,21 +511,23 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 				(Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL && Notes[i].knd != NOTES_BIGROLLEND &&
 					Notes[i].knd != NOTES_ROLLEND && Notes[i].knd != NOTES_BALLOON && Notes[i].knd != NOTES_BALLOONEND)) {
 
-				if (Notes[i].knd == NOTES_DON) {
+				switch (Notes[i].knd) {
+				case NOTES_DON:
 					play_sound(SOUND_DON);
 					make_judge(PERFECT, CurrentTimeNotes);
-				}
-				else if (Notes[i].knd == NOTES_BIGDON) {
+					break;
+				case NOTES_BIGDON:
 					play_sound(SOUND_DON);
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
-				}
-				else if (Notes[i].knd == NOTES_KATSU) {
+					break;
+				case NOTES_KATSU:
 					play_sound(SOUND_KATSU);
 					make_judge(PERFECT, CurrentTimeNotes);
-				}
-				else if (Notes[i].knd == NOTES_BIGKATSU) {
+					break;
+				case NOTES_BIGKATSU:
 					play_sound(SOUND_KATSU);
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
+					break;
 				}
 
 				if (Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU) update_score(SPECIAL_PERFECT);
@@ -755,7 +749,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU) update_score(PERFECT);
 					else if (Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU) update_score(SPECIAL_PERFECT);
 					if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_BIGDON) play_sound(SOUND_DON);
-					if (Notes[i].knd == NOTES_KATSU || Notes[i].knd == NOTES_BIGKATSU) play_sound(SOUND_KATSU);
+					else if (Notes[i].knd == NOTES_KATSU || Notes[i].knd == NOTES_BIGKATSU) play_sound(SOUND_KATSU);
 				}
 			}
 			delete_notes(i);
@@ -975,7 +969,6 @@ void init_roll__notes() {
 int find_roll_id() {
 
 	for (int i = 0; i < ROLL_MAX - 1; ++i) {
-
 		if (RollNotes[i].flag == false) return i;
 	}
 	return -1;
