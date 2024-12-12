@@ -475,16 +475,14 @@ void dan_condition() {
 	for (int i = 0; i < 7; ++i) {
 		if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "l") == 0 && counts[i] >= redCdn[0]) ||
 		(strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "l") == 0 && counts[i] >= redCdn[1]) ||
-		(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "l") == 0 && counts[i] >= redCdn[2]) ||
-		(strcmp(exam4[0], types[i]) == 0 && strcmp(exam4[3], "l") == 0 && counts[i] >= redCdn[3])) ++isBadCondition;
+		(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "l") == 0 && counts[i] >= redCdn[2])) ++isBadCondition;
 	}
 
 	if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
 		for (int i = 0; i < 7; ++i) {
 			if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "m") == 0 && counts[i] <= redCdn[0]) ||
 			(strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "m") == 0 && counts[i] <= redCdn[1]) ||
-			(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2]) ||
-			(strcmp(exam4[0], types[i]) == 0 && strcmp(exam4[3], "m") == 0 && counts[i] <= redCdn[3])) ++isBadCondition;
+			(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2])) ++isBadCondition;
 		}
 	}
 }
