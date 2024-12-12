@@ -5,8 +5,8 @@
 #include "score.h"
 #include "result.h"
 
-extern int gaugelife, redCdn[4];
-extern char *exam1[4], *exam2[4], *exam3[4] *exam[4];
+extern int gaugelife, redCdn[3];
+extern char *exam1[4], *exam2[4], *exam3[4];
 bool isGOGO;
 int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, isBadCondition,
 CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalPerfectCount, TotalNiceCount, TotalBadCount, TotalCount,
