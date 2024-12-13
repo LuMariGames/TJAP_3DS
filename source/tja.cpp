@@ -6,8 +6,8 @@
 #include "select.h"
 #include "option.h"
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], *exam4[4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[4], gaugelife;
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -279,21 +279,6 @@ void load_tja_head(int course,LIST_T Song) {
 					while ((c = strtok(NULL, ","))) {
 						exam3[cnt] = c;
 						if (cnt == 1) redCdn[2] = atoi(c);
-						++cnt;
-					}
-				}
-				continue;
-			}
-
-			if (strstr(buf, "EXAM4:") == buf) {
-				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *d = strtok(temp, ",");
-					exam4[0] = d;
-					cnt = 1;
-					while ((d = strtok(NULL, ","))) {
-						exam4[cnt] = d;
-						if (cnt == 1) redCdn[3] = atoi(d);
 						++cnt;
 					}
 				}
