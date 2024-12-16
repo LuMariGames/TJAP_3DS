@@ -373,7 +373,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0; i < NOTES_MAX - 1; i++) {
+	for (int i = 0; i < NOTES_MAX - 1; ++i) {
 		if (Notes[i].flag == false) return i;
 	}
 	return -1;
@@ -381,7 +381,7 @@ int find_notes_id() {
 
 int find_line_id() {
 
-	for (int i = 0; i < BARLINE_MAX - 1; i++) {
+	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
 		if (BarLine[i].flag == false) return i;
 	}
 	return -1;
@@ -676,7 +676,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0; i < NOTES_MAX; i++) {	//計算
+	for (int i = 0; i < NOTES_MAX; ++i) {	//計算
 
 		if (Notes[i].flag == true) {
 
@@ -729,7 +729,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = 0, j = NOTES_MAX; i < j; i++) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag == true &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -760,7 +760,7 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = NOTES_MAX; i < j; i++) {	//描画
+	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
 
 		if (Notes[i].flag == true) {
 
@@ -956,14 +956,14 @@ void delete_roll(int i) {
 
 void init_roll__notes() {
 
-	for (int i = 0; i < ROLL_MAX - 1; i++) {
+	for (int i = 0; i < ROLL_MAX - 1; ++i) {
 		delete_roll(i);
 	}
 }
 
 int find_roll_id() {
 
-	for (int i = 0; i < ROLL_MAX - 1; i++) {
+	for (int i = 0; i < ROLL_MAX - 1; ++i) {
 		if (RollNotes[i].flag == false) return i;
 	}
 	return -1;
@@ -1026,14 +1026,14 @@ void delete_balloon(int i) {
 
 void init_balloon_notes() {
 
-	for (int i = 0; i < BALLOON_MAX - 1; i++) {
+	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
 		delete_balloon(i);
 	}
 }
 
 int find_balloon_id() {
 
-	for (int i = 0; i < BALLOON_MAX - 1; i++) {
+	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
 
 		if (BalloonNotes[i].flag == false) return i;
 	}
@@ -1060,7 +1060,7 @@ int make_balloon_start(int NotesId) {
 
 int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
-	for (int i = 0; i < BALLOON_MAX - 1; i++) {
+	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
 
 		if (BalloonNotes[i].flag == true &&
 			BalloonNotes[i].start_id != -1 &&
