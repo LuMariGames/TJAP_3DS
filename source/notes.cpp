@@ -373,7 +373,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0; i < NOTES_MAX - 1; ++i) {
+	for (int i = 0; i < NOTES_MAX - 1; i++) {
 		if (Notes[i].flag == false) return i;
 	}
 	return -1;
@@ -381,7 +381,7 @@ int find_notes_id() {
 
 int find_line_id() {
 
-	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
+	for (int i = 0; i < BARLINE_MAX - 1; i++) {
 		if (BarLine[i].flag == false) return i;
 	}
 	return -1;
@@ -956,14 +956,14 @@ void delete_roll(int i) {
 
 void init_roll__notes() {
 
-	for (int i = 0; i < ROLL_MAX - 1; ++i) {
+	for (int i = 0; i < ROLL_MAX - 1; i++) {
 		delete_roll(i);
 	}
 }
 
 int find_roll_id() {
 
-	for (int i = 0; i < ROLL_MAX - 1; ++i) {
+	for (int i = 0; i < ROLL_MAX - 1; i++) {
 		if (RollNotes[i].flag == false) return i;
 	}
 	return -1;
@@ -1026,14 +1026,14 @@ void delete_balloon(int i) {
 
 void init_balloon_notes() {
 
-	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
+	for (int i = 0; i < BALLOON_MAX - 1; i++) {
 		delete_balloon(i);
 	}
 }
 
 int find_balloon_id() {
 
-	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
+	for (int i = 0; i < BALLOON_MAX - 1; i++) {
 
 		if (BalloonNotes[i].flag == false) return i;
 	}
@@ -1060,7 +1060,7 @@ int make_balloon_start(int NotesId) {
 
 int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
-	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
+	for (int i = 0; i < BALLOON_MAX - 1; i++) {
 
 		if (BalloonNotes[i].flag == true &&
 			BalloonNotes[i].start_id != -1 &&
@@ -1227,7 +1227,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	Command.val[2] = 0;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
-	for (int i = 0, j = (int)(sizeof(balloon) / sizeof(balloon[0])); i < j; ++i) {
+	for (int i = 0, j = (int)(sizeof(balloon) / sizeof(balloon[0])); i < j; i++) {
 		balloon[i] = TJA_Header.balloon[i];
 	}
 	NotesNumber = 0;
