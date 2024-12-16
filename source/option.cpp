@@ -525,10 +525,6 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		}
 		XCnt = 0, ++YCnt;
 		break;
-
-
-	default:
-		break;
 	}
 
 	calc_option_page(px,py,key);
