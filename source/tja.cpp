@@ -71,8 +71,8 @@ void load_tja_head(int course,LIST_T Song) {
 	Current_Header.course = course;
 	Current_Header.style = 1;
 	Current_Header.life = -1;
-	Current_Header.demostart = 0;
-	Current_Header.side = 3;
+	//Current_Header.demostart = 0;
+	//Current_Header.side = 3;
 	Current_Header.scoremode = 2;
 	exam1[0] = (char*)"";
 	exam1[1] = (char*)"";
@@ -302,7 +302,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "DEMOSTART:") == buf) {
+			/*if (strstr(buf, "DEMOSTART:") == buf) {
 				if (buf[10] != '\n' && buf[10] != '\r') {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.demostart = atof(temp);
@@ -316,7 +316,7 @@ void load_tja_head(int course,LIST_T Song) {
 					Current_Header.side = atoi(temp);
 				}
 				continue;
-			}
+			}*/
 
 			if (strstr(buf, "SCOREMODE:") == buf) {
 				if (buf[10] != '\n' && buf[10] != '\r') {
