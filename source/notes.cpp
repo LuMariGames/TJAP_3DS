@@ -725,6 +725,8 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					Notes[i].isThrough = true;
 				}
 				break;
+			default:
+				break;
 			}
 		}
 	}
