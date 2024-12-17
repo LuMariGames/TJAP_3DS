@@ -263,8 +263,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 						}
 						RollState = 0;
 						break;
-					default:
-						break;
 					}
 
 					++NotesNumber;
