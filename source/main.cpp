@@ -343,9 +343,6 @@ int main() {
 
 			if (TotalBadCount > 0) {
 				switch (Option.special) {
-				case 0:
-					break;
-
 				case 1:
 					scene_state = SCENE_RESULT;
 					cnt = -1;
@@ -364,9 +361,6 @@ int main() {
 				tmp = pause_window(tp, key);
 
 				switch (tmp) {
-				case 0:
-					break;
-
 				case 1:
 					isPlayMain = true;
 					stopPlayback();
