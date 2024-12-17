@@ -2,8 +2,8 @@
 #include "tja.h"
 
 typedef struct {
-	int num, notes_max, knd, roll_id;
-	double x_ini, create_time, judge_time, pop_time, hb_time, bpm, scroll;
+	int num, notes_max, knd, roll_id, text_id;
+	double x_ini, create_time, judge_time, pop_time, bpm, scroll;
 	bool flag, isThrough;
 	float x;
 	C2D_Sprite spr;
@@ -38,11 +38,6 @@ typedef struct {
 	bool next, wait;
 
 }BRANCH_T;
-
-typedef struct {
-	char *musicname[3];
-
-}MUSIC_T;
 
 void notes_main(
 	bool isDon,
