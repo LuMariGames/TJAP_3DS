@@ -1,6 +1,6 @@
 #pragma once
 
-const char Text[3][60][128] = {
+const char Text[3][72][128] = {
 	{
 		"ON",
 		"OFF",
@@ -58,6 +58,18 @@ const char Text[3][60][128] = {
 		"ﾌﾟﾚｲﾔｰ(双打用)",
 		"1P",
 		"2P",
+		"ド",
+		"コ",
+		"ドン",
+		"カ",
+		"カッ",
+		"ドン(大)",
+		"カッ(大)",
+		"連打",
+		"ー",
+		"っ!!",
+		"連打(大)",
+		"ふうせん",
 	},
 	{
 		"ON",
@@ -116,6 +128,18 @@ const char Text[3][60][128] = {
 		"Player",
 		"1P",
 		"2P",
+		"Do",
+		"CO",
+		"Don",
+		"Ka",
+		"Ka",
+		"DON",
+		"KA",
+		"Drum Roll!",
+		"",
+		"",
+		"DRUM ROLL-!!",
+		"Balloon",
 	},
 	{
 		"Sí",
@@ -174,6 +198,18 @@ const char Text[3][60][128] = {
 		"Jugador",
 		"1P",
 		"2P",
+		"Do",
+		"CO",
+		"Don",
+		"Ka",
+		"Ka",
+		"DON",
+		"KA",
+		"Drum Roll!",
+		"",
+		"",
+		"DRUM ROLL-!!",
+		"Balloon",
 	}
 };
 
@@ -257,6 +293,18 @@ enum Text_knd {
 	TEXT_PLAYER,
 	TEXT_1P,
 	TEXT_2P,
+	TEXT_DO,
+	TEXT_CO,
+	TEXT_DON,
+	TEXT_KA,
+	TEXT_KATSU,
+	TEXT_DAIDON,
+	TEXT_DAIKATSU,
+	TEXT_ROLL1,
+	TEXT_ROLL2,
+	TEXT_ROLL3,
+	TEXT_DAIROLL,
+	TEXT_BALLOON,
 };
 
 int get_lang();
