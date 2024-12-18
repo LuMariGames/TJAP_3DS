@@ -349,7 +349,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 		if (Measure[i].judge_time >= CurrentTimeNotes) {
-			NowBPM = 60.0 / Measure[i].bpm;
+			NowBPM = 60.0 / Measure[i-1].bpm;
 			break;
 		}
 	}
