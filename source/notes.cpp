@@ -130,7 +130,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				NotesCountMax = NotesCount;
 			}
 
-			for (int i = 0; i < NotesCount; ++i) {
+			int i = 0;
+			while (NotesCount) {
 
 				int id = find_notes_id();
 
@@ -278,7 +279,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	}
 
-	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
+	i = 0;
+	while (BARLINE_MAX - 1) {
 
 		if (BarLine[i].flag == true) {
 
@@ -293,6 +295,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			}
 			if ((BarLine[i].x < 62 && BarLine[i].scroll > 0) || (BarLine[i].x > 400 && BarLine[i].scroll < 0)) BarLine[i].flag = false;
 		}
+		++i;
 	}
 
 	send_gogotime(isGOGOTime);
@@ -303,8 +306,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}	
 
 	if (get_isPause() == false) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
-	
-	for (int i = 0; i < MEASURE_MAX - 1; ++i) {	//判定時に発動する命令
+
+	i = 0;
+	while (MEASURE_MAX - 1) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
 
@@ -341,17 +345,20 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 			if (NotFalse == false && Measure[i].judge_time <= CurrentTimeNotes) Measure[i].flag = false;
 		}
+		++i;
 	}
 
 	if (Option.isStelth == false) notes_draw(sprites);
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	for (int i = 1; i < BARLINE_MAX; ++i) {
+	i = 1;
+	while (BARLINE_MAX - 1) {
 		if (Measure[i].pop_time > CurrentTimeNotes) {
 			NowBPM = 60.0 / Measure[i-1].bpm;
 			break;
 		}
+		++i;
 	}
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
@@ -371,16 +378,20 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0; i < NOTES_MAX - 1; ++i) {
+	int i = 0;
+	while (NOTES_MAX - 1) {
 		if (Notes[i].flag == false) return i;
+		++i;
 	}
 	return -1;
 }
 
 int find_line_id() {
 
-	for (int i = 0; i < BARLINE_MAX - 1; ++i) {
+	int i = 0;
+	while (BARLINE_MAX - 1) {
 		if (BarLine[i].flag == false) return i;
+		++i;
 	}
 	return -1;
 }
@@ -673,8 +684,9 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 	OPTION_T Option;
 	get_option(&Option);
+	int i = 0;
 
-	for (int i = 0; i < NOTES_MAX; ++i) {	//計算
+	while (NOTES_MAX) {	//計算
 
 		if (Notes[i].flag == true) {
 
@@ -725,9 +737,11 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 				break;
 			}
 		}
+		++i;
 	}
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	i = 0;
+	while (NOTES_MAX) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag == true &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -749,6 +763,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			}
 			delete_notes(i);
 		}
+		++i;
 	}
 
 	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
@@ -756,9 +771,9 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
-	int notes_y = 109;
+	int notes_y = 109, i = 0;
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
+	while (NOTES_MAX) {	//描画
 
 		if (Notes[i].flag == true) {
 
@@ -886,6 +901,7 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 			//snprintf(get_buffer(), BUFFER_SIZE, "%d", Notes[i].knd);
 			//draw_debug(Notes[i].x, 132, get_buffer());
 		}
+		++i;
 	}
 
 	//割れた風船
@@ -954,15 +970,19 @@ void delete_roll(int i) {
 
 void init_roll__notes() {
 
-	for (int i = 0; i < ROLL_MAX - 1; ++i) {
+	int i = 0;
+	while (ROLL_MAX - 1) {
 		delete_roll(i);
+		++i;
 	}
 }
 
 int find_roll_id() {
 
-	for (int i = 0; i < ROLL_MAX - 1; ++i) {
+	int i = 0;
+	while (ROLL_MAX - 1) {
 		if (RollNotes[i].flag == false) return i;
+		++i;
 	}
 	return -1;
 }
@@ -984,11 +1004,13 @@ int make_roll_start(int NotesId) {
 
 int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
-	for (int i = 0; i < ROLL_MAX - 1; ++i) {
+	int i = 0;
+	while (ROLL_MAX - 1) {
 
 		if (RollNotes[i].flag == true &&
 			RollNotes[i].start_x != -1 &&
 			RollNotes[i].end_x == -1) return i;
+		++i;
 	}
 	return -1;
 }
@@ -1024,16 +1046,19 @@ void delete_balloon(int i) {
 
 void init_balloon_notes() {
 
-	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
+	int i = 0;
+	for (BALLOON_MAX - 1) {
 		delete_balloon(i);
+		++i;
 	}
 }
 
 int find_balloon_id() {
 
-	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
-
+	int i = 0;
+	for (BALLOON_MAX - 1) {
 		if (BalloonNotes[i].flag == false) return i;
+		++i;
 	}
 	return -1;
 }
@@ -1058,11 +1083,12 @@ int make_balloon_start(int NotesId) {
 
 int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
-	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
-
+	int i = 0;
+	while (BALLOON_MAX - 1) {
 		if (BalloonNotes[i].flag == true &&
 			BalloonNotes[i].start_id != -1 &&
 			BalloonNotes[i].end_id == -1) return i;
+		++i;
 	}
 	return -1;
 }
@@ -1128,9 +1154,10 @@ void delete_notes(int i) {
 bool get_notes_finish() {
 
 	if (isNotesLoad == true) return false;
-	for (int i = 0; i < NOTES_MAX - 1; ++i) {
-
+	int i = 0;
+	while (NOTES_MAX - 1) {
 		if (Notes[i].flag == true && Notes[i].isThrough == false) return false;
+		++i;
 	}
 	return true;
 }
@@ -1205,8 +1232,10 @@ void draw_condition() {
 }
 void init_notes_structure() {
 
-	for (int i = 0; i < NOTES_MAX - 1; ++i) {
+	int i = 0;
+	while (NOTES_MAX - 1) {
 		delete_notes(i);
+		++i;
 	}
 }
 
