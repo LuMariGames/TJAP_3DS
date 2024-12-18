@@ -200,14 +200,8 @@ void disp_file_list() {
 				draw_select_text(x, (n + g + cursor) * 20 + 60, buf_select);
 
 				if (i + g != (cursor * -1)) {
-					if (List[i].level[COURSE_ONI] != 0) {
-						snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_ONI]);
-						draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-					}
-					else {
-						snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_TOWER]);
-						draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-					}
+					snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_ONI]);
+					draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
 				}
 			}
 		}
