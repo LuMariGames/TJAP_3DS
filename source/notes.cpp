@@ -280,7 +280,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	}
 
-	i = 0;
+	int i = 0;
 	while (BARLINE_MAX - 1) {
 
 		if (BarLine[i].flag == true) {
@@ -308,7 +308,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	if (get_isPause() == false) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 
-	int i = 0;
+	i = 0;
 	while (MEASURE_MAX - 1) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
