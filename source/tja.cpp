@@ -423,7 +423,8 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソート
 
-	for (int i = 1; i < array_size; ++i) {
+	int i = 1; 
+	while (array_size - 1) {
 
 		MEASURE_T temp = t[i];
 		if (t[i - 1].create_time > temp.create_time) {
@@ -435,14 +436,14 @@ void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソ
 			} while (j > 0 && t[j - 1].create_time > temp.create_time);
 			t[j] = temp;
 		}
+		++i;
 	}
 }
 
 double calc_first_measure_time() {	//最初に到達する小節の所要時間を計算
 
-	int tmp = -1;
-
-	for (int i = 0; i < MEASURE_MAX; ++i) {
+	int tmp = -1, i = 0;
+	while (MEASURE_MAX) {
 
 		if (Measure[i].flag == true && Measure[i].command == -1) {
 
@@ -452,6 +453,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
 		}
+		++i;
 	}
 	if (Measure[tmp].create_time > 0.000) stme = 0;
 	else stme = tmp;
@@ -732,7 +734,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		MeasureMaxNumber = tja_cnt;
 
-		for (int i = 0; i < MeasureMaxNumber; ++i) {	//次の小節の判定時に発動する命令の調整
+		int i = 0;
+		while (MeasureMaxNumber) {	//次の小節の判定時に発動する命令の調整
 
 			switch (Measure[i].command) {
 			case COMMAND_SECTION:
@@ -743,6 +746,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[i].judge_time = Measure[n].judge_time;
 				break;
 			}
+			++i;
 		}
 
 		//基本天井点を計算
@@ -902,9 +906,10 @@ double get_FirstMeasureTime() {
 
 int get_MeasureId_From_OriginalId(int id) {
 
-	for (int i = 0; i < MEASURE_MAX; ++i) {
-
+	int i = 0;
+	while (MEASURE_MAX) {
 		if (Measure[i].original_id == id) return i;
+		++i;
 	}
 	return -1;
 }
