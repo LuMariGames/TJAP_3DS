@@ -484,6 +484,7 @@ void draw_option_text(float x, float y, const char* text, bool state, float* wid
 
 void get_SelectedId(LIST_T* TMP, int* arg) {
 
+	int i = 0;
 	while (5) {
 		TMP->course[i] = List[SelectedId].course[i];
 		TMP->course_exist[i] = List[SelectedId].course_exist[i];
