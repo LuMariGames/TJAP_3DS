@@ -308,7 +308,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	if (get_isPause() == false) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 
-	i = 0;
+	int i = 0;
 	while (MEASURE_MAX - 1) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
@@ -1048,7 +1048,7 @@ void delete_balloon(int i) {
 void init_balloon_notes() {
 
 	int i = 0;
-	for (BALLOON_MAX - 1) {
+	while (BALLOON_MAX - 1) {
 		delete_balloon(i);
 		++i;
 	}
