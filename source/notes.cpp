@@ -271,6 +271,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				else if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) == 0){
 				PreNotesKnd = 0;
 				}
+				++i;
 			}
 
 			++MeasureCount;
@@ -1056,7 +1057,7 @@ void init_balloon_notes() {
 int find_balloon_id() {
 
 	int i = 0;
-	for (BALLOON_MAX - 1) {
+	while (BALLOON_MAX - 1) {
 		if (BalloonNotes[i].flag == false) return i;
 		++i;
 	}
