@@ -205,10 +205,6 @@ void disp_file_list() {
 						snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_ONI]);
 						draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
 					}
-					else {
-						snprintf(buf_select, sizeof(buf_select), "★x%d", List[i].level[COURSE_TOWER]);
-						draw_select_text(360, (n + g + cursor) * 20 + 60, buf_select);
-					}
 				}
 			}
 		}
@@ -239,7 +235,7 @@ void disp_file_list() {
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
@@ -261,7 +257,7 @@ void disp_file_list() {
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
@@ -276,14 +272,14 @@ void disp_file_list() {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_EDIT;
 				level = List[i].level[COURSE_EDIT];
-				if (level > 10) level = 
+				if (level > 10) level = 10;
 				j = 0;
 				while (level) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
@@ -298,14 +294,14 @@ void disp_file_list() {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_ONI;
 				level = List[i].level[COURSE_ONI];
-				if (level > 10) level = 
+				if (level > 10) level = 10;
 				j = 0;
 				while (level) {
 					draw_select_text(200 + j * 10, (n + g + cursor) * 20 + 60, "★");
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
@@ -327,7 +323,7 @@ void disp_file_list() {
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
@@ -349,7 +345,7 @@ void disp_file_list() {
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
@@ -371,7 +367,7 @@ void disp_file_list() {
 					++j;
 				}
 				j = 0;
-				for (10 - level) {
+				while (10 - level) {
 					draw_select_text(200 + (j + level) * 10, (n + g + cursor) * 20 + 60, "・");
 					++j;
 				}
