@@ -679,8 +679,6 @@ void load_tja_notes(int course, LIST_T Song) {
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
 						break;
-					default:
-						break;
 					}
 				}
 				else {
