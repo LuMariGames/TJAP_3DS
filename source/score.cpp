@@ -10,7 +10,7 @@ extern char *exam1[4], *exam2[4], *exam3[4];
 bool isGOGO;
 int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, isBadCondition,
 CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalPerfectCount, TotalNiceCount, TotalBadCount, TotalCount,
-CurrentPerfectCount, CurrentNiceCount, CurrentBadCount, CurrentBalloonCount, MaxComboCount;
+CurrentPerfectCount, CurrentNiceCount, CurrentBadCount, CurrentBalloonCount, CurrentDaiNotes, MaxComboCount;
 double tmp, Precision, CurrentPrecision;
 TJA_HEADER_T TJA_Header;
 char buf_score[160];
@@ -53,6 +53,7 @@ void init_score() {
 	Precision = 0;
 	CurrentPrecision = 0;
 	CurrentBalloonCount = 0;
+	CurrentDaiNotes = 0;
 	MaxComboCount = 0;
 	init_guage_structure();
 	TotalCount = 0;
@@ -109,6 +110,7 @@ void update_score(int knd) {
 		++TotalPerfectCount;
 		++CurrentPerfectCount;
 		Gauge.score += Gauge.perfect;
+		++CurrentDaiNotes;
 		break;
 
 	case NICE:
@@ -129,6 +131,7 @@ void update_score(int knd) {
 		++TotalNiceCount;
 		++CurrentNiceCount;
 		Gauge.score += Gauge.nice;
+		++CurrentDaiNotes;
 		break;
 
 	case BAD:
@@ -446,6 +449,11 @@ int start_branch(int knd, double x, double y) {	//分岐
 		else if (x <= CurrentScore) branch = COMMAND_E;
 		else branch = COMMAND_N;
 		break;
+	case 3:	//大音符
+		if (y <= CurrentDaiNotes) branch = COMMAND_M;
+		else if (x <= CurrentDaiNotes) branch = COMMAND_E;
+		else branch = COMMAND_N;
+		break;
 	default:
 		branch = COMMAND_N;
 		break;
@@ -461,6 +469,7 @@ void init_branch_section() {	//#SECTION
 	CurrentBadCount = 0;
 	CurrentScore = 0;
 	CurrentPrecision = 0;
+	CurrentDaiNotes = 0;
 }
 
 void send_gogotime(bool arg) {
