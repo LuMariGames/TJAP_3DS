@@ -100,6 +100,12 @@ void load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
+		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
+		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
+		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
+		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
@@ -177,6 +183,12 @@ void sd_load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
+		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
+		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
+		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
+		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
@@ -302,6 +314,12 @@ void sd_load_sound() {
 		//linearFree(&sound[j].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
+  		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
+		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
+		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
+		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }*/
 
@@ -312,12 +330,6 @@ int play_sound(int id) {
 		return -1;
 	}
 	ndspChnWaveBufClear(sound[id].audiochannel);
-	ndspChnReset(sound[id].audiochannel);
-	ndspChnInitParams(sound[id].audiochannel);
-	ndspChnSetMix(sound[id].audiochannel, sound[id].mix);
-	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
-	ndspChnSetRate(sound[id].audiochannel, sound[id].rate);
-	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
 	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id]);
 
 	return 0;
@@ -334,7 +346,7 @@ void exit_music() {
 	linearFree(sound[2].data);
 	linearFree(sound[3].data);
 	/*ndspChnWaveBufClear(sound[4].audiochannel);
-	for (int i = 0; i < ; i += 5) {
+	for (int i = 0; i < 55; i += 5) {
 		linearFree(sound[i].data);
 		linearFree(sound[i+1].data);
 		linearFree(sound[i+2].data);
