@@ -347,12 +347,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	for (int i = 1, j = -1; i < MEASURE_MAX; ++i) {
+	for (int i = 1; i < MEASURE_MAX; ++i) {
 		if (Measure[i].judge_time >= CurrentTimeNotes) {
-			NowBPM = 60.0 / Measure[i+j].bpm;
+			NowBPM = 60.0 / Measure[i-1].bpm;
 			break;
 		}
-		else if (Measure[i].command != -1) ++j;
 	}
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
