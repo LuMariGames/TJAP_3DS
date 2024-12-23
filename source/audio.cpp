@@ -23,8 +23,8 @@ typedef struct {
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[55];
-ndspWaveBuf waveBuf[55];
+Sound sound[SOUND_NUMBER];
+ndspWaveBuf waveBuf[SOUND_NUMBER];
 
 void load_sound() {
 
@@ -100,6 +100,12 @@ void load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
+		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
+		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
+		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
+		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
@@ -177,10 +183,16 @@ void sd_load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
+		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
+		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
+		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
+		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
-void sd_load_combo() {
+/*void sd_load_combo() {
 
 	char sound_address[51][40] = {
 		"sdmc:/tjafiles/theme/50combo.ogg",
@@ -299,7 +311,7 @@ void sd_load_combo() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-}
+}*/
 
 int play_sound(int id) {
 
@@ -308,12 +320,6 @@ int play_sound(int id) {
 		return -1;
 	}
 	ndspChnWaveBufClear(sound[id].audiochannel);
-  	ndspChnReset(sound[id].audiochannel);
-	ndspChnInitParams(sound[id].audiochannel);
-	ndspChnSetMix(sound[id].audiochannel, sound[id].mix);
-	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
-	ndspChnSetRate(sound[id].audiochannel, sound[id].rate);
-	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
 	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id]);
 
 	return 0;
@@ -325,8 +331,8 @@ void exit_music() {
 	ndspChnWaveBufClear(sound[1].audiochannel);
 	ndspChnWaveBufClear(sound[2].audiochannel);
 	ndspChnWaveBufClear(sound[3].audiochannel);
-	ndspChnWaveBufClear(sound[4].audiochannel);
-	for (int i = 0; i < 55; ++i) {
+	//ndspChnWaveBufClear(sound[4].audiochannel);
+	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		linearFree(sound[i].data);
 	}
 	ndspExit();
