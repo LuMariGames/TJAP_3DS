@@ -228,7 +228,7 @@ int main() {
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
 			CurrentTimeMain = -1000;
-			BeforeCombo = 0;
+			BeforeCombo = -1;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
