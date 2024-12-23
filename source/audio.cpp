@@ -308,12 +308,12 @@ int play_sound(int id) {
 		return -1;
 	}
 	ndspChnWaveBufClear(sound[id].audiochannel);
-  	ndspChnReset(sound[i].audiochannel);
-	ndspChnInitParams(sound[i].audiochannel);
-	ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-	ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
-	ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
-	ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
+  	ndspChnReset(sound[id].audiochannel);
+	ndspChnInitParams(sound[id].audiochannel);
+	ndspChnSetMix(sound[id].audiochannel, sound[id].mix);
+	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
+	ndspChnSetRate(sound[id].audiochannel, sound[id].rate);
+	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
 	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id]);
 
 	return 0;
