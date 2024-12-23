@@ -23,8 +23,8 @@ typedef struct {
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[SOUND_NUMBER];
-ndspWaveBuf waveBuf[SOUND_NUMBER];
+Sound sound[55];
+ndspWaveBuf waveBuf[55];
 
 void load_sound() {
 
@@ -100,12 +100,6 @@ void load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
-		ndspChnReset(sound[i].audiochannel);
-		ndspChnInitParams(sound[i].audiochannel);
-		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
-		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
-		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
@@ -183,21 +177,11 @@ void sd_load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
-		ndspChnReset(sound[i].audiochannel);
-		ndspChnInitParams(sound[i].audiochannel);
-		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
-		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
-		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
-/*void sd_load_combo() {
+void sd_load_combo() {
 
-	int j = SOUND_NUMBER;
-	ndspInit();
-	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
-	ndspSetOutputCount(1);
 	char sound_address[51][40] = {
 		"sdmc:/tjafiles/theme/50combo.ogg",
 		"sdmc:/tjafiles/theme/100combo.ogg",
@@ -275,7 +259,7 @@ void sd_load_sound() {
 		sound[i].encoding = NDSP_ENCODING_PCM16;
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
-		sound[i].audiochannel = j;
+		sound[i].audiochannel = SOUND_NUMBER;
 		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
@@ -314,14 +298,8 @@ void sd_load_sound() {
 		//linearFree(&sound[j].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
-  		ndspChnReset(sound[i].audiochannel);
-		ndspChnInitParams(sound[i].audiochannel);
-		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
-		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
-		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
-}*/
+}
 
 int play_sound(int id) {
 
@@ -330,6 +308,12 @@ int play_sound(int id) {
 		return -1;
 	}
 	ndspChnWaveBufClear(sound[id].audiochannel);
+  	ndspChnReset(sound[i].audiochannel);
+	ndspChnInitParams(sound[i].audiochannel);
+	ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
+	ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
+	ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
+	ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id]);
 
 	return 0;
@@ -341,21 +325,9 @@ void exit_music() {
 	ndspChnWaveBufClear(sound[1].audiochannel);
 	ndspChnWaveBufClear(sound[2].audiochannel);
 	ndspChnWaveBufClear(sound[3].audiochannel);
-	linearFree(sound[0].data);
-	linearFree(sound[1].data);
-	linearFree(sound[2].data);
-	linearFree(sound[3].data);
-	/*ndspChnWaveBufClear(sound[4].audiochannel);
-	for (int i = 0; i < 55; i += 5) {
+	ndspChnWaveBufClear(sound[4].audiochannel);
+	for (int i = 0; i < 55; ++i) {
 		linearFree(sound[i].data);
-		linearFree(sound[i+1].data);
-		linearFree(sound[i+2].data);
-		linearFree(sound[i+3].data);
-		linearFree(sound[i+4].data);
-	}*/
+	}
 	ndspExit();
-}
-
-int music_SamplePos(int id) {
-	return (int)ndspChnGetSamplePos(sound[id].audiochannel);
 }
