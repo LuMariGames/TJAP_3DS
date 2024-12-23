@@ -23,8 +23,8 @@ typedef struct {
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[SOUND_NUMBER];
-ndspWaveBuf waveBuf[SOUND_NUMBER];
+Sound sound[55];
+ndspWaveBuf waveBuf[55];
 
 void load_sound() {
 
@@ -100,12 +100,6 @@ void load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
-		ndspChnReset(sound[i].audiochannel);
-		ndspChnInitParams(sound[i].audiochannel);
-		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
-		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
-		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
@@ -183,69 +177,63 @@ void sd_load_sound() {
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
-		ndspChnReset(sound[i].audiochannel);
-		ndspChnInitParams(sound[i].audiochannel);
-		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
-		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
-		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 	}
 }
 
-/*void sd_load_combo() {
+void load_combo() {
 
-	char sound_address[51][40] = {
-		"sdmc:/tjafiles/theme/50combo.ogg",
-		"sdmc:/tjafiles/theme/100combo.ogg",
-		"sdmc:/tjafiles/theme/200combo.ogg",
-		"sdmc:/tjafiles/theme/300combo.ogg",
-		"sdmc:/tjafiles/theme/400combo.ogg",
-		"sdmc:/tjafiles/theme/500combo.ogg",
-		"sdmc:/tjafiles/theme/600combo.ogg",
-		"sdmc:/tjafiles/theme/700combo.ogg",
-		"sdmc:/tjafiles/theme/800combo.ogg",
-		"sdmc:/tjafiles/theme/900combo.ogg",
-		"sdmc:/tjafiles/theme/1000combo.ogg",
-		"sdmc:/tjafiles/theme/1100combo.ogg",
-		"sdmc:/tjafiles/theme/1200combo.ogg",
-		"sdmc:/tjafiles/theme/1300combo.ogg",
-		"sdmc:/tjafiles/theme/1400combo.ogg",
-		"sdmc:/tjafiles/theme/1500combo.ogg",
-		"sdmc:/tjafiles/theme/1600combo.ogg",
-		"sdmc:/tjafiles/theme/1700combo.ogg",
-		"sdmc:/tjafiles/theme/1800combo.ogg",
-		"sdmc:/tjafiles/theme/1900combo.ogg",
-		"sdmc:/tjafiles/theme/2000combo.ogg",
-		"sdmc:/tjafiles/theme/2100combo.ogg",
-		"sdmc:/tjafiles/theme/2200combo.ogg",
-		"sdmc:/tjafiles/theme/2300combo.ogg",
-		"sdmc:/tjafiles/theme/2400combo.ogg",
-		"sdmc:/tjafiles/theme/2500combo.ogg",
-		"sdmc:/tjafiles/theme/2600combo.ogg",
-		"sdmc:/tjafiles/theme/2700combo.ogg",
-		"sdmc:/tjafiles/theme/2800combo.ogg",
-		"sdmc:/tjafiles/theme/2900combo.ogg",
-		"sdmc:/tjafiles/theme/3000combo.ogg",
-		"sdmc:/tjafiles/theme/3100combo.ogg",
-		"sdmc:/tjafiles/theme/3200combo.ogg",
-		"sdmc:/tjafiles/theme/3300combo.ogg",
-		"sdmc:/tjafiles/theme/3400combo.ogg",
-		"sdmc:/tjafiles/theme/3500combo.ogg",
-		"sdmc:/tjafiles/theme/3600combo.ogg",
-		"sdmc:/tjafiles/theme/3700combo.ogg",
-		"sdmc:/tjafiles/theme/3800combo.ogg",
-		"sdmc:/tjafiles/theme/3900combo.ogg",
-		"sdmc:/tjafiles/theme/4000combo.ogg",
-		"sdmc:/tjafiles/theme/4100combo.ogg",
-		"sdmc:/tjafiles/theme/4200combo.ogg",
-		"sdmc:/tjafiles/theme/4300combo.ogg",
-		"sdmc:/tjafiles/theme/4400combo.ogg",
-		"sdmc:/tjafiles/theme/4500combo.ogg",
-		"sdmc:/tjafiles/theme/4600combo.ogg",
-		"sdmc:/tjafiles/theme/4700combo.ogg",
-		"sdmc:/tjafiles/theme/4800combo.ogg",
-		"sdmc:/tjafiles/theme/4900combo.ogg",
-		"sdmc:/tjafiles/theme/5000combo.ogg",
+	char sound_address[51][30] = {
+		"romfs:/combo/50combo.ogg",
+		"romfs:/combo/100combo.ogg",
+		"romfs:/combo/200combo.ogg",
+		"romfs:/combo/300combo.ogg",
+		"romfs:/combo/400combo.ogg",
+		"romfs:/combo/500combo.ogg",
+		"romfs:/combo/600combo.ogg",
+		"romfs:/combo/700combo.ogg",
+		"romfs:/combo/800combo.ogg",
+		"romfs:/combo/900combo.ogg",
+		"romfs:/combo/1000combo.ogg",
+		"romfs:/combo/1100combo.ogg",
+		"romfs:/combo/1200combo.ogg",
+		"romfs:/combo/1300combo.ogg",
+		"romfs:/combo/1400combo.ogg",
+		"romfs:/combo/1500combo.ogg",
+		"romfs:/combo/1600combo.ogg",
+		"romfs:/combo/1700combo.ogg",
+		"romfs:/combo/1800combo.ogg",
+		"romfs:/combo/1900combo.ogg",
+		"romfs:/combo/2000combo.ogg",
+		"romfs:/combo/2100combo.ogg",
+		"romfs:/combo/2200combo.ogg",
+		"romfs:/combo/2300combo.ogg",
+		"romfs:/combo/2400combo.ogg",
+		"romfs:/combo/2500combo.ogg",
+		"romfs:/combo/2600combo.ogg",
+		"romfs:/combo/2700combo.ogg",
+		"romfs:/combo/2800combo.ogg",
+		"romfs:/combo/2900combo.ogg",
+		"romfs:/combo/3000combo.ogg",
+		"romfs:/combo/3100combo.ogg",
+		"romfs:/combo/3200combo.ogg",
+		"romfs:/combo/3300combo.ogg",
+		"romfs:/combo/3400combo.ogg",
+		"romfs:/combo/3500combo.ogg",
+		"romfs:/combo/3600combo.ogg",
+		"romfs:/combo/3700combo.ogg",
+		"romfs:/combo/3800combo.ogg",
+		"romfs:/combo/3900combo.ogg",
+		"romfs:/combo/4000combo.ogg",
+		"romfs:/combo/4100combo.ogg",
+		"romfs:/combo/4200combo.ogg",
+		"romfs:/combo/4300combo.ogg",
+		"romfs:/combo/4400combo.ogg",
+		"romfs:/combo/4500combo.ogg",
+		"romfs:/combo/4600combo.ogg",
+		"romfs:/combo/4700combo.ogg",
+		"romfs:/combo/4800combo.ogg",
+		"romfs:/combo/4900combo.ogg",
+		"romfs:/combo/5000combo.ogg",
 	};
 
 	for (int i = 4; i < 55; ++i) {
@@ -311,7 +299,7 @@ void sd_load_sound() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-}*/
+}
 
 int play_sound(int id) {
 
@@ -320,6 +308,12 @@ int play_sound(int id) {
 		return -1;
 	}
 	ndspChnWaveBufClear(sound[id].audiochannel);
+	ndspChnReset(sound[id].audiochannel);
+	ndspChnInitParams(sound[id].audiochannel);
+	ndspChnSetMix(sound[id].audiochannel, sound[id].mix);
+	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
+	ndspChnSetRate(sound[id].audiochannel, sound[id].rate);
+	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
 	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id]);
 
 	return 0;
@@ -331,8 +325,8 @@ void exit_music() {
 	ndspChnWaveBufClear(sound[1].audiochannel);
 	ndspChnWaveBufClear(sound[2].audiochannel);
 	ndspChnWaveBufClear(sound[3].audiochannel);
-	//ndspChnWaveBufClear(sound[4].audiochannel);
-	for (int i = 0; i < SOUND_NUMBER; ++i) {
+	ndspChnWaveBufClear(sound[4].audiochannel);
+	for (int i = 0; i < 55; ++i) {
 		linearFree(sound[i].data);
 	}
 	ndspExit();
