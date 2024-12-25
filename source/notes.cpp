@@ -167,14 +167,14 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].flag = true;
 					Notes[id].notes_max = NotesCount;
 					Notes[id].num = NotesNumber;
-					Notes[id].scroll = Measure[MeasureCount].scroll * Option.speed;
-					Notes[id].x_ini = ((NOTES_AREA*Measure[MeasureCount].measure / NotesCountMax)*i + NOTES_JUDGE_RANGE)*Notes[id].scroll + NOTES_JUDGE_X;
+					Notes[id].scroll = Measure[MeasureCount].scroll*Option.speed;
+					Notes[id].x_ini = NOTES_JUDGE_RANGE*Notes[id].scroll+NOTES_JUDGE_X;
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
 					//Notes[id].create_time = CurrentTimeNotes;
-					Notes[id].pop_time = Measure[MeasureCount].pop_time;
-					Notes[id].judge_time = Measure[MeasureCount].judge_time + 240.0 / Measure[MeasureCount].bpm * Measure[MeasureCount].measure * i / NotesCountMax;
+					Notes[id].pop_time = Measure[MeasureCount].pop_time+240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
+					Notes[id].judge_time = Measure[MeasureCount].judge_time+240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
 
@@ -347,9 +347,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	for (int i = 1; i < MEASURE_MAX; ++i) {
-		if (Measure[i].judge_time >= CurrentTimeNotes) {
-			NowBPM = 60.0 / Measure[i-1].bpm;
+	for (int i = MEASURE_MAX; i > 0; --i) {
+		if (Measure[i].judge_time <= CurrentTimeNotes) {
+			NowBPM = Measure[i].bpm;
 			break;
 		}
 	}
@@ -678,7 +678,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag == true) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0 / Notes[i].bpm);
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (NowBPM / Notes[i].bpm);
 
 			switch (Notes[i].knd) {
 
