@@ -334,11 +334,6 @@ int main() {
 			}
 			draw_score(sprites);
 
-			if ((int)(combo/100) != BeforeCombo && combo < 5100 && combo >= 50) {
-				play_sound(combo/100+4);
-				BeforeCombo = combo/100;
-			}
-
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
@@ -388,6 +383,13 @@ int main() {
 			if ((get_notes_finish() == true && ndspChnIsPlaying(CHANNEL) == false) || (courselife == 0 && course == COURSE_TOWER)) {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
+			}
+			if ((int)(combo/100) != BeforeCombo && combo < 5100 && combo >= 50) {
+				play_sound(combo/100+4);
+				BeforeCombo = combo/100;
+			}
+			else if (combo <= 0) {
+				BeforeCombo = -1;
 			}
 			break;
 
