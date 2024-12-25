@@ -347,9 +347,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	for (int i = MEASURE_MAX; i > 0; --i) {
-		if (Measure[i].judge_time >= CurrentTimeNotes) {
-			NowBPM = Measure[i].bpm;
+	for (int i = 1; i < MEASURE_MAX; ++i) {
+		if (Measure[i].create_time <= CurrentTimeNotes) {
+			NowBPM = Measure[i-1].bpm;
 			break;
 		}
 	}
@@ -678,7 +678,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag == true) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0/NowBPM);
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0/Notes[i].bpm);
 
 			switch (Notes[i].knd) {
 
