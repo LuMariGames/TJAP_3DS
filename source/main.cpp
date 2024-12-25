@@ -388,7 +388,7 @@ int main() {
 				play_sound(combo/100+4);
 				BeforeCombo = combo/100;
 			}
-			else if (combo <= 0) {
+			if (combo < 50) {
 				BeforeCombo = -1;
 			}
 			break;
