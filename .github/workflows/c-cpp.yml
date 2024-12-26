@@ -19,5 +19,6 @@ jobs:
       with:
         name: Build
         path: |
+          romfs/gfx/sprites.t3x
           TJAP_3DS.3dsx
           TJAP_3DS.cia
