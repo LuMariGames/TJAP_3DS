@@ -96,8 +96,8 @@ void load_tja_head(int course,LIST_T Song) {
 			++cnt;
 			temp = (char *)malloc((strlen(buf) + 1));
 
-			mix[0] = Current_Header.songvol / 100;
-			mix[1] = Current_Header.songvol / 100;
+			mix[0] = Current_Header.songvol / 100.0;
+			mix[1] = Current_Header.songvol / 100.0;
 			if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
 				break;
 			}
