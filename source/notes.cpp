@@ -348,7 +348,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_judge(CurrentTimeNotes, sprites);
 
 	for (int i = 1; i < MEASURE_MAX; ++i) {
-		if (Measure[i].judge_time+240.0/Measure[i].bpm*Measure[i].measure >= CurrentTimeNotes) 
+		if (Measure[i].judge_time + (240.0 / Measure[i].bpm * Measure[i].measure) >= CurrentTimeNotes) {
 			NowBPM = Measure[i-1].bpm;
 			break;
 		}
