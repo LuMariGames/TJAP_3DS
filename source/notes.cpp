@@ -356,7 +356,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}*/
 
-	if (Measure[id].judge_time <= CurrentTimeNotes) NowBPM = Measure[id].bpm;
+	if (Measure[id].pop_time <= CurrentTimeNotes) NowBPM = Measure[id].bpm;
 	
 	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
