@@ -95,8 +95,14 @@ void playFile(void* infoIn){
 
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
-	int16_t*	buffer1 = NULL, buffer2 = NULL, buffer3 = NULL, buffer4 = NULL,
-				buffer5 = NULL, buffer6 = NULL, buffer7 = NULL, buffer8 = NULL;
+	int16_t*	buffer1 = NULL;
+	int16_t*	buffer2 = NULL;
+	int16_t*	buffer3 = NULL;
+	int16_t*	buffer4 = NULL;
+	int16_t*	buffer5 = NULL;
+	int16_t*	buffer6 = NULL;
+	int16_t*	buffer7 = NULL;
+	int16_t*	buffer8 = NULL;
 	ndspWaveBuf		waveBuf[8];
 	bool			lastbuf = false;
 	int				ret = -1;
