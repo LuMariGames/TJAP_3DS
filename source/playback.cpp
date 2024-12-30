@@ -179,19 +179,19 @@ void playFile(void* infoIn){
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 
 	waveBuf[4].nsamples = (*decoder.decode)(&buffer5[0]) / (*decoder.channels)();
-	waveBuf[4].data_vaddr = &buffer1[0];
+	waveBuf[4].data_vaddr = &buffer5[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[4]);
 
 	waveBuf[5].nsamples = (*decoder.decode)(&buffer6[0]) / (*decoder.channels)();
-	waveBuf[5].data_vaddr = &buffer2[0];
+	waveBuf[5].data_vaddr = &buffer6[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[5]);
 	
 	waveBuf[6].nsamples = (*decoder.decode)(&buffer7[0]) / (*decoder.channels)();
-	waveBuf[6].data_vaddr = &buffer3[0];
+	waveBuf[6].data_vaddr = &buffer7[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[6]);
 
 	waveBuf[7].nsamples = (*decoder.decode)(&buffer8[0]) / (*decoder.channels)();
-	waveBuf[7].data_vaddr = &buffer4[0];
+	waveBuf[7].data_vaddr = &buffer8[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[7]);
 	
 	while(ndspChnIsPlaying(CHANNEL) == false);
