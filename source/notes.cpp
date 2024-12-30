@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, NowMeCount;
+int balloon[256], BalloonCount, TotalFailedCount, MeDiff, MeCount;
 extern int isBranch, comboVoice, course, isBadCondition, stme;
 double bpm, offset;
 float NowBPM;
@@ -57,8 +57,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			Branch.next = false;
 		}
 
+		if (Measure[MeasureCount].create_time <= CurrentTimeNotes && Branch.wait == false) MeDiff = 0;
+
 		while (Measure[MeasureCount].create_time <= CurrentTimeNotes && Branch.wait == false) {
 
+			++MeDiff;
 			NotesCount = 0;
 
 			if (Measure[MeasureCount].branch != Branch.course && Measure[MeasureCount].branch != -1) {
@@ -264,20 +267,17 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 						RollState = 0;
 						break;
 					}
-
 					++NotesNumber;
 				}
 				else if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) == 0){
 				PreNotesKnd = 0;
 				}
 			}
-
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
-
 	}
-
+	
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 
 		if (BarLine[i].flag == true) {
@@ -347,10 +347,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	int id = MeasureCount - 1;
+	int id = MeasureCount - MeDiff;
 
 	/*for (int i = 1; i < MEASURE_MAX; ++i) {
-		if (Measure[i].pop_time + (240.0 / Measure[i].bpm * Measure[i].measure) >= CurrentTimeNotes) {
+		if (Measure[i].judge_time >= CurrentTimeNotes) {
 			NowBPM = Measure[i-1].bpm;
 			break;
 		}
@@ -360,7 +360,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	
 	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
-
 	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[id].bpm, Measure[id].measure, Measure[id].scroll);
 	draw_debug(0, 20, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "Judge:%.1f   Create:%.1f   Pop:%.1f", Measure[id].judge_time, Measure[id].create_time, Measure[id].pop_time);
@@ -369,8 +368,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_debug(0, 50, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "course:%d", Branch.course);
 	draw_debug(250, 40, get_buffer());
-	
-	
 }
 
 int find_notes_id() {
@@ -1236,7 +1233,8 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	NotesCount = 0;
 	NowMeCount = 0;
 	RollState = 0;
-	MeasureCount = 0;
+	MeDiff = 0;
+	MeCount = 0;
 	isNotesLoad = true;
 	isJudgeDisp = false;
 	JudgeMakeTime = 0;
