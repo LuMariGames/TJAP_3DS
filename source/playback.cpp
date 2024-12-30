@@ -267,7 +267,6 @@ void playFile(void* infoIn){
 
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 		}
-	}
 
 		if(waveBuf[4].status == NDSP_WBUF_DONE){
 
