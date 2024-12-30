@@ -347,14 +347,16 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	int id = MeasureCount;
+	int id = MeasureCount - 1;
 
-	for (int i = 1; i < MEASURE_MAX; ++i) {
-		if (Measure[i].create_time + (240.0 / Measure[i].bpm * Measure[i].measure) >= CurrentTimeNotes) {
+	/*for (int i = 1; i < MEASURE_MAX; ++i) {
+		if (Measure[i].pop_time + (240.0 / Measure[i].bpm * Measure[i].measure) >= CurrentTimeNotes) {
 			NowBPM = Measure[i-1].bpm;
 			break;
 		}
-	}
+	}*/
+
+	if (Measure[id].pop_time + (240.0 / Measure[id].bpm * Measure[id].measure) <= CurrentTimeNotes) NowBPM = Measure[id].bpm;
 	
 	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
