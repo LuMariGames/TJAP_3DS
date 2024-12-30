@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, MeDiff, MeCount;
+int balloon[256], BalloonCount, TotalFailedCount, MeDiff;
 extern int isBranch, comboVoice, course, isBadCondition, stme;
 double bpm, offset;
 float NowBPM;
@@ -1231,10 +1231,8 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	}
 	NotesNumber = 0;
 	NotesCount = 0;
-	NowMeCount = 0;
 	RollState = 0;
 	MeDiff = 0;
-	MeCount = 0;
 	isNotesLoad = true;
 	isJudgeDisp = false;
 	JudgeMakeTime = 0;
