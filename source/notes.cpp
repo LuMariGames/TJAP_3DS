@@ -57,8 +57,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			Branch.next = false;
 		}
 
-		if (Measure[MeasureCount].create_time <= CurrentTimeNotes && Branch.wait == false) MeDiff = 0;
-
 		while (Measure[MeasureCount].create_time <= CurrentTimeNotes && Branch.wait == false) {
 
 			NotesCount = 0;
