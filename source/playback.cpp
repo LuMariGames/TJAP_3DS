@@ -202,7 +202,11 @@ void playFile(void* infoIn){
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
 			waveBuf[2].status == NDSP_WBUF_DONE &&
-			waveBuf[3].status == NDSP_WBUF_DONE)
+			waveBuf[3].status == NDSP_WBUF_DONE &&
+			waveBuf[4].status == NDSP_WBUF_DONE &&
+			waveBuf[5].status == NDSP_WBUF_DONE &&
+			waveBuf[6].status == NDSP_WBUF_DONE &&
+			waveBuf[7].status == NDSP_WBUF_DONE)
 			break;
 
 		if(ndspChnIsPaused(CHANNEL) == true || lastbuf == true)
