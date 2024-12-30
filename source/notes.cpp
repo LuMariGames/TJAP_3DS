@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, MeDiff;
+int balloon[256], BalloonCount, TotalFailedCount;
 extern int isBranch, comboVoice, course, isBadCondition, stme;
 double bpm, offset;
 float NowBPM;
@@ -61,7 +61,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 		while (Measure[MeasureCount].create_time <= CurrentTimeNotes && Branch.wait == false) {
 
-			++MeDiff;
 			NotesCount = 0;
 
 			if (Measure[MeasureCount].branch != Branch.course && Measure[MeasureCount].branch != -1) {
@@ -347,18 +346,14 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	int id = MeasureCount - MeDiff;
-
-	/*for (int i = 1; i < MEASURE_MAX; ++i) {
-		if (Measure[i].judge_time >= CurrentTimeNotes) {
+	for (int i = 1; i < MEASURE_MAX; ++i) {
+		if (Measure[i].pop_time >= CurrentTimeNotes) {
 			NowBPM = Measure[i-1].bpm;
 			break;
 		}
-	}*/
+	}
 
-	if (Measure[id].pop_time <= CurrentTimeNotes) NowBPM = Measure[id].bpm;
-	
-	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
+	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[id].bpm, Measure[id].measure, Measure[id].scroll);
 	draw_debug(0, 20, get_buffer());
@@ -367,7 +362,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", id, tja_notes[id]);
 	draw_debug(0, 50, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "course:%d", Branch.course);
-	draw_debug(250, 40, get_buffer());
+	draw_debug(250, 40, get_buffer());*/
 }
 
 int find_notes_id() {
@@ -1232,7 +1227,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	NotesNumber = 0;
 	NotesCount = 0;
 	RollState = 0;
-	MeDiff = 0;
 	isNotesLoad = true;
 	isJudgeDisp = false;
 	JudgeMakeTime = 0;
