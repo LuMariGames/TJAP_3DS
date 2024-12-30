@@ -347,16 +347,18 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	if (Measure[MeasureCount].judge_time+240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure >= CurrentTimeNotes) NowBPM = Measure[MeasureCount].bpm;
+	id = MeasureCount - 2;
+
+	if (Measure[id].judge_time+240.0/Measure[id].bpm*Measure[id].measure >= CurrentTimeNotes) NowBPM = Measure[id].bpm;
 	
 	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
 
-	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[MeasureCount].bpm, Measure[MeasureCount].measure, Measure[MeasureCount].scroll);
+	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[id].bpm, Measure[id].measure, Measure[id].scroll);
 	draw_debug(0, 20, get_buffer());
-	snprintf(get_buffer(), BUFFER_SIZE, "Judge:%.1f   Create:%.1f   Pop:%.1f", Measure[MeasureCount].judge_time, Measure[MeasureCount].create_time, Measure[MeasureCount].pop_time);
+	snprintf(get_buffer(), BUFFER_SIZE, "Judge:%.1f   Create:%.1f   Pop:%.1f", Measure[id].judge_time, Measure[id].create_time, Measure[id].pop_time);
 	draw_debug(0, 40, get_buffer());
-	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", MeasureCount, tja_notes[MeasureCount]);
+	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", id, tja_notes[id]);
 	draw_debug(0, 50, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "course:%d", Branch.course);
 	draw_debug(250, 40, get_buffer());
