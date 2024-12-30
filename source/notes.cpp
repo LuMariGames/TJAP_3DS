@@ -347,14 +347,16 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
+	int id = MeasureCount;
+
 	for (int i = 1; i < MEASURE_MAX; ++i) {
-		if (Measure[i].pop_time + (240.0 / Measure[i].bpm * Measure[i].measure) >= CurrentTimeNotes) {
+		if (Measure[i].pop_time + (240.0 / Measure[i+1].bpm * Measure[i+1].measure) >= CurrentTimeNotes) {
 			NowBPM = Measure[i-1].bpm;
 			break;
 		}
 	}
 	
-	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
+	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
 
 	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[id].bpm, Measure[id].measure, Measure[id].scroll);
@@ -364,7 +366,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", id, tja_notes[id]);
 	draw_debug(0, 50, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "course:%d", Branch.course);
-	draw_debug(250, 40, get_buffer());*/
+	draw_debug(250, 40, get_buffer());
 	
 	
 }
