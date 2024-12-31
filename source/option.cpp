@@ -542,6 +542,10 @@ void toggle_auto() {
 	Option.isAuto = !Option.isAuto;
 }
 
+bool get_isauto() {
+	return Option.isAuto;
+}
+
 void init_option() {
 
 	Option.isAuto = false;

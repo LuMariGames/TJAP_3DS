@@ -23,8 +23,8 @@ typedef struct {
 	ndspInterpType interp;
 	OggVorbis_File ovf;
 } Sound;
-Sound sound[55];
-ndspWaveBuf waveBuf[55];
+Sound sound[71];
+ndspWaveBuf waveBuf[71];
 
 void load_sound() {
 
@@ -182,7 +182,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[51][30] = {
+	char sound_address[67][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
@@ -234,9 +234,25 @@ void load_combo() {
 		"romfs:/combo/4800combo.ogg",
 		"romfs:/combo/4900combo.ogg",
 		"romfs:/combo/5000combo.ogg",
+		"romfs:/combo/50meka.ogg",
+		"romfs:/combo/100meka.ogg",
+		"romfs:/combo/200meka.ogg",
+		"romfs:/combo/300meka.ogg",
+		"romfs:/combo/400meka.ogg",
+		"romfs:/combo/500meka.ogg",
+		"romfs:/combo/600meka.ogg",
+		"romfs:/combo/700meka.ogg",
+		"romfs:/combo/800meka.ogg",
+		"romfs:/combo/900meka.ogg",
+		"romfs:/combo/1000meka.ogg",
+		"romfs:/combo/1100meka.ogg",
+		"romfs:/combo/1200meka.ogg",
+		"romfs:/combo/1300meka.ogg",
+		"romfs:/combo/1400meka.ogg",
+		"romfs:/combo/mekaover.ogg",
 	};
 
-	for (int i = 4; i < 55; ++i) {
+	for (int i = 4; i < 71; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
@@ -326,7 +342,7 @@ void exit_music() {
 	ndspChnWaveBufClear(sound[2].audiochannel);
 	ndspChnWaveBufClear(sound[3].audiochannel);
 	ndspChnWaveBufClear(sound[4].audiochannel);
-	for (int i = 0; i < 55; ++i) {
+	for (int i = 0; i < 71; ++i) {
 		linearFree(sound[i].data);
 	}
 	ndspExit();

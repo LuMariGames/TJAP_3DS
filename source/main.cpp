@@ -384,8 +384,8 @@ int main() {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
 			}
-			if ((int)(combo/100) != BeforeCombo && combo < 5100 && combo >= 50) {
-				play_sound(combo/100+4);
+			if ((int)(combo/100) != BeforeCombo && combo < get_isauto() ? 5100 : 1600 && combo >= 50) {
+				play_sound(combo/100+(get_isauto() ? 55 : 4));
 				BeforeCombo = combo/100;
 			}
 			if (combo < 50) {
