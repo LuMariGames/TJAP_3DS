@@ -535,11 +535,3 @@ int time_count(double TIME) {
 	if ((int)floor(TIME/(60.0/NowBPM)) % 2 == 1) return 1+(isGOGO*2);
 	else return 0+(isGOGO*2);
 }
-
-double get_offset(TJA_HEADER_T TJA_Header) {
-
-	OPTION_T Option;
-	get_option(&Option);
-
-	return TJA_Header.offset + Option.offset;
-}
