@@ -5,6 +5,8 @@
 #include <inttypes.h>
 
 #include "main.h"
+#include "tja.h"
+#include "option.h"
 #include "vorbis.h"
 #include "header.h"
 
