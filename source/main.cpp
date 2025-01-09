@@ -25,6 +25,7 @@ C2D_Text dynText;
 int dn_x, dn_y, dg_x, dg_y;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
 char buffer[BUFFER_SIZE];
+double offset = 0;
 
 void load_sprites();
 
@@ -112,8 +113,7 @@ int main() {
 
 	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, BeforeCombo = 0;
 
-	double FirstMeasureTime = INT_MAX,
-		offset = 0,CurrentTimeMain = -1000;
+	double FirstMeasureTime = INT_MAX,CurrentTimeMain = -1000;
 
 	while (aptMainLoop()) {
 
