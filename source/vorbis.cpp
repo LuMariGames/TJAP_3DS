@@ -5,6 +5,7 @@
 #include <inttypes.h>
 
 #include "main.h"
+#include "notes.h"
 #include "vorbis.h"
 #include "header.h"
 
@@ -107,7 +108,7 @@ int isVorbis(const char *in){
 
 double getVorbisTime() {
 
-	if (get_isMusicStart() == true) return vorbis_time = ((double)ov_time_tell(&vorbisFile) / 1000.0) - (1.0 - get_offset(TJA_HEADER_T TJA_Header));	//再生前に呼び出すとクラッシュ
+	if (get_isMusicStart() == true) return vorbis_time = ((double)ov_time_tell(&vorbisFile) / 1000.0) - (1.0 - get_offset());	//再生前に呼び出すとクラッシュ
 	else return -1000;
 }
 
