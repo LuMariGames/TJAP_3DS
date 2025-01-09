@@ -1263,6 +1263,3 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 double sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
-double get_offset() {
-	return offset;
-}
