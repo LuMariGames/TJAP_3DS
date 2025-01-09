@@ -5,7 +5,6 @@
 #include <inttypes.h>
 
 #include "main.h"
-#include "notes.h"
 #include "vorbis.h"
 #include "header.h"
 
