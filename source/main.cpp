@@ -528,12 +528,14 @@ int exist_file(const char* path) {
     if (fp == NULL) {
         return 0;
     }
-
     fclose(fp);
     return 1;
 }
 int time_count(double TIME) {
-
 	if ((int)floor(TIME/(60.0/NowBPM)) % 2 == 1) return 1+(isGOGO*2);
 	else return 0+(isGOGO*2);
+}
+
+double get_offset() {
+	return offset;
 }
