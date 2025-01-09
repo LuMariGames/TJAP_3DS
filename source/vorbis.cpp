@@ -8,6 +8,9 @@
 #include "vorbis.h"
 #include "header.h"
 
+TJA_HEADER_T TJA_Header
+OPTION_T Option;
+
 static OggVorbis_File	vorbisFile;
 static vorbis_info		*vi;
 static FILE				*f;
@@ -107,8 +110,6 @@ int isVorbis(const char *in){
 
 double getVorbisTime() {
 
-	TJA_HEADER_T TJA_Header;
-	OPTION_T Option;
 	get_option(&Option);
 
 	if (get_isMusicStart() == true) return vorbis_time = ((double)ov_time_tell(&vorbisFile) / 1000.0) - (1.0 - (TJA_Header.offset + Option.offset));	//再生前に呼び出すとクラッシュ
