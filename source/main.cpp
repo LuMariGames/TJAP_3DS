@@ -15,7 +15,7 @@
 #include "main.h"
 #include "vorbis.h"
 
-extern int course, courselife, TotalBadCount, combo;
+extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
@@ -110,7 +110,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, BeforeCombo = 0;
+	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0, //BeforeCombo = 0;
 
 	double FirstMeasureTime = INT_MAX,
 		offset = 0,CurrentTimeMain = -1000;
@@ -154,7 +154,7 @@ int main() {
 				warning = WARNING_DSP1;
 				scene_state = SCENE_WARNING; 
 			}
-			load_combo();
+			//load_combo();
 			break;
 
 		case SCENE_WARNING:		//警告画面
@@ -228,7 +228,7 @@ int main() {
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
 			CurrentTimeMain = -1000;
-			BeforeCombo = -1;
+			//BeforeCombo = -1;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
@@ -386,13 +386,13 @@ int main() {
 			}
 
 			//コンボボイス
-			if ((int)(combo/100) != BeforeCombo && combo < (get_isauto() ? 1600 : 5100) && combo >= 50) {
+			/*if ((int)(combo/100) != BeforeCombo && combo < (get_isauto() ? 1600 : 5100) && combo >= 50) {
 				play_sound(combo/100+(get_isauto() ? 55 : 4));
 				BeforeCombo = combo/100;
 			}
 			if (combo < 50) {
 				BeforeCombo = -1;
-			}
+			}*/
 			break;
 
 		case SCENE_RESULT:
