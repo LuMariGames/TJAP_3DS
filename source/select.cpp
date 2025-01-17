@@ -78,7 +78,6 @@ void load_genre_file(int id) {
 	}
 	if (json == NULL) {	//開けなかった時
 	}
-
 	json_decref(json);
 }
 
@@ -358,7 +357,6 @@ void disp_file_list() {
 	draw_select_text(10, 60, ">>");
 	//snprintf(buf_select, sizeof(buf_select), "isCS:%d SI:%d SGI:%dGf:%d",isCursorGenre,SelectedId, SelectedGenreId,Genre[SelectedGenreId].flag);
 	//draw_select_text(0, 50, buf_select);
-
 }
 
 void update_cursor(int knd) {
@@ -395,10 +393,9 @@ void update_cursor(int knd) {
 	else if (knd == KEY_X) {
 		isSelectCourse = false;
 		srand(time(NULL));
-		cursor = rand() % (SongNumber - ClosedSongNumber) - (SongNumber - ClosedSongNumber);
+		cursor = rand() % (SongNumber - ClosedSongNumber) + GenreNumber;
 		play_sound(SOUND_DON);
 	}
-
 }
 
 C2D_TextBuf g_SelectText = C2D_TextBufNew(4096);
@@ -446,8 +443,7 @@ void draw_option_text(float x, float y, const char* text, bool state, float* wid
 	}
 	else if (state == true) {
 		C2D_DrawText(&SelectText, C2D_WithColor, x, y, 1.0f, sizex, sizey, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
-	}
-	
+	}	
 }
 
 void get_SelectedId(LIST_T* TMP, int* arg) {
