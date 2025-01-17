@@ -101,7 +101,7 @@ void load_sound() {
 		ndspChnReset(sound[i].audiochannel);
 		ndspChnInitParams(sound[i].audiochannel);
 		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[id].audiochannel, sound[i].interp);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
 		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
 		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 		//linearFree(&sound[i].ovf);
@@ -184,7 +184,7 @@ void sd_load_sound() {
 		ndspChnReset(sound[i].audiochannel);
 		ndspChnInitParams(sound[i].audiochannel);
 		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[id].audiochannel, sound[i].interp);
+		ndspChnSetInterp(sound[i].audiochannel, sound[i].interp);
 		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
 		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(sound[i].encoding));
 		//linearFree(&sound[i].ovf);
