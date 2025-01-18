@@ -2,8 +2,8 @@
 #include "tja.h"
 
 typedef struct {
-	int num, notes_max, knd, roll_id, text_id;
-	double x_ini, create_time, judge_time, pop_time, bpm, scroll;
+	int num, notes_max, knd, roll_id, text_id, x_ini;
+	double create_time, judge_time, pop_time, bpm, scroll;
 	bool flag, isThrough;
 	float x;
 	C2D_Sprite spr;
@@ -11,8 +11,8 @@ typedef struct {
 } NOTES_T;
 
 typedef struct {
-	int measure;
-	double x_ini, create_time, scroll;
+	int measure, x_ini;
+	double create_time, scroll;
 	bool flag, isDisp;
 	float x;
 
