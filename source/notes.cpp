@@ -15,6 +15,7 @@ extern int isBranch, comboVoice, course, isBadCondition, stme;
 double bpm, offset;
 float NowBPM;
 extern double black;
+extern C2D_SpriteSheet spriteSheet;
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId), make_balloon_start(int NotesId), make_balloon_end(int NotesId);
 void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
