@@ -219,9 +219,6 @@ void update_score(int knd) {
 	case ROLL_END:
 		CurrentRollCount = 0;
 		break;
-
-	default:
-		break;
 	}
 	//}
 
