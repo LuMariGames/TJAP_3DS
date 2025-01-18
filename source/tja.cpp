@@ -604,8 +604,6 @@ void load_tja_notes(int course, LIST_T Song) {
 					case COMMAND_END:
 						isEnd = true;
 						break;
-					default:
-						break;
 					}
 				}
 				else {
