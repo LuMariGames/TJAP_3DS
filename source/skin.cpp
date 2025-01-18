@@ -54,7 +54,7 @@ void exit_skin() {
 void get_skin(SKIN_T *TMP) {
 
 	TMP->don_x = Skin.don_x*3;
-	TMP->don_y = Skin.don_y*3;
+	TMP->don_y = Skin.don_y;
 	TMP->don_gogo_x = Skin.don_gogo_x*3;
-	TMP->don_gogo_y = Skin.don_gogo_y*3;
+	TMP->don_gogo_y = Skin.don_gogo_y;
 }
