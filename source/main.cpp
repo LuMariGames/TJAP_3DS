@@ -243,7 +243,7 @@ int main() {
 
 		case SCENE_MAINGAME:		//メイン
 
-			C2D_SceneSize (TOP_HEIGHT*3, TOP_WIDTH*3, true);
+			C2D_SceneSize (TOP_HEIGHT*3, TOP_WIDTH/3, true);
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
 
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
