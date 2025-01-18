@@ -419,16 +419,16 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		case NICE:				//可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_NICE], &Tint);
-			C2D_DrawSprite(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_NICE), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_NICE), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		case SPECIAL_NICE:		//特可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_NICE], &Tint);
-			C2D_DrawSprite(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_NICE), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_NICE), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		case BAD:				//不可
-			C2D_DrawSprite(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_BAD), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_BAD), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		}
@@ -846,10 +846,10 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				//draw_debug(Notes[i].x, 132, buf_notes);
 				break;
 			case NOTES_ROLLEND:
-				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_ROLL_END), Notes[i].x, notes_y, 0.0f, 0.0f, null, sign(Notes[i].scroll), 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_ROLL_END), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, sign(Notes[i].scroll), 1.0f);
 				break;
 			case NOTES_BIGROLLEND:
-				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_ROLL_END), Notes[i].x, notes_y, 0.0f, 0.0f, null, sign(Notes[i].scroll), 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_ROLL_END), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, sign(Notes[i].scroll), 1.0f);
 				break;
 			}
 			
