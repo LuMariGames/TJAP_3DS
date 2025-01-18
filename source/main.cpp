@@ -430,6 +430,7 @@ void load_sprites() {
 	for (int i = 0; i < SPRITES_NUMER; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
+		C2D_SpriteSetScale(sprites[i], 3.0, 1.0)
 	}
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
