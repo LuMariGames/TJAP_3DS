@@ -407,11 +407,9 @@ int main() {
 			break;
 		}
 
-		C2D_Flush();
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
-
 	exit_main();
 	return 0;
 }
