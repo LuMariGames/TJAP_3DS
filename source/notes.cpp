@@ -93,8 +93,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					case COMMAND_BRANCHEND:
 						Branch.course = -1;
 						break;
-					default:
-						break;
 					}
 
 					NotesCount = 0;
