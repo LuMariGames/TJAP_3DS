@@ -408,26 +408,26 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		case PERFECT:			//良
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_PERFECT], &Tint);
-			C2D_DrawImageAtRotated(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_PERFECT), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT], &Tint);
-			C2D_DrawImageAtRotated(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_PERFECT), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		case NICE:				//可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_NICE], &Tint);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawSprite(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_NICE), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		case SPECIAL_NICE:		//特可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_NICE], &Tint);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawSprite(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_NICE), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		case BAD:				//不可
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_BAD], 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+			C2D_DrawSprite(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_JUDGE_BAD), 93, JudgeY, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 			break;
 
 		}
@@ -757,16 +757,16 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 			switch (Notes[i].knd) {
 			case NOTES_DON:
-				C2D_DrawImageAtRotated(&sprites[SPRITE_DON], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_DON), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				break;
 			case NOTES_KATSU:
-				C2D_DrawImageAtRotated(&sprites[SPRITE_KATSU], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_KATSU), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				break;
 			case NOTES_BIGDON:
-				C2D_DrawImageAtRotated(&sprites[SPRITE_BIG_DON], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_DON), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				break;
 			case NOTES_BIGKATSU:
-				C2D_DrawImageAtRotated(&sprites[SPRITE_BIG_KATSU], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_KATSU), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				break;
 			case NOTES_ROLL:
 
@@ -778,15 +778,15 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					if (Notes[i].scroll > 0) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							C2D_DrawImageAtRotated(&sprites[SPRITE_ROLL_INT], Notes[i].x + 9 * n, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+							C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_ROLL_INT), Notes[i].x + 9 * n, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							C2D_DrawImageAtRotated(&sprites[SPRITE_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+							C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_ROLL_INT), Notes[i].x + 9 * (n * -1), notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 						}
 					}
-					C2D_DrawImageAtRotated(&sprites[SPRITE_ROLL_START], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_ROLL_START), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 				break;
 
@@ -800,15 +800,15 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					if (Notes[i].scroll > 0) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							C2D_DrawImageAtRotated(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+							C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_ROLL_INT), Notes[i].x + 9 * (n * -1), notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							C2D_DrawImageAtRotated(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+							C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_ROLL_INT), Notes[i].x + 9 * (n * -1), notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 						}
 					}
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BIG_ROLL_START], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_ROLL_START), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 					break;
 				}
 
@@ -816,27 +816,27 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 				if (BalloonNotes[Notes[i].roll_id].current_hit == 0) {
 
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BALLOON], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BALLOON), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2) {
 
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BALLOON_1], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BALLOON_1), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4) {
 
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BALLOON_2], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BALLOON_2), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6) {
 
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BALLOON_3], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BALLOON_3), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8) {
 
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BALLOON_4], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BALLOON_4), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
-					C2D_DrawImageAtRotated(&sprites[SPRITE_BALLOON_5], Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
+					C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BALLOON_5), Notes[i].x, notes_y, 0.0f, 0.0f, NULL, 1.0f, 1.0f);
 				}
 
 				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
@@ -845,10 +845,10 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				//draw_debug(Notes[i].x, 132, buf_notes);
 				break;
 			case NOTES_ROLLEND:
-				C2D_DrawImageAtRotated(&sprites[SPRITE_ROLL_END], Notes[i].x, notes_y, 0.0f, 0.0f, null, sign(Notes[i].scroll), 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_ROLL_END), Notes[i].x, notes_y, 0.0f, 0.0f, null, sign(Notes[i].scroll), 1.0f);
 				break;
 			case NOTES_BIGROLLEND:
-				C2D_DrawImageAtRotated(&sprites[SPRITE_BIG_ROLL_END], Notes[i].x, notes_y, 0.0f, 0.0f, null, sign(Notes[i].scroll), 1.0f);
+				C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(spriteSheet, SPRITE_BIG_ROLL_END), Notes[i].x, notes_y, 0.0f, 0.0f, null, sign(Notes[i].scroll), 1.0f);
 				break;
 			}
 			
