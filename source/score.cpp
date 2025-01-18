@@ -269,7 +269,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 		if (TotalScore / powi(10, i) > 0) {
 			int n = TotalScore / powi(10, i) % 10;
-			C2D_SpriteSetPos(&sprites[SPRITE_SCORE_0 + n], 80 - i * 12, 70);
+			C2D_SpriteSetPos(&sprites[SPRITE_SCORE_0 + n], 240 - i * 36, 70);
 			C2D_DrawSprite(&sprites[SPRITE_SCORE_0 + n]);
 		}
 	}
@@ -287,11 +287,11 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 			int n = combo / powi(10, i) % 10;
 
 			if (combo < 100) {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0 + n], 22 + j * 8 - i * 16, 110);
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0 + n], 66 + j * 24 - i * 48, 110);
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0 + n]);
 			}
 			else {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED + n], 22 + j * 8 - i * 16, 110);
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED + n], 66 + j * 24 - i * 48, 110);
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED + n]);
 			}
 		}
@@ -302,7 +302,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		if (CurrentRollCount / powi(10, j) == 0) break;
 	}
 	if (CurrentRollCount > 0) {
-		C2D_SpriteSetPos(&sprites[SPRITE_ROLL_COUNT], 110, 35);
+		C2D_SpriteSetPos(&sprites[SPRITE_ROLL_COUNT], 330, 35);
 		C2D_DrawSprite(&sprites[SPRITE_ROLL_COUNT]);
 	}
 	for (int i = 0; i < 4; ++i) {
@@ -310,7 +310,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		if (CurrentRollCount / powi(10, i) > 0) {
 
 			int n = CurrentRollCount / powi(10, i) % 10;
-			C2D_SpriteSetPos(&sprites[SPRITE_ROLL_0 + n], 95 + j * 10 - i * 20, 30);
+			C2D_SpriteSetPos(&sprites[SPRITE_ROLL_0 + n], 285 + j * 30 - i * 60, 30);
 			C2D_DrawSprite(&sprites[SPRITE_ROLL_0 + n]);
 		}
 	}
@@ -320,7 +320,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		if (CurrentBalloonCount / powi(10, j) == 0) break;
 	}
 	if (CurrentBalloonCount > 0) {
-		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_COUNT], 110, 35);
+		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_COUNT], 330, 35);
 		C2D_DrawSprite(&sprites[SPRITE_BALLOON_COUNT]);
 	}
 	for (int i = 0; i < 4; ++i) {
@@ -328,7 +328,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		if (CurrentBalloonCount / powi(10, i) > 0) {
 
 			int n = CurrentBalloonCount / powi(10, i) % 10;
-			C2D_SpriteSetPos(&sprites[SPRITE_ROLL_0 + n], 97 + j * 10 - i * 20, 30);
+			C2D_SpriteSetPos(&sprites[SPRITE_ROLL_0 + n], 291 + j * 30 - i * 60, 30);
 			C2D_DrawSprite(&sprites[SPRITE_ROLL_0 + n]);
 		}
 	}
@@ -342,17 +342,17 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	if (gauge > 1.0) gauge = 1.0;
 
 	//赤
-	C2D_DrawRectSolid(123, 76, 0, 250.0 * Gauge.norma / Gauge.soul, 8, C2D_Color32f(102.0 / 255, 0, 0, 1));
-	C2D_DrawRectSolid(123, 76, 0, 250.0 * gauge, 8, C2D_Color32f(1, 0, 0, 1));
+	C2D_DrawRectSolid(369, 76, 0, 750.0 * Gauge.norma / Gauge.soul, 8, C2D_Color32f(102.0 / 255, 0, 0, 1));
+	C2D_DrawRectSolid(369, 76, 0, 750.0 * gauge, 8, C2D_Color32f(1, 0, 0, 1));
 
 	//黄
-	C2D_DrawRectSolid(123 + 250.0 * Gauge.norma / Gauge.soul, 67, 0, 250 - 250.0 * Gauge.norma / Gauge.soul, 17, C2D_Color32f(102.0 / 255, 68.0 / 255, 0, 1));
+	C2D_DrawRectSolid(369 + 750.0 * Gauge.norma / Gauge.soul, 67, 0, 750 - 750.0 * Gauge.norma / Gauge.soul, 17, C2D_Color32f(102.0 / 255, 68.0 / 255, 0, 1));
 	if (250 * gauge - (250.0 * Gauge.norma / Gauge.soul) >= 0)
-		C2D_DrawRectSolid(123 + 250.0 * Gauge.norma / Gauge.soul, 67, 0, 250 * gauge - (250.0 * Gauge.norma / Gauge.soul), 17, C2D_Color32f(1, 1, 12.0 / 255, 1));
+		C2D_DrawRectSolid(369 + 750.0 * Gauge.norma / Gauge.soul, 67, 0, 750 * gauge - (750.0 * Gauge.norma / Gauge.soul), 17, C2D_Color32f(1, 1, 12.0 / 255, 1));
 
 	//魂
-	for (int i = 0; i < 2; ++i) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 385, 75);
-	C2D_SpriteSetPos(&sprites[SPRITE_SOUL_EFFECT], 395, 65);
+	for (int i = 0; i < 2; ++i) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 1155, 75);
+	C2D_SpriteSetPos(&sprites[SPRITE_SOUL_EFFECT], 1185, 65);
 	if ((Gauge.score / 200) * 200 >= Gauge.soul) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 0.8);
@@ -365,7 +365,7 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	int diff = 50, scores = (int)Gauge.score;
-	double x_start = 123 - diff, x_end = 250 - diff;
+	double x_start = 369 - diff, x_end = 750 - diff;
 	double gauge = 1.0 * (scores / 200) * 200 / Gauge.soul;
 	if (gauge > 1.0) gauge = 1.0;
 
@@ -379,8 +379,8 @@ void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		C2D_DrawRectSolid(x_start + x_end * Gauge.norma / Gauge.soul, 67, 0, x_end * gauge - (x_end * Gauge.norma / Gauge.soul), 17, C2D_Color32f(1, 1, 12.0 / 255, 1));
 
 	//魂
-	for (int i = 0; i < 2; ++i) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 385 - diff * 2, 75);
-	C2D_SpriteSetPos(&sprites[SPRITE_SOUL_EFFECT], 395 - diff * 2, 65);
+	for (int i = 0; i < 2; ++i) C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON + i], 1155 - diff * 6, 75);
+	C2D_SpriteSetPos(&sprites[SPRITE_SOUL_EFFECT], 1185 - diff * 6, 65);
 	if ((Gauge.score / 200) * 200 >= Gauge.soul) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 0.8);
@@ -400,21 +400,21 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		switch (branch) {
 		case COMMAND_N:
 		default:
-			C2D_SpriteSetPos(&sprites[SPRITE_CHART_NORMAL], 350, 110);
+			C2D_SpriteSetPos(&sprites[SPRITE_CHART_NORMAL], 1050, 110);
 			C2D_DrawSprite(&sprites[SPRITE_CHART_NORMAL]);
 			break;
 
 		case COMMAND_E:
-			C2D_SpriteSetPos(&sprites[SPRITE_LANE_EXPERT], 233, 109);
+			C2D_SpriteSetPos(&sprites[SPRITE_LANE_EXPERT], 699, 109);
 			C2D_DrawSprite(&sprites[SPRITE_LANE_EXPERT]);
-			C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 350, 110);
+			C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 1050, 110);
 			C2D_DrawSprite(&sprites[SPRITE_CHART_EXPERT]);
 			break;
 
 		case COMMAND_M:
-			C2D_SpriteSetPos(&sprites[SPRITE_LANE_MASTER], 233, 109);
+			C2D_SpriteSetPos(&sprites[SPRITE_LANE_MASTER], 699, 109);
 			C2D_DrawSprite(&sprites[SPRITE_LANE_MASTER]);
-			C2D_SpriteSetPos(&sprites[SPRITE_CHART_MASTER], 350, 110);
+			C2D_SpriteSetPos(&sprites[SPRITE_CHART_MASTER], 1050, 110);
 			C2D_DrawSprite(&sprites[SPRITE_CHART_MASTER]);
 			break;
 		}
@@ -802,31 +802,31 @@ void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	switch (TJA_Header.course) {
 	case COURSE_EASY:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EASY]);
 		break;
 	case COURSE_NORMAL:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 204.0 / 255.0, 34.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(136.0 / 255.0, 204.0 / 255.0, 34.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_NORMAL]);
 		break;
 	case COURSE_HARD:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(51.0 / 255.0, 170.0 / 255.0, 187.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(51.0 / 255.0, 170.0 / 255.0, 187.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_HARD]);
 		break;
 	case COURSE_ONI:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 34.0 / 255.0, 204.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(1, 34.0 / 255.0, 204.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_ONI]);
 		break;
 	case COURSE_EDIT:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 34.0 / 255.0, 1, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(136.0 / 255.0, 34.0 / 255.0, 1, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EDIT]);
 		break;
 	case COURSE_TOWER:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 86.0 / 255.0, 12.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(136.0 / 255.0, 86.0 / 255.0, 12.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_TOWER]);
 		break;
 	case COURSE_DAN:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(14.0 / 255.0, 88.0 / 255.0, 129.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 0, 186, 58, C2D_Color32f(14.0 / 255.0, 88.0 / 255.0, 129.0 / 255.0, 1));
 		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_DAN]);
 		break;
 	}
