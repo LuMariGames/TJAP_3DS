@@ -286,7 +286,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) / (240.0 / Measure[BarLine[i].measure].bpm);
 
 			if (BarLine[i].isDisp == true) {
-				C2D_DrawRectSolid(BarLine[i].x, 86, 0, 3, 46, C2D_Color32f(1, 1, 1, 1));
+				C2D_DrawRectangle(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1));
 
 				//snprintf(buf_notes, sizeof(buf_notes), "%d", Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x - 10, 133, buf_notes);
@@ -408,30 +408,30 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		case PERFECT:			//良
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_PERFECT], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 279, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_PERFECT]);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 279, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_PERFECT]);
 			break;
 
 		case NICE:				//可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_NICE], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 279, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE]);
 			break;
 
 		case SPECIAL_NICE:		//特可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_NICE], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 279, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE]);
 			break;
 
 		case BAD:				//不可
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], 279, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], 92, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_BAD]);
 			break;
 
@@ -782,18 +782,18 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 1260.0) end_x = TOP_WIDTH + 60;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 27.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 27 * n, notes_y);
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 9 * n, notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 27.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 27 * (n * -1), notes_y);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
@@ -807,18 +807,18 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 1260.0) end_x = TOP_WIDTH + 60;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 27.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 27 * n, notes_y);
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 9 * n, notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 27.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 27 * (n * -1), notes_y);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
@@ -867,12 +867,12 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				break;
 			case NOTES_ROLLEND:
 				C2D_SpriteSetPos(&sprites[SPRITE_ROLL_END], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll)*3, 1);
+				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawSprite(&sprites[SPRITE_ROLL_END]);
 				break;
 			case NOTES_BIGROLLEND:
 				C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_END], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll)*3, 1);
+				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_END]);
 				break;
 			}
@@ -1148,7 +1148,7 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
-	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, size*3, size, C2D_Color32f(black, black, black, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
@@ -1160,7 +1160,7 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
-	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size*3, size, C2D_Color32f(black, black, black, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
 void draw_title() {

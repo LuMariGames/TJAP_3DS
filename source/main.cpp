@@ -37,7 +37,7 @@ void draw_debug(float x, float y, const char *text) {
 	C2D_TextBufClear(g_dynamicBuf);
 	C2D_TextParse(&dynText, g_dynamicBuf, text);
 	C2D_TextOptimize(&dynText);
-	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 1.5f, 0.5f, C2D_Color32f(0.0f, 1.0f, 0.0f, 1.0f));
+	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
 void init_main() {
@@ -48,7 +48,7 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	gfxSetWide(false);
+	gfxSetWide(true);
 	osSetSpeedupEnable(true);
 }
 
@@ -209,6 +209,7 @@ int main() {
 			C2D_SceneBegin(bottom);
 			draw_option(tp.px, tp.py, key, sprites);
 			isPause = false;
+
 			break;
 
 		case SCENE_MAINLOAD:
@@ -242,7 +243,6 @@ int main() {
 
 		case SCENE_MAINGAME:		//メイン
 
-			C2D_SceneSize (TOP_HEIGHT, TOP_WIDTH, true);
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
 
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
@@ -429,7 +429,6 @@ void load_sprites() {
 	for (int i = 0; i < SPRITES_NUMER; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
-		C2D_SpriteSetScale(&sprites[i], 3.0f, 1.0f);
 	}
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
@@ -438,9 +437,9 @@ void load_sprites() {
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
-	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 279, 109);
+	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
 
-	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 330, 92);
+	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
@@ -450,7 +449,7 @@ void load_sprites() {
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
-	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 93, 113);
+	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 }
 
 bool get_isPause() {

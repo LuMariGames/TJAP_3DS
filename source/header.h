@@ -25,11 +25,11 @@
 
 #define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
 #define MEASURE_MAX 8192
-#define NOTES_AREA 1014.0	//ノーツ表示エリアの長さ
-#define NOTES_JUDGE_X 279.0	//判定枠の中心のX座標
-#define NOTES_JUDGE_RANGE 981.0	//判定枠の中心から小節生成位置の距離(右端+20)
+#define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
+#define NOTES_JUDGE_X 93.0	//判定枠の中心のX座標
+#define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
 
-#define TOP_WIDTH  1200
+#define TOP_WIDTH  400
 #define TOP_HEIGHT 240
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
@@ -44,7 +44,7 @@
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
 
-#define DEFAULT_BUFFER_SIZE 2500
+#define DEFAULT_BUFFER_SIZE 2560
 
 enum NOTES_KND {
 
