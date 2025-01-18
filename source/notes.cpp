@@ -867,12 +867,12 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				break;
 			case NOTES_ROLLEND:
 				C2D_SpriteSetPos(&sprites[SPRITE_ROLL_END], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
+				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll)*3, 1);
 				C2D_DrawSprite(&sprites[SPRITE_ROLL_END]);
 				break;
 			case NOTES_BIGROLLEND:
 				C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_END], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
+				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll)*3, 1);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_END]);
 				break;
 			}
