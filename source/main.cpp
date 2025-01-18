@@ -183,7 +183,6 @@ int main() {
 
 		case SCENE_SELECTSONG:	//選曲
 
-			C2D_SceneSize (TOP_HEIGHT, TOP_WIDTH, true);
 			if (key & KEY_START) isExit = true;
 
 			if (cnt == 0) {
