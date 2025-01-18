@@ -19,7 +19,7 @@ extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
-C2D_SpriteSheet spriteSheet;
+static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 int dn_x, dn_y, dg_x, dg_y;
@@ -48,7 +48,7 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	gfxSetWide(false);
+	gfxSetWide(true);
 	osSetSpeedupEnable(true);
 }
 

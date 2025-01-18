@@ -351,7 +351,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	}
 
 	FILE *fp;
-	char buf[128],*temp = NULL;;
+	char buf[128],*temp = NULL;
 	int course = COURSE_ONI,cnt = 0;
 
 	chdir(List->path);
