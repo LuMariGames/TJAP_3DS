@@ -439,9 +439,9 @@ void load_sprites() {
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
-	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
+	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 279, 109);
 
-	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
+	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 330, 92);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
@@ -451,7 +451,7 @@ void load_sprites() {
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
-	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
+	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 93, 113);
 }
 
 bool get_isPause() {
