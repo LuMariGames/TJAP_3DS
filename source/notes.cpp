@@ -782,18 +782,18 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 1260.0) end_x = TOP_WIDTH + 60;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 9 * n, notes_y);
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 27.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 27 * n, notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 27.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_ROLL_INT], Notes[i].x + 27 * (n * -1), notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
@@ -807,18 +807,18 @@ void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 1260.0) end_x = TOP_WIDTH + 60;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 9 * n, notes_y);
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 27.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 27 * n, notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 9 * (n * -1), notes_y);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 27.0; n < m; ++n) {
+							C2D_SpriteSetPos(&sprites[SPRITE_BIG_ROLL_INT], Notes[i].x + 27 * (n * -1), notes_y);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
