@@ -286,7 +286,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) / (240.0 / Measure[BarLine[i].measure].bpm);
 
 			if (BarLine[i].isDisp == true) {
-				C2D_DrawRectangle(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1));
+				C2D_DrawRectSolid(BarLine[i].x, 86, 0, 3, 46, C2D_Color32f(1, 1, 1, 1));
 
 				//snprintf(buf_notes, sizeof(buf_notes), "%d", Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x - 10, 133, buf_notes);
