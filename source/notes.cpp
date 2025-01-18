@@ -408,30 +408,30 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		case PERFECT:			//良
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_PERFECT], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 279, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_PERFECT]);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 279, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_PERFECT]);
 			break;
 
 		case NICE:				//可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_NICE], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 279, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE]);
 			break;
 
 		case SPECIAL_NICE:		//特可
 			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_NICE], &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 279, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE]);
 			break;
 
 		case BAD:				//不可
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], 92, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], 279, JudgeY);
 			C2D_DrawSprite(&sprites[SPRITE_JUDGE_BAD]);
 			break;
 
