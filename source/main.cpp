@@ -183,6 +183,7 @@ int main() {
 
 		case SCENE_SELECTSONG:	//選曲
 
+			C2D_SceneSize (TOP_WIDTH, TOP_HEIGHT, true);
 			if (key & KEY_START) isExit = true;
 
 			if (cnt == 0) {
@@ -209,7 +210,6 @@ int main() {
 			C2D_SceneBegin(bottom);
 			draw_option(tp.px, tp.py, key, sprites);
 			isPause = false;
-
 			break;
 
 		case SCENE_MAINLOAD:
@@ -243,6 +243,7 @@ int main() {
 
 		case SCENE_MAINGAME:		//メイン
 
+			C2D_SceneSize (TOP_WIDTH*2, TOP_HEIGHT, true);
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
 
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
