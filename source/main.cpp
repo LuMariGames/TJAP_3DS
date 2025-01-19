@@ -1,7 +1,3 @@
-#pragma GCC target("avx2");
-#pragma GCC optimize("O2");
-#pragma GCC optimize("unroll-loops");
-
 #include <stdio.h>
 #include <stdlib.h>
 
