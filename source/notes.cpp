@@ -345,10 +345,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 
-	for (int i = 0; i < MEASURE_MAX; ++i) {
-		if (Measure[i].command == -1 && Measure[i].judge_time <= CurrentTimeNotes) {
-			NowBPM = Measure[i].bpm;
-		}
+	for (int i = 0; i < MEASURE_MAX; i += 4) {
+		if (Measure[i].command == -1 && Measure[i].judge_time <= CurrentTimeNotes) NowBPM = Measure[i].bpm;
+		else if (Measure[i+1].command == -1 && Measure[i+1].judge_time <= CurrentTimeNotes) NowBPM = Measure[i+1].bpm;
+		else if (Measure[i+2].command == -1 && Measure[i+2].judge_time <= CurrentTimeNotes) NowBPM = Measure[i+2].bpm;
+		else if (Measure[i+3].command == -1 && Measure[i+2].judge_time <= CurrentTimeNotes) NowBPM = Measure[i+3].bpm;
 	}
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
@@ -369,6 +370,9 @@ int find_notes_id() {
 
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 		if (Notes[i].flag == false) return i;
+		if (Notes[i+1].flag == false) return i+1;
+		if (Notes[i+2].flag == false) return i+2;
+		if (Notes[i+3].flag == false) return i+3;
 	}
 	return -1;
 }
@@ -377,6 +381,9 @@ int find_line_id() {
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		if (BarLine[i].flag == false) return i;
+		if (BarLine[i+1].flag == false) return i+1;
+		if (BarLine[i+2].flag == false) return i+2;
+		if (BarLine[i+3].flag == false) return i+3;
 	}
 	return -1;
 }
