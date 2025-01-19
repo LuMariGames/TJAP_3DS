@@ -124,13 +124,12 @@ int main() {
 		if (isExit == true) break;
 
 		bool isDon = false, isKatsu = false;
+		get_option(&Option);
 
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
-
-		get_option(&Option);
 
 		switch (scene_state) {
 
@@ -316,9 +315,6 @@ int main() {
 				button_game(&isDon, &isKatsu, Option, key);
 			}
 
-			if (isDon == true)   play_sound(SOUND_DON);			//ドン
-			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
-
 			if (key & KEY_SELECT || (key & KEY_START)) {
 				togglePlayback();
 				toggle_time(0);
@@ -338,21 +334,6 @@ int main() {
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
-
-			if (TotalBadCount > 0) {
-				switch (Option.special) {
-				case 1:
-					scene_state = SCENE_RESULT;
-					cnt = -1;
-					break;
-
-				case 2:
-					isPlayMain = true;
-					stopPlayback();
-					scene_state = SCENE_MAINLOAD;
-					break;
-				}
-			}
 
 			if (isPause == true) {
 				if (key & KEY_DUP) toggle_auto();
@@ -381,10 +362,28 @@ int main() {
 					play_sound(SOUND_DON);
 				}
 			}
+			C3D_FrameEnd(0);
+
+			if (TotalBadCount > 0) {
+				switch (Option.special) {
+				case 1:
+					scene_state = SCENE_RESULT;
+					cnt = -1;
+					break;
+
+				case 2:
+					isPlayMain = true;
+					stopPlayback();
+					scene_state = SCENE_MAINLOAD;
+					break;
+				}
+			}
 			if ((get_notes_finish() == true && ndspChnIsPlaying(CHANNEL) == false) || (courselife == 0 && course == COURSE_TOWER)) {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
 			}
+			if (isDon == true)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
 
 			//コンボボイス
 			/*if ((int)(combo/100) != BeforeCombo && combo < (get_isauto() ? 1600 : 5100) && combo >= 50) {
