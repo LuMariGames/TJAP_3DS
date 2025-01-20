@@ -44,6 +44,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].pop_time);
 	//draw_debug(0, 185, get_buffer());
 
+	if (Option.isStelth == false) notes_draw(sprites);
+	draw_emblem(sprites);
+	draw_judge(CurrentTimeNotes, sprites);
+
 	if (cnt >= 0 && isNotesLoad == true) {
 
 		//分岐
@@ -294,11 +298,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}
 
 	send_gogotime(isGOGOTime);
-	if (course == COURSE_DAN) dan_condition();
-	if (TotalFailedCount != isBadCondition) {
-		play_sound(SOUND_FAILED);
-		TotalFailedCount = isBadCondition;
-	}	
 
 	if (get_isPause() == false) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 	
@@ -341,13 +340,15 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	if (Option.isStelth == false) notes_draw(sprites);
-	draw_emblem(sprites);
-	draw_judge(CurrentTimeNotes, sprites);
-
 	for (int i = 0; i < MEASURE_MAX; i += 4) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) NowBPM = Measure[i].bpm;
 		else if (Measure[i].judge_time >= CurrentTimeNotes) break;
+	}
+
+	if (course == COURSE_DAN) dan_condition();
+	if (TotalFailedCount != isBadCondition) {
+		play_sound(SOUND_FAILED);
+		TotalFailedCount = isBadCondition;
 	}
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
