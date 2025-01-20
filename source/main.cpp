@@ -301,6 +301,9 @@ int main() {
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 
+			if (isDon == true)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
+
 			if (key & KEY_SELECT || (key & KEY_START)) {
 				togglePlayback();
 				toggle_time(0);
@@ -381,8 +384,6 @@ int main() {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
 			}
-			if (isDon == true)   play_sound(SOUND_DON);		//ドン
-			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
 
 			//コンボボイス
 			/*if ((int)(combo/100) != BeforeCombo && combo < (get_isauto() ? 1600 : 5100) && combo >= 50) {
