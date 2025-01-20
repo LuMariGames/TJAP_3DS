@@ -346,10 +346,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_judge(CurrentTimeNotes, sprites);
 
 	for (int i = 0; i < MEASURE_MAX; i += 4) {
-		if (Measure[i].command == -1 && Measure[i].judge_time <= CurrentTimeNotes) NowBPM = Measure[i].bpm;
-		else if (Measure[i+1].command == -1 && Measure[i+1].judge_time <= CurrentTimeNotes) NowBPM = Measure[i+1].bpm;
-		else if (Measure[i+2].command == -1 && Measure[i+2].judge_time <= CurrentTimeNotes) NowBPM = Measure[i+2].bpm;
-		else if (Measure[i+3].command == -1 && Measure[i+2].judge_time <= CurrentTimeNotes) NowBPM = Measure[i+3].bpm;
+		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) NowBPM = Measure[i].bpm;
+		else if (Measure[i].judge_time >= CurrentTimeNotes) break;
 	}
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
