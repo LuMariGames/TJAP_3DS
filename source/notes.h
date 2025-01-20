@@ -14,7 +14,7 @@ typedef struct {
 	int measure, x_ini;
 	double create_time, scroll;
 	bool flag, isDisp;
-	float x;
+	float x = 420;
 
 } BARLINE_T;
 
