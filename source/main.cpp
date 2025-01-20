@@ -182,11 +182,17 @@ int main() {
 
 		case SCENE_SELECTSONG:	//選曲
 
-			if (key & KEY_START) isExit = true;
-
 			if (cnt == 0) {
 				select_ini();
 			}
+
+			disp_file_list();
+			get_SelectedId(&SelectedSong, &course);
+
+			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
+			C2D_SceneBegin(bottom);
+			draw_option(tp.px, tp.py, key, sprites);
+			C3D_FrameEnd(0);
 
 			if (key & KEY_UP)		update_cursor(KEY_UP);
 			if (key & KEY_DOWN)		update_cursor(KEY_DOWN);
@@ -196,19 +202,12 @@ int main() {
 			if (key & KEY_B)		update_cursor(KEY_B);
 			if (key & KEY_X)		update_cursor(KEY_X);
 
-			disp_file_list();
-
 			if (get_isGameStart() == true) {
 				scene_state = SCENE_MAINLOAD;
 				cnt = -1;
 			}
-			get_SelectedId(&SelectedSong, &course);
-
-			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
-			C2D_SceneBegin(bottom);
-			draw_option(tp.px, tp.py, key, sprites);
 			isPause = false;
-
+			if (key & KEY_START) isExit = true;
 			break;
 
 		case SCENE_MAINLOAD:
@@ -252,12 +251,62 @@ int main() {
 			draw_emblem(sprites);
 			if (course == COURSE_DAN) draw_condition();
 
+			if (Option.dispFps == true) draw_fps();
+
+			draw_lane(sprites);
+			draw_gauge(sprites);
+
+			if (isNotesStart == true) {
+				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+				if (isPause == false) ++notes_cnt;
+			}
+			draw_score(sprites);
+
+			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
+			C2D_SceneBegin(bottom);
+			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+
+			if (isPause == true) {
+				tmp = pause_window(tp, key);
+
+				switch (tmp) {
+				case 1:
+					isPlayMain = true;
+					stopPlayback();
+					scene_state = SCENE_MAINLOAD;
+					break;
+
+				case 2:
+					isPlayMain = true;
+					stopPlayback();
+					cnt = -1;
+					scene_state = SCENE_SELECTSONG;
+					break;
+				}
+
+				if (tmp > -1) {
+					togglePlayback();
+					toggle_time(0);
+					toggle_time(1);
+					isPause = !isPause;
+					play_sound(SOUND_DON);
+				}
+				if (key & KEY_DUP) toggle_auto();
+			}
+			C3D_FrameEnd(0);
+
 			if (cnt == 0) {
 				FirstMeasureTime = get_FirstMeasureTime();
 				play_main_music(&isPlayMain, SelectedSong);
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
-			if (Option.dispFps == true) draw_fps();
+
+			if (key & KEY_SELECT || (key & KEY_START)) {
+				togglePlayback();
+				toggle_time(0);
+				toggle_time(1);
+				isPause = !isPause;
+			}
 
 			//譜面が先
 			if (offset > 0 && (isNotesStart == false || isMusicStart == false)) {
@@ -314,55 +363,6 @@ int main() {
 				button_game(&isDon, &isKatsu, Option, key);
 			}
 
-			if (key & KEY_SELECT || (key & KEY_START)) {
-				togglePlayback();
-				toggle_time(0);
-				toggle_time(1);
-				isPause = !isPause;
-			}
-
-			draw_lane(sprites);
-			draw_gauge(sprites);
-
-			if (isNotesStart == true) {
-				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (isPause == false) ++notes_cnt;
-			}
-			draw_score(sprites);
-
-			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
-			C2D_SceneBegin(bottom);
-			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
-
-			if (isPause == true) {
-				if (key & KEY_DUP) toggle_auto();
-				tmp = pause_window(tp, key);
-
-				switch (tmp) {
-				case 1:
-					isPlayMain = true;
-					stopPlayback();
-					scene_state = SCENE_MAINLOAD;
-					break;
-
-				case 2:
-					isPlayMain = true;
-					stopPlayback();
-					cnt = -1;
-					scene_state = SCENE_SELECTSONG;
-					break;
-				}
-
-				if (tmp > -1) {
-					togglePlayback();
-					toggle_time(0);
-					toggle_time(1);
-					isPause = !isPause;
-					play_sound(SOUND_DON);
-				}
-			}
-			C3D_FrameEnd(0);
-
 			if (TotalBadCount > 0) {
 				switch (Option.special) {
 				case 1:
@@ -397,12 +397,12 @@ int main() {
 		case SCENE_RESULT:
 
 			stopPlayback();
+			draw_gauge_result(sprites);
+			draw_result();
 			if (key & KEY_START) {
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
-			draw_gauge_result(sprites);
-			draw_result();
 			break;
 		}
 
