@@ -293,13 +293,12 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	if (Option.isStelth == false) notes_draw(sprites);
-	draw_emblem(sprites);
-	draw_judge(CurrentTimeNotes, sprites);
-
 	send_gogotime(isGOGOTime);
 
 	if (get_isPause() == false) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
+	if (Option.isStelth == false) notes_draw(sprites);
+	draw_emblem(sprites);
+	draw_judge(CurrentTimeNotes, sprites);
 	
 	for (int i = 0, j = MEASURE_MAX - 1; i < j; ++i) {	//判定時に発動する命令
 
