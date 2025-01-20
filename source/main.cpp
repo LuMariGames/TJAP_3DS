@@ -243,6 +243,39 @@ int main() {
 
 		case SCENE_MAINGAME:		//メイン
 
+			if (isPause == false) {
+
+				if (tp.px != 0 && tp.py != 0) {
+
+					PreTouch_x = touch_x, PreTouch_y = touch_y;
+					touch_x = tp.px, touch_y = tp.py;
+
+					if (
+						(key & KEY_TOUCH || 
+							pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0
+						) &&
+						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
+						touch_cnt < 2) {
+						isDon = true;
+						++touch_cnt;
+					}
+					else if (
+						(
+						key & KEY_TOUCH ||
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 
+							)&&
+						touch_cnt < 2) {
+						isKatsu = true;
+						++touch_cnt;
+					}
+				}
+				else {
+					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
+				}
+
+				button_game(&isDon, &isKatsu, Option, key);
+			}
+
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
 
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
@@ -333,39 +366,6 @@ int main() {
 				if (CurrentTimeMain >= (-1.0) * offset && isNotesStart == false) {
 					isNotesStart = true;
 				}
-			}
-
-			if (isPause == false) {
-
-				if (tp.px != 0 && tp.py != 0) {
-
-					PreTouch_x = touch_x, PreTouch_y = touch_y;
-					touch_x = tp.px, touch_y = tp.py;
-
-					if (
-						(key & KEY_TOUCH || 
-							pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0
-						) &&
-						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
-						touch_cnt < 2) {
-						isDon = true;
-						++touch_cnt;
-					}
-					else if (
-						(
-						key & KEY_TOUCH ||
-						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 
-							)&&
-						touch_cnt < 2) {
-						isKatsu = true;
-						++touch_cnt;
-					}
-				}
-				else {
-					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
-				}
-
-				button_game(&isDon, &isKatsu, Option, key);
 			}
 
 			if (TotalBadCount > 0) {
