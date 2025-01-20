@@ -213,7 +213,7 @@ AccessControlInfo:
    - ac:u
    - am:net
    - boss:U
-   - cam:u
+   #- cam:u
    - cecd:u
    - cfg:nor
    - cfg:u
@@ -224,7 +224,7 @@ AccessControlInfo:
    - gsp::Gpu
    - gsp::Lcd
    - hid:USER
-   - http:C
+   #- http:C
    - ir:rst
    - ir:u
    - ir:USER
@@ -239,7 +239,7 @@ AccessControlInfo:
    - ptm:u
    - pxi:dev
    - soc:U
-   - ssl:C
+   #- ssl:C
    - y2r:u
 
 
@@ -256,7 +256,7 @@ SystemControlInfo:
     #act: 0x0004013000003802
     am: 0x0004013000001502
     boss: 0x0004013000003402
-    camera: 0x0004013000001602
+    #camera: 0x0004013000001602
     cecd: 0x0004013000002602
     cfg: 0x0004013000001702
     codec: 0x0004013000001802
@@ -267,7 +267,7 @@ SystemControlInfo:
     gpio: 0x0004013000001b02
     gsp: 0x0004013000001c02
     hid: 0x0004013000001d02
-    http: 0x0004013000002902
+    #http: 0x0004013000002902
     i2c: 0x0004013000001e02
     ir: 0x0004013000003302
     mcu: 0x0004013000001f02
@@ -285,4 +285,4 @@ SystemControlInfo:
     ro: 0x0004013000003702
     socket: 0x0004013000002e02
     spi: 0x0004013000002302
-    ssl: 0x0004013000002f02
+    #ssl: 0x0004013000002f02
