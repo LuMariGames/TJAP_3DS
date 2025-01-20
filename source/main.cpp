@@ -257,7 +257,7 @@ int main() {
 			draw_gauge(sprites);
 
 			if (isNotesStart == true) {
-				notes_main(isDon, isKatsu, tja_notes, Measure, count, sprites);
+				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 				if (isPause == false) ++notes_cnt;
 			}
 			draw_score(sprites);
