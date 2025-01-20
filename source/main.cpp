@@ -50,7 +50,8 @@ void init_main() {
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	gfxSetWide(false);
 	osSetSpeedupEnable(true);
-	gfxSetDoubleBuffering(GFX_TOP, false);
+	gfxSetDoubleBuffering(GFX_TOP, true);
+	gfxScreenSwapBuffers(GFX_TOP, true);
 }
 
 void exit_main() {
