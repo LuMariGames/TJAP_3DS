@@ -119,9 +119,6 @@ int main() {
 
 	while (aptMainLoop()) {
 
-		//処理開始時間
-		clock_t chkFps = clock() + CLOCKS_PER_SEC / FPSNUM;
-
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
@@ -414,9 +411,6 @@ int main() {
 
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
-
-		//余剰時間を待つ
-		while (clock() < chkFps) {}
 	}
 	exit_main();
 	return 0;
