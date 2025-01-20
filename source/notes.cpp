@@ -44,10 +44,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].pop_time);
 	//draw_debug(0, 185, get_buffer());
 
-	if (Option.isStelth == false) notes_draw(sprites);
-	draw_emblem(sprites);
-	draw_judge(CurrentTimeNotes, sprites);
-
 	if (cnt >= 0 && isNotesLoad == true) {
 
 		//分岐
@@ -296,6 +292,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			if ((BarLine[i].x < 62 && BarLine[i].scroll > 0) || (BarLine[i].x > 400 && BarLine[i].scroll < 0)) BarLine[i].flag = false;
 		}
 	}
+
+	if (Option.isStelth == false) notes_draw(sprites);
+	draw_emblem(sprites);
+	draw_judge(CurrentTimeNotes, sprites);
 
 	send_gogotime(isGOGOTime);
 
