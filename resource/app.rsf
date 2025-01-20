@@ -35,36 +35,36 @@ AccessControlInfo:
   # FS:USER Archive Access Permissions
   # Uncomment as required
   FileSystemAccess:
-   - CategorySystemApplication
+   #- CategorySystemApplication
    - CategoryHardwareCheck
    - CategoryFileSystemTool
-   - Debug
-   - TwlCardBackup
-   - TwlNandData
+   #- Debug
+   #- TwlCardBackup
+   #- TwlNandData
    - Boss
    - DirectSdmc
    - Core
-   - CtrNandRo
-   - CtrNandRw
-   - CtrNandRoWrite
-   - CategorySystemSettings
-   - CardBoard
-   - ExportImportIvs
+   #- CtrNandRo
+   #- CtrNandRw
+   #- CtrNandRoWrite
+   #- CategorySystemSettings
+   #- CardBoard
+   #- ExportImportIvs
    - DirectSdmcWrite
-   - SwitchCleanup
-   - SaveDataMove
-   - Shop
+   #- SwitchCleanup
+   #- SaveDataMove
+   #- Shop
    - Shell
    - CategoryHomeMenu
   IoAccessControl:
-   - FsMountNand
-   - FsMountNandRoWrite
-   - FsMountTwln
-   - FsMountWnand
-   - FsMountCardSpi
+   #- FsMountNand
+   #- FsMountNandRoWrite
+   #- FsMountTwln
+   #- FsMountWnand
+   #- FsMountCardSpi
    - UseSdif3
    - CreateSeed
-   - UseCardSpi
+   #- UseCardSpi
 
   # Process Settings
   MemoryType                    : Application # Application/System/Base
