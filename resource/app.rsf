@@ -38,7 +38,7 @@ AccessControlInfo:
    #- CategorySystemApplication
    - CategoryHardwareCheck
    - CategoryFileSystemTool
-   #- Debug
+   - Debug
    #- TwlCardBackup
    #- TwlNandData
    - Boss
