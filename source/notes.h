@@ -5,7 +5,7 @@ typedef struct {
 	int num, notes_max, knd, roll_id, text_id, x_ini;
 	double create_time, judge_time, pop_time, bpm, scroll;
 	bool flag, isThrough;
-	float x = 420;
+	float x = 420.0;
 	C2D_Sprite spr;
 
 } NOTES_T;
