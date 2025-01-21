@@ -47,8 +47,8 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	gfxSetWide(true);
-	osSetSpeedupEnable(false);
+	gfxSetWide(false);
+	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	gfxScreenSwapBuffers(GFX_TOP, true);
 }
