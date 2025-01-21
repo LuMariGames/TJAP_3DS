@@ -102,6 +102,7 @@ void load_sound() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
 		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
 		ndspChnSetInterp(sound[i].audiochannel, NDSP_INTERP_NONE);
 		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
@@ -184,6 +185,7 @@ void sd_load_sound() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 		ndspChnReset(sound[i].audiochannel);
+		ndspChnInitParams(sound[i].audiochannel);
 		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
 		ndspChnSetInterp(sound[i].audiochannel, NDSP_INTERP_NONE);
 		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
