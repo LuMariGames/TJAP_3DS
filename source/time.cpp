@@ -63,7 +63,7 @@ void stop_time(int id) {
 		msec[id][n] = 0;
 	}
 
-	PreTime[id] = Time[id] += 0.0178;
+	PreTime[id] = Time[id] += 0.01785714;
 	sec[id] = 0;
 	cnt[id] = 0;
 }
