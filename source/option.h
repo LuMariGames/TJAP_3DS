@@ -58,6 +58,7 @@ const char Text[3][60][128] = {
 		"ﾌﾟﾚｲﾔｰ(双打用)",
 		"1P",
 		"2P",
+		"VSync",
 	},
 	{
 		"ON",
@@ -116,6 +117,7 @@ const char Text[3][60][128] = {
 		"Player",
 		"1P",
 		"2P",
+		"VSync",
 	},
 	{
 		"Sí",
@@ -174,13 +176,14 @@ const char Text[3][60][128] = {
 		"Jugador",
 		"1P",
 		"2P",
+		"VSync",
 	}
 };
 
 typedef struct {
 
 	int lang,buffer_size,Voice,special,player;
-	bool isAuto, isStelth,isSwap,dispFps,fixroll,exse;
+	bool isAuto, isStelth,isSwap,dispFps,fixroll,exse,vsync;
 	float speed, random,offset,blacktext,musicspeed,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
 	int KEY_A, KEY_B, KEY_DRIGHT, KEY_DLEFT, KEY_DUP, KEY_DDOWN, KEY_R, KEY_L, KEY_X, KEY_Y,
@@ -257,6 +260,7 @@ enum Text_knd {
 	TEXT_PLAYER,
 	TEXT_1P,
 	TEXT_2P,
+	TEXT_VSYNC,
 };
 
 int get_lang();
