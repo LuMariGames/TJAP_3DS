@@ -84,7 +84,7 @@ int get_time_isStop(int id) {
 double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
-	fps_time[0] = fps_time[1] * mspeed();
+	fps_time[0] = fps_time[1] / mspeed();
 	fps_time[1] = get_current_time(TIME_FPS);
 
 	fps_sum += fps_time[1] - fps_time[0];
