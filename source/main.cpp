@@ -22,7 +22,6 @@ C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-int dn_x, dn_y, dg_x, dg_y;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
 char buffer[BUFFER_SIZE];
 
@@ -113,9 +112,12 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
-
-	double FirstMeasureTime = INT_MAX,
-		offset = 0,CurrentTimeMain = -1000;
+	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
+	load_option();
+	load_skin();
+	get_skin(&Skin);
+	
+	int dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 
 	while (aptMainLoop()) {
 
@@ -128,7 +130,8 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		if (Option.vsync) C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+		else C3D_FrameBegin(C3D_FRAME_NONBLOCK);
 
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
@@ -137,11 +140,6 @@ int main() {
 
 		case SCENE_SELECTLOAD:	//ロード画面
 
-			load_option();
-			load_skin();
-			get_skin(&Skin);
-			dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
-			get_option(&Option);
 			if (Option.exse == false) load_sound();
 			else if (Option.exse == true) sd_load_sound();
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
