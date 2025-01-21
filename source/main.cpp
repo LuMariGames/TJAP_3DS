@@ -131,8 +131,7 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
-		if (Option.vsync) C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		else C3D_FrameBegin(C3D_FRAME_NONBLOCK);
+		C3D_FrameBegin(C3D_FRAME_NONBLOCK);
 
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
