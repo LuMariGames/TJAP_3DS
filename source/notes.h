@@ -2,19 +2,19 @@
 #include "tja.h"
 
 typedef struct {
-	int num, notes_max, knd, roll_id, text_id, x_ini;
-	double create_time, judge_time, pop_time, bpm, scroll;
+	int num, notes_max, knd, roll_id, text_id;
+	double create_time, judge_time, pop_time, bpm, scroll, x_ini;
 	bool flag, isThrough;
-	float x = 420.0;
+	float x;
 	C2D_Sprite spr;
 
 } NOTES_T;
 
 typedef struct {
-	int measure, x_ini;
-	double create_time, scroll;
+	int measure;
+	double create_time, scroll, x_ini;
 	bool flag, isDisp;
-	float x = 420;
+	float x;
 
 } BARLINE_T;
 
