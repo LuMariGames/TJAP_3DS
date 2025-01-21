@@ -24,6 +24,7 @@ C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
 char buffer[BUFFER_SIZE];
+int dn_x,dn_y,dg_x,dg_y;
 
 void load_sprites();
 
@@ -117,7 +118,7 @@ int main() {
 	load_skin();
 	get_skin(&Skin);
 	
-	int dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
+	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 
 	while (aptMainLoop()) {
 
