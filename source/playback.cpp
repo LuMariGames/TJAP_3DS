@@ -152,6 +152,8 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
+	while (*info->isPlay == false) svcSleepThread(100000);
+
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
@@ -171,6 +173,7 @@ void playFile(void* infoIn){
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
+		svcSleepThread(100000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
