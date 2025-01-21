@@ -2,7 +2,7 @@
 
 #include "select.h"
 
-#define CHANNEL 7
+#define CHANNEL 5
 
 enum file_types{
 	FILE_TYPE_ERROR = -1,
