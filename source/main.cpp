@@ -52,6 +52,7 @@ void init_main() {
 	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	gfxScreenSwapBuffers(GFX_TOP, true);
+	C3D_FrameRate(FPSNUM)
 }
 
 void exit_main() {
@@ -126,6 +127,7 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
+		C3D_FrameSync()
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
