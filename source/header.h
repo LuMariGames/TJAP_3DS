@@ -18,7 +18,7 @@
 #define SKIN_SETTING_FILE "sdmc:/tjafiles/theme/config.json"
 #define PATH_DSP1 "sdmc:/3ds/dspfirm.cdc"
 #define GENRE_FILE "genre.json"
-#define FPSNUM 59.94
+#define FPSNUM 60
 
 #define DEFAULT_JUDGE_RANGE_PERFECT	0.040
 #define DEFAULT_JUDGE_RANGE_NICE	0.100
