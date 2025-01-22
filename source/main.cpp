@@ -52,7 +52,7 @@ void init_main() {
 	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	gfxScreenSwapBuffers(GFX_TOP, true);
-	C3D_FrameRate(FPSNUM);
+	//C3D_FrameRate(FPSNUM);
 }
 
 void exit_main() {
