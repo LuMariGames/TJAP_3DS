@@ -754,12 +754,12 @@ void load_tja_notes(int course, LIST_T Song) {
 	}
 }
 
-void get_tja_header(TJA_HEADER_T *TJA_Header) {
+static void get_tja_header(TJA_HEADER_T *TJA_Header) {
 
 	*TJA_Header = Current_Header;
 }
 
-static void tja_to_notes(bool isDon, bool isKatsu, int count, C2D_Sprite sprites[SPRITES_NUMER]) {
+void tja_to_notes(bool isDon, bool isKatsu, int count, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	notes_main(isDon, isKatsu, tja_notes, Measure, count, sprites);
 }
