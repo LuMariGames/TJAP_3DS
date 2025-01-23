@@ -15,7 +15,7 @@ float mix[12];
 TJA_HEADER_T Current_Header;
 MEASURE_T Measure[MEASURE_MAX];
 
-static void get_command_value(char* buf, COMMAND_T *Command);
+void get_command_value(char* buf, COMMAND_T *Command);
 
 void init_measure_structure() {
 
@@ -765,7 +765,7 @@ void tja_to_notes(bool isDon, bool isKatsu, int count, C2D_Sprite sprites[SPRITE
 }
 
 //コマンドと値を取り出す
-static void get_command_value(char* buf, COMMAND_T *Command) {
+void get_command_value(char* buf, COMMAND_T *Command) {
 
 	OPTION_T Option;
 	get_option(&Option);
