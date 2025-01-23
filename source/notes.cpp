@@ -345,8 +345,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		else if (Measure[i].judge_time >= CurrentTimeNotes) break;
 	}
 
-	if (course == COURSE_DAN) dan_condition();
-	if (TotalFailedCount != isBadCondition) {
+	if (TotalFailedCount != dan_condition() && course == COURSE_DAN) {
 		play_sound(SOUND_FAILED);
 		TotalFailedCount = isBadCondition;
 	}
