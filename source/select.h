@@ -15,8 +15,8 @@ typedef struct {
 	bool isOpened;
 } GENRE_T;
 
-void disp_file_list();
-void load_file_main();
+static void disp_file_list();
+static void load_file_main();
 void update_cursor(int knd);
 void get_SelectedId(LIST_T *TMP, int *arg);
 void draw_select_text(float x, float y, const char* text, int color = 0xffffff);
