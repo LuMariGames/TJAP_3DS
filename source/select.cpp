@@ -359,7 +359,7 @@ static void disp_file_list() {
 	//draw_select_text(0, 50, buf_select);
 }
 
-static void update_cursor(int knd) {
+void update_cursor(int knd) {
 
 	if (knd == KEY_UP) {
 		if (isSelectCourse == false) ++cursor;
@@ -460,11 +460,11 @@ void get_SelectedId(LIST_T* TMP, int* arg) {
 	*arg = course;
 }
 
-static bool get_isGameStart() {
+bool get_isGameStart() {
 	return isGameStart;
 }
 
-static void select_ini() {
+void select_ini() {
 	//cursor = 0;
 	course_cursor = 0;
 	course_count = 0;
