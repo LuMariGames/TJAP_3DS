@@ -23,7 +23,7 @@ void init_score();
 void debug_score();
 void update_score(int knd);
 void send_gogotime(bool temp);
-void dan_condition();
+int dan_condition();
 int round_down(int arg);
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX]);
 void init_branch_section();
