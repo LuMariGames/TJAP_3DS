@@ -401,7 +401,7 @@ static void update_cursor(int knd) {
 C2D_TextBuf g_SelectText = C2D_TextBufNew(4096);
 C2D_Text SelectText;
 
-static void draw_select_text(float x, float y, const char* text,int color) {	//color省略可(0xffffff)
+void draw_select_text(float x, float y, const char* text,int color) {	//color省略可(0xffffff)
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -412,7 +412,7 @@ static void draw_select_text(float x, float y, const char* text,int color) {	//c
 	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 1.0f, 0.5f, 0.5f, C2D_Color32f(r, g, b, 1.0f));
 }
 
-static void draw_result_text(float x, float y, float size, const char* text) {
+void draw_result_text(float x, float y, float size, const char* text) {
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -420,7 +420,7 @@ static void draw_result_text(float x, float y, float size, const char* text) {
 	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 0.5f, size, size, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
-static void calc_result_text(const char* text, float* width, float* height) {
+void calc_result_text(const char* text, float* width, float* height) {
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -429,7 +429,7 @@ static void calc_result_text(const char* text, float* width, float* height) {
 	C2D_TextGetDimensions(&SelectText, size, size, width, height);
 }
 
-static void draw_option_text(float x, float y, const char* text, bool state, float* width, float* height, float sizex, float sizey) {	//size省略可(0.7)
+void draw_option_text(float x, float y, const char* text, bool state, float* width, float* height, float sizex, float sizey) {	//size省略可(0.7)
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
