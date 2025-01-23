@@ -36,7 +36,7 @@ void sort_list() {	//曲をジャンル順にソート
 	qsort(List, SongNumber, sizeof(LIST_T), cmp_list);
 }
 
-void load_file_main() {
+static void load_file_main() {
 
 	chdir(DEFAULT_DIR);
 	load_file_list(DEFAULT_DIR);
@@ -155,7 +155,7 @@ void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
 
 
 
-void disp_file_list() {
+static void disp_file_list() {
 
 	int n = 0, g = 0;	//コース用調整、ジャンル用調整
 	bool isGenre = false;
