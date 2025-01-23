@@ -16,10 +16,11 @@ double bpm, offset;
 float NowBPM;
 extern double black;
 
-static int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId), make_balloon_start(int NotesId), make_balloon_end(int NotesId);
+static int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId), make_balloon_start(int NotesId);
+int make_balloon_end(int NotesId);
 void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
-static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), void notes_sort(), delete_roll(int i), delete_notes(int i), make_balloon_break();
-void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]);
+static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break();
+void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), void notes_sort(), delete_roll(int i), delete_notes(int i);
 
 NOTES_T Notes[NOTES_MAX];
 COMMAND_T Command;
@@ -934,7 +935,7 @@ int notes_cmp(const void *p, const void *q) {	//比較用
 	return qq - pp;
 }
 
-static void notes_sort() {	//ノーツを出現順にソート
+void notes_sort() {	//ノーツを出現順にソート
 	int n = sizeof Notes / sizeof(NOTES_T);
 	qsort(Notes, n, sizeof(NOTES_T), notes_cmp);
 }
@@ -1080,14 +1081,14 @@ static int find_balloon_end_id() {	//startの値だけ入ってる風船idを返
 	return -1;
 }
 
-static int make_balloon_end(int NotesId) {
+int make_balloon_end(int NotesId) {
 
 	int id = find_balloon_end_id();
 	if (id != -1) return id;
 	else return -1;
 }
 
-static void delete_notes(int i) {
+void delete_notes(int i) {
 
 	if (i >= 0 &&
 		Notes[i].roll_id != -1 &&
