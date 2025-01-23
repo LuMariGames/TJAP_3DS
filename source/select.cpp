@@ -81,7 +81,7 @@ void load_genre_file(int id) {
 	json_decref(json);
 }
 
-void load_file_list(const char* path) {
+inline void load_file_list(const char* path) {
 
 	DIR* dir;
 	struct dirent* dp;
@@ -153,7 +153,7 @@ void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
 	C2D_DrawRectangle(x, y, 0, w, h, C2D_Color32f(r, g, b, 1), C2D_Color32f(r, g, b, 1), C2D_Color32f(r, g, b, 1), C2D_Color32f(r, g, b, 1));
 }
 
-inline void disp_file_list() {
+void disp_file_list() {
 
 	int n = 0, g = 0;	//コース用調整、ジャンル用調整
 	bool isGenre = false;
