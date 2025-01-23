@@ -469,11 +469,11 @@ void init_branch_section() {	//#SECTION
 	CurrentDaiNotes = 0;
 }
 
-void send_gogotime(bool arg) {
+static void send_gogotime(bool arg) {
 	isGOGO = arg;
 }
 
-void dan_condition() {
+inline static void dan_condition() {
 	isBadCondition = 0; //ここで何回条件に反しているかをリセットする
 	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
