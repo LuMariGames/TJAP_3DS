@@ -347,7 +347,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	if (TotalFailedCount != dan_condition() && course == COURSE_DAN) {
 		play_sound(SOUND_FAILED);
-		TotalFailedCount = isBadCondition;
+		TotalFailedCount = dan_condition();
 	}
 	
 	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
