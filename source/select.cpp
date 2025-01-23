@@ -81,7 +81,7 @@ void load_genre_file(int id) {
 	json_decref(json);
 }
 
-inline void load_file_list(const char* path) {
+void load_file_list(const char* path) {
 
 	DIR* dir;
 	struct dirent* dp;
