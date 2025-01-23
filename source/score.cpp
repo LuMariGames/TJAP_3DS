@@ -469,11 +469,11 @@ void init_branch_section() {	//#SECTION
 	CurrentDaiNotes = 0;
 }
 
-static void send_gogotime(bool arg) {
+void send_gogotime(bool arg) {
 	isGOGO = arg;
 }
 
-inline static void dan_condition() {
+inline void dan_condition() {
 	isBadCondition = 0; //ここで何回条件に反しているかをリセットする
 	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
@@ -795,7 +795,7 @@ void update_balloon_count(int arg) {
 	CurrentBalloonCount = arg;
 }
 
-void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
+inline static void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	switch (TJA_Header.course) {
 	case COURSE_EASY:
