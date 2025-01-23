@@ -975,7 +975,7 @@ inline static int find_roll_id() {
 	return -1;
 }
 
-static int make_roll_start(int NotesId) {
+inline static int make_roll_start(int NotesId) {
 
 	int id = find_roll_id();
 	if (id != -1) {
@@ -1001,7 +1001,7 @@ static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 	return -1;
 }
 
-static int make_roll_end(int NotesId) {
+inline static int make_roll_end(int NotesId) {
 
 	int id = find_roll_end_id();
 	if (id != -1) {
@@ -1030,7 +1030,7 @@ static void delete_balloon(int i) {
 	}
 }
 
-static void init_balloon_notes() {
+inline static void init_balloon_notes() {
 
 	for (int i = 0; i < BALLOON_MAX - 1; i += 4) {
 		delete_balloon(i);
@@ -1040,7 +1040,7 @@ static void init_balloon_notes() {
 	}
 }
 
-static int find_balloon_id() {
+inline static int find_balloon_id() {
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; i += 4) {
 
@@ -1217,7 +1217,7 @@ void draw_condition() {
 		else if (strcmp(Cdn3[j], "l") == 0) draw_condition_text(50+tx, 160+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
 	}
 }
-static void init_notes_structure() {
+inline static void init_notes_structure() {
 
 	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
 		delete_notes(i);
