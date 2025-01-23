@@ -49,7 +49,7 @@ void notes_main(
 int ctoi(char c);
 int get_branch_course();
 void init_notes(TJA_HEADER_T TJA_Header);
-static bool get_notes_finish();
+bool get_notes_finish();
 void draw_title();
 void draw_condition();
 double sign(double A);
