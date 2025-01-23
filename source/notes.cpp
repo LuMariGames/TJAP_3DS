@@ -35,7 +35,7 @@ bool  isNotesLoad = true, isJudgeDisp = false, isBalloonBreakDisp = false, isGOG
 double JudgeMakeTime, JudgeY,JudgeEffectCnt;
 
 
-inline void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) {
+void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	OPTION_T Option;
 	get_option(&Option);
