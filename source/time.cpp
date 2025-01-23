@@ -19,7 +19,7 @@ int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM];
 
-double get_current_time(int id) {
+inline double get_current_time(int id) {
 	
 	if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
 		//if (isStop[id] != 1) stop_time(id);
@@ -68,7 +68,7 @@ void stop_time(int id) {
 	cnt[id] = 0;
 }
 
-void toggle_time(int id) {
+inline void toggle_time(int id) {
 
 	if (Time[id] != 0) {
 		if (isStop[id] == 1) restart_time(id);
