@@ -896,7 +896,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 	else Command->knd = -1;
 }
 
-double get_FirstMeasureTime() {
+static double get_FirstMeasureTime() {
 	return MainFirstMeasureTime;
 }
 
@@ -909,6 +909,6 @@ int get_MeasureId_From_OriginalId(int id) {
 	return -1;
 }
 
-bool get_isBranch() {
+static bool get_isBranch() {
 	return isBranch;
 }
