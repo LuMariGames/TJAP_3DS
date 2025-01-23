@@ -427,7 +427,7 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 }
 
-int start_branch(int knd, double x, double y) {	//分岐
+inline int start_branch(int knd, double x, double y) {	//分岐
 
 	int branch;
 	switch (knd) {
@@ -499,7 +499,7 @@ int round_down(int arg) {
 	return arg - temp;
 }
 
-void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
+inline void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
 	int NotesCount = 0, i = 0, combo = 0, DiffTmp = 0, BalloonCnt = 0, TmpBaseCeilingPoint = 0, NotesCountMax = 0, RollCnt = 0, RollKnd = 0;
 	bool isEND = false;
@@ -795,7 +795,7 @@ void update_balloon_count(int arg) {
 	CurrentBalloonCount = arg;
 }
 
-inline static void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
+inline void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	switch (TJA_Header.course) {
 	case COURSE_EASY:
