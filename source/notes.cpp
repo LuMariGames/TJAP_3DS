@@ -954,7 +954,7 @@ void delete_roll(int i) {
 	}
 }
 
-static void init_roll__notes() {
+inline static void init_roll__notes() {
 
 	for (int i = 0, j = ROLL_MAX - 1; i < j; i += 4) {
 		delete_roll(i);
@@ -964,7 +964,7 @@ static void init_roll__notes() {
 	}
 }
 
-static int find_roll_id() {
+inline static int find_roll_id() {
 
 	for (int i = 0, j = ROLL_MAX - 1; i < j; i += 4) {
 		if (RollNotes[i].flag == false) return i;
