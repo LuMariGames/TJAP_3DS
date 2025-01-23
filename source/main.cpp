@@ -485,7 +485,7 @@ void draw_window_text(float x, float y, const char* text, float* width, float* h
 	C2D_DrawText(&MainText, C2D_WithColor, BOTTOM_WIDTH / 2 - *width / 2, y, 1.0f, size, size, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
-int pause_window(touchPosition tp, unsigned int key) {
+inline int pause_window(touchPosition tp, unsigned int key) {
 
 	int margin = 20, result = -1, x, y;
 	float width, height;
@@ -507,7 +507,7 @@ int pause_window(touchPosition tp, unsigned int key) {
 	return result;
 }
 
-int message_window(touchPosition tp, unsigned int key,int text) {
+inline int message_window(touchPosition tp, unsigned int key,int text) {
 
 	int margin = 20,result = -1, x, y;
 	float width, height;
@@ -531,7 +531,7 @@ static int exist_file(const char* path) {
     fclose(fp);
     return 1;
 }
-static int time_count(double TIME) {
+inline static int time_count(double TIME) {
 	if ((int)floor(TIME/(60.0/NowBPM)) % 2 == 1) return 1+(isGOGO*2);
 	else return 0+(isGOGO*2);
 }
