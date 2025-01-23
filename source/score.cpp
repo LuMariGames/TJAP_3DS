@@ -60,7 +60,7 @@ void init_score() {
 }
 
 
-void update_score(int knd) {
+inline void update_score(int knd) {
 
 	int PreScore = TotalScore;
 	bool isCombo = false;
@@ -258,7 +258,7 @@ void update_score(int knd) {
 	}
 }*/
 
-void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
+inline void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 
 	//スコア
