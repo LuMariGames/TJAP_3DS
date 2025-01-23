@@ -268,7 +268,7 @@ err:
 
 struct playbackInfo_t playbackInfo;
 
-int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, bool *p_isPlayMain){
+inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, bool *p_isPlayMain){
 
 	s32 prio;
 	static Thread thread = NULL;
