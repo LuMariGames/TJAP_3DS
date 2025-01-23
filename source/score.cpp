@@ -29,7 +29,6 @@ void init_guage_structure() {
 void init_score() {
 
 	isGOGO = false;
-	isBadCondition = 0;
 	combo = 0;
 	get_tja_header(&TJA_Header);
 	init = TJA_Header.scoreinit;
