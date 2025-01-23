@@ -754,7 +754,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	}
 }
 
-static void get_tja_header(TJA_HEADER_T *TJA_Header) {
+void get_tja_header(TJA_HEADER_T *TJA_Header) {
 
 	*TJA_Header = Current_Header;
 }
@@ -896,7 +896,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 	else Command->knd = -1;
 }
 
-static double get_FirstMeasureTime() {
+double get_FirstMeasureTime() {
 	return MainFirstMeasureTime;
 }
 
@@ -909,6 +909,6 @@ int get_MeasureId_From_OriginalId(int id) {
 	return -1;
 }
 
-static bool get_isBranch() {
+bool get_isBranch() {
 	return isBranch;
 }
