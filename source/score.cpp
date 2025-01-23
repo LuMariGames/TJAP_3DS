@@ -426,7 +426,7 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 }
 
-inline int start_branch(int knd, double x, double y) {	//分岐
+int start_branch(int knd, double x, double y) {	//分岐
 
 	int branch;
 	switch (knd) {
