@@ -26,7 +26,8 @@ bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = f
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 
-void load_sprites();
+static void load_sprites();
+static int time_count(double TIME), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
 
@@ -415,7 +416,7 @@ int main() {
 	return 0;
 }
 
-void load_sprites() {
+static void load_sprites() {
 
 	if (exist_file("sdmc:/tjafiles/theme/default.t3x")) {
 		spriteSheet = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/default.t3x");
@@ -521,7 +522,7 @@ int message_window(touchPosition tp, unsigned int key,int text) {
 	return result;
 }
 
-int exist_file(const char* path) {
+static int exist_file(const char* path) {
 
     FILE* fp = fopen(path, "r");
     if (fp == NULL) {
@@ -530,7 +531,7 @@ int exist_file(const char* path) {
     fclose(fp);
     return 1;
 }
-int time_count(double TIME) {
+static int time_count(double TIME) {
 	if ((int)floor(TIME/(60.0/NowBPM)) % 2 == 1) return 1+(isGOGO*2);
 	else return 0+(isGOGO*2);
 }
