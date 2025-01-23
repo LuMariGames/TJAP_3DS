@@ -20,7 +20,7 @@ static int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_r
 int make_balloon_end(int NotesId);
 void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
 static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i);
-void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), void notes_sort(), delete_roll(int i);
+void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i);
 
 NOTES_T Notes[NOTES_MAX];
 COMMAND_T Command;
