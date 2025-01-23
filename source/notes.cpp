@@ -364,9 +364,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	
 }
 
-int find_notes_id() {
+static int find_notes_id() {
 
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
 		if (Notes[i].flag == false) return i;
 		if (Notes[i+1].flag == false) return i+1;
 		if (Notes[i+2].flag == false) return i+2;
@@ -375,9 +375,9 @@ int find_notes_id() {
 	return -1;
 }
 
-int find_line_id() {
+static int find_line_id() {
 
-	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
+	for (int i = 0, j = BARLINE_MAX - 1; i < j; i += 4) {
 		if (BarLine[i].flag == false) return i;
 		if (BarLine[i+1].flag == false) return i+1;
 		if (BarLine[i+2].flag == false) return i+2;
@@ -679,7 +679,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag == true) {
 
-			Notes[i].x = (float)(Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0/Notes[i].bpm));
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0/Notes[i].bpm);
 
 			switch (Notes[i].knd) {
 
@@ -755,7 +755,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
 }
 
-void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
+static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
