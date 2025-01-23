@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-static void load_file_list(const char* path);
-void set_genres();
+void load_file_list(const char* path);
+static void set_genres();
 
 LIST_T List[LIST_MAX];
 GENRE_T Genre[GENRE_MAX];
@@ -134,7 +134,7 @@ void load_file_list(const char* path) {
 	closedir(dir);
 }
 
-void set_genres() {
+static void set_genres() {
 
 	for (int i = 0; i < GenreNumber; ++i) {
 
@@ -153,9 +153,7 @@ void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
 	C2D_DrawRectangle(x, y, 0, w, h, C2D_Color32f(r, g, b, 1), C2D_Color32f(r, g, b, 1), C2D_Color32f(r, g, b, 1), C2D_Color32f(r, g, b, 1));
 }
 
-
-
-static void disp_file_list() {
+void disp_file_list() {
 
 	int n = 0, g = 0;	//コース用調整、ジャンル用調整
 	bool isGenre = false;
