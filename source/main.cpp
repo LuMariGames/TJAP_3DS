@@ -416,7 +416,7 @@ int main() {
 	return 0;
 }
 
-static void load_sprites() {
+inline static void load_sprites() {
 
 	if (exist_file("sdmc:/tjafiles/theme/default.t3x")) {
 		spriteSheet = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/default.t3x");
