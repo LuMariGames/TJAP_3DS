@@ -759,7 +759,7 @@ void get_tja_header(TJA_HEADER_T *TJA_Header) {
 	*TJA_Header = Current_Header;
 }
 
-void tja_to_notes(bool isDon, bool isKatsu, int count, C2D_Sprite sprites[SPRITES_NUMER]) {
+static void tja_to_notes(bool isDon, bool isKatsu, int count, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	notes_main(isDon, isKatsu, tja_notes, Measure, count, sprites);
 }
