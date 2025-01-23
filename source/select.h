@@ -15,14 +15,10 @@ typedef struct {
 	bool isOpened;
 } GENRE_T;
 
-static void disp_file_list();
-static void load_file_main();
-void update_cursor(int knd);
-void get_SelectedId(LIST_T *TMP, int *arg);
-void draw_select_text(float x, float y, const char* text, int color = 0xffffff);
-bool get_isGameStart();
-void select_ini();
-void draw_option_text(float x, float y, const char *text, bool state, float *width, float *height,float sizex=0.7,float sizey = 0.7);
-void draw_result_text(float x, float y, float size, const char *text);
-void get_result(RESULT_T *Result);
-void calc_result_text(const char *text, float *width, float *height);
+void disp_file_list(), load_file_main(), get_SelectedId(LIST_T *TMP, int *arg), get_result(RESULT_T *Result);
+static void update_cursor(int knd), select_ini();
+static void draw_select_text(float x, float y, const char* text, int color = 0xffffff);
+static void draw_option_text(float x, float y, const char *text, bool state, float *width, float *height,float sizex=0.7,float sizey = 0.7);
+static void draw_result_text(float x, float y, float size, const char *text);
+static void calc_result_text(const char *text, float *width, float *height);
+static bool get_isGameStart();
