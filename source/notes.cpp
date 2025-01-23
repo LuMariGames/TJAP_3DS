@@ -19,8 +19,8 @@ extern double black;
 static int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId), make_balloon_start(int NotesId);
 int make_balloon_end(int NotesId);
 void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
-static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_roll(int i);
-void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), void notes_sort(), delete_notes(int i);
+static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i);
+void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), void notes_sort(), delete_roll(int i);
 
 NOTES_T Notes[NOTES_MAX];
 COMMAND_T Command;
@@ -940,7 +940,7 @@ void notes_sort() {	//ノーツを出現順にソート
 	qsort(Notes, n, sizeof(NOTES_T), notes_cmp);
 }
 
-static void delete_roll(int i) {
+void delete_roll(int i) {
 
 	if (i >= 0 && i < ROLL_MAX) {
 		if (RollNotes[i].start_id != -1 && Notes[RollNotes[i].start_id].flag == true) delete_notes(RollNotes[i].start_id);
@@ -1088,7 +1088,7 @@ int make_balloon_end(int NotesId) {
 	else return -1;
 }
 
-void delete_notes(int i) {
+static void delete_notes(int i) {
 
 	if (i >= 0 &&
 		Notes[i].roll_id != -1 &&
@@ -1139,7 +1139,7 @@ void delete_notes(int i) {
 		Notes[i].isThrough = false;
 	}
 }
-static bool get_notes_finish() {
+bool get_notes_finish() {
 
 	if (isNotesLoad == true) return false;
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
