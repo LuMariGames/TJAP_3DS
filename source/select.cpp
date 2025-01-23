@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void load_file_list(const char* path);
+static void load_file_list(const char* path);
 void set_genres();
 
 LIST_T List[LIST_MAX];
@@ -36,7 +36,7 @@ void sort_list() {	//曲をジャンル順にソート
 	qsort(List, SongNumber, sizeof(LIST_T), cmp_list);
 }
 
-static void load_file_main() {
+void load_file_main() {
 
 	chdir(DEFAULT_DIR);
 	load_file_list(DEFAULT_DIR);
@@ -359,7 +359,7 @@ static void disp_file_list() {
 	//draw_select_text(0, 50, buf_select);
 }
 
-void update_cursor(int knd) {
+static void update_cursor(int knd) {
 
 	if (knd == KEY_UP) {
 		if (isSelectCourse == false) ++cursor;
@@ -401,7 +401,7 @@ void update_cursor(int knd) {
 C2D_TextBuf g_SelectText = C2D_TextBufNew(4096);
 C2D_Text SelectText;
 
-void draw_select_text(float x, float y, const char* text,int color) {	//color省略可(0xffffff)
+static void draw_select_text(float x, float y, const char* text,int color) {	//color省略可(0xffffff)
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -412,7 +412,7 @@ void draw_select_text(float x, float y, const char* text,int color) {	//color省
 	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 1.0f, 0.5f, 0.5f, C2D_Color32f(r, g, b, 1.0f));
 }
 
-void draw_result_text(float x, float y, float size, const char* text) {
+static void draw_result_text(float x, float y, float size, const char* text) {
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -420,7 +420,7 @@ void draw_result_text(float x, float y, float size, const char* text) {
 	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 0.5f, size, size, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
-void calc_result_text(const char* text, float* width, float* height) {
+static void calc_result_text(const char* text, float* width, float* height) {
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -429,7 +429,7 @@ void calc_result_text(const char* text, float* width, float* height) {
 	C2D_TextGetDimensions(&SelectText, size, size, width, height);
 }
 
-void draw_option_text(float x, float y, const char* text, bool state, float* width, float* height, float sizex, float sizey) {	//size省略可(0.7)
+static void draw_option_text(float x, float y, const char* text, bool state, float* width, float* height, float sizex, float sizey) {	//size省略可(0.7)
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
@@ -460,11 +460,11 @@ void get_SelectedId(LIST_T* TMP, int* arg) {
 	*arg = course;
 }
 
-bool get_isGameStart() {
+static bool get_isGameStart() {
 	return isGameStart;
 }
 
-void select_ini() {
+static void select_ini() {
 	//cursor = 0;
 	course_cursor = 0;
 	course_count = 0;
