@@ -8,8 +8,8 @@
 extern int gaugelife, redCdn[3];
 extern char *exam1[4], *exam2[4], *exam3[4];
 bool isGOGO;
-int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, isBadCondition,
-CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalPerfectCount, TotalNiceCount, TotalBadCount, TotalCount,
+int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, TotalPerfectCount, TotalNiceCount, TotalBadCount,
+CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalCount,
 CurrentPerfectCount, CurrentNiceCount, CurrentBadCount, CurrentBalloonCount, CurrentDaiNotes, MaxComboCount;
 double tmp, Precision, CurrentPrecision;
 TJA_HEADER_T TJA_Header;
@@ -473,8 +473,8 @@ void send_gogotime(bool arg) {
 	isGOGO = arg;
 }
 
-void dan_condition() {
-	isBadCondition = 0; //ここで何回条件に反しているかをリセットする
+int dan_condition() {
+	int isBadCondition = 0; //ここで何回条件に反しているかをリセットする
 	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
     
@@ -491,6 +491,7 @@ void dan_condition() {
 			(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2])) ++isBadCondition;
 		}
 	}
+	return isBadCondition;
 }
 
 
