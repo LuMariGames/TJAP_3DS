@@ -473,7 +473,7 @@ void send_gogotime(bool arg) {
 	isGOGO = arg;
 }
 
-inline void dan_condition() {
+void dan_condition() {
 	isBadCondition = 0; //ここで何回条件に反しているかをリセットする
 	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
@@ -499,7 +499,7 @@ int round_down(int arg) {
 	return arg - temp;
 }
 
-inline void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
+void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
 	int NotesCount = 0, i = 0, combo = 0, DiffTmp = 0, BalloonCnt = 0, TmpBaseCeilingPoint = 0, NotesCountMax = 0, RollCnt = 0, RollKnd = 0;
 	bool isEND = false;
@@ -795,7 +795,7 @@ void update_balloon_count(int arg) {
 	CurrentBalloonCount = arg;
 }
 
-inline void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
+void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	switch (TJA_Header.course) {
 	case COURSE_EASY:
