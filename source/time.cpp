@@ -34,9 +34,9 @@ double get_current_time(int id) {
 		gettimeofday(&myTime, NULL);
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		if (cnt[id] == 0) OffTime[id] = (double)(myTime.tv_sec + myTime.tv_usec/1000000.0);
+		if (cnt[id] == 0) OffTime[id] = (double)(myTime.tv_sec + myTime.tv_usec * 0.000001);
 		++cnt[id];
-		Time[id] = (double)(myTime.tv_sec + myTime.tv_usec/1000000.0) - OffTime[id];
+		Time[id] = (double)(myTime.tv_sec + myTime.tv_usec * 0.000001) - OffTime[id];
 		
 		//旧式だけど念の為残す
 		/*if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
