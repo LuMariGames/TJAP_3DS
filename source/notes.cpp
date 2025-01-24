@@ -301,7 +301,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
-	for (int i = MEASURE_MAX - 1; i < -1; --i) {	//判定時に発動する命令
+	for (int i = 0; i < MEASURE_MAX - 1; ++i) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
 
