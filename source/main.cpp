@@ -128,7 +128,8 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
-		C3D_FrameBegin(C3D_FRAME_NONBLOCK);
+		if (scene_state == SCENE_MAINGAME) C3D_FrameBegin(C3D_FRAME_NONBLOCK);
+		else C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
@@ -148,7 +149,7 @@ int main() {
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
-			C3D_FrameEnd(1);
+			C3D_FrameEnd(0);
 			load_file_main();
 			if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
 			else { 
@@ -194,7 +195,7 @@ int main() {
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
 			draw_option(tp.px, tp.py, key, sprites);
-			C3D_FrameEnd(1);
+			C3D_FrameEnd(0);
 
 			if (key & KEY_UP)		update_cursor(KEY_UP);
 			if (key & KEY_DOWN)		update_cursor(KEY_DOWN);
@@ -409,7 +410,7 @@ int main() {
 			break;
 		}
 
-		C3D_FrameEnd(1);
+		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
 	exit_main();
