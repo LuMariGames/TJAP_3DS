@@ -301,7 +301,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
-	for (int i = 0, j = MEASURE_MAX - 1; i < j; ++i) {	//判定時に発動する命令
+	for (int i = MEASURE_MAX - 1; i < -1; --i) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
 
@@ -340,7 +340,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = 0; i < MEASURE_MAX; ++i) {
+	for (int i = MEASURE_MAX - 1; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) NowBPM = Measure[i].bpm;
 		else if (Measure[i].judge_time >= CurrentTimeNotes) break;
 	}
@@ -676,7 +676,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0; i < NOTES_MAX; ++i) {	//計算
+	for (int i = NOTES_MAX - 1; i > -1; --i) {	//計算
 
 		if (Notes[i].flag == true) {
 
@@ -729,7 +729,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 		}
 	}
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = NOTES_MAX - 1; i > -1; --i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag == true &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
