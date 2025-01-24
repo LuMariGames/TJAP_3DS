@@ -19,6 +19,7 @@ extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[SPRITES_NUMER];			//画像用
+C2D_Image img[SPRITES_NUMER];
 static C2D_SpriteSheet spriteSheet;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
@@ -128,6 +129,7 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
 
@@ -146,7 +148,6 @@ int main() {
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
-			C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			C3D_FrameEnd(0);
 			load_file_main();
 			if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
@@ -274,12 +275,12 @@ int main() {
 				button_game(&isDon, &isKatsu, Option, key);
 			}
 
-			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
+			C2D_DrawImageAtRotated(&img[SPRITE_TOP_2], TOP_WIDTH * 0.5,43,0,0,NULL,1,1);
 
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 
-			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
-			C2D_DrawSprite(&sprites[SPRITE_TOP]);
+			C2D_DrawImageAtRotated(&img[SPRITE_TOP_3], TOP_WIDTH * 0.5,200,0,0,NULL,1,1);
+			C2D_DrawImageAtRotated(&img[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5,0,0,NULL,1,1);
 			draw_title();
 			draw_emblem(sprites);
 			if (course == COURSE_DAN) draw_condition();
@@ -297,7 +298,7 @@ int main() {
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
-			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			C2D_DrawImageAtRotated(&img[SPRITE_BOTTOM], BOTTOM_WIDTH * 0.5, BOTTOM_HEIGHT * 0.5,0,0,NULL,1,1);
 
 			if (isPause == true) {
 				tmp = pause_window(tp, key);
@@ -406,7 +407,6 @@ int main() {
 			break;
 		}
 
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
@@ -427,6 +427,7 @@ inline static void load_sprites() {
 	for (int i = 0; i < SPRITES_NUMER; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
+		img[i] = C2D_SpriteSheetGetImage(spriteSheet, i);
 	}
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
