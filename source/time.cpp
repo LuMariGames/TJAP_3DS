@@ -17,7 +17,7 @@ enum msec_status {
 struct timeval myTime;
 int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
-double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM];
+double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
 
 double get_current_time(int id) {
 	
@@ -33,7 +33,13 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 		gettimeofday(&myTime, NULL);
 
-		if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
+		//計式タイマー(不具合があったら旧式に戻す)
+		if (cnt[id] == 0) OffTime[id] = (double)(myTime.tv_sec + myTime.tv_usec/1000000.0);
+		++cnt[id];
+		Time[id] = (double)(myTime.tv_sec + myTime.tv_usec/1000000.0) - OffTime[id];
+		
+		//旧式だけど念の為残す
+		/*if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
 
 		msec[id][MSEC_CURRENT] = (int)myTime.tv_usec;
 		msec[id][MSEC_LAST_DIFF] = msec[id][MSEC_DIFF];
@@ -45,7 +51,7 @@ double get_current_time(int id) {
 
 		++cnt[id];
 		//printf("%04d:%06d\n", sec, msec[id][MSEC_DIFF]);
-		Time[id] = sec[id] + msec[id][MSEC_DIFF] / 1000000.0 + PreTime[id];
+		Time[id] = sec[id] + msec[id][MSEC_DIFF] / 1000000.0 + PreTime[id];*/
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
