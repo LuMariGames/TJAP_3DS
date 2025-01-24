@@ -342,7 +342,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	for (int i = MEASURE_MAX - 1; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) NowBPM = Measure[i].bpm;
-		else if (Measure[i].judge_time >= CurrentTimeNotes) break;
 	}
 
 	int dcd = dan_condition();
