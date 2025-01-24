@@ -340,9 +340,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = 0; i < MEASURE_MAX; ++i) {
+	for (int i = MEASURE_MAX; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) NowBPM = Measure[i].bpm;
-		else if (Measure[i].judge_time >= CurrentTimeNotes) break;
 	}
 
 	int dcd = dan_condition();
@@ -458,7 +457,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	JudgeRollState = -1;
 
 	//連打の状態
-	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
+	for (int i = ROLL_MAX - 1; i < -1; --i) {
 
 		if (RollNotes[i].flag == true &&
 			Notes[RollNotes[i].start_id].judge_time < CurrentTimeNotes &&
@@ -467,7 +466,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	//風船の処理
 	int JudgeBalloonState = -1;
-	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
+	for (int i = BALLOON_MAX - 1; i < -1; --i) {
 
 		if (BalloonNotes[i].flag == true && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
 			JudgeBalloonState = i;
@@ -476,7 +475,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	}
 
 	//判定すべきノーツを検索
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {
+	for (int i = NOTES_MAX - 1; i < -1; --i) {
 
 		if (Notes[i].flag == true) {
 
@@ -505,11 +504,10 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto == true) {	//オート
 
-		for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+		for (int i = NOTES_MAX - 1; i < -1; --i) {
 
-			if (Notes[i].flag == true && Notes[i].judge_time <= CurrentTimeNotes && Notes[i].isThrough == false &&
-				(Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL && Notes[i].knd != NOTES_BIGROLLEND &&
-					Notes[i].knd != NOTES_ROLLEND && Notes[i].knd != NOTES_BALLOON && Notes[i].knd != NOTES_BALLOONEND)) {
+			if (Notes[i].flag == true && Notes[i].judge_time <= CurrentTimeNotes &&
+				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
 				switch (Notes[i].knd) {
 				case NOTES_DON:
@@ -676,7 +674,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0; i < NOTES_MAX; ++i) {	//計算
+	for (int i = NOTES_MAX - 1; i > -1; --i) {	//計算
 
 		if (Notes[i].flag == true) {
 
@@ -729,14 +727,14 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 		}
 	}
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = NOTES_MAX - 1; i < -1; --i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag == true &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
 			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
 			if (Notes[i].isThrough == false && 
-				(Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU || Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU)) {
+				(Notes[i].knd < NOTES_ROLL && Notes[i].knd > NOTES_REST)) {
 
 				if (Option.isAuto == false) {
 					update_score(THROUGH);
@@ -760,7 +758,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
+	for (int i = NOTES_MAX - 1; i > -1; --i) {	//描画
 
 		if (Notes[i].flag == true) {
 
