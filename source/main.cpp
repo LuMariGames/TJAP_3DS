@@ -128,6 +128,7 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
+		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
 
@@ -146,7 +147,6 @@ int main() {
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
-			C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 			C3D_FrameEnd(0);
 			load_file_main();
 			if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
@@ -406,7 +406,6 @@ int main() {
 			break;
 		}
 
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
