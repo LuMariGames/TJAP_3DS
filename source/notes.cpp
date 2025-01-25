@@ -285,7 +285,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) / (240.0 / Measure[BarLine[i].measure].bpm);
 
 			if (BarLine[i].isDisp == true) {
-				C2D_DrawRectangle(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1), C2D_Color32f(1, 1, 1, 1));
+				C2D_DrawRectSolid(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1));
 
 				//snprintf(buf_notes, sizeof(buf_notes), "%d", Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x - 10, 133, buf_notes);
@@ -788,7 +788,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420) end_x = TOP_WIDTH + 20;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
@@ -813,7 +813,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0) end_x = TOP_WIDTH + 20;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420) end_x = TOP_WIDTH + 20;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
@@ -840,22 +840,22 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_1], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_1]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4f) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_2], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_2]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6f) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_3], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_3]);
 				}
-				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8) {
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8f) {
 
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_4], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_4]);
