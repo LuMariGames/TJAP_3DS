@@ -24,7 +24,7 @@ double get_current_time(int id) {
 	if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
 		//if (isStop[id] != 1) stop_time(id);
 		if (CurrentTime[id] == 0 && Time[id] == 0 && IniVorbisTime[id]==0) IniVorbisTime[id] = getVorbisTime();
-		CurrentTime[id] = Time[id] + getVorbisTime() - IniVorbisTime[id];
+		CurrentTime[id] = Time[id] + (getVorbisTime() - IniVorbisTime[id]) / 1000.0;
 		//return CurrentTime[id]; 
 		//snprintf(get_buffer(), BUFFER_SIZE, "vbt:%.1f", CurrentTime[id]);
 		//draw_debug(100, id*10, get_buffer()); 
@@ -34,9 +34,9 @@ double get_current_time(int id) {
 		gettimeofday(&myTime, NULL);
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		if (cnt[id] == 0) OffTime[id] = (double)(myTime.tv_sec + myTime.tv_usec / 1000000.0);
+		if (cnt[id] == 0) OffTime[id] = myTime.tv_sec + myTime.tv_usec / 1000000.0;
 		++cnt[id];
-		Time[id] = ((double)(myTime.tv_sec + myTime.tv_usec / 1000000.0) - OffTime[id] + PreTime[id]) * mspeed();
+		Time[id] = (myTime.tv_sec + myTime.tv_usec / 1000000.0 - OffTime[id] + PreTime[id]) * mspeed();
 		
 		//旧式だけど念の為残す
 		/*if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
