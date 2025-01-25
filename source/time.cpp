@@ -24,7 +24,7 @@ double get_current_time(int id) {
 	if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
 		//if (isStop[id] != 1) stop_time(id);
 		if (CurrentTime[id] == 0 && Time[id] == 0 && IniVorbisTime[id]==0) IniVorbisTime[id] = getVorbisTime();
-		CurrentTime[id] = Time[id] + getVorbisTime() - IniVorbisTime[id];
+		CurrentTime[id] = Time[id];
 		//return CurrentTime[id]; 
 		//snprintf(get_buffer(), BUFFER_SIZE, "vbt:%.1f", CurrentTime[id]);
 		//draw_debug(100, id*10, get_buffer()); 
