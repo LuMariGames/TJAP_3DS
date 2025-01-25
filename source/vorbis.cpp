@@ -61,6 +61,8 @@ void exitVorbis(void)
 	fclose(f);
 }
 
+double vorbis_time = 0.0;
+
 uint64_t fillVorbisBuffer(char* bufferOut)
 {
 	uint64_t samplesRead = 0;
