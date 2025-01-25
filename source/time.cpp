@@ -22,10 +22,10 @@ double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME
 double get_current_time(int id) {
 	
 	if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
-		//if (isStop[id] != 1) stop_time(id);
+		if (isStop[id] != 1) stop_time(id);
 		if (CurrentTime[id] == 0 && Time[id] == 0 && IniVorbisTime[id]==0) IniVorbisTime[id] = getVorbisTime();
 		CurrentTime[id] = Time[id] + getVorbisTime() - IniVorbisTime[id];
-		//return CurrentTime[id]; 
+		return CurrentTime[id] * mspeed(); 
 		//snprintf(get_buffer(), BUFFER_SIZE, "vbt:%.1f", CurrentTime[id]);
 		//draw_debug(100, id*10, get_buffer()); 
 	}
@@ -55,7 +55,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id] * mspeed();
+	return Time[id];
 }
 
 void restart_time(int id) {
@@ -65,12 +65,12 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
-	for (int n = 0; n < 4; ++n) {
+	/*for (int n = 0; n < 4; ++n) {
 		msec[id][n] = 0;
-	}
+	}*/
 
-	PreTime[id] = Time[id] += 0.01785714285;
-	sec[id] = 0;
+ 	PreTime[id] = Time[id] += 0.01785714285;
+	//sec[id] = 0;
 	cnt[id] = 0;
 }
 
@@ -105,8 +105,8 @@ void draw_fps() {
 	draw_debug(0, 0, get_buffer());
 }
 
-double preVorbisTime = -1000,startVorbisTime = -1000;
-double calc_vorbis_time(double CurrentTimeNotes) {
+//double preVorbisTime = -1000,startVorbisTime = -1000;
+/*double calc_vorbis_time(double CurrentTimeNotes) {
 
 	double result,vorbisTime = getVorbisTime();
 	if (vorbisTime == -1000) result = CurrentTimeNotes;	//曲開始前はそのまま返す
@@ -115,7 +115,7 @@ double calc_vorbis_time(double CurrentTimeNotes) {
 
 	preVorbisTime = vorbisTime;
 	return result;
-}
+}*/
 
 void time_ini() {
 
