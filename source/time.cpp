@@ -25,7 +25,7 @@ double get_current_time(int id) {
 		//if (isStop[id] != 1) stop_time(id);
 		if (CurrentTime[id] == 0 && Time[id] == 0 && IniVorbisTime[id] == 0) IniVorbisTime[id] = getVorbisTime();
 		CurrentTime[id] = Time[id] + (getVorbisTime() - IniVorbisTime[id])/1000.0;
-		return CurrentTime[id] * mspeed(); 
+		//return CurrentTime[id];
 		//snprintf(get_buffer(), BUFFER_SIZE, "vbt:%.1f", CurrentTime[id]);
 		//draw_debug(100, id*10, get_buffer()); 
 	}
@@ -55,7 +55,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id];
+	return Time[id] * mspeed();
 }
 
 void restart_time(int id) {
