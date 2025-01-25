@@ -139,6 +139,6 @@ void time_ini() {
 	fps_cnt = 0;
 	fps_sum = 0;
 	fps = 0;
-	preVorbisTime = -1000;
-	startVorbisTime = -1000;
+	//preVorbisTime = -1000;
+	//startVorbisTime = -1000;
 }
