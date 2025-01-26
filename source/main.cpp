@@ -280,6 +280,8 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 			draw_title();
 			draw_emblem(sprites);
+			if (course == COURSE_DAN) draw_condition();
+			if (Option.dispFps == true) draw_fps();
 
 			draw_lane(sprites);
 			draw_gauge(sprites);
@@ -289,8 +291,6 @@ int main() {
 				if (isPause == false) ++notes_cnt;
 			}
 			draw_score(sprites);
-			if (course == COURSE_DAN) draw_condition();
-			if (Option.dispFps == true) draw_fps();
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
 			C2D_SceneBegin(bottom);
