@@ -837,13 +837,13 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			if (strstr(value, "/") != NULL) {
 
 				int srash = strstr(value, "/") - value;
-				char *denominator = (char *)malloc((strlen(buf) + 1)),
-					*molecule = (char *)malloc((strlen(buf) + 1));
+				char *denominator = new char[strlen(buf) + 1],
+					*molecule = new char[strlen(buf) + 1];
 				strlcpy(molecule, value + 1, srash);
 				strlcpy(denominator, value + srash + 1, strlen(buf) - srash);
 				Command->val[0] = strtod(molecule, NULL) / strtod(denominator, NULL);
-				free(denominator);
-				free(molecule);
+				delete[] denominator;
+				delete[] molecule;
 			}
 			else {
 				if (strtod(value, NULL) != 0) Command->val[0] = strtod(value, NULL);
