@@ -50,8 +50,10 @@ void init_main() {
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	gfxSetWide(true);
-	osSetSpeedupEnable(false);
-	//C3D_FrameRate(60);
+	osSetSpeedupEnable(true);
+	gfxSetDoubleBuffering(GFX_TOP, true);
+	gfxScreenSwapBuffers(GFX_TOP, true);
+	C3D_FrameRate(60);
 }
 
 void exit_main() {
@@ -115,7 +117,7 @@ int main() {
 	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
 	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000;
 
-	while (1) {
+	while (aptMainLoop()) {
 
 		hidScanInput();
 		hidTouchRead(&tp);
@@ -281,6 +283,7 @@ int main() {
 			draw_title();
 			draw_emblem(sprites);
 			if (course == COURSE_DAN) draw_condition();
+
 			if (Option.dispFps == true) draw_fps();
 
 			draw_lane(sprites);
