@@ -54,7 +54,7 @@ void init_main() {
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	gfxScreenSwapBuffers(GFX_TOP, true);
 	C3D_FrameRate(60);
-	APT_SetAppCpuTimeLimit(100)
+	APT_SetAppCpuTimeLimit(100);
 }
 
 void exit_main() {
