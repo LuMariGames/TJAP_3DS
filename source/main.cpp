@@ -52,7 +52,6 @@ void init_main() {
 	gfxSetWide(false);
 	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
-	gfxScreenSwapBuffers(GFX_TOP, true);
 	C3D_FrameRate(60);
 	APT_SetAppCpuTimeLimit(100);
 }
@@ -129,6 +128,7 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
+		gfxScreenSwapBuffers(GFX_TOP, false);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
