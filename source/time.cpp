@@ -36,7 +36,7 @@ double get_current_time(int id) {
 		//計式タイマー(不具合があったら旧式に戻す)
 		if (cnt[id] == 0) OffTime[id] = myTime.tv_sec + myTime.tv_usec / 1000000.0;
 		++cnt[id];
-		Time[id] = (myTime.tv_sec + myTime.tv_usec / 1000000.0 - OffTime[id] + PreTime[id]) * mspeed();
+		Time[id] = (myTime.tv_sec + myTime.tv_usec / 1000000.0 - OffTime[id] + PreTime[id]);
 		
 		//旧式だけど念の為残す
 		/*if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
@@ -55,7 +55,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id];
+	return Time[id] * mspeed();
 }
 
 void restart_time(int id) {
@@ -91,7 +91,7 @@ double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
 	fps_time[0] = fps_time[1];
-	fps_time[1] = get_current_time(TIME_FPS);
+	fps_time[1] = get_current_time(TIME_FPS)/mspeed();
 
 	fps_sum += fps_time[1] - fps_time[0];
 	++fps_cnt;
