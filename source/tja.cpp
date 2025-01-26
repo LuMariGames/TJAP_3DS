@@ -501,7 +501,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			if (strstr(tja_notes[tja_cnt], "COURSE:") == tja_notes[tja_cnt]) {
 
-				char* temp = (char*)(strlen(tja_notes[tja_cnt]) + 1);
+				char* temp = NULL;
+				temp = (char *)malloc((strlen(tja_notes[tja_cnt]) + 1));
 
 				strlcpy(temp, tja_notes[tja_cnt] + 7, strlen(tja_notes[tja_cnt]) - 8);
 				if (strlen(temp) == 1) CurrentCourse = atoi(temp);		//数字表記
@@ -512,6 +513,8 @@ void load_tja_notes(int course, LIST_T Song) {
 				else if (strcmp(temp, "Edit") ==   0 || strcmp(temp, "edit") == 0)   CurrentCourse = COURSE_EDIT;
 				else if (strcmp(temp, "Tower") ==   0 || strcmp(temp, "tower") == 0)   CurrentCourse = COURSE_TOWER;
 				else if (strcmp(temp, "Dan") ==   0 || strcmp(temp, "dan") == 0)   CurrentCourse = COURSE_DAN;
+
+				free(temp);
 
 				if (course == CurrentCourse) isCourseMatch = true;
 
@@ -775,8 +778,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		length = strlen(buf);
 		comment = 0;
 
-		char* command = (char*)(strlen(buf) + 1);
-		char* value = (char*)(strlen(buf) + 1);
+		char* command = (char *)malloc((strlen(buf) + 1));
+		char* value = (char *)malloc((strlen(buf) + 1));
 
 		Command->notes = buf;
 
@@ -835,11 +838,13 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			if (strstr(value, "/") != NULL) {
 
 				int srash = strstr(value, "/") - value;
-				char *denominator = (char *)(strlen(buf) + 1),
-					*molecule = (char *)(strlen(buf) + 1);
+				char *denominator = (char *)malloc((strlen(buf) + 1)),
+					*molecule = (char *)malloc((strlen(buf) + 1));
 				strlcpy(molecule, value + 1, srash);
 				strlcpy(denominator, value + srash + 1, strlen(buf) - srash);
 				Command->val[0] = strtod(molecule, NULL) / strtod(denominator, NULL);
+				free(denominator);
+				free(molecule);
 			}
 			else {
 				if (strtod(value, NULL) != 0) Command->val[0] = strtod(value, NULL);
@@ -883,6 +888,9 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "BARLINEOFF") == 0) Command->knd = COMMAND_BARLINEOFF;
 		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
 		else Command->knd = -1;
+
+		free(command);
+		free(value);
 	}
 
 	else Command->knd = -1;
