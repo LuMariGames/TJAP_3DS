@@ -769,22 +769,22 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				C2D_SpriteSetPos(&sprites[SPRITE_DON], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_DON], 1 - 1/26.f, 1);
+				C2D_SpriteSetCenter(&sprites[SPRITE_DON], 0.5 * (1/26.f * roundsign(Notes[i].x)), 0.5f);
 				C2D_DrawSprite(&sprites[SPRITE_DON]);
 				break;
 			case NOTES_KATSU:
 				C2D_SpriteSetPos(&sprites[SPRITE_KATSU], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_KATSU], 1 - 1/26.f, 1);
+				C2D_SpriteSetCenter(&sprites[SPRITE_KATSU], 0.5 * (1/26.f * roundsign(Notes[i].x)), 0.5f);
 				C2D_DrawSprite(&sprites[SPRITE_KATSU]);
 				break;
 			case NOTES_BIGDON:
 				C2D_SpriteSetPos(&sprites[SPRITE_BIG_DON], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_BIG_DON], 1 - 1/40.f, 1);
+				C2D_SpriteSetCenter(&sprites[SPRITE_BIG_DON], 0.5 * (1/40.f * roundsign(Notes[i].x)), 0.5f);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_DON]);
 				break;
 			case NOTES_BIGKATSU:
 				C2D_SpriteSetPos(&sprites[SPRITE_BIG_KATSU], Notes[i].x, notes_y);
-				C2D_SpriteSetScale(&sprites[SPRITE_BIG_KATSU], 1 - 1/40.f, 1);
+				C2D_SpriteSetCenter(&sprites[SPRITE_BIG_KATSU], 0.5 * (1/40.f * roundsign(Notes[i].x)), 0.5f);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_KATSU]);
 				break;
 			case NOTES_ROLL:
@@ -1287,4 +1287,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 }
 int sign(double A) noexcept {	//正か負かの判別
 	return (A > 0) - (A < 0);
+}
+double roundsign(double B) noexcept {
+	return round(B) - B;
 }
