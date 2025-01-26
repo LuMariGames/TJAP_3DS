@@ -290,7 +290,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32 * 1024, prio - 1, -2, false);
+	thread = threadCreate(playFile, playbackInfo, 20480, prio - 1, -2, false);
 	
 	return 0;
 }
