@@ -51,7 +51,7 @@ void init_main() {
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	gfxSetWide(true);
 	osSetSpeedupEnable(false);
-	APT_SetAppCpuTimeLimit(NULL, 100);
+	APT_SetAppCpuTimeLimit(100);
 	C3D_FrameRate(60);
 }
 
