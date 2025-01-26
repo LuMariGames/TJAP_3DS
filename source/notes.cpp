@@ -1191,7 +1191,7 @@ void draw_title() {
 	draw_notes_text(TOP_WIDTH, 0, Header.title, &width, &height);
 }
 
-void draw_condition() {
+void draw_condition() noexcept {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -1281,6 +1281,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].isDisp = false;
 	}
 }
-int sign(double A) {	//正か負かの判別
+int sign(double A) noexcept {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
