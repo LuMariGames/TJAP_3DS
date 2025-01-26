@@ -35,7 +35,7 @@ bool  isNotesLoad = true, isJudgeDisp = false, isBalloonBreakDisp = false, isGOG
 double JudgeMakeTime, JudgeY,JudgeEffectCnt;
 
 
-void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) {
+void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) noexcept {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -397,7 +397,7 @@ void make_judge(int knd, double CurrentTimeNotes) {
 	JudgeEffectCnt = 0;
 }
 
-void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
+void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 	if (isJudgeDisp == true) {
 
@@ -673,7 +673,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	}
 }
 
-static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]) {
+static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -758,7 +758,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
 }
 
-inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
+inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 	int notes_y = 109;
 
