@@ -94,7 +94,7 @@ void load_tja_head(int course,LIST_T Song) {
 		while (fgets(buf, 128, fp) != NULL) {
 
 			++cnt;
-			temp = (char *)malloc((strlen(buf) + 1));
+			temp = (char*)malloc((strlen(buf) + 1));
 
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
@@ -360,7 +360,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 		while (fgets(buf, 128, fp) != NULL) {
 
-			temp = (char *)malloc((strlen(buf) + 1));
+			temp = (char*)malloc((strlen(buf) + 1));
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
@@ -501,7 +501,7 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			if (strstr(tja_notes[tja_cnt], "COURSE:") == tja_notes[tja_cnt]) {
 
-				char* temp = new char*[strlen(tja_notes[tja_cnt]) + 1];
+				char* temp = new char[strlen(tja_notes[tja_cnt]) + 1];
 
 				strlcpy(temp, tja_notes[tja_cnt] + 7, strlen(tja_notes[tja_cnt]) - 8);
 				if (strlen(temp) == 1) CurrentCourse = atoi(temp);		//数字表記
@@ -777,8 +777,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		length = strlen(buf);
 		comment = 0;
 
-		char* command = new char*[strlen(buf) + 1];
-		char* value = new char*[strlen(buf) + 1];
+		char* command = new char[strlen(buf) + 1];
+		char* value = new char[strlen(buf) + 1];
 
 		Command->notes = buf;
 
