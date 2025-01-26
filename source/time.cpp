@@ -36,7 +36,7 @@ double get_current_time(int id) {
 		//計式タイマー(不具合があったら旧式に戻す)
 		if (cnt[id] == 0) OffTime[id] = myTime.tv_sec + myTime.tv_usec / 1000000.0;
 		++cnt[id];
-		Time[id] = (myTime.tv_sec + myTime.tv_usec / 1000000.0 - OffTime[id] + PreTime[id]) * mspeed();
+		Time[id] = (myTime.tv_sec + myTime.tv_usec / 1000000.0 - OffTime[id]) * mspeed() + PreTime[id];
 		
 		//旧式だけど念の為残す
 		/*if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
