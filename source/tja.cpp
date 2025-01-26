@@ -94,7 +94,7 @@ void load_tja_head(int course,LIST_T Song) {
 		while (fgets(buf, 128, fp) != NULL) {
 
 			++cnt;
-			temp = (char*)malloc((strlen(buf) + 1));
+			temp = (char *)malloc((strlen(buf) + 1));
 
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
@@ -360,7 +360,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 		while (fgets(buf, 128, fp) != NULL) {
 
-			temp = (char*)malloc((strlen(buf) + 1));
+			temp = (char *)malloc((strlen(buf) + 1));
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
@@ -501,7 +501,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			if (strstr(tja_notes[tja_cnt], "COURSE:") == tja_notes[tja_cnt]) {
 
-				char* temp = new char[strlen(tja_notes[tja_cnt]) + 1];
+				char* temp = NULL;
+				temp = (char *)malloc((strlen(tja_notes[tja_cnt]) + 1));
 
 				strlcpy(temp, tja_notes[tja_cnt] + 7, strlen(tja_notes[tja_cnt]) - 8);
 				if (strlen(temp) == 1) CurrentCourse = atoi(temp);		//数字表記
@@ -513,7 +514,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				else if (strcmp(temp, "Tower") ==   0 || strcmp(temp, "tower") == 0)   CurrentCourse = COURSE_TOWER;
 				else if (strcmp(temp, "Dan") ==   0 || strcmp(temp, "dan") == 0)   CurrentCourse = COURSE_DAN;
 
-				delete[] temp;
+				free(temp);
 
 				if (course == CurrentCourse) isCourseMatch = true;
 
@@ -777,8 +778,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		length = strlen(buf);
 		comment = 0;
 
-		char* command = new char[strlen(buf) + 1];
-		char* value = new char[strlen(buf) + 1];
+		char* command = (char *)malloc((strlen(buf) + 1));
+		char* value = (char *)malloc((strlen(buf) + 1));
 
 		Command->notes = buf;
 
@@ -837,13 +838,13 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			if (strstr(value, "/") != NULL) {
 
 				int srash = strstr(value, "/") - value;
-				char *denominator = new char[strlen(buf) + 1],
-					*molecule = new char[strlen(buf) + 1];
+				char *denominator = (char *)malloc((strlen(buf) + 1)),
+					*molecule = (char *)malloc((strlen(buf) + 1));
 				strlcpy(molecule, value + 1, srash);
 				strlcpy(denominator, value + srash + 1, strlen(buf) - srash);
 				Command->val[0] = strtod(molecule, NULL) / strtod(denominator, NULL);
-				delete[] denominator;
-				delete[] molecule;
+				free(denominator);
+				free(molecule);
 			}
 			else {
 				if (strtod(value, NULL) != 0) Command->val[0] = strtod(value, NULL);
@@ -888,8 +889,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
 		else Command->knd = -1;
 
-		delete[] command;
-		delete[] value;
+		free(command);
+		free(value);
 	}
 
 	else Command->knd = -1;
