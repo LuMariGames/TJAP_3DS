@@ -127,7 +127,7 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
-		gfxSetDoubleBuffering(GFX_TOP, false);
+		gfxSetDoubleBuffering(GFX_TOP, true);
 		gfxScreenSwapBuffers(GFX_TOP, false);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
