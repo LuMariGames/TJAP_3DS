@@ -49,10 +49,9 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	gfxSetWide(false);
-	osSetSpeedupEnable(true);
-	gfxSetDoubleBuffering(GFX_TOP, true);
-	gfxScreenSwapBuffers(GFX_TOP, true);
+	gfxSetWide(true);
+	osSetSpeedupEnable(false);
+	APT_SetAppCpuTimeLimit(NULL, 100);
 	C3D_FrameRate(60);
 }
 
@@ -128,6 +127,8 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
+		gfxSetDoubleBuffering(GFX_TOP, false);
+		gfxScreenSwapBuffers(GFX_TOP, false);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
 		C2D_SceneBegin(top);
