@@ -21,22 +21,22 @@ double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME
 
 double get_current_time(int id) {
 	
-	/*if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
+	if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
 		//if (isStop[id] != 1) stop_time(id);
 		if (CurrentTime[id] == 0 && Time[id] == 0 && IniVorbisTime[id]==0) IniVorbisTime[id] = getVorbisTime();
 		CurrentTime[id] = Time[id] + getVorbisTime() - IniVorbisTime[id];
 		//return CurrentTime[id]; 
 		//snprintf(get_buffer(), BUFFER_SIZE, "vbt:%.1f", CurrentTime[id]);
 		//draw_debug(100, id*10, get_buffer()); 
-	}*/
+	}
 
 	if (isStop[id] != 1) {
 		gettimeofday(&myTime, NULL);
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		if (cnt[id] == 0) OffTime[id] = myTime.tv_sec + myTime.tv_usec / 1000000.0;
+		if (cnt[id] == 0) OffTime[id] = myTime.tv_sec + (int)(myTime.tv_usec) / 1000000;
 		++cnt[id];
-		Time[id] = (myTime.tv_sec + myTime.tv_usec / 1000000.0 + PreTime[id] - OffTime[id]) * mspeed();
+		Time[id] = (myTime.tv_sec + (int)(myTime.tv_usec) / 1000000.0 + PreTime[id] - OffTime[id]);
 		
 		//旧式だけど念の為残す
 		/*if (cnt[id] == 0) msec[id][MSEC_INIT] = (int)myTime.tv_usec;
@@ -55,7 +55,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id];
+	return Time[id] * mspeed();
 }
 
 void restart_time(int id) {
@@ -91,7 +91,7 @@ double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
 	fps_time[0] = fps_time[1];
-	fps_time[1] = get_current_time(TIME_FPS);
+	fps_time[1] = get_current_time(TIME_FPS)/mspeed();
 
 	fps_sum += fps_time[1] - fps_time[0];
 	++fps_cnt;
