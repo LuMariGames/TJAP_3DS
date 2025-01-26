@@ -471,7 +471,7 @@ int powi(int x, int y) {	//なぜかpowのキャストが上手くいかない�
 C2D_TextBuf g_MainText = C2D_TextBufNew(4096);
 C2D_Text MainText;
 
-void draw_window_text(float x, float y, const char* text, float* width, float* height,float size = 1.0) {
+void draw_window_text(float x, float y, const char* text, float* width, float* height,float size = 1.0) noexcept {
 
 	C2D_TextBufClear(g_MainText);
 	C2D_TextParse(&MainText, g_MainText, text);
@@ -481,7 +481,7 @@ void draw_window_text(float x, float y, const char* text, float* width, float* h
 	C2D_DrawText(&MainText, C2D_WithColor, BOTTOM_WIDTH / 2 - *width / 2, y, 1.0f, size, size, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
-inline int pause_window(touchPosition tp, unsigned int key) {
+inline int pause_window(touchPosition tp, unsigned int key) noexcept {
 
 	int margin = 20, result = -1, x, y;
 	float width, height;
@@ -527,7 +527,7 @@ static int exist_file(const char* path) {
     fclose(fp);
     return 1;
 }
-inline static int time_count(double TIME) {
+inline static int time_count(double TIME) noexcept {
 	if ((int)floor(TIME/(60.0/NowBPM)) % 2 == 1) return 1+(isGOGO*2);
 	else return 0+(isGOGO*2);
 }
