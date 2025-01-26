@@ -117,7 +117,7 @@ int main() {
 	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
 	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000;
 
-	while (aptMainLoop()) {
+	while (1) {
 
 		hidScanInput();
 		hidTouchRead(&tp);
@@ -283,7 +283,6 @@ int main() {
 			draw_title();
 			draw_emblem(sprites);
 			if (course == COURSE_DAN) draw_condition();
-
 			if (Option.dispFps == true) draw_fps();
 
 			draw_lane(sprites);
