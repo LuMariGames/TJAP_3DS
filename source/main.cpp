@@ -49,9 +49,8 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	gfxSetWide(false);
+	gfxSetWide(true);
 	osSetSpeedupEnable(false);
-	APT_SetAppCpuTimeLimit(100);
 	C3D_FrameRate(60);
 }
 
