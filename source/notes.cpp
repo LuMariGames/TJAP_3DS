@@ -768,7 +768,8 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 			switch (Notes[i].knd) {
 			case NOTES_DON:
-				C2D_SpriteSetPos(&sprites[SPRITE_DON], (float)Notes[i].x, notes_y);
+				&sprites[SPRITE_DON]->params.pos.x = Notes[i].x;
+				&sprites[SPRITE_DON]->params.pos.y = notes_y;
 				C2D_DrawSprite(&sprites[SPRITE_DON]);
 				break;
 			case NOTES_KATSU:
