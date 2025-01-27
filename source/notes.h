@@ -3,8 +3,9 @@
 
 typedef struct {
 	int num, notes_max, knd, roll_id, text_id;
-	double create_time, judge_time, pop_time, bpm, scroll, x_ini, x;
+	double create_time, judge_time, pop_time, bpm, scroll, x_ini;
 	bool flag, isThrough;
+	float x;
 	C2D_Sprite spr;
 
 } NOTES_T;
