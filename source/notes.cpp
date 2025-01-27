@@ -760,7 +760,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 
 inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
-	int notes_y = 109.f;
+	int notes_y = 109;
 
 	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
 
