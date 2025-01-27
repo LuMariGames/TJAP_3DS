@@ -760,7 +760,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 
 inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
-	int notes_y = 109.f;
+	int notes_y = 109;
 
 	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
 
@@ -773,15 +773,18 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 				C2D_DrawSprite(&sprites[SPRITE_DON]);
 				break;
 			case NOTES_KATSU:
-				C2D_SpriteSetPos(&sprites[SPRITE_KATSU], (float)Notes[i].x, notes_y);
+				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
+				sprites[SPRITE_KATSU].params.pos.y = notes_y;
 				C2D_DrawSprite(&sprites[SPRITE_KATSU]);
 				break;
 			case NOTES_BIGDON:
-				C2D_SpriteSetPos(&sprites[SPRITE_BIG_DON], (float)Notes[i].x, notes_y);
+				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
+				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
 				C2D_DrawSprite(&sprites[SPRITE_BIG_DON]);
 				break;
 			case NOTES_BIGKATSU:
-				C2D_SpriteSetPos(&sprites[SPRITE_BIG_KATSU], (float)Notes[i].x, notes_y);
+				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
+				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
 				C2D_DrawSprite(&sprites[SPRITE_BIG_KATSU]);
 				break;
 			case NOTES_ROLL:
