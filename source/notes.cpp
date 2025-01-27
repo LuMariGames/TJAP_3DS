@@ -682,7 +682,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 
 		if (Notes[i].flag == true) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0/Notes[i].bpm);
+			Notes[i].x = (float)((double)Notes[i].x_ini - NOTES_AREA * (double)Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0 / (double)Notes[i].bpm));
 
 			switch (Notes[i].knd) {
 
@@ -865,11 +865,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_5], Notes[i].x, notes_y);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_5]);
 				}
-
 				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
-
-				//snprintf(buf_notes, sizeof(buf_notes), "%d", BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
-				//draw_debug(Notes[i].x, 132, buf_notes);
 				break;
 			case NOTES_ROLLEND:
 				C2D_SpriteSetPos(&sprites[SPRITE_ROLL_END], Notes[i].x, notes_y);
@@ -882,13 +878,6 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 				C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_END]);
 				break;
 			}
-			
-			/*if (Notes[i].roll_id != -1) {
-				snprintf(get_buffer(), BUFFER_SIZE, "%d", RollNotes[Notes[i].roll_id].id);
-				draw_debug(Notes[i].x, 132, get_buffer());
-			}*/
-			//snprintf(get_buffer(), BUFFER_SIZE, "%d", Notes[i].knd);
-			//draw_debug(Notes[i].x, 132, get_buffer());
 		}
 	}
 
