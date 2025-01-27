@@ -130,7 +130,8 @@ int main() {
 
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
-		C2D_SceneBegin(top);
+		C3D_FrameDrawOn(top);
+		C2D_SceneTarget(top);
 
 		switch (scene_state) {
 
@@ -160,7 +161,8 @@ int main() {
 		case SCENE_WARNING:		//警告画面
 
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
-			C2D_SceneBegin(bottom);
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
 
 			switch (warning) {
 			case WARNING_DSP1:
@@ -191,7 +193,8 @@ int main() {
 			get_SelectedId(&SelectedSong, &course);
 
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
-			C2D_SceneBegin(bottom);
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
 			draw_option(tp.px, tp.py, key, sprites);
 
 			if (key & KEY_UP)		update_cursor(KEY_UP);
@@ -295,7 +298,8 @@ int main() {
 			draw_score(sprites);
 
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
-			C2D_SceneBegin(bottom);
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			if (isPause == true) {
@@ -405,6 +409,7 @@ int main() {
 			break;
 		}
 
+		C2D_Flush();
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
