@@ -53,7 +53,7 @@ void init_main() {
 	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	gfxScreenSwapBuffers(GFX_TOP, true);
-	C3D_FrameRate(60);
+	C3D_FrameRate(60.0f);
 }
 
 void exit_main() {
@@ -128,8 +128,11 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
+		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//上画面
+
+		//上画面
+		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
 		C3D_FrameDrawOn(top);
 		C2D_SceneTarget(top);
 
@@ -160,7 +163,8 @@ int main() {
 
 		case SCENE_WARNING:		//警告画面
 
-			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
+			//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 
@@ -192,7 +196,8 @@ int main() {
 			disp_file_list();
 			get_SelectedId(&SelectedSong, &course);
 
-			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));	//下画面
+			//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			draw_option(tp.px, tp.py, key, sprites);
@@ -213,7 +218,7 @@ int main() {
 			if (key & KEY_START) isExit = true;
 			break;
 
-		case SCENE_MAINLOAD:
+		case SCENE_MAINLOAD:	 //ロード中
 
 			init_tja();
 			load_tja_head(course, SelectedSong);
@@ -242,7 +247,7 @@ int main() {
 			cnt = -60;
 			break;
 
-		case SCENE_MAINGAME:		//メイン
+		case SCENE_MAINGAME:		//演奏画面
 
 			if (isPause == false) {
 
@@ -296,7 +301,8 @@ int main() {
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps == true) draw_fps();
 
-			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));	//下画面
+			//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
@@ -408,6 +414,7 @@ int main() {
 			break;
 		}
 
+		//描画終了
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
