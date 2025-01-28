@@ -101,7 +101,7 @@ void playFile(void* infoIn){
 	int16_t*	buffer4 = NULL;
 	ndspWaveBuf		waveBuf[4];
 	bool			lastbuf = false;
-	int				ret = -1, set = 100000;
+	int				ret = -1, set = 114286;
 	const char*		file = info->file;
 	bool			isNdspInit = false;
 
@@ -152,7 +152,6 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	set = (getbitrate()/56)*100;
 	while (*info->isPlay == false) svcSleepThread(set);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
@@ -291,7 +290,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32768, prio - 1, -2, false);
+	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, -2, false);
 	
 	return 0;
 }
