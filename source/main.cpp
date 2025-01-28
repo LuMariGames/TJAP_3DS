@@ -298,7 +298,6 @@ int main() {
 				if (isPause == false) ++notes_cnt;
 			}
 			draw_title();
-			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps == true) draw_fps();
 
 			//下画面
