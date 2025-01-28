@@ -74,7 +74,7 @@ AccessControlInfo:
   Priority                      : 16
   MaxCpu                        : 0xFF
   HandleTableSize               : 0x200
-  DisableDebug                  : false
+  DisableDebug                  : true
   EnableForceDebug              : false
   CanWriteSharedPage            : true
   CanUsePrivilegedPriority      : false
