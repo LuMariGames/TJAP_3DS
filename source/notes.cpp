@@ -800,15 +800,15 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_ROLL_INT].params.pos.x = Notes[i].x + 9.0 * n;
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
+							sprites[SPRITE_ROLL_INT].params.pos.x = Notes[i].x + 8.0 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_ROLL_INT].params.pos.x = Notes[i].x + 9.0 * (n * -1);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
+							sprites[SPRITE_ROLL_INT].params.pos.x = Notes[i].x + 8.0 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
@@ -828,15 +828,15 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = Notes[i].x + 9.0 * n;
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = Notes[i].x + 8.0 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = Notes[i].x + 9.0 * (n * -1);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = Notes[i].x + 8.0 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
