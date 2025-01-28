@@ -770,6 +770,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
+				C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_DON]);
 				break;
 			case NOTES_KATSU:
