@@ -121,5 +121,5 @@ void put_buffer_size(int tmp) {
 
 float getbitrate() {
 	if (get_isMusicStart() == true) return (float)ov_bitrate(&vorbisFile, -1);
-	else return 64.0f;
+	else return 56.0f;
 }
