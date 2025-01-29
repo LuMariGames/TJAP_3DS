@@ -796,20 +796,20 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420) end_x = TOP_WIDTH + 20.0f;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0f) end_x = TOP_WIDTH + 20.0f;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 10.0; n < m; ++n) {
+							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 10 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C3D_TexSetFilter(sprites[SPRITE_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 10.0; n < m; ++n) {
+							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 10 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C3D_TexSetFilter(sprites[SPRITE_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
@@ -827,20 +827,20 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 				if (RollNotes[Notes[i].roll_id].flag == true) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420) end_x = TOP_WIDTH + 20.0f;
+					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0f) end_x = TOP_WIDTH + 20.0f;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 10.0; n < m; ++n) {
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 10 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 10.0; n < m; ++n) {
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 10 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
