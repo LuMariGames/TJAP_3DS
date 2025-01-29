@@ -782,7 +782,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, x, GPU_LINEAR, GPU_NEAREST);
+				C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_NEAREST);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_DON]);
 				break;
 			case NOTES_BIGKATSU:
