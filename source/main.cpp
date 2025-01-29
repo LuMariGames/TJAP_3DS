@@ -413,6 +413,7 @@ int main() {
 		}
 
 		//描画終了
+		C2D_Flush();
 		C3D_FrameEnd(0);
 		if (isPause == false) ++cnt;
 	}
