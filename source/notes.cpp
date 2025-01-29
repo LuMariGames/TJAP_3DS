@@ -770,25 +770,25 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
+				C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_NEAREST, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_DON]);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_KATSU].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
+				C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_NEAREST, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_KATSU]);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
+				C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_NEAREST, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_DON]);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
+				C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_NEAREST, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_KATSU]);
 				break;
 			case NOTES_ROLL:
@@ -801,23 +801,23 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 					if (Notes[i].scroll > 0) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_ROLL_INT].params.pos.x = Notes[i].x + 9 * n;
+							sprites[SPRITE_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							C3D_TexSetFilter(sprites[SPRITE_ROLL_INT].image.tex, GPU_LINEAR, GPU_NEAREST);
+							C3D_TexSetFilter(sprites[SPRITE_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_ROLL_INT].params.pos.x = Notes[i].x + 9 * n;
+							sprites[SPRITE_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							C3D_TexSetFilter(sprites[SPRITE_ROLL_INT].image.tex, GPU_LINEAR, GPU_NEAREST);
+							C3D_TexSetFilter(sprites[SPRITE_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
 						}
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_ROLL_START]);
 				}
 				break;
@@ -832,23 +832,23 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 					if (Notes[i].scroll > 0) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = Notes[i].x + 9 * n;
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_INT].image.tex, GPU_LINEAR, GPU_NEAREST);
+							C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 9.0; n < m; ++n) {
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = Notes[i].x + 9 * n;
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (Notes[i].x + 9.0 * n);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_INT].image.tex, GPU_LINEAR, GPU_NEAREST);
+							C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_INT].image.tex, GPU_NEAREST, GPU_LINEAR);
 							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
 						}
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_START]);
 					break;
 				}
@@ -859,42 +859,42 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 
 					sprites[SPRITE_BALLOON].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON]);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
 					sprites[SPRITE_BALLOON_1].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_1].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BALLOON_1].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BALLOON_1].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_1]);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4f) {
 
 					sprites[SPRITE_BALLOON_2].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_2].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BALLOON_2].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BALLOON_2].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_2]);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6f) {
 
 					sprites[SPRITE_BALLOON_3].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_3].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BALLOON_3].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BALLOON_3].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_3]);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8f) {
 
 					sprites[SPRITE_BALLOON_4].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_4].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BALLOON_4].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BALLOON_4].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_4]);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
 					sprites[SPRITE_BALLOON_5].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_5].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BALLOON_5].image.tex, GPU_LINEAR, GPU_NEAREST);
+					C3D_TexSetFilter(sprites[SPRITE_BALLOON_5].image.tex, GPU_NEAREST, GPU_LINEAR);
 					C2D_DrawSprite(&sprites[SPRITE_BALLOON_5]);
 				}
 				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
@@ -902,14 +902,14 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_NEAREST);
+				C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_NEAREST, GPU_LINEAR);
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawSprite(&sprites[SPRITE_ROLL_END]);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_NEAREST);
+				C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_NEAREST, GPU_LINEAR);
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_END]);
 				break;
@@ -923,6 +923,7 @@ inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, BalloonBreakCount / 40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6], NOTES_JUDGE_X, notes_y);
+		C3D_TexSetFilter(sprites[SPRITE_BALLOON_6].image.tex, GPU_NEAREST, GPU_LINEAR);
 		C2D_DrawSpriteTinted(&sprites[SPRITE_BALLOON_6], &Tint);
 	}
 	if (BalloonBreakCount <= 0) isBalloonBreakDisp = false;
