@@ -33,9 +33,9 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		if (cnt[id] == 0) OffTime[id] = (double)(osGetTime() * 0.001);
+		if (cnt[id] == 0) OffTime[id] = (double)osGetTime() * 0.001;
 		++cnt[id];
-		Time[id] = (double)(osGetTime() * 0.001) - OffTime[id] + PreTime[id];
+		Time[id] = (double)osGetTime() * 0.001 - OffTime[id] + PreTime[id];
 
 		//旧式だけど念の為残す
 		/*gettimeofday(&myTime, NULL);
