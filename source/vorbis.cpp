@@ -120,6 +120,6 @@ void put_buffer_size(int tmp) {
 }
 
 int getlatency() {
-	if (get_isMusicStart() == true) return (int)ov_bitrate(&vorbisFile, -1);
-	else return 56000;
+	if (get_isMusicStart() == true) return (56000 / (int)ov_bitrate(&vorbisFile, -1) - 1 ) * -200000;
+	else return 0;
 }
