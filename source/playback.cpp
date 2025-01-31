@@ -9,8 +9,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
-static volatile bool stop = true;
-static bool set = false;
+static volatile bool stop = true, set = false;
 extern float mix[12];
 
 bool togglePlayback(void){
