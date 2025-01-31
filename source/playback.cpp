@@ -154,7 +154,7 @@ void playFile(void* infoIn){
 	memset(waveBuf, 0, sizeof(waveBuf));
 
 	if (set = false) {
-		offset = 1000 * 100;
+		offset = 100000 + getlatency();
 		set = true;
 	}
 	while (*info->isPlay == false) svcSleepThread(offset);
