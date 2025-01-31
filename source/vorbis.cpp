@@ -119,7 +119,7 @@ void put_buffer_size(int tmp) {
 	vorbis_buffer_size = (size_t)tmp;
 }
 
-/*int getlatency() {
-	if (get_isMusicStart() == true) return (int)ov_time_tell(&vorbisFile);
-	else return 100000;
-}*/
+int getlatency() {
+	if (get_isMusicStart() == true) return (int)ov_bitrate(&vorbisFile, -1);
+	else return 56000;
+}
