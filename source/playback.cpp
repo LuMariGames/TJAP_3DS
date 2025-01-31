@@ -152,7 +152,7 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (set = false) {
+	if (set == false) {
 		offset = 100000 + getlatency();
 		set = true;
 	}
