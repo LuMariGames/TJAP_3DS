@@ -16,4 +16,3 @@ int isVorbis(const char* in);
 double getVorbisTime();
 int get_buffer_size();
 void put_buffer_size(int tmp);
-//int getlatency();
