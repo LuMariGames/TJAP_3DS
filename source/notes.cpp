@@ -367,7 +367,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	
 }
 
-static int find_notes_id() {
+int find_notes_id() {
 
 	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
 		if (Notes[i].flag == false) return i;
@@ -378,7 +378,7 @@ static int find_notes_id() {
 	return -1;
 }
 
-static int find_line_id() {
+int find_line_id() {
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; i += 4) {
 		if (BarLine[i].flag == false) return i;
