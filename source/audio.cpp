@@ -63,7 +63,7 @@ void load_sound() {
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
 		sound[i].audiochannel = i;
-		sound[i].interp = NDSP_INTERP_POLYPHASE;
+		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
 			printf("not enough linear memory available %ld\n", sound[i].size);
@@ -104,7 +104,7 @@ void load_sound() {
 		ndspChnReset(sound[i].audiochannel);
 		ndspChnInitParams(sound[i].audiochannel);
 		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, NDSP_INTERP_POLYPHASE);
+		ndspChnSetInterp(sound[i].audiochannel, NDSP_INTERP_NONE);
 		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
 		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(NDSP_ENCODING_PCM16));
 	}
@@ -146,7 +146,7 @@ void sd_load_sound() {
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
 		sound[i].audiochannel = i;
-		sound[i].interp = NDSP_INTERP_POLYPHASE;
+		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
 			printf("not enough linear memory available %ld\n", sound[i].size);
@@ -187,7 +187,7 @@ void sd_load_sound() {
 		ndspChnReset(sound[i].audiochannel);
 		ndspChnInitParams(sound[i].audiochannel);
 		ndspChnSetMix(sound[i].audiochannel, sound[i].mix);
-		ndspChnSetInterp(sound[i].audiochannel, NDSP_INTERP_POLYPHASE);
+		ndspChnSetInterp(sound[i].audiochannel, NDSP_INTERP_NONE);
 		ndspChnSetRate(sound[i].audiochannel, sound[i].rate);
 		ndspChnSetFormat(sound[i].audiochannel, NDSP_CHANNELS(sound[i].channels) | NDSP_ENCODING(NDSP_ENCODING_PCM16));
 	}
@@ -289,7 +289,7 @@ void sd_load_sound() {
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
 		sound[i].audiochannel = SOUND_NUMBER;
-		sound[i].interp = NDSP_INTERP_POLYPHASE;
+		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
 			printf("not enough linear memory available %ld\n", sound[i].size);
