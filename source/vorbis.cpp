@@ -119,8 +119,8 @@ void put_buffer_size(int tmp) {
 	vorbis_buffer_size = (size_t)tmp;
 }
 
-int getlatency() {
+/*int getlatency() {
 	static int bit = (int)ov_bitrate(&vorbisFile, 1);
 	if (get_isMusicStart() == true && bit > 64000) return (64000/bit-1)*-200000;
 	else return 0;
-}
+}*/
