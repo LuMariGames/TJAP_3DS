@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, NowMeCount;
+int balloon[256], BalloonCount, TotalFailedCount, NowMeCount, dcd;
 extern int isBranch, comboVoice, course, stme;
 double bpm, offset;
 float NowBPM;
@@ -340,15 +340,15 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = MEASURE_MAX - 1; i > -1; --i) {
+	for (int i = 0; i < MEASURE_MAX; ++i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			break;
 		}
 	}
 
-	int dcd = dan_condition();
-	if (TotalFailedCount != dcd && course == COURSE_DAN) {
+	if (course == COURSE_DAN) dcd = dan_condition();
+	if (TotalFailedCount != dcd) {
 		play_sound(SOUND_FAILED);
 		TotalFailedCount = dcd;
 	}
@@ -678,7 +678,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0; i < NOTES_MAX - 1; ++i) {	//計算
+	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//計算
 
 		if (Notes[i].flag == true) {
 
@@ -927,7 +927,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 		C2D_DrawSpriteTinted(&sprites[SPRITE_BALLOON_6], &Tint);
 	}
 	if (BalloonBreakCount <= 0) isBalloonBreakDisp = false;
-
 }
 
 int get_branch_course() {
