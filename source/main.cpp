@@ -192,6 +192,7 @@ int main() {
 
 			disp_file_list();
 			get_SelectedId(&SelectedSong, &course);
+			draw_fps();
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
