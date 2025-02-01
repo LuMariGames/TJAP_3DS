@@ -9,7 +9,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
-static volatile bool stop = true, set = false;
+static volatile bool stop = true;
 extern float mix[12];
 
 bool togglePlayback(void){
@@ -22,7 +22,6 @@ bool togglePlayback(void){
 void stopPlayback(void){
 
 	stop = true;
-	set = false;
 }
 
 bool isPlaying(void){
@@ -102,7 +101,7 @@ void playFile(void* infoIn){
 	int16_t*	buffer4 = NULL;
 	ndspWaveBuf	waveBuf[4];
 	bool		lastbuf = false, isNdspInit = false;
-	int		ret = -1, settime = 100000;
+	int		ret = -1;
 	const char*	file = info->file;
 
 	/* Reset previous stop command */
@@ -152,12 +151,7 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (set == false) {
-		settime = 100000 + getlatency();
-		set = true;
-	}
-
-	while (*info->isPlay == false) svcSleepThread(settime);
+	while (*info->isPlay == false) svcSleepThread(100000);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
@@ -178,7 +172,7 @@ void playFile(void* infoIn){
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
-		svcSleepThread(settime);
+		svcSleepThread(100000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
