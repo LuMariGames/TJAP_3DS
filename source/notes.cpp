@@ -731,7 +731,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = NOTES_MAX - 1; i > -1; --i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag == true &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
