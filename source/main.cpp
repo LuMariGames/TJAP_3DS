@@ -131,7 +131,8 @@ int main() {
 
 		//上画面
 		C2D_TargetClear(top, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
-		C2D_SceneBegin(top);
+		C3D_FrameDrawOn(top);
+		C2D_SceneTarget(top);
 
 		switch (scene_state) {
 
@@ -196,7 +197,8 @@ int main() {
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
-			C2D_SceneBegin(bottom);
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
 			draw_option(tp.px, tp.py, key, sprites);
 
 			if (key & KEY_UP)		update_cursor(KEY_UP);
@@ -300,7 +302,8 @@ int main() {
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
-			C2D_SceneBegin(bottom);
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			if (isPause == true) {
