@@ -193,7 +193,6 @@ int main() {
 
 			disp_file_list();
 			get_SelectedId(&SelectedSong, &course);
-			draw_fps();
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
@@ -281,6 +280,10 @@ int main() {
 				button_game(&isDon, &isKatsu, Option, key);
 			}
 
+			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
+			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
+
+			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 			draw_lane(sprites);
 			draw_gauge(sprites);
