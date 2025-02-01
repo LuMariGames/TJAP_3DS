@@ -35,7 +35,7 @@ bool  isNotesLoad = true, isJudgeDisp = false, isBalloonBreakDisp = false, isGOG
 double JudgeMakeTime, JudgeY,JudgeEffectCnt;
 
 
-void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) noexcept {
+void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -397,7 +397,7 @@ void make_judge(int knd, double CurrentTimeNotes) {
 	JudgeEffectCnt = 0;
 }
 
-void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
+void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	if (isJudgeDisp == true) {
 
@@ -673,7 +673,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	}
 }
 
-static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
+static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -758,7 +758,7 @@ static void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeN
 	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
 }
 
-inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) noexcept {
+inline static void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
@@ -1217,7 +1217,7 @@ void draw_title() {
 	draw_notes_text(TOP_WIDTH, 0, Header.title, &width, &height);
 }
 
-void draw_condition() noexcept {
+void draw_condition() {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -1245,7 +1245,7 @@ void draw_condition() noexcept {
 		else if (strcmp(Cdn3[j], "l") == 0) draw_condition_text(50+tx, 160+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
 	}
 }
-inline static void init_notes_structure() noexcept {
+inline static void init_notes_structure() {
 
 	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
 		delete_notes(i);
