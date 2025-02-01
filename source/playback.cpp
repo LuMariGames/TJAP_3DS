@@ -9,7 +9,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
-static volatile bool stop = true, set = false;
+static volatile bool stop = true; //set = false;
 extern float mix[12];
 
 bool togglePlayback(void){
@@ -22,7 +22,7 @@ bool togglePlayback(void){
 void stopPlayback(void){
 
 	stop = true;
-	set = false;
+	//set = false;
 }
 
 bool isPlaying(void){
@@ -152,10 +152,6 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (set == false) {
-		offset = 100000 + getlatency();
-		set = true;
-	}
 	while (*info->isPlay == false) svcSleepThread(offset);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
