@@ -1,3 +1,9 @@
+> [!NOTE]
+> 最新バージョン「v1.4.6」及び「v1.4.6(A)」にて  
+> OLD3DSでプレイする際に動作が重くなる不具合が発生しています。  
+> すみませんが、全力で原因を突き詰めているので  
+> 旧バージョンである「v1.4.5」以下をご使用下さい。  
+
 # TJAP_3DS(日本語)  
 TJAP_3DSは、[togetg](https://github.com/togetg)氏制作の[TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS)のフォークです。  
 とっくん や 固定スクロール 等の新オプションとスキンの変更、  
