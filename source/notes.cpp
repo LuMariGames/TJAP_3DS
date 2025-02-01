@@ -678,11 +678,11 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = NOTES_MAX - 1; i > -1; --i) {	//計算
+	for (int i = 0; i < NOTES_MAX - 1; ++i) {	//計算
 
 		if (Notes[i].flag == true) {
 
-			Notes[i].x = (double)Notes[i].x_ini - NOTES_AREA * (double)Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0 / (double)Notes[i].bpm);
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0 / Notes[i].bpm);
 
 			switch (Notes[i].knd) {
 
@@ -762,7 +762,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {	//描画
+	for (int i = 0; i < NOTES_MAX; ++i) {	//描画
 
 		if (Notes[i].flag == true) {
 
