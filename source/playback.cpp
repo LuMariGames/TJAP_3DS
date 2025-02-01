@@ -1,14 +1,16 @@
-﻿#include <cstdio>
+#include <cstdio>
 
 #include "header.h"
 #include "vorbis.h"
 #include "main.h"
 #include "select.h"
+#include "option.h"
 
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
-static volatile bool stop = true;
+static volatile bool stop = true; //set = false;
+extern float mix[12];
 
 bool togglePlayback(void){
 
@@ -20,6 +22,7 @@ bool togglePlayback(void){
 void stopPlayback(void){
 
 	stop = true;
+	//set = false;
 }
 
 bool isPlaying(void){
@@ -93,13 +96,14 @@ void playFile(void* infoIn){
 
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
-	int16_t*		buffer1 = NULL;
-	int16_t*		buffer2 = NULL;
-	ndspWaveBuf		waveBuf[2];
-	bool			lastbuf = false;
-	int				ret = -1;
-	const char*		file = info->file;
-	bool			isNdspInit = false;
+	int16_t*	buffer1 = NULL;
+	int16_t*	buffer2 = NULL;
+	int16_t*	buffer3 = NULL;
+	int16_t*	buffer4 = NULL;
+	ndspWaveBuf	waveBuf[4];
+	bool		lastbuf = false, isNdspInit = false;
+	int		ret = -1;
+	const char*	file = info->file;
 
 	/* Reset previous stop command */
 	stop = false;
@@ -133,19 +137,22 @@ void playFile(void* infoIn){
 	testtest = 99;
 	buffer1 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 	buffer2 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer3 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer4 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
-	ndspChnSetInterp(CHANNEL, NDSP_INTERP_POLYPHASE);
-	ndspChnSetRate(CHANNEL, (*decoder.rate)());
+	ndspChnSetInterp(CHANNEL, NDSP_INTERP_NONE);
+	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
 			NDSP_FORMAT_MONO_PCM16);
+	ndspChnSetMix(CHANNEL, mix);
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	while (*info->isPlay == false) svcSleepThread(100 * 1000);
+	while (*info->isPlay == false) svcSleepThread(100000);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
@@ -154,14 +161,24 @@ void playFile(void* infoIn){
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer2[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
+	
+	waveBuf[2].nsamples = (*decoder.decode)(&buffer3[0]) / (*decoder.channels)();
+	waveBuf[2].data_vaddr = &buffer3[0];
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 
+	waveBuf[3].nsamples = (*decoder.decode)(&buffer4[0]) / (*decoder.channels)();
+	waveBuf[3].data_vaddr = &buffer4[0];
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
+	
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
-		svcSleepThread(100 * 1000);
+		svcSleepThread(100000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
-				waveBuf[1].status == NDSP_WBUF_DONE)
+			waveBuf[1].status == NDSP_WBUF_DONE &&
+			waveBuf[2].status == NDSP_WBUF_DONE &&
+			waveBuf[3].status == NDSP_WBUF_DONE)
 			break;
 
 		if(ndspChnIsPaused(CHANNEL) == true || lastbuf == true)
@@ -197,9 +214,35 @@ void playFile(void* infoIn){
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 		}
 
+		if(waveBuf[2].status == NDSP_WBUF_DONE)
+		{
+			size_t read = (*decoder.decode)(&buffer3[0]);
 
-		//DSP_FlushDataCache(buffer1, decoder.vorbis_buffer_size * sizeof(int16_t));
-		//DSP_FlushDataCache(buffer2, decoder.vorbis_buffer_size * sizeof(int16_t));
+			if(read <= 0)
+			{
+				lastbuf = true;
+				continue;
+			}
+			else if(read < decoder.vorbis_buffer_size)
+				waveBuf[2].nsamples = read / (*decoder.channels)();
+
+			ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
+		}
+
+		if(waveBuf[3].status == NDSP_WBUF_DONE)
+		{
+			size_t read = (*decoder.decode)(&buffer4[0]);
+
+			if(read <= 0)
+			{
+				lastbuf = true;
+				continue;
+			}
+			else if(read < decoder.vorbis_buffer_size)
+				waveBuf[3].nsamples = read / (*decoder.channels)();
+
+			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
+		}
 	}
 
 	(*decoder.exit)();
@@ -213,6 +256,8 @@ out:
 	delete(info->file);
 	linearFree(buffer1);
 	linearFree(buffer2);
+	linearFree(buffer3);
+	linearFree(buffer4);
 
 	threadExit(0);
 	return;
@@ -223,7 +268,7 @@ err:
 
 struct playbackInfo_t playbackInfo;
 
-int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, bool *p_isPlayMain){
+inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, bool *p_isPlayMain){
 
 	s32 prio;
 	static Thread thread = NULL;
@@ -245,7 +290,7 @@ int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, bool *p
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32 * 1024, prio - 1, -2, false);
+	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, -2, false);
 	
 	return 0;
 }
