@@ -9,7 +9,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
-static volatile bool stop = true; //set = false;
+static volatile bool stop = true;
 extern float mix[12];
 
 bool togglePlayback(void){
@@ -22,7 +22,6 @@ bool togglePlayback(void){
 void stopPlayback(void){
 
 	stop = true;
-	//set = false;
 }
 
 bool isPlaying(void){
@@ -143,7 +142,7 @@ void playFile(void* infoIn){
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
-	ndspChnSetInterp(CHANNEL, NDSP_INTERP_NONE);
+	ndspChnSetInterp(CHANNEL, NDSP_INTERP_POLYPHASE);
 	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
 	ndspChnSetFormat(CHANNEL,
 			(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 :
@@ -290,7 +289,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, -2, false);
+	thread = threadCreate(playFile, playbackInfo, 32768, prio - 1, -2, false);
 	
 	return 0;
 }
