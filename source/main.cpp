@@ -329,6 +329,7 @@ int main() {
 				}
 				if (key & KEY_DUP) toggle_auto();
 			}
+			C3D_FrameEnd(0);
 
 			if (cnt == 0) {
 				FirstMeasureTime = get_FirstMeasureTime();
