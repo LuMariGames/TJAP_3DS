@@ -281,11 +281,6 @@ int main() {
 				button_game(&isDon, &isKatsu, Option, key);
 			}
 
-			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
-
-			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
-
-			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 			draw_lane(sprites);
 			draw_gauge(sprites);
