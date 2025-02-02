@@ -340,7 +340,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = 0; float jut1 = 0.0f, jut2 = 0.0f; i < BARLINE_MAX; ++i) {
+	float jut1 = 0.0f, jut2 = 0.0f;
+	for (int i = 0; i < BARLINE_MAX; ++i) {
 		jut1 = Measure[BarLine[i].measure].judge_time;
 		if (jut2 > CurrentTimeNotes && jut2 > jut1) continue;
 		NowBPM = Measure[BarLine[i].measure].bpm;
