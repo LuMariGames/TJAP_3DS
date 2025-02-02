@@ -456,7 +456,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	}
 	if (Measure[tmp].create_time > 0.000) stme = 0;
 	else stme = tmp;
-	return Measure[tmp].judge_time - ((stme == 0) ? Measure[stme].pop_time : Measure[stme].create_time);
+	return Measure[tmp].judge_time - Measure[stme].create_time;
 }
 
 void load_tja_notes(int course, LIST_T Song) {
@@ -628,7 +628,6 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
-				//Measure[MeasureCount].count_time = Measure[MeasureCount].judge_time + (240.0 / bpm);
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 / Measure[MeasureCount].bpm)*(NOTES_JUDGE_RANGE / NOTES_AREA);
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - (240.0 / Measure[MeasureCount].bpm)*(NOTES_JUDGE_RANGE / (NOTES_AREA * fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
