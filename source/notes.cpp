@@ -13,7 +13,7 @@
 int balloon[256], BalloonCount, TotalFailedCount, NowMeCount, dcd;
 extern int isBranch, comboVoice, course, stme;
 double bpm, offset;
-float NowBPM　= 120.0f;
+float NowBPM = 120.0f;
 extern double black;
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
