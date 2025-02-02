@@ -456,7 +456,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	}
 	if (Measure[tmp].create_time > 0.000) stme = 0;
 	else stme = tmp;
-	return Measure[tmp].judge_time - Measure[stme].create_time;
+	return Measure[tmp].judge_time - (Measure[stme].judge_time - (240.0/Measure[MeasureCount].bpm) / Measure[MeasureCount].scroll);
 }
 
 void load_tja_notes(int course, LIST_T Song) {
