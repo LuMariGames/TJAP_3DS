@@ -301,7 +301,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
-	for (int i = 0; i < MEASURE_MAX - 1; ++i) {	//判定時に発動する命令
+	for (int i = 0, j = MEASURE_MAX - 1; i < j; ++i) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
 
@@ -341,7 +341,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}
 
 	for (int i = 0; i < 4096; ++i) {
-		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
+		if (Measure[i].command == COMMAND_BPMCHANGE && Measure[i].judge_time < CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			break;
 		}
