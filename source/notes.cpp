@@ -340,9 +340,13 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = 0; i < 4096; ++i) {
-		NowBPM = Measure[i].bpm;
-		if (Measure[i].command == -1 && Measure[i].judge_time > CurrentTimeNotes) break;
+	static float jut1 = 0.0f, jut2 = -9.9f;
+	for (int i = 0; i < BARLINE_MAX; ++i) {
+		jut1 = Measure[BarLine[i].measure].pop_time - CurrentTimeNotes;
+		if (jut1 > jut2 && jut1 < 0.0f) {
+			NowBPM = Measure[BarLine[i].measure].bpm;
+			jut2 = jut1;
+		}
 	}
 
 	if (course == COURSE_DAN) dcd = dan_condition();
