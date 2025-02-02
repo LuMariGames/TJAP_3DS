@@ -340,12 +340,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	float jut1 = 0.0f, jut2 = 0.0f;
-	for (int i = 0; i < BARLINE_MAX; ++i) {
-		jut1 = Measure[BarLine[i].measure].judge_time;
-		if (jut1 > CurrentTimeNotes && jut2 > jut1) continue;
-		NowBPM = Measure[BarLine[i].measure].bpm;
-		jut2 = jut1;
+	for (int i = MeasureCount; i > -1; ++i) {
+		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
+			NowBPM = Measure[i].bpm;
+			break;
+		}
 	}
 
 	if (course == COURSE_DAN) dcd = dan_condition();
@@ -510,9 +509,8 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 		for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 
-			if (Notes[i].flag == true && Notes[i].judge_time <= CurrentTimeNotes && Notes[i].isThrough == false &&
-				(Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL && Notes[i].knd != NOTES_BIGROLLEND &&
-					Notes[i].knd != NOTES_ROLLEND && Notes[i].knd != NOTES_BALLOON && Notes[i].knd != NOTES_BALLOONEND)) {
+			if (Notes[i].flag == true && Notes[i].judge_time <= CurrentTimeNotes &&
+				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
 				switch (Notes[i].knd) {
 				case NOTES_DON:
@@ -739,7 +737,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
 			if (Notes[i].isThrough == false && 
-				(Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU || Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU)) {
+				(Notes[i].knd > NOTES_REST && Notes[i].knd < NOTES_ROLL)) {
 
 				if (Option.isAuto == false) {
 					update_score(THROUGH);
