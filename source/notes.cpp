@@ -101,7 +101,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					if (Branch.wait == true) break;
 					else continue;
 				}
-				if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
+
 				++NotesCount;
 			}
 
@@ -274,7 +274,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
-
+	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 	}
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
