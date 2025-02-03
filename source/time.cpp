@@ -19,7 +19,7 @@ int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
 
-double get_current_time(int id) {
+float get_current_time(int id) {
 	
 	/*if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
 		//if (isStop[id] != 1) stop_time(id);
@@ -33,9 +33,9 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		/*if (cnt[id] == 0) OffTime[id] = (double)osGetTime() * 0.001;
+		/*if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
 		++cnt[id];
-		Time[id] = (double)osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
+		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//旧式だけど念の為残す
 		clock_gettime(CLOCK_REALTIME, &ts);
