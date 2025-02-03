@@ -14,7 +14,7 @@ enum msec_status {
 };
 #define TIME_NUM 5
 
-struct timespec ts;
+struct timeval tv;
 int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
@@ -38,10 +38,10 @@ float get_current_time(int id) {
 		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//旧式だけど念の為残す
-		clock_gettime(CLOCK_REALTIME, &ts);
-		if (cnt[id] == 0) OffTime[id] = (int)ts.tv_sec + ts.tv_nsec * 0.000000001;
+		gettimeofday(&tv, NULL);
+		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_usec * 0.000001;
 		++cnt[id];
-		Time[id] = (int)ts.tv_sec + ts.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
+		Time[id] = tv.tv_sec + tv.tv_usec * 0.000001 - OffTime[id] + PreTime[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
