@@ -745,7 +745,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU) update_score(PERFECT);
 					else if (Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU) update_score(SPECIAL_PERFECT);
 					if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_BIGDON) play_sound(SOUND_DON);
-					else if (Notes[i].knd == NOTES_KATSU || Notes[i].knd == NOTES_BIGKATSU) play_sound(SOUND_KATSU);
+					if (Notes[i].knd == NOTES_KATSU || Notes[i].knd == NOTES_BIGKATSU) play_sound(SOUND_KATSU);
 				}
 			}
 			delete_notes(i);
