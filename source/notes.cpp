@@ -29,7 +29,7 @@ ROLL_T RollNotes[ROLL_MAX];
 BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
-int MeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
+int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
 NotesNumber;	//何番目のノーツか
 bool  isNotesLoad = true, isJudgeDisp = false, isBalloonBreakDisp = false, isGOGOTime = false, isLevelHold = false;	//要初期化
 double JudgeMakeTime, JudgeY,JudgeEffectCnt;
@@ -101,7 +101,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					if (Branch.wait == true) break;
 					else continue;
 				}
-
+				if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 				++NotesCount;
 			}
 
@@ -301,7 +301,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
-	for (int i = 0, j = MEASURE_MAX - 1; i < j; ++i) {	//判定時に発動する命令
+	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag == true) {
 
@@ -340,7 +340,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = MeasureCount; i > -1; --i) {
+	for (int i = MaxMeasureCount; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			break;
@@ -1274,6 +1274,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	NowMeCount = 0;
 	RollState = 0;
 	MeasureCount = 0;
+	MaxMeasureCount = 0;
 	isNotesLoad = true;
 	isJudgeDisp = false;
 	JudgeMakeTime = 0;
