@@ -23,8 +23,8 @@ AC15から常連モード、条件を達成しないとノルマ失敗！？「�
 見た目を自由に変更！「カスタムスキン」  
 
 ## それ以外の内容  
-従来のバッファサイズだと動作が不安定になって来たのでv1.4.5で大幅な軽量化を加えました。  
-バッファサイズを4000~5000くらいにすると安定するかと思います  
+従来のバッファサイズだと動作が不安定になって来たのでv1.4.6(A)で大幅な軽量化を加えました。  
+バッファサイズを2500~4000くらいにすると安定するかと思います  
 (ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。)  
 
 # TJAP_3DS (English)
@@ -47,8 +47,8 @@ Regular mode from AC15, quota failure if you don't meet the conditions!? "Dani D
 Feel free to change the appearance! "Custom skin"
 
 ## Other contents
-The operation became unstable with the conventional buffer size, so I added a significant weight reduction with v1.4.5.
-I think it will be stable if the buffer size is about 4000~5000.
+The operation became unstable with the conventional buffer size, so I added a significant weight reduction with v1.4.6(A).
+I think it will be stable if the buffer size is about 2500~4000.
 (Except for the information described here, it is almost the same as the original work, so please check the original [Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README_en.md) for details.)  
 
 # 対応表 / Complete the table
