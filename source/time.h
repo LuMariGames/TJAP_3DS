@@ -1,5 +1,5 @@
 ﻿#pragma once
-float get_current_time(int id);
+double get_current_time(int id);
 void time_ini();
 void draw_fps();
 void stop_time(int id);
