@@ -41,7 +41,7 @@ double get_current_time(int id) {
 		clock_gettime(CLOCK_REALTIME, &ts);
 		if (cnt[id] == 0) OffTime[id] = (int)ts.tv_sec + ts.tv_nsec / 1000000000.0;
 		++cnt[id];
-		Time[id] = (double)((int)ts.tv_sec + ts.tv_nsec / 1000000000.0 - OffTime[id] + PreTime[id]);
+		Time[id] = (int)ts.tv_sec + ts.tv_nsec / 1000000000.0 - OffTime[id] + PreTime[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
