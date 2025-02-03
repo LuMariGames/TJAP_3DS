@@ -4,7 +4,7 @@
 #include "tja.h"
 #include "time.h"
 #include "option.h"
-#include <sys/time.h>
+#include <time.h>
 
 enum msec_status {
 	MSEC_INIT,
@@ -14,7 +14,7 @@ enum msec_status {
 };
 #define TIME_NUM 5
 
-struct timeval myTime;
+struct timespec ts;
 int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
@@ -38,10 +38,10 @@ double get_current_time(int id) {
 		Time[id] = (double)osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//旧式だけど念の為残す
-		gettimeofday(&myTime, NULL);
-		if (cnt[id] == 0) OffTime[id] = (int)myTime.tv_sec + (int)myTime.tv_usec / 1000000.0;
+		clock_gettime(CLOCK_REALTIME, &ts);
+		if (cnt[id] == 0) OffTime[id] = (int)ts.tv_sec + ts.tv_nsec / 1000000000.0;
 		++cnt[id];
-		Time[id] = (int)myTime.tv_sec + (int)myTime.tv_usec / 1000000.0 - OffTime[id] + PreTime[id];
+		Time[id] = (double)((int)ts.tv_sec + ts.tv_nsec / 1000000000.0 - OffTime[id] + PreTime[id]);
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
