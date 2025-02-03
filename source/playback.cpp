@@ -173,7 +173,7 @@ void playFile(void* infoIn){
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 	waveBuf[4].nsamples = (*decoder.decode)(&buffer5[0]) / (*decoder.channels)();
 	waveBuf[4].data_vaddr = &buffer5[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[4]);
 	waveBuf[5].nsamples = (*decoder.decode)(&buffer6[0]) / (*decoder.channels)();
 	waveBuf[5].data_vaddr = &buffer6[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[5]);	
