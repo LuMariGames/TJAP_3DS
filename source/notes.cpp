@@ -317,7 +317,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					isGOGOTime = false;
 					break;
 				case COMMAND_SECTION:
-					init_branch_section();
+					if (Branch.wait == false) init_branch_section();
 					break;
 				case COMMAND_BRANCHSTART:
 
