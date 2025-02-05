@@ -731,15 +731,14 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		for (int i = 0; i < MeasureMaxNumber; ++i) {	//次の小節の判定時に発動する命令の調整
 
+			int n = i + 1;
 			switch (Measure[i].command) {
 			case COMMAND_SECTION:
-				int n = i + 1;
 				while (n <= MeasureMaxNumber && Measure[n].command != -1) ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 				break;
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
-				int n = i + 1;
 				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 				break;
