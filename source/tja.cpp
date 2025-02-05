@@ -599,6 +599,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BranchCourse = -1;
 						break;
 					case COMMAND_SECTION:
+						BranchCourse = -1;
 						Measure[MeasureCount].command = COMMAND_SECTION;
 						break;
 					case COMMAND_END:
@@ -736,7 +737,7 @@ void load_tja_notes(int course, LIST_T Song) {
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
 				int n = i + 1;
-				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
+				while (n <= MeasureMaxNumber && Measure[i].command != -1) ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 				break;
 			}
