@@ -316,9 +316,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				case COMMAND_GOGOEND:
 					isGOGOTime = false;
 					break;
-				case COMMAND_SECTION:
-					if (Branch.wait == false) init_branch_section();
-					break;
 				case COMMAND_BRANCHSTART:
 
 					if (isLevelHold == false && (Branch.knd != 0 || JudgeRollState == -1) ) {	//連打分岐の時は連打が無くなってから分岐
@@ -338,6 +335,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 			if (NotFalse == false && Measure[i].judge_time <= CurrentTimeNotes) Measure[i].flag = false;
 		}
+		if (Measure[i].command == COMMAND_SECTION && Branch.wait == false) init_branch_section();
 	}
 
 	for (int i = MaxMeasureCount; i > -1; --i) {
