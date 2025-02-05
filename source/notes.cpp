@@ -1155,7 +1155,6 @@ void delete_notes(int i) {
 		Notes[i].x_ini = 0;
 		Notes[i].x = 0;
 		Notes[i].create_time = 0;
-		Notes[i].hb_time = 0;
 		Notes[i].judge_time = 0;
 		Notes[i].pop_time = 0;
 		Notes[i].bpm = 0;
