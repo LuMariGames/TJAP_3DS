@@ -536,5 +536,6 @@ static int exist_file(const char* path) {
     return 1;
 }
 inline static int time_count(double TIME) noexcept {
+	if (TIME < 0) return 0;
 	return ((int)floor(TIME/(60.0/NowBPM)) % 2)+(isGOGO*2);
 }
