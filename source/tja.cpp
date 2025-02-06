@@ -617,7 +617,6 @@ void load_tja_notes(int course, LIST_T Song) {
 						if (tja_notes[tja_cnt][i] == '/') ++NotesCount;
 						if (tja_notes[tja_cnt][i] != ',' && tja_notes[tja_cnt][i] != '/') --i;
 						Measure[MeasureCount].notes_count = i;
-
 					}
 				}
 
@@ -687,7 +686,6 @@ void load_tja_notes(int course, LIST_T Song) {
 					delay = 0;
 				}
 
-
 				if (isNoComma == false && NotesCount != 0 && tja_notes[tja_cnt][0] != '#') {	//複数行小節の最後の行
 
 					Measure[Measure[MeasureCount].firstmeasure].max_notes = NotesCount + 1;
@@ -731,14 +729,11 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		for (int i = 0; i < MeasureMaxNumber; ++i) {	//次の小節の判定時に発動する命令の調整
 
-			int n = i + 1;
 			switch (Measure[i].command) {
 			case COMMAND_SECTION:
-				while (n <= MeasureMaxNumber && Measure[n].command != -1) ++n;
-				Measure[i].judge_time = Measure[n].judge_time;
-				break;
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
+				int n = i + 1;
 				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
 				Measure[i].judge_time = Measure[n].judge_time;
 				break;
@@ -746,7 +741,6 @@ void load_tja_notes(int course, LIST_T Song) {
 		}
 
 		//基本天井点を計算
-
 		calc_base_score(Measure, tja_notes);
 
 		fclose(fp);
