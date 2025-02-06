@@ -438,7 +438,7 @@ inline static void load_sprites() {
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
 	if (dance) {
-		for (int i = SPRITES_NUMER, j = SPRITES_NUMER + 4) {
+		for (int i = SPRITES_NUMER, j = SPRITES_NUMER + 4; i < j; ++i) {
 			C2D_SpriteFromSheet(&sprites[i], dancerspsh, i);
 			C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 		}
