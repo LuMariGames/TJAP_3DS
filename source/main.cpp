@@ -288,7 +288,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 
 			draw_lane(sprites);
-			draw_gauge(sprites);
+			draw_gauge(sprites, time_count(CurrentTimeMain, 8));
 			draw_emblem(sprites);
 
 			if (isNotesStart == true) {
