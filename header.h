@@ -1,0 +1,249 @@
+#pragma once
+
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <3ds.h>
+#include <citro2d.h>
+#include <limits.h>
+#include <math.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <ctype.h>
+
+#define VERSION "1.4.6(B)"
+#define DEFAULT_DIR	"sdmc:/tjafiles/"
+#define NOTDEF_DIR	"romfs:/tjafiles/"
+#define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
+#define SKIN_SETTING_FILE "sdmc:/tjafiles/theme/config.json"
+#define PATH_DSP1 "sdmc:/3ds/dspfirm.cdc"
+#define GENRE_FILE "genre.json"
+
+#define DEFAULT_JUDGE_RANGE_PERFECT	0.040
+#define DEFAULT_JUDGE_RANGE_NICE	0.100
+#define DEFAULT_JUDGE_RANGE_BAD		0.120
+
+#define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
+#define MEASURE_MAX 8192
+#define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
+#define NOTES_JUDGE_X 93.0	//判定枠の中心のX座標
+#define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
+
+#define TOP_WIDTH  400
+#define TOP_HEIGHT 240
+#define BOTTOM_WIDTH  320
+#define BOTTOM_HEIGHT 240
+
+#define SPRITES_NUMER 91
+
+#define NOTES_MAX 512
+#define BARLINE_MAX 128
+#define ROLL_MAX 512
+#define BALLOON_MAX 512
+
+#define LIST_MAX 16384		//選曲リストの最大数
+#define GENRE_MAX 512		//ジャンルの最大数
+
+#define DEFAULT_BUFFER_SIZE 2560
+
+enum NOTES_KND {
+
+	NOTES_REST = 0,		//休符
+	NOTES_DON,		//ドン
+	NOTES_KATSU,		//カツ
+	NOTES_BIGDON,		//ドン(大)
+	NOTES_BIGKATSU,		//カツ(大)
+	NOTES_ROLL,		//連打開始
+	NOTES_BIGROLL,		//連打(大)開始
+	NOTES_BALLOON,		//風船開始
+	NOTES_ROLLEND,		//連打終了
+	NOTES_POTATO,		//お芋音符開始
+	NOTES_BIGROLLEND,	//大連打終了
+	NOTES_BALLOONEND,	//風船終了
+};
+
+enum SPRITE_NOTES_KND {	//スプライト用
+
+	SPRITE_TOP = 0,			//音符を表示するレーン部分,上画面で表示する画像
+	SPRITE_BOTTOM,			//タッチ太鼓,下画面に表示する画像
+	SPRITE_DON,
+	SPRITE_KATSU,
+	SPRITE_BIG_DON,
+	SPRITE_BIG_KATSU,
+	SPRITE_ROLL_START,
+	SPRITE_ROLL_INT,
+	SPRITE_ROLL_END,
+	SPRITE_BIG_ROLL_START,
+	SPRITE_BIG_ROLL_INT,
+	SPRITE_BIG_ROLL_END,
+	SPRITE_BALLOON,
+	SPRITE_BALLOON_1,		//風船音符を叩く時に使う画像①
+	SPRITE_BALLOON_2,		//風船音符を叩く時に使う画像②
+	SPRITE_BALLOON_3,		//風船音符を叩く時に使う画像③
+	SPRITE_BALLOON_4,		//風船音符を叩く時に使う画像④
+	SPRITE_BALLOON_5,		//風船音符を叩く時に使う画像⑤
+	SPRITE_BALLOON_6,		//風船音符を叩き終わる時に使う画像
+	SPRITE_JUDGE_PERFECT,		//良
+	SPRITE_JUDGE_NICE,		//可
+	SPRITE_JUDGE_BAD,		//不可
+	SPRITE_JUDGE_CIRCLE,		//判定枠
+	SPRITE_CHART_NORMAL,		//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_EXPERT,		//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_MASTER,		//譜面分岐がある譜面で使う画像
+	SPRITE_LANE_EXPERT,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
+	SPRITE_LANE_MASTER,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
+	SPRITE_EFFECT_PERFECT,		//赤花火,良で叩いた時に表示する画像
+	SPRITE_EFFECT_SPECIAL_PERFECT,	//特大赤花火,特良で叩いた時に表示する画像
+	SPRITE_EFFECT_NICE,		//白花火,可で叩いた時に表示する画像
+	SPRITE_EFFECT_SPECIAL_NICE,	//特大白花火,特可で叩いた時に表示する画像
+	SPRITE_SOUL_ON,			//魂ゲージが最大値である時に表示する画像
+	SPRITE_SOUL_OFF,		//魂ゲージが最大値ではない時に表示する画像
+	SPRITE_SOUL_EFFECT,		//魂ゲージが最大値である時に表示する画像
+	SPRITE_EFFECT_GOGO,		//GOGOである時に表示する画像
+	SPRITE_SCORE_0,
+	SPRITE_SCORE_1,
+	SPRITE_SCORE_2,
+	SPRITE_SCORE_3,
+	SPRITE_SCORE_4,
+	SPRITE_SCORE_5,
+	SPRITE_SCORE_6,
+	SPRITE_SCORE_7,
+	SPRITE_SCORE_8,
+	SPRITE_SCORE_9,
+	SPRITE_COMBO_0,
+	SPRITE_COMBO_1,
+	SPRITE_COMBO_2,
+	SPRITE_COMBO_3,
+	SPRITE_COMBO_4,
+	SPRITE_COMBO_5,
+	SPRITE_COMBO_6,
+	SPRITE_COMBO_7,
+	SPRITE_COMBO_8,
+	SPRITE_COMBO_9,
+	SPRITE_COMBO_0_RED,
+	SPRITE_COMBO_1_RED,
+	SPRITE_COMBO_2_RED,
+	SPRITE_COMBO_3_RED,
+	SPRITE_COMBO_4_RED,
+	SPRITE_COMBO_5_RED,
+	SPRITE_COMBO_6_RED,
+	SPRITE_COMBO_7_RED,
+	SPRITE_COMBO_8_RED,
+	SPRITE_COMBO_9_RED,
+	SPRITE_ROLL_0,
+	SPRITE_ROLL_1,
+	SPRITE_ROLL_2,
+	SPRITE_ROLL_3,
+	SPRITE_ROLL_4,
+	SPRITE_ROLL_5,
+	SPRITE_ROLL_6,
+	SPRITE_ROLL_7,
+	SPRITE_ROLL_8,
+	SPRITE_ROLL_9,
+	SPRITE_ROLL_COUNT,
+	SPRITE_BALLOON_COUNT,
+	SPRITE_EMBLEM_EASY,
+	SPRITE_EMBLEM_NORMAL,
+	SPRITE_EMBLEM_HARD,
+	SPRITE_EMBLEM_ONI,
+	SPRITE_EMBLEM_EDIT,
+	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
+	SPRITE_EMBLEM_DAN,		//段位道場の画像
+	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
+	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
+	SPRITE_DONCHAN_0,		//どんちゃんの画像,GOGOでは無い1
+	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い2
+	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである1
+	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである2
+	SPRITE_DANCER_0,		//踊り子の画像1
+	SPRITE_DANCER_1,		//踊り子の画像2
+	SPRITE_DANCER_2,		//踊り子の画像3
+	SPRITE_DANCER_3,		//踊り子の画像4
+};
+
+enum COMMAND_KND {
+
+	COMMAND_START = 1,
+	COMMAND_END,
+	COMMAND_BPMCHANGE,
+	COMMAND_GOGOSTART,
+	COMMAND_GOGOEND,
+	COMMAND_MEASURE,
+	COMMAND_SCROLL,
+	COMMAND_DELAY,
+	COMMAND_SECTION,
+	COMMAND_BRANCHSTART,
+	COMMAND_BRANCHEND,
+	COMMAND_N,
+	COMMAND_E,
+	COMMAND_M,
+	COMMAND_LEVELHOLD,
+	COMMAND_BMSCROLL,
+	COMMAND_HBSCROLL,
+	COMMAND_BARLINEOFF,
+	COMMAND_BARLINEON,
+};
+
+enum HEADER_KND {
+
+	HEADER_TITLE,
+	HEADER_SUBTITLE,
+	HEADER_BPM,
+	HEADER_WAVE,
+	HEADER_OFFSET,
+	HEADER_BALLOON,
+	HEADER_SONGVOL,
+	HEADER_SEVOL,
+	HEADER_SCOREINIT,
+	HEADER_SCOREDIFF,
+	HEADER_COURSE,
+	HEADER_STYLE,
+	HEADER_LIFE,
+	HEADER_DEMOSTART,
+	HEADER_SIDE,
+	HEADER_SCOREMODE,
+	HEADER_TOTAL,
+};
+
+enum COURSE_KND {
+
+	COURSE_EASY = 0,
+	COURSE_NORMAL,
+	COURSE_HARD,
+	COURSE_ONI,
+	COURSE_EDIT,
+	COURSE_TOWER,
+	COURSE_DAN,
+};
+
+enum SCENE_STATE {
+
+	SCENE_SELECTLOAD = 0,
+	SCENE_WARNING = 5,
+	SCENE_SELECTSONG = 10,
+	SCENE_MAINLOAD = 50,
+	SCENE_MAINGAME = 100,
+	SCENE_RESULT = 110,
+};
+
+enum SOUND_KND {
+
+	SOUND_DON = 0,
+	SOUND_KATSU,
+	SOUND_BALLOONBREAK,
+	SOUND_FAILED,
+};
+
+enum TIME_KND {
+
+	TIME_NOTES = 0,	//ノーツが開始(最初の小節が生成)で計測開始,cntはこれに最初にcreate_time加算(マイナス用,通常は0),
+	TIME_MAINGAME,	//メインゲーム,開始時には-1000,1秒後に計測開始,ノーツ・音楽開始にのみ使用
+	TIME_FPS,	//fps計測用
+};
+
+enum WARNING_KND {
+
+	WARNING_DSP1 = 0,		//DSP1未起動
+	WARNING_WAVE_NO_EXIST,		//音楽ファイルが存在しない
+	WARNING_WAVE_NOT_OGG,		//音楽ファイルがOGGファイルじゃない
+};
