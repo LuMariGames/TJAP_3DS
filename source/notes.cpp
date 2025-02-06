@@ -1302,6 +1302,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].create_time = 0;
 		BarLine[i].isDisp = false;
 	}
+	dcd = 0;
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
