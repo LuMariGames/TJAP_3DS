@@ -359,7 +359,7 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], int time) {
 	}
 	else C2D_DrawSprite(&sprites[SPRITE_SOUL_OFF]);
 
-	if (dance) {
+	if (dance == true) {
 		//1体目
 		C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 128, 192);
 		C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
