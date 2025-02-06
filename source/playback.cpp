@@ -292,6 +292,10 @@ out:
 	linearFree(buffer2);
 	linearFree(buffer3);
 	linearFree(buffer4);
+	linearFree(buffer5);
+	linearFree(buffer6);
+	linearFree(buffer7);
+	linearFree(buffer8);
 
 	threadExit(0);
 	return;
