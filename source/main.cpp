@@ -447,7 +447,7 @@ inline static void load_sprites() {
 	if (exist_file("sdmc:/tjafiles/theme/dancer.t3x")) {
 		dancerspsh = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/dancer.t3x");
 		dance = true;
-		dancnt = C2D_SpriteSheetCount(dancerspsh);
+		dancnt = (int)C2D_SpriteSheetCount(dancerspsh);
 	}
 
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
@@ -570,5 +570,5 @@ inline static int time_count(double TIME) noexcept {
 }
 inline static int dancer_time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor(TIME/(240.0/dancnt/NowBPM)) % (dancnt * 2);
+	return (int)floor(TIME/((240.0/dancnt)/NowBPM)) % (dancnt * 2);
 }
