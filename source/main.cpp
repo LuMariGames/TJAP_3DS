@@ -24,6 +24,7 @@ C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
 bool dance = false;	//拡張スキン用
+int dancnt = 0;		//拡張スキン用
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 
@@ -446,6 +447,7 @@ inline static void load_sprites() {
 	if (exist_file("sdmc:/tjafiles/theme/dancer.t3x")) {
 		dancerspsh = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/dancer.t3x");
 		dance = true;
+		dancnt = C2D_SpriteSheetCount(dancerspsh);
 	}
 
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
@@ -455,7 +457,7 @@ inline static void load_sprites() {
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
 	if (dance == true) {
-		for (int i = 0, j = 4; i < j; ++i) {
+		for (int i = 0, j = dancnt; i < j; ++i) {
 			C2D_SpriteFromSheet(&sprites[SPRITES_NUMER + i], dancerspsh, i);
 			C2D_SpriteSetCenter(&sprites[SPRITES_NUMER + i], 0.5f, 0.5f);
 		}
@@ -568,5 +570,5 @@ inline static int time_count(double TIME) noexcept {
 }
 inline static int dancer_time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor(TIME/(30.0/NowBPM)) % 8;
+	return (int)floor(TIME/(120.0/dancnt/NowBPM)) % (dancnt * 2);
 }
