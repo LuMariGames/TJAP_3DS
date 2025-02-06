@@ -333,7 +333,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], int time) {
 
-	static int mintime4 = floor(time/2), mintime2 = floor(time/4);
+	static int mintime4 = time % 4, mintime2 = floor(time / 4);
 	courselife = Gauge.score;
 	double gauge = 1.0 * ((int)Gauge.score / 200) * 200 / Gauge.soul;
 	if (Gauge.score > Gauge.soul) Gauge.score = Gauge.soul;
