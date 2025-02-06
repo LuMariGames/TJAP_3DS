@@ -28,7 +28,7 @@ char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 
 static void load_sprites();
-static int time_count(double TIME, int NUM), dancer_time_count(double TIME), exist_file(const char* path);
+static int time_count(double TIME), dancer_time_count(double TIME), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
 
@@ -282,7 +282,7 @@ int main() {
 			}
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
-			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain, 2)]);
+			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
