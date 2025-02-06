@@ -303,7 +303,7 @@ int main() {
 				mintime2 = floor(dancer_time_count(CurrentTimeMain) / dancnt);
 
 				//1体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 100, 192);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 128, 192);
 				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
 				//2体目
@@ -311,7 +311,7 @@ int main() {
 				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
 				//3体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 300, 192);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 272, 192);
 				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
 			}
