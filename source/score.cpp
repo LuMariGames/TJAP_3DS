@@ -7,6 +7,7 @@
 
 extern int gaugelife, redCdn[3];
 extern char *exam1[4], *exam2[4], *exam3[4];
+extern bool dance;
 bool isGOGO;
 int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, TotalPerfectCount, TotalNiceCount, TotalBadCount,
 CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalCount,
