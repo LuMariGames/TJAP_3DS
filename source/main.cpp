@@ -113,7 +113,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0, notes_cnt = 0, scene_state = SCENE_SELECTLOAD,warning=-1, course = COURSE_ONI, tmp=0; //BeforeCombo = 0;
+	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0, mintime4 = 0,mintime2 = 0; //BeforeCombo = 0;
 	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000;
 
 	while (aptMainLoop()) {
@@ -288,7 +288,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 
 			draw_lane(sprites);
-			draw_gauge(sprites, dancer_time_count(CurrentTimeMain));
+			draw_gauge(sprites);
 			draw_emblem(sprites);
 
 			if (isNotesStart == true) {
@@ -297,6 +297,23 @@ int main() {
 			}
 			draw_score(sprites);
 			draw_title();
+			if (dance == true && course != COURSE_DAN) {
+				mintime4 = dancer_time_count(CurrentTimeMain) % 4;
+				mintime2 = floor(dancer_time_count(CurrentTimeMain) / 4);
+
+				//1体目
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 128, 192);
+				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
+				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
+				//2体目
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 200, 192);
+				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
+				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
+				//3体目
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 272, 192);
+				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
+				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
+			}
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps == true) draw_fps();
 
