@@ -6,7 +6,7 @@
 #include "select.h"
 #include "option.h"
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4], *wavename[4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
@@ -84,6 +84,10 @@ void load_tja_head(int course,LIST_T Song) {
 	exam3[0] = (char*)"";
 	exam3[1] = (char*)"";
 	exam3[3] = (char*)"";
+	wavename[0] = (char*)"";
+	wavename[1] = (char*)"";
+	wavename[2] = (char*)"";
+	wavename[3] = (char*)NULL;
 
 	chdir(Song.path);
 	int cnt = -1;
@@ -323,6 +327,20 @@ void load_tja_head(int course,LIST_T Song) {
 				if (buf[10] != '\n' && buf[10] != '\r') {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scoremode = atoi(temp);
+				}
+				continue;
+			}
+
+			if (strstr(buf, "NEXTSONG:") == buf) {
+				if (buf[9] != '\n' && buf[9] != '\r') {
+					strlcpy(temp, buf + 9, strlen(buf) - 10);
+					char *d = strtok(temp, ",");
+					wavename[0] = d;
+					cnt = 1;
+					while ((d = strtok(NULL, ","))) {
+						wavename[cnt] = d;
+						++cnt;
+					}
 				}
 				continue;
 			}
