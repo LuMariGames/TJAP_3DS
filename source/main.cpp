@@ -18,7 +18,7 @@
 extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
-C2D_Sprite sprites[SPRITES_NUMER+4];			//画像用
+C2D_Sprite sprites[112];			//画像用
 static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
