@@ -87,7 +87,7 @@ void load_tja_head(int course,LIST_T Song) {
 	wavename[0] = (char*)"";
 	wavename[1] = (char*)"";
 	wavename[2] = (char*)"";
-	wavename[3] = (char*)NULL;
+	wavename[3] = (char*)"";
 
 	chdir(Song.path);
 	int cnt = -1;
