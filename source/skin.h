@@ -1,6 +1,6 @@
 typedef struct {
 
-	int don_x, don_y, don_gogo_x, don_gogo_y;
+	int don_x,don_y,don_gogo_x,don_gogo_y,d1num,d2num,d3num;
 } SKIN_T;
 
 void get_skin(SKIN_T *TMP);
