@@ -7,7 +7,6 @@
 
 extern int gaugelife, redCdn[3];
 extern char *exam1[4], *exam2[4], *exam3[4];
-extern bool dance;
 bool isGOGO;
 int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, TotalPerfectCount, TotalNiceCount, TotalBadCount,
 CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalCount,
@@ -331,9 +330,8 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 }
 
-void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], int dantime) {
+void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
-	static int mintime4 = dantime % 4, mintime2 = floor(dantime / 4);
 	courselife = Gauge.score;
 	double gauge = 1.0 * ((int)Gauge.score / 200) * 200 / Gauge.soul;
 	if (Gauge.score > Gauge.soul) Gauge.score = Gauge.soul;
@@ -358,21 +356,6 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], int dantime) {
 		C2D_DrawSprite(&sprites[SPRITE_SOUL_ON]);
 	}
 	else C2D_DrawSprite(&sprites[SPRITE_SOUL_OFF]);
-
-	if (dance == true) {
-		//1体目
-		C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 128, 192);
-		C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
-		C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
-		//2体目
-		C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 200, 192);
-		C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
-		C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
-		//3体目
-		C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 272, 192);
-		C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
-		C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
-	}
 }
 
 void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
