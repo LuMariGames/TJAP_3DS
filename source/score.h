@@ -29,7 +29,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char tja_notes[MEASURE_MAX]
 void init_branch_section();
 int start_branch(int knd, double x, double y);
 void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]);
-void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], static int time);
+void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], int time);
 void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]);
 void update_balloon_count(int arg);
 void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]);
