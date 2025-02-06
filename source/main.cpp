@@ -23,10 +23,10 @@ static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
-bool dance = false;	//拡張スキン用
-int dancnt = 0;		//拡張スキン用
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
+bool dance = false;		//拡張スキン用
+unsigned int dancnt = 0;	//拡張スキン用
 
 static void load_sprites();
 static int time_count(double TIME), dancer_time_count(double TIME), exist_file(const char* path);
@@ -116,7 +116,7 @@ int main() {
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0, mintime4 = 0,mintime2 = 0; //BeforeCombo = 0;
 	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000;
-
+	
 	while (aptMainLoop()) {
 
 		hidScanInput();
@@ -299,8 +299,8 @@ int main() {
 			draw_score(sprites);
 			draw_title();
 			if (dance == true && course != COURSE_DAN) {
-				mintime4 = dancer_time_count(CurrentTimeMain) % 4;
-				mintime2 = floor(dancer_time_count(CurrentTimeMain) / 4);
+				mintime4 = dancer_time_count(CurrentTimeMain) % dancnt;
+				mintime2 = floor(dancer_time_count(CurrentTimeMain) / dancnt);
 
 				//1体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 128, 192);
@@ -447,7 +447,7 @@ inline static void load_sprites() {
 	if (exist_file("sdmc:/tjafiles/theme/dancer.t3x")) {
 		dancerspsh = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/dancer.t3x");
 		dance = true;
-		dancnt = (int)C2D_SpriteSheetCount(dancerspsh);
+		dancnt = (unsigned int)C2D_SpriteSheetCount(dancerspsh);
 	}
 
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
@@ -570,5 +570,5 @@ inline static int time_count(double TIME) noexcept {
 }
 inline static int dancer_time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor(TIME/((240.0/dancnt)/NowBPM)) % (dancnt * 2);
+	return (int)floor(TIME/((240.0/dancnt)/NowBPM)) % dancnt;
 }
