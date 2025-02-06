@@ -151,10 +151,14 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
-	SPRITE_DONCHAN_0,		//どんちゃんの画像,GOGOでは無い①
-	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い②
-	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである①
-	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである②
+	SPRITE_DONCHAN_0,		//どんちゃんの画像,GOGOでは無い1
+	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い2
+	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである1
+	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである2
+	SPRITE_DANCER_0,		//踊り子の画像1
+	SPRITE_DANCER_1,		//踊り子の画像2
+	SPRITE_DANCER_2,		//踊り子の画像3
+	SPRITE_DANCER_3,		//踊り子の画像4
 };
 
 enum COMMAND_KND {
