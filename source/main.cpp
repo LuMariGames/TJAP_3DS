@@ -28,7 +28,7 @@ char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 
 static void load_sprites();
-static int time_count(double TIME, int NUM), exist_file(const char* path);
+static int time_count(double TIME, int NUM), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
 
@@ -288,7 +288,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 
 			draw_lane(sprites);
-			draw_gauge(sprites, time_count(CurrentTimeMain, 8));
+			draw_gauge(sprites, dancer_time_count(CurrentTimeMain));
 			draw_emblem(sprites);
 
 			if (isNotesStart == true) {
@@ -545,7 +545,11 @@ static int exist_file(const char* path) {
     fclose(fp);
     return 1;
 }
-inline static int time_count(double TIME, int NUM) noexcept {
+inline static int time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
-	return ((int)floor(TIME/(60.0/NowBPM)) % NUM)+(isGOGO*2);
+	return ((int)floor(TIME/(60.0/NowBPM)) % 2)+(isGOGO*2);
+}
+inline static int dancer_time_count(double TIME) noexcept {
+	if (TIME < 0) return 0;
+	return (int)floor(TIME/(30.0/NowBPM)) % 8;
 }
