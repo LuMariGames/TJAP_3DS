@@ -331,7 +331,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 }
 
-void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], static int time) {
+void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER], int time) {
 
 	static int mintime4 = time % 4, mintime2 = floor(time/4);
 	courselife = Gauge.score;
