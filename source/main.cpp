@@ -22,7 +22,8 @@ C2D_Sprite sprites[SPRITES_NUMER];			//画像用
 static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false, dance = false;
+bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
+bool dance = false;	//拡張スキン用
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 
@@ -285,7 +286,7 @@ int main() {
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
-			if (dance == true) C2D_DrawImageAtRotated(C2D_SpriteSheetGetImage(dancerspsh, time_count(CurrentTimeMain, 4)), 200, 192, 0.5, 0, NULL, 1 + (-2 * time_count(CurrentTimeMain, 2)), 1);
+
 			draw_lane(sprites);
 			draw_gauge(sprites);
 			draw_emblem(sprites);
@@ -432,10 +433,17 @@ inline static void load_sprites() {
 
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
 
-	for (int i = 0; i < SPRITES_NUMER; ++i) {
+	for (int i = 0, j = SPRITES_NUMER; i < j; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
+	if (dance) {
+		for (int i = SPRITES_NUMER, j = SPRITES_NUMER + 4) {
+			C2D_SpriteFromSheet(&sprites[i], dancerspsh, i);
+			C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
+		}
+	}
+
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_2], 9, 26);
