@@ -9,6 +9,9 @@ SKIN_T Skin;
 json_t *sjson;
 json_error_t error_sjson;
 
+char* temp = NULL, tp = NULL;
+int cnt = 1;
+
 void init_skin() {
 
 	Skin.don_x = 76;
@@ -21,6 +24,9 @@ void init_skin() {
 	Skin.d1total = 6;
 	Skin.d2total = 6;
 	Skin.d3total = 6;
+	Skin.d1anime[] = {0,1,2,3,2,3};
+	Skin.d2anime[] = {0,1,2,3,2,3};
+	Skin.d3anime[] = {0,1,2,3,2,3};
 }
 
 void save_skin() {
@@ -29,12 +35,6 @@ void save_skin() {
 	json_object_set(sjson, "don_y", json_integer(Skin.don_y));
 	json_object_set(sjson, "don_go_x", json_integer(Skin.don_gogo_x));
 	json_object_set(sjson, "don_go_y", json_integer(Skin.don_gogo_y));
-	json_object_set(sjson, "d1num", json_integer(Skin.d1num));
-	json_object_set(sjson, "d2num", json_integer(Skin.d2num));
-	json_object_set(sjson, "d3num", json_integer(Skin.d3num));
-	json_object_set(sjson, "d1total", json_integer(Skin.d1total));
-	json_object_set(sjson, "d2total", json_integer(Skin.d2total));
-	json_object_set(sjson, "d3total", json_integer(Skin.d3total));
 
 	json_dump_file(sjson, SKIN_SETTING_FILE, 0);
 }
@@ -57,6 +57,33 @@ void load_skin() {
 		Skin.d1total = json_integer_value(json_object_get(sjson, "d1total"));
 		Skin.d2total = json_integer_value(json_object_get(sjson, "d2total"));
 		Skin.d3total = json_integer_value(json_object_get(sjson, "d3total"));
+		
+		temp = json_string_value(json_object_get(sjson, "d1anime"));
+		tp = strtok(temp, ",");
+		Skin.d1anime[0] = atoi(tp);
+		cnt = 1;
+		while ((tp = strtok(NULL, ","))) {
+			Skin.d1anime[cnt] = atoi(tp);
+			++cnt;
+		}
+
+		temp = json_string_value(json_object_get(sjson, "d2anime"));
+		tp = strtok(temp, ",");
+		Skin.d2anime[0] = atoi(tp);
+		cnt = 1;
+		while ((tp = strtok(NULL, ","))) {
+			Skin.d2anime[cnt] = atoi(tp);
+			++cnt;
+		}
+
+		temp = json_string_value(json_object_get(sjson, "d3anime"));
+		tp = strtok(temp, ",");
+		Skin.d3anime[0] = atoi(tp);
+		cnt = 1;
+		while ((tp = strtok(NULL, ","))) {
+			Skin.d3anime[cnt] = atoi(tp);
+			++cnt;
+		}
 	}
 	if (sjson == NULL) {			//開けなかった時
 		sjson = json_pack("{}");	//ファイル空の時はこれしないとセットできなくなる
@@ -81,4 +108,7 @@ void get_skin(SKIN_T *TMP) {
 	TMP->d1total = Skin.d1total;
 	TMP->d2total = Skin.d2total;
 	TMP->d3total = Skin.d3total;
+	TMP->d1anime[] = Skin.d1anime[];
+	TMP->d2anime[] = Skin.d2anime[];
+	TMP->d3anime[] = Skin.d3anime[];
 }
