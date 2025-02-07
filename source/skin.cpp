@@ -9,7 +9,8 @@ SKIN_T Skin;
 json_t *sjson;
 json_error_t error_sjson;
 
-char *temp = NULL, *tp = NULL;
+char* const temp = NULL;
+char* tp = NULL;
 int cnt = 1;
 
 void init_skin() {
