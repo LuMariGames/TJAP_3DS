@@ -309,10 +309,10 @@ int main() {
 				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d2num;
 
 				//1体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 100, 192);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 200, 192);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime1]);
 				//2体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime2], 200, 192);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime2], 100, 192);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime2]);
 				//3体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime3], 300, 192);
@@ -573,5 +573,5 @@ inline static int time_count(double TIME) noexcept {
 }
 inline static int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor(TIME/(960.0/NowBPM) * NUM) % NUM;
+	return (int)floor((TIME/(960.0/NowBPM)) * NUM) % NUM;
 }
