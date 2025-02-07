@@ -70,7 +70,7 @@ void load_skin() {
 		cnt = 1;
 		while ((tp = strtok(NULL, ","))) {
 			Skin.d2anime[cnt] = atoi(tp);
-			if (Skin.d2anime[cnt] > Skin.d2num) Skin.d2num = Skin.d2anime[cnt]
+			if (Skin.d2anime[cnt] > Skin.d2num) Skin.d2num = Skin.d2anime[cnt];
 			++cnt;
 		}
 		Skin.d2total = cnt;
@@ -81,7 +81,7 @@ void load_skin() {
 		cnt = 1;
 		while ((tp = strtok(NULL, ","))) {
 			Skin.d3anime[cnt] = atoi(tp);
-			if (Skin.d3anime[cnt] > Skin.d3num) Skin.d3num = Skin.d3anime[cnt]
+			if (Skin.d3anime[cnt] > Skin.d3num) Skin.d3num = Skin.d3anime[cnt];
 			++cnt;
 		}
 		Skin.d3total = cnt;
@@ -90,6 +90,9 @@ void load_skin() {
 		sjson = json_pack("{}");	//ファイル空の時はこれしないとセットできなくなる
 		save_skin();			//書き込み
 	}
+	++Skin.d1num;
+	++Skin.d2num;
+	++Skin.d3num;
 }
 
 void exit_skin() {
