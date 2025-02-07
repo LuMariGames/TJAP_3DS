@@ -290,17 +290,6 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 
-			draw_lane(sprites);
-			draw_gauge(sprites);
-			draw_emblem(sprites);
-
-			if (isNotesStart == true) {
-				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (isPause == false) ++notes_cnt;
-			}
-			draw_score(sprites);
-			draw_title();
-
 			//ダンサー表示
 			if (dance == true && course != COURSE_DAN) {
 				//ダンサーのコマ数調整
@@ -318,6 +307,18 @@ int main() {
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime3], 300, 192);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime3]);
 			}
+
+			draw_lane(sprites);
+			draw_gauge(sprites);
+			draw_emblem(sprites);
+
+			if (isNotesStart == true) {
+				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+				if (isPause == false) ++notes_cnt;
+			}
+			draw_score(sprites);
+			draw_title();
+
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps == true) draw_fps();
 
