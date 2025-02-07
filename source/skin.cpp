@@ -36,6 +36,9 @@ void save_skin() {
 	json_object_set(sjson, "don_y", json_integer(Skin.don_y));
 	json_object_set(sjson, "don_go_x", json_integer(Skin.don_gogo_x));
 	json_object_set(sjson, "don_go_y", json_integer(Skin.don_gogo_y));
+	json_object_get(sjson, "d1anime", json_string(0,1,2,3));
+	json_object_get(sjson, "d2anime", json_string(0,1,2,3));
+	json_object_get(sjson, "d2anime", json_string(0,1,2,3));
 
 	json_dump_file(sjson, SKIN_SETTING_FILE, 0);
 }
