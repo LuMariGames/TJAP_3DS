@@ -302,8 +302,8 @@ int main() {
 			draw_title();
 			if (dance == true && course != COURSE_DAN) {
 				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
-				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)];
-				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)];
+				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
+				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d2num;
 
 				//1体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 100, 192);
