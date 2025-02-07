@@ -306,7 +306,7 @@ int main() {
 				//ダンサーのコマ数調整
 				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
 				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
-				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d2num;
+				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + (Skin.d1num + Skin.d2num);
 
 				//1体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 200, 192);
@@ -573,5 +573,5 @@ inline static int time_count(double TIME) noexcept {
 }
 inline static int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor((TIME/(960.0/NowBPM)) * NUM) % NUM;
+	return (int)floor(TIME/(960.0/NUM/NowBPM)) % NUM;
 }
