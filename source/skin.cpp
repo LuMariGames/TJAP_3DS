@@ -24,9 +24,9 @@ void init_skin() {
 	Skin.d1total = 6;
 	Skin.d2total = 6;
 	Skin.d3total = 6;
-	Skin.d1anime[] = {0,1,2,3,2,3};
-	Skin.d2anime[] = {0,1,2,3,2,3};
-	Skin.d3anime[] = {0,1,2,3,2,3};
+	Skin.d1anime[120] = {0,1,2,3,2,3};
+	Skin.d2anime[60] = {0,1,2,3,2,3};
+	Skin.d3anime[60] = {0,1,2,3,2,3};
 }
 
 void save_skin() {
