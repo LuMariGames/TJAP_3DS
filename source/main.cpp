@@ -300,7 +300,10 @@ int main() {
 			}
 			draw_score(sprites);
 			draw_title();
+
+			//ダンサー表示
 			if (dance == true && course != COURSE_DAN) {
+				//ダンサーのコマ数調整
 				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
 				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
 				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d2num;
