@@ -15,9 +15,12 @@ void init_skin() {
 	Skin.don_y = 51;
 	Skin.don_gogo_x = 84;
 	Skin.don_gogo_y = 45;
-	Skin.d1num = 6;
-	Skin.d2num = 6;
-	Skin.d3num = 6;
+	Skin.d1num = 4;
+	Skin.d2num = 4;
+	Skin.d3num = 4;
+	Skin.d1total = 6;
+	Skin.d2total = 6;
+	Skin.d3total = 6;
 }
 
 void save_skin() {
@@ -29,6 +32,9 @@ void save_skin() {
 	json_object_set(sjson, "d1num", json_integer(Skin.d1num));
 	json_object_set(sjson, "d2num", json_integer(Skin.d2num));
 	json_object_set(sjson, "d3num", json_integer(Skin.d3num));
+	json_object_set(sjson, "d1total", json_integer(Skin.d1total));
+	json_object_set(sjson, "d2total", json_integer(Skin.d2total));
+	json_object_set(sjson, "d3total", json_integer(Skin.d3total));
 
 	json_dump_file(sjson, SKIN_SETTING_FILE, 0);
 }
@@ -48,6 +54,9 @@ void load_skin() {
 		Skin.d1num = json_integer_value(json_object_get(sjson, "d1num"));
 		Skin.d2num = json_integer_value(json_object_get(sjson, "d2num"));
 		Skin.d3num = json_integer_value(json_object_get(sjson, "d3num"));
+		Skin.d1total = json_integer_value(json_object_get(sjson, "d1total"));
+		Skin.d2total = json_integer_value(json_object_get(sjson, "d2total"));
+		Skin.d3total = json_integer_value(json_object_get(sjson, "d3total"));
 	}
 	if (sjson == NULL) {			//開けなかった時
 		sjson = json_pack("{}");	//ファイル空の時はこれしないとセットできなくなる
@@ -69,4 +78,7 @@ void get_skin(SKIN_T *TMP) {
 	TMP->d1num = Skin.d1num;
 	TMP->d2num = Skin.d2num;
 	TMP->d3num = Skin.d3num;
+	TMP->d1total = Skin.d1total;
+	TMP->d2total = Skin.d2total;
+	TMP->d3total = Skin.d3total;
 }
