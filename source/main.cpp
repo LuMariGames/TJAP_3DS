@@ -18,7 +18,7 @@
 extern int course, courselife, TotalBadCount; //combo;
 extern float NowBPM;
 extern bool isGOGO;
-C2D_Sprite sprites[128];			//画像用
+C2D_Sprite sprites[144];	//画像用
 static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
@@ -29,7 +29,7 @@ bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
 static void load_sprites();
-static int time_count(double TIME), dancer_time_count(double TIME), exist_file(const char* path);
+static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
 
@@ -114,8 +114,14 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0, mintime4 = 0,mintime2 = 0; //BeforeCombo = 0;
+	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
+	mintime1 = 0,mintime2 = 0,mintime3 = 0;	//BeforeCombo = 0;
 	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000;
+
+	load_option();
+	get_option(&Option);
+	load_skin();
+	get_skin(&Skin);
 	
 	while (aptMainLoop()) {
 
@@ -140,10 +146,6 @@ int main() {
 
 		case SCENE_SELECTLOAD:	//ロード画面
 
-			load_option();
-			get_option(&Option);
-			load_skin();
-			get_skin(&Skin);
 			dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 			if (Option.exse == false) load_sound();
 			else if (Option.exse == true) sd_load_sound();
@@ -299,21 +301,19 @@ int main() {
 			draw_score(sprites);
 			draw_title();
 			if (dance == true && course != COURSE_DAN) {
-				mintime4 = dancer_time_count(CurrentTimeMain) % dancnt;
-				mintime2 = floor(dancer_time_count(CurrentTimeMain) / dancnt);
+				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
+				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)];
+				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)];
 
 				//1体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 128, 192);
-				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
-				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 100, 192);
+				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime1]);
 				//2体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 200, 192);
-				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
-				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime2], 200, 192);
+				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime2]);
 				//3体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime4], 272, 192);
-				C2D_SpriteSetScale(&sprites[SPRITE_DANCER_0 + mintime4], 1 + -2 * mintime2, 1);
-				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime4]);
+				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime3], 300, 192);
+				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime3]);
 			}
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps == true) draw_fps();
@@ -568,7 +568,7 @@ inline static int time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
 	return ((int)floor(TIME/(60.0/NowBPM)) % 2)+(isGOGO*2);
 }
-inline static int dancer_time_count(double TIME) noexcept {
+inline static int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor(TIME/((240.0/dancnt)/NowBPM)) % (dancnt * 2);
+	return (int)floor(TIME/(240.0/NowBPM) * NUM) % NUM;
 }
