@@ -9,7 +9,7 @@ SKIN_T Skin;
 json_t *sjson;
 json_error_t error_sjson;
 
-char temp[256] = {}, *tp = NULL;
+char temp[512] = {}, *tp = NULL;
 int cnt = 1;
 
 void init_skin() {
@@ -24,9 +24,11 @@ void init_skin() {
 	Skin.d1total = 6;
 	Skin.d2total = 6;
 	Skin.d3total = 6;
-	Skin.d1anime[120] = {0,1,2,3,2,3};
-	Skin.d2anime[60] = {0,1,2,3,2,3};
-	Skin.d3anime[60] = {0,1,2,3,2,3};
+	for (int i = 0; i < 4; ++i) {
+		Skin.d1anime[i] = i;
+		Skin.d2anime[i] = i;
+		Skin.d3anime[i] = i;
+	}
 }
 
 void save_skin() {
@@ -59,7 +61,7 @@ void load_skin() {
 		Skin.d3total = json_integer_value(json_object_get(sjson, "d3total"));
 		
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d1anime")), sizeof(temp));
-		tp = strtok((char*)temp, ",");
+		tp = strtok(temp, ",");
 		Skin.d1anime[0] = atoi(tp);
 		cnt = 1;
 		while ((tp = strtok(NULL, ","))) {
@@ -108,7 +110,9 @@ void get_skin(SKIN_T *TMP) {
 	TMP->d1total = Skin.d1total;
 	TMP->d2total = Skin.d2total;
 	TMP->d3total = Skin.d3total;
-	TMP->d1anime[] = Skin.d1anime[];
-	TMP->d2anime[] = Skin.d2anime[];
-	TMP->d3anime[] = Skin.d3anime[];
+	for (int i = 0; i < 128; ++i) {
+		TMP->d1anime[i] = Skin.d1anime[i];
+		TMP->d2anime[i] = Skin.d2anime[i];
+		TMP->d3anime[i] = Skin.d3anime[i];
+	}
 }
