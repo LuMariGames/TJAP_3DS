@@ -20,9 +20,9 @@ void init_skin() {
 	Skin.d1num = 4;
 	Skin.d2num = 4;
 	Skin.d3num = 4;
-	Skin.d1total = 6;
-	Skin.d2total = 6;
-	Skin.d3total = 6;
+	Skin.d1total = 4;
+	Skin.d2total = 4;
+	Skin.d3total = 4;
 	for (int i = 0; i < 4; ++i) {
 		Skin.d1anime[i] = i;
 		Skin.d2anime[i] = i;
