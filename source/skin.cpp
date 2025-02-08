@@ -30,16 +30,6 @@ void init_skin() {
 	}
 }
 
-void save_skin() {
-
-	json_object_set(sjson, "don_x", json_integer(Skin.don_x));
-	json_object_set(sjson, "don_y", json_integer(Skin.don_y));
-	json_object_set(sjson, "don_go_x", json_integer(Skin.don_gogo_x));
-	json_object_set(sjson, "don_go_y", json_integer(Skin.don_gogo_y));
-
-	json_dump_file(sjson, SKIN_SETTING_FILE, 0);
-}
-
 void load_skin() {
 
 	init_skin();
@@ -85,10 +75,6 @@ void load_skin() {
 			++cnt;
 		}
 		Skin.d3total = cnt;
-	}
-	if (sjson == NULL) {			//開けなかった時
-		sjson = json_pack("{}");	//ファイル空の時はこれしないとセットできなくなる
-		save_skin();			//書き込み
 	}
 	++Skin.d1num;
 	++Skin.d2num;
