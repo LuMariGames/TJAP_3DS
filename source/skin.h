@@ -5,4 +5,4 @@ typedef struct {
 } SKIN_T;
 
 void get_skin(SKIN_T *TMP);
-void init_skin(),load_skin(),exit_skin(),save_skin();
+void init_skin(),load_skin(),exit_skin();
