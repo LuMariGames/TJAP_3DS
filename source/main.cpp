@@ -29,7 +29,7 @@ int dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
-static void load_sprites(), test_thread(void* arg);
+static void load_sprites();
 static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
@@ -581,7 +581,4 @@ inline static int time_count(double TIME) noexcept {
 inline static int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME/(960.0/NUM/NowBPM)) % NUM;
-}
-static void test_thread(void* arg) {
-	threadExit(0);
 }
