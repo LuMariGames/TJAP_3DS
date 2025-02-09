@@ -41,7 +41,6 @@ out:
 	return err;
 }
 
-
 uint32_t rateVorbis(void){
 	return vi->rate;
 }
