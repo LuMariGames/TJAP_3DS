@@ -60,9 +60,9 @@ void init_main() {
 	else APT_SetAppCpuTimeLimit(90);
 
 	//Core1の動作テスト
-	Thread Core1 = threadCreate(test_thread, (void*)(""), 32000, 0x25, 1, false);
-	isUseCore1 = (bool)Core1;
-	if (Core1) threadJoin(Core1, U64_MAX);
+	Thread Core1 = threadCreate(test_thread, (void*)(""), 32000, 0x25, -2, false);
+	if ((bool)Core1 != NULL) isUseCore1 = true;
+	if (Core1 != NULL) threadJoin(Core1, U64_MAX);
 	threadFree(Core1);
 }
 
