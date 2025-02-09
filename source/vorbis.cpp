@@ -20,6 +20,7 @@ void setVorbis(struct decoder_fn* decoder){
 	decoder->vorbis_buffer_size = vorbis_buffer_size;
 	decoder->decode = &decodeVorbis;
 	decoder->exit = &exitVorbis;
+	decoder->bitrate = &bitrateVorbis;
 }
 
 int initVorbis(const char* file){
@@ -48,6 +49,11 @@ uint32_t rateVorbis(void){
 uint8_t channelVorbis(void)
 {
 	return vi->channels;
+}
+
+long bitrateVorbis(void)
+{
+	return vi->bitrate_upper;
 }
 
 uint64_t decodeVorbis(void* buffer)
@@ -118,9 +124,3 @@ int get_buffer_size() {
 void put_buffer_size(int tmp) {
 	vorbis_buffer_size = (size_t)tmp;
 }
-
-/*int getlatency() {
-	static int bit = (int)ov_bitrate(&vorbisFile, 1);
-	if (get_isMusicStart() == true && bit > 64000) return (64000/bit-1)*-200000;
-	else return 0;
-}*/
