@@ -11,7 +11,6 @@
 
 static volatile bool stop = true;
 extern float mix[12];
-extern bool isUseCore1;
 
 bool togglePlayback(void){
 
@@ -329,7 +328,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, (isUseCore1 ? 1 : -2), false);
+	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, 1, false);
 	
 	return 0;
 }
