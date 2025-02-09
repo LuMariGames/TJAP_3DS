@@ -20,6 +20,7 @@ struct decoder_fn{
 	size_t vorbis_buffer_size;
 	uint64_t (* decode)(void*);
 	void (* exit)(void);
+	long (* bitrate)(void);
 };
 
 struct playbackInfo_t{
