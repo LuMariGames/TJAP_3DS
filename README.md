@@ -1,8 +1,3 @@
-> [!NOTE]
-> 動作が重い場合はこの [dspfirm.cdc](https://www.dropbox.com/scl/fi/4y74wpppasjby06wtqk57/dspfirm.cdc?rlkey=2dc5zx3nj1mv1l2tjrp24gebd&raw=1) を使用してみては？  
-> これはバンブラPに使用されている dspaudio.cdc を dspfirm.cdc にファイル名を変更した物です。  
-> 他のhomebrewソフトでも使える&実質性能が約1.5倍になります！  
-
 # TJAP_3DS(日本語)  
 TJAP_3DSは、[togetg](https://github.com/togetg)氏制作の[TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS)のフォークです。  
 とっくん や 固定スクロール 等の新オプションとスキンの変更、  
