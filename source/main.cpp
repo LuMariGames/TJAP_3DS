@@ -55,7 +55,7 @@ void init_main() {
 	gfxSetWide(false);
 	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
-	APT_CheckNew3DS(isNew3ds);
+	APT_CheckNew3DS(&isNew3ds);
 	if (isNew3ds) APT_SetAppCpuTimeLimit(40);
 	else APT_SetAppCpuTimeLimit(100);
 
