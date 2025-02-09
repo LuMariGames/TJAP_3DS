@@ -162,7 +162,7 @@ int main() {
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
-			if (isUseCore1) draw_select_text(120, 100, "Now Loading... (UseCore1OK)");
+			if (isUseCore1 == true) draw_select_text(120, 100, "Now Loading... UseCore1OK");
 			else draw_select_text(120, 100, "Now Loading...");
 			C3D_FrameEnd(0);
 			load_file_main();
