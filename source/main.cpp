@@ -29,7 +29,7 @@ int dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
-static void load_sprites();
+static void load_sprites(), test_thread(void* arg);
 static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
