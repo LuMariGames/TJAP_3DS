@@ -23,6 +23,7 @@ static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
+bool isNew3ds = false, isUseCore1 = false;
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
@@ -52,8 +53,17 @@ void init_main() {
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	gfxSetWide(false);
-	osSetSpeedupEnable(false);
+	osSetSpeedupEnable(true);
 	gfxSetDoubleBuffering(GFX_TOP, true);
+	APT_CheckNew3DS(isNew3ds);
+	if (isNew3ds) APT_SetAppCpuTimeLimit(40);
+	else APT_SetAppCpuTimeLimit(100);
+
+	//Core1の動作テスト
+	Thread Core1 = threadCreate(test_thread, (void*)(""), 32000, 0x25, 1, false);
+	isUseCore1 = (bool)Core1;
+	if (Core1) threadJoin(Core1, U64_MAX);
+	threadFree(Core1);
 }
 
 void exit_main() {
@@ -122,7 +132,8 @@ int main() {
 	get_option(&Option);
 	load_skin();
 	get_skin(&Skin);
-	
+	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
+
 	while (aptMainLoop()) {
 
 		hidScanInput();
@@ -146,13 +157,13 @@ int main() {
 
 		case SCENE_SELECTLOAD:	//ロード画面
 
-			dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 			if (Option.exse == false) load_sound();
 			else if (Option.exse == true) sd_load_sound();
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
-			draw_select_text(120, 100, "Now Loading...");
+			if (isUseCore1) draw_select_text(120, 100, "Now Loading... (UseCore1OK)");
+			else draw_select_text(120, 100, "Now Loading...");
 			C3D_FrameEnd(0);
 			load_file_main();
 			if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
@@ -578,4 +589,7 @@ inline static int time_count(double TIME) noexcept {
 inline static int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME/(960.0/NUM/NowBPM)) % NUM;
+}
+static void test_thread(void* arg) {
+	threadExit(0);
 }
