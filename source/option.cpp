@@ -534,7 +534,6 @@ void init_option() {
 	Option.dispFps = false;
 	Option.random = 0;
 	Option.speed = 1.0;
-	Option.musicspeed = 1.0;
 	Option.isSwap = false;
 	Option.lang = LANG_JP;
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
@@ -662,7 +661,6 @@ void get_option(OPTION_T *TMP) {
 	TMP->isStelth = Option.isStelth;
 	TMP->random = Option.random;
 	TMP->speed = Option.speed;
-	TMP->musicspeed = Option.musicspeed;
 	TMP->offset = Option.offset;
 	TMP->isSwap = Option.isSwap;
 	TMP->lang = Option.lang;
