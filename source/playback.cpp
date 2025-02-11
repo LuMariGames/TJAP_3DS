@@ -93,6 +93,9 @@ int testtest = 0;
 
 void playFile(void* infoIn){
 
+	//恐らくバッファサイズは最低1024前後までしか出来ない為これ以上格納数を増やしても意味が無いと思われる。
+	//人によっては増やすと確認する際のif文で逆に重く感じるので増やし過ぎには注意、格納数は4~6くらいが良い。
+
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
 	int16_t*	buffer1 = NULL;
@@ -101,9 +104,7 @@ void playFile(void* infoIn){
 	int16_t*	buffer4 = NULL;
 	int16_t*	buffer5 = NULL;
 	int16_t*	buffer6 = NULL;
-	int16_t*	buffer7 = NULL;
-	int16_t*	buffer8 = NULL;
-	ndspWaveBuf	waveBuf[8];
+	ndspWaveBuf	waveBuf[6];
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
 	const char*	file = info->file;
@@ -144,14 +145,12 @@ void playFile(void* infoIn){
 	buffer4 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 	buffer5 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 	buffer6 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer7 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer8 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_LINEAR);
-	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
+	ndspChnSetRate(CHANNEL, (*decoder.rate)());
 	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
 	ndspChnSetMix(CHANNEL, mix);
 
@@ -177,26 +176,19 @@ void playFile(void* infoIn){
 	waveBuf[5].nsamples = (*decoder.decode)(&buffer6[0]) / (*decoder.channels)();
 	waveBuf[5].data_vaddr = &buffer6[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[5]);	
-	waveBuf[6].nsamples = (*decoder.decode)(&buffer7[0]) / (*decoder.channels)();
-	waveBuf[6].data_vaddr = &buffer7[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[6]);
-	waveBuf[7].nsamples = (*decoder.decode)(&buffer8[0]) / (*decoder.channels)();
-	waveBuf[7].data_vaddr = &buffer8[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[7]);
 	
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
-		svcSleepThread(56000);
+		//音切れチェックの間隔(us, この場合50ms毎に確認する)
+		svcSleepThread(50000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
 			waveBuf[2].status == NDSP_WBUF_DONE &&
 			waveBuf[3].status == NDSP_WBUF_DONE &&
 			waveBuf[4].status == NDSP_WBUF_DONE &&
-			waveBuf[5].status == NDSP_WBUF_DONE &&
-			waveBuf[6].status == NDSP_WBUF_DONE &&
-			waveBuf[7].status == NDSP_WBUF_DONE)
+			waveBuf[5].status == NDSP_WBUF_DONE)
 			break;
 
 		if(ndspChnIsPaused(CHANNEL) == true || lastbuf == true)
@@ -257,24 +249,6 @@ void playFile(void* infoIn){
 			else if(read < decoder.vorbis_buffer_size) waveBuf[5].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[5]);
 		}
-		if(waveBuf[6].status == NDSP_WBUF_DONE) {
-			size_t read = (*decoder.decode)(&buffer7[0]);
-			if(read <= 0) {
-				lastbuf = true;
-				continue;
-			}
-			else if(read < decoder.vorbis_buffer_size) waveBuf[6].nsamples = read / (*decoder.channels)();
-			ndspChnWaveBufAdd(CHANNEL, &waveBuf[6]);
-		}
-		if(waveBuf[7].status == NDSP_WBUF_DONE) {
-			size_t read = (*decoder.decode)(&buffer8[0]);
-			if(read <= 0) {
-				lastbuf = true;
-				continue;
-			}
-			else if(read < decoder.vorbis_buffer_size) waveBuf[7].nsamples = read / (*decoder.channels)();
-			ndspChnWaveBufAdd(CHANNEL, &waveBuf[7]);
-		}
 	}
 
 	(*decoder.exit)();
@@ -292,8 +266,6 @@ out:
 	linearFree(buffer4);
 	linearFree(buffer5);
 	linearFree(buffer6);
-	linearFree(buffer7);
-	linearFree(buffer8);
 
 	threadExit(0);
 	return;

@@ -1,4 +1,4 @@
-﻿#include "header.h"
+#include "header.h"
 #include "main.h"
 #include "vorbis.h"
 #include "tja.h"
@@ -45,7 +45,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id] * mspeed();
+	return Time[id];
 }
 
 void restart_time(int id) {
@@ -81,7 +81,7 @@ double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
 	fps_time[0] = fps_time[1];
-	fps_time[1] = get_current_time(TIME_FPS)/mspeed();
+	fps_time[1] = get_current_time(TIME_FPS);
 
 	fps_sum += fps_time[1] - fps_time[0];
 	++fps_cnt;

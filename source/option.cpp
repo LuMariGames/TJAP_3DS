@@ -220,7 +220,8 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.buffer_size = (int)input_number_keyboard(5, false,false);
-			if (Option.buffer_size < 1000) Option.buffer_size = 1000;
+			if (Option.buffer_size < 512) Option.buffer_size = 512;
+			else if (Option.buffer_size > 8192) Option.buffer_size = 8192;
 			put_buffer_size(Option.buffer_size);
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
@@ -229,22 +230,6 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			Option.buffer_size = DEFAULT_BUFFER_SIZE;
 			put_buffer_size(Option.buffer_size);
 		}
-		XCnt = 0, ++YCnt;
-		
-		//曲のはやさ
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_MUSICSPEED], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%.2f", Option.musicspeed);
-		draw_option_text(x, y, get_buffer(), true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			Option.musicspeed = input_number_keyboard(5, true,false);
-			if (Option.musicspeed > 2.0) Option.musicspeed = 2.0;
-			else if (Option.musicspeed < 0.1) Option.musicspeed = 0.1;
-		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.musicspeed = 1.0;
 		XCnt = 0, ++YCnt;
 
 		//offset
@@ -532,10 +517,6 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 
 int get_lang() {
 	return Option.lang;
-}
-
-float mspeed() {
-	return Option.musicspeed;
 }
 
 void toggle_auto() {
