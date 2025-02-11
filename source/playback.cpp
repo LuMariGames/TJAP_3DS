@@ -187,7 +187,7 @@ void playFile(void* infoIn){
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
-		svcSleepThread(100000);
+		svcSleepThread(56000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
@@ -202,6 +202,7 @@ void playFile(void* infoIn){
 		if(ndspChnIsPaused(CHANNEL) == true || lastbuf == true)
 			continue;
 
+		//音声処理
 		if(waveBuf[0].status == NDSP_WBUF_DONE) {
 			size_t read = (*decoder.decode)(&buffer1[0]);
 			if(read <= 0) {
@@ -211,7 +212,6 @@ void playFile(void* infoIn){
 			else if(read < decoder.vorbis_buffer_size) waveBuf[0].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 		}
-
 		if(waveBuf[1].status == NDSP_WBUF_DONE) {
 			size_t read = (*decoder.decode)(&buffer2[0]);
 			if(read <= 0) {
@@ -221,7 +221,6 @@ void playFile(void* infoIn){
 			else if(read < decoder.vorbis_buffer_size) waveBuf[1].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 		}
-
 		if(waveBuf[2].status == NDSP_WBUF_DONE) {
 			size_t read = (*decoder.decode)(&buffer3[0]);
 			if(read <= 0) {
@@ -231,7 +230,6 @@ void playFile(void* infoIn){
 			else if(read < decoder.vorbis_buffer_size) waveBuf[2].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 		}
-
 		if(waveBuf[3].status == NDSP_WBUF_DONE) {
 			size_t read = (*decoder.decode)(&buffer4[0]);
 			if(read <= 0) {
@@ -328,7 +326,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, 0, false);
+	thread = threadCreate(playFile, playbackInfo, 32000, prio - 1, -2, false);
 	
 	return 0;
 }

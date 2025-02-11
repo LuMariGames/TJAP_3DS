@@ -289,7 +289,6 @@ int main() {
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
-
 			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 
@@ -302,15 +301,12 @@ int main() {
 
 				//1体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 200, 192);
-				C3D_TexSetFilter(sprites[SPRITE_DANCER_0 + mintime1].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime1]);
 				//2体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime2], 100, 192);
-				C3D_TexSetFilter(sprites[SPRITE_DANCER_0 + mintime2].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime2]);
 				//3体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime3], 300, 192);
-				C3D_TexSetFilter(sprites[SPRITE_DANCER_0 + mintime3].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime3]);
 			}
 
