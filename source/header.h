@@ -12,7 +12,7 @@
 #include <ctype.h>
 
 #define VERSION "1.5.0"
-#define DEFAULT_DIR	"sdmc:/tjafiles/"
+#define DEFAULT_DIR "sdmc:/tjafiles/"
 #define NOTDEF_DIR	"romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
 #define SKIN_SETTING_FILE "sdmc:/tjafiles/theme/config.json"
@@ -83,13 +83,13 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_BALLOON_4,		//風船音符を叩く時に使う画像④
 	SPRITE_BALLOON_5,		//風船音符を叩く時に使う画像⑤
 	SPRITE_BALLOON_6,		//風船音符を叩き終わる時に使う画像
-	SPRITE_JUDGE_PERFECT,		//良
+	SPRITE_JUDGE_PERFECT,	//良
 	SPRITE_JUDGE_NICE,		//可
 	SPRITE_JUDGE_BAD,		//不可
-	SPRITE_JUDGE_CIRCLE,		//判定枠
-	SPRITE_CHART_NORMAL,		//譜面分岐がある譜面で使う画像
-	SPRITE_CHART_EXPERT,		//譜面分岐がある譜面で使う画像
-	SPRITE_CHART_MASTER,		//譜面分岐がある譜面で使う画像
+	SPRITE_JUDGE_CIRCLE,	//判定枠
+	SPRITE_CHART_NORMAL,	//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_EXPERT,	//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_MASTER,	//譜面分岐がある譜面で使う画像
 	SPRITE_LANE_EXPERT,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
 	SPRITE_LANE_MASTER,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
 	SPRITE_EFFECT_PERFECT,		//赤花火,良で叩いた時に表示する画像
@@ -147,7 +147,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_HARD,
 	SPRITE_EMBLEM_ONI,
 	SPRITE_EMBLEM_EDIT,
-	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
+	SPRITE_EMBLEM_TOWER,	//太鼓タワーの画像
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
@@ -155,10 +155,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い2
 	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである1
 	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである2
-	SPRITE_DANCER_0,		//踊り子の画像1
-	SPRITE_DANCER_1,		//踊り子の画像2
-	SPRITE_DANCER_2,		//踊り子の画像3
-	SPRITE_DANCER_3,		//踊り子の画像4
+	SPRITE_DANCER_0,		//踊り子の画像
 };
 
 enum COMMAND_KND {
