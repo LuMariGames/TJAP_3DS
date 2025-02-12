@@ -23,7 +23,7 @@ static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
-bool isNew3ds = false, isUseCore1 = false;
+//bool isNew3ds = false;
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
@@ -56,13 +56,7 @@ void init_main() {
 	osSetSpeedupEnable(false);
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	//APT_CheckNew3DS(&isNew3ds);
-	APT_SetAppCpuTimeLimit(90);
-
-	//Core1の動作テスト
-	Thread Core1 = threadCreate(test_thread, (void*)(""), 32000, 0x25, 1, false);
-	if (Core1 != NULL) isUseCore1 = true;
-	if (isUseCore1) threadJoin(Core1, U64_MAX);
-	threadFree(Core1);
+	APT_SetAppCpuTimeLimit(100);
 }
 
 void exit_main() {
@@ -161,8 +155,7 @@ int main() {
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			load_sprites();
 			draw_select_text(120, 70, get_buffer());
-			if (isUseCore1 == true) draw_select_text(120, 100, "Now Loading... UseCore1OK");
-			else draw_select_text(120, 100, "Now Loading...");
+			draw_select_text(120, 100, "Now Loading...");
 			C3D_FrameEnd(0);
 			load_file_main();
 			if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
