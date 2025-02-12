@@ -56,7 +56,7 @@ void init_main() {
 	osSetSpeedupEnable(false);
 	gfxSetDoubleBuffering(GFX_TOP, true);
 	//APT_CheckNew3DS(&isNew3ds);
-	APT_SetAppCpuTimeLimit(95);
+	APT_SetAppCpuTimeLimit(90);
 
 	//Core1の動作テスト
 	Thread Core1 = threadCreate(test_thread, (void*)(""), 32000, 0x25, 1, false);
