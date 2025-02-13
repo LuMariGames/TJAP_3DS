@@ -677,7 +677,6 @@ void load_tja_notes(int course, LIST_T Song) {
 					bpm = NextBpm;
 					measure = NextMeasure;
 					delay = 0;
-					sudntime = 0;
 				}
 
 				if (isNoComma == false && NotesCount != 0 && tja_notes[tja_cnt][0] != '#') {	//複数行小節の最後の行
