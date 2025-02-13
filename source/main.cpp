@@ -130,7 +130,7 @@ int main() {
 	if (Option.exse == false) load_sound();
 	else if (Option.exse == true) sd_load_sound();
 	load_sprites();
-	chartload = threadCreate(load_file_main, 0, 8192, 0x3f, -2, true);
+	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
 
