@@ -470,13 +470,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,
-		NextBpm = bpm,
-		measure = 1,
-		scroll = 1,
-		NextMeasure = 1,
-		delay = 0,
-		percent = 1,
+	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0;
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 
@@ -569,6 +563,9 @@ void load_tja_notes(int course, LIST_T Song) {
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
 						break;
+					case COMMAND_SUDDEN:
+						sudntime = Command.val[0];
+						break;
 					case COMMAND_SCROLL:
 						scroll = Command.val[0];
 						break;
@@ -627,7 +624,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].scroll = scroll;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll)));
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - ((240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll))) - (240.0 / Measure[MeasureCount].bpm - sudntime));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 
@@ -683,6 +680,7 @@ void load_tja_notes(int course, LIST_T Song) {
 					bpm = NextBpm;
 					measure = NextMeasure;
 					delay = 0;
+					sudntime = 0;
 				}
 
 				if (isNoComma == false && NotesCount != 0 && tja_notes[tja_cnt][0] != '#') {	//複数行小節の最後の行
@@ -845,6 +843,14 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 				else Command->val[0] = 1.0;
 			}
 		}
+		else if (strcmp(command, "SUDDEN") == 0) 
+			Command->knd = COMMAND_SUDDEN;
+			char* tp;
+			tp = strtok(value, " ");
+			Command->val[0] = strtod(tp, NULL);
+			tp = strtok(NULL, " ");
+			Command->val[1] = strtod(tp, NULL);
+		}
 		else if (strcmp(command, "SCROLL") == 0) {
 			Command->knd = COMMAND_SCROLL;
 			if (Option.fixroll == true) Command->val[0] = 1;
@@ -877,10 +883,10 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "E") == 0) Command->knd = COMMAND_E;
 		else if (strcmp(command, "M") == 0) Command->knd = COMMAND_M;
 		else if (strcmp(command, "LEVELHOLD") == 0) Command->knd = COMMAND_LEVELHOLD;
-		else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
-		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;
 		else if (strcmp(command, "BARLINEOFF") == 0) Command->knd = COMMAND_BARLINEOFF;
 		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
+		/*else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
+		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;*/
 		else Command->knd = -1;
 
 		free(command);
