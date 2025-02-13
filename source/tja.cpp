@@ -843,7 +843,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 				else Command->val[0] = 1.0;
 			}
 		}
-		else if (strcmp(command, "SUDDEN") == 0) 
+		else if (strcmp(command, "SUDDEN") == 0) {
 			Command->knd = COMMAND_SUDDEN;
 			char* tp;
 			tp = strtok(value, " ");
