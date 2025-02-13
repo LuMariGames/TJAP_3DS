@@ -184,6 +184,9 @@ int main() {
 				}
 				button_game(&isDon, &isKatsu, Option, key);
 			}
+			else {
+				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
+			}
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
