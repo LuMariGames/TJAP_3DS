@@ -31,8 +31,8 @@ BRANCH_T Branch;
 
 int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
 NotesNumber;	//何番目のノーツか
-bool  isNotesLoad = true, isJudgeDisp = false, isBalloonBreakDisp = false, isGOGOTime = false, isLevelHold = false;	//要初期化
-double JudgeMakeTime, JudgeY,JudgeEffectCnt;
+bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
+double JudgeMakeTime,JudgeY,JudgeEffectCnt;
 
 
 void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], MEASURE_T Measure[MEASURE_MAX], int cnt, C2D_Sprite  sprites[SPRITES_NUMER]) {
