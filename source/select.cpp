@@ -20,8 +20,8 @@ char buf_select[256];
 int SongNumber = 0;		//曲の総数
 int GenreNumber = 0;		//ジャンルの総数
 int ClosedSongNumber = 0;	//閉じたジャンル内の曲数
-int GenreCount = 0, SongCount = 0, cursor = 0, course_cursor = 0, course_count = 0, SelectedId = 0, SelectedGenreId = 0 ,course = COURSE_ONI;
-bool isSelectCourse = false, isCursorGenre = false, isGameStart = false;
+int GenreCount = 0,SongCount = 0,cursor = 0,course_cursor = 0,course_count = 0,SelectedId = 0,SelectedGenreId = 0 ,course = COURSE_ONI;
+bool isSelectCourse = false,isCursorGenre = false,isGameStart = false,loadend = false;
 
 int cmp_list(const void* p, const void* q) {	//比較用
 
@@ -50,6 +50,7 @@ void load_file_main() {
 	}
 	set_genres();
 	sort_list();
+	loadend = true;
 }
 
 void load_genre_file(int id) {
