@@ -470,7 +470,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,
+	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 
@@ -562,9 +562,6 @@ void load_tja_notes(int course, LIST_T Song) {
 						break;
 					case COMMAND_MEASURE:
 						NextMeasure = Command.val[0];
-						break;
-					case COMMAND_SUDDEN:
-						sudntime = Command.val[0];
 						break;
 					case COMMAND_SCROLL:
 						scroll = Command.val[0];
