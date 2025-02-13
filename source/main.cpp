@@ -15,13 +15,14 @@
 #include "main.h"
 #include "vorbis.h"
 
-extern int course, courselife, TotalBadCount; //combo;
+extern int course,courselife,TotalBadCount; //combo;
 extern float NowBPM;
-extern bool isGOGO;
+extern bool isGOGO,loadend;
 C2D_Sprite sprites[144];	//画像用
 static C2D_SpriteSheet spriteSheet, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
+Thread chartload;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
 //bool isNew3ds = false;
 char buffer[BUFFER_SIZE];
@@ -126,6 +127,10 @@ int main() {
 	load_skin();
 	get_skin(&Skin);
 	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
+	if (Option.exse == false) load_sound();
+	else if (Option.exse == true) sd_load_sound();
+	load_sprites();
+	chartload = threadCreate(load_file_main, 0, 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
 
@@ -150,18 +155,52 @@ int main() {
 
 		case SCENE_SELECTLOAD:	//ロード画面
 
-			if (Option.exse == false) load_sound();
-			else if (Option.exse == true) sd_load_sound();
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
-			load_sprites();
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
+
+			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
+
+				PreTouch_x = touch_x, PreTouch_y = touch_y;
+				touch_x = tp.px, touch_y = tp.py;
+
+				if (
+					(key & KEY_TOUCH || 
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0
+					) &&
+					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
+					touch_cnt < 2) {
+					isDon = true;
+					++touch_cnt;
+				}
+				else if (
+					(
+					key & KEY_TOUCH ||
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 
+						)&&
+					touch_cnt < 2) {
+					isKatsu = true;
+					++touch_cnt;
+				}
+				button_game(&isDon, &isKatsu, Option, key);
+			}
+
+			//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
+			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 			C3D_FrameEnd(0);
-			load_file_main();
-			if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
-			else { 
-				warning = WARNING_DSP1;
-				scene_state = SCENE_WARNING; 
+
+			if (isDon == true)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
+
+			if (loadend == true) {
+				if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
+				else { 
+					warning = WARNING_DSP1;
+					scene_state = SCENE_WARNING; 
+				}
 			}
 			//load_combo();
 			break;
