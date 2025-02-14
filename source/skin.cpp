@@ -17,9 +17,9 @@ void init_skin() {
 	Skin.don_y = 51;
 	Skin.don_gogo_x = 84;
 	Skin.don_gogo_y = 45;
-	Skin.d1num = 4;
-	Skin.d2num = 4;
-	Skin.d3num = 4;
+	Skin.d1num = 3;
+	Skin.d2num = 3;
+	Skin.d3num = 3;
 	Skin.d1total = 4;
 	Skin.d2total = 4;
 	Skin.d3total = 4;
