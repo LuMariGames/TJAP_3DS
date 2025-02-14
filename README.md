@@ -51,12 +51,15 @@ I think it will be stable if the buffer size is about 2500~4000.
 
 |命令文 / commands|Supported?|Comment|
 |---|---|---|
-|`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`, `MEASURE`|✅||
-|`SECTION`, `BRANCHSTART`, `BRANCHEND`, |⚠️|譜面分岐開始時の挙動がまだ不安定|
-|`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`|✅||
+|`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`|✅||
+|`SECTION`, `BRANCHSTART`, `BRANCHEND`|⚠️|譜面分岐開始時の挙動がまだ不安定|
+|`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`, `DELAY`, `MEASURE`|✅||
 |`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌|技術的に難しい|
+|`SUDDEN`|❌|実装したいけど意外に難しいので後回し|
 
 |metadata|Supported?|Comment|
 |---|---|---|
-|COURSE:0~5|✅||
-|COURSE:6|⚠️|`NEXTSONG`が非対応の為TJAP3等で作られた段位は出来ない。|
+|`COURSE:0~5`, `LEVEL`, `TITLE`, `OFFSET`|✅||
+|`WAVE`, `BALLOON`, `SONGVOL`, `EXAM1~3`|✅|4条件は非対応なので注意|
+|`COURSE:6`|⚠️|`NEXTSONG`が非対応の為TJAP3等で作られた段位は出来ない。|
+|`DEMOSTART`, `SEVOL`|❌|選曲画面で曲を流せる様にする予定|
