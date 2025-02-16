@@ -44,37 +44,43 @@ void load_skin() {
 		Skin.don_gogo_y = json_integer_value(json_object_get(sjson, "don_go_y"));
 		
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d1anime")), sizeof(temp));
-		tp = strtok(temp, ",");
-		Skin.d1anime[0] = atoi(tp);
-		int cnt = 1;
-		while ((tp = strtok(NULL, ","))) {
-			Skin.d1anime[cnt] = atoi(tp);
-			if (Skin.d1anime[cnt] > Skin.d1num) Skin.d1num = Skin.d1anime[cnt];
-			++cnt;
+		if ((char*)temp != NULL) {
+			tp = strtok(temp, ",");
+			Skin.d1anime[0] = atoi(tp);
+			int cnt = 1;
+			while ((tp = strtok(NULL, ","))) {
+				Skin.d1anime[cnt] = atoi(tp);
+				if (Skin.d1anime[cnt] > Skin.d1num) Skin.d1num = Skin.d1anime[cnt];
+				++cnt;
+			}
+			Skin.d1total = cnt;
 		}
-		Skin.d1total = cnt;
 
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d2anime")), sizeof(temp));
-		tp = strtok(temp, ",");
-		Skin.d2anime[0] = atoi(tp);
-		cnt = 1;
-		while ((tp = strtok(NULL, ","))) {
-			Skin.d2anime[cnt] = atoi(tp);
-			if (Skin.d2anime[cnt] > Skin.d2num) Skin.d2num = Skin.d2anime[cnt];
-			++cnt;
+		if ((char*)temp != NULL) {
+			tp = strtok(temp, ",");
+			Skin.d2anime[0] = atoi(tp);
+			cnt = 1;
+			while ((tp = strtok(NULL, ","))) {
+				Skin.d2anime[cnt] = atoi(tp);
+				if (Skin.d2anime[cnt] > Skin.d2num) Skin.d2num = Skin.d2anime[cnt];
+				++cnt;
+			}
+			Skin.d2total = cnt;
 		}
-		Skin.d2total = cnt;
 
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d3anime")), sizeof(temp));
-		tp = strtok(temp, ",");
-		Skin.d3anime[0] = atoi(tp);
-		cnt = 1;
-		while ((tp = strtok(NULL, ","))) {
-			Skin.d3anime[cnt] = atoi(tp);
-			if (Skin.d3anime[cnt] > Skin.d3num) Skin.d3num = Skin.d3anime[cnt];
-			++cnt;
+		if ((char*)temp != NULL) {
+			tp = strtok(temp, ",");
+			Skin.d3anime[0] = atoi(tp);
+			cnt = 1;
+			while ((tp = strtok(NULL, ","))) {
+				Skin.d3anime[cnt] = atoi(tp);
+				if (Skin.d3anime[cnt] > Skin.d3num) Skin.d3num = Skin.d3anime[cnt];
+				++cnt;
+			}
+			Skin.d3total = cnt;
 		}
-		Skin.d3total = cnt;
 	}
 	++Skin.d1num;
 	++Skin.d2num;
