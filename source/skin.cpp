@@ -45,7 +45,7 @@ void load_skin() {
 		Skin.don_gogo_y = json_integer_value(json_object_get(sjson, "don_go_y"));
 		
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d1anime")), sizeof(temp));
-		if (temp[0] != NULL) {
+		if (json_string_value(json_object_get(sjson, "d1anime")) != NULL) {
 			tp = strtok(temp, ",");
 			Skin.d1anime[0] = atoi(tp);
 			cnt = 1;
