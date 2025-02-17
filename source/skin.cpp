@@ -58,7 +58,7 @@ void load_skin() {
 		}
 
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d2anime")), sizeof(temp));
-		if (temp[0] != NULL) {
+		if (json_string_value(json_object_get(sjson, "d2anime")) != NULL) {
 			tp = strtok(temp, ",");
 			Skin.d2anime[0] = atoi(tp);
 			cnt = 1;
@@ -71,7 +71,7 @@ void load_skin() {
 		}
 
 		strlcpy(temp, json_string_value(json_object_get(sjson, "d3anime")), sizeof(temp));
-		if (temp[0] != NULL) {
+		if (json_string_value(json_object_get(sjson, "d3anime")) != NULL) {
 			tp = strtok(temp, ",");
 			Skin.d3anime[0] = atoi(tp);
 			cnt = 1;
