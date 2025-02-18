@@ -24,7 +24,7 @@ typedef struct {
 }HEADER_T;
 
 typedef struct {
-	double judge_time, create_time, pop_time,
+	double judge_time, create_time, pop_time, sudn_time,
 		bpm, speed,measure,scroll;
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
