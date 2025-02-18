@@ -93,9 +93,6 @@ int testtest = 0;
 
 void playFile(void* infoIn){
 
-	//恐らくバッファサイズは最低1024前後までしか出来ない為これ以上格納数を増やしても意味が無いと思われる。
-	//人によっては増やすと確認する際のif文で逆に重く感じるので増やし過ぎには注意、格納数は4~6くらいが良い。
-
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
 	int16_t*	buffer1 = NULL;
@@ -180,8 +177,8 @@ void playFile(void* infoIn){
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
-		//音切れチェックの間隔(us, この場合50ms毎に確認する)
-		svcSleepThread(50000);
+		//音切れチェックの間隔(us, この場合100ms毎に確認する)
+		svcSleepThread(100000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
