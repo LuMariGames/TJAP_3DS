@@ -455,7 +455,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	}
 	if (Measure[tmp].create_time > 0.000) stme = 0;
 	else stme = tmp;
-	return Measure[tmp].judge_time + Measure[stme].create_time * -1;
+	return Measure[tmp].judge_time - Measure[stme].create_time;
 }
 
 void load_tja_notes(int course, LIST_T Song) {
@@ -464,13 +464,13 @@ void load_tja_notes(int course, LIST_T Song) {
 		NotesCount = 0, BranchCourse = -1,
 		BeforeBranchFirstMultiMeasure = -1, BeforeBranchNotesCount = 0;
 	bool isStart = false, isEnd = false, isDispBarLine = true, isNoComma = false, isCourseMatch = false,
-		BeforeBranchIsDispBarLine = true, BeforeBranchIsNoComma = false;
+		BeforeBranchIsDispBarLine = true, BeforeBranchIsNoComma = false, isSudden = false;
 	FILE *fp;
 	COMMAND_T Command;
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,
+	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 240.0 / bpm,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 
@@ -532,6 +532,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			if (isStart == true && isCourseMatch == true) {
 
+				if (!isSudden) sudntime = 240.0 / bpm;
+
 				//一文字目がコメントアウトの時スキップ
 				if (strstr(tja_notes[tja_cnt], "//") == tja_notes[tja_cnt] || strstr(tja_notes[tja_cnt], "\r") == tja_notes[tja_cnt]) {
 
@@ -568,6 +570,10 @@ void load_tja_notes(int course, LIST_T Song) {
 						break;
 					case COMMAND_DELAY:
 						delay = Command.val[0];
+						break;
+					case COMMAND_SUDDEN:
+						sudntime = Command.val[0];
+						isSudden = true;
 						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
@@ -621,7 +627,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].scroll = scroll;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time - ((240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll))));
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (240.0 / bpm - sudntime) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 
@@ -695,7 +701,7 @@ void load_tja_notes(int course, LIST_T Song) {
 								* Measure[Measure[MeasureCount].firstmeasure + i - 1].notes_count / Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
 							Measure[Measure[MeasureCount].firstmeasure + i].pop_time    = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[Measure[MeasureCount].firstmeasure + i].bpm * NOTES_AREA);
-							Measure[Measure[MeasureCount].firstmeasure + i].create_time = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[Measure[MeasureCount].firstmeasure + i].bpm * (NOTES_AREA * fabs(Measure[Measure[MeasureCount].firstmeasure + i].scroll)));
+							Measure[Measure[MeasureCount].firstmeasure + i].create_time = Measure[Measure[MeasureCount].firstmeasure + i].judge_time + (240.0 / bpm - sudntime) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[Measure[MeasureCount].firstmeasure + i].bpm * (NOTES_AREA * fabs(Measure[Measure[MeasureCount].firstmeasure + i].scroll)));
 							percent = (double)Measure[Measure[MeasureCount].firstmeasure + i].notes_count / (double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 
 							Measure[Measure[MeasureCount].firstmeasure + i].isDispBarLine = false;	//最初の小節は小節線をオフにしない
