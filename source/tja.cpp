@@ -533,8 +533,6 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			if (isStart == true && isCourseMatch == true) {
 
-				if (!isSudden) sudntime = 240.0 / bpm;
-
 				//一文字目がコメントアウトの時スキップ
 				if (strstr(tja_notes[tja_cnt], "//") == tja_notes[tja_cnt] || strstr(tja_notes[tja_cnt], "\r") == tja_notes[tja_cnt]) {
 
@@ -620,6 +618,8 @@ void load_tja_notes(int course, LIST_T Song) {
 						Measure[MeasureCount].notes_count = i;
 					}
 				}
+
+				if (!isSudden) sudntime = 240.0 / NextBpm;
 
 				Measure[MeasureCount].flag = true;
 				Measure[MeasureCount].notes = tja_cnt;
