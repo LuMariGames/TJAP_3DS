@@ -35,6 +35,7 @@ void init_measure_structure() {
 		Measure[i].original_id = -1;
 		Measure[i].notes_count = 0;
 		Measure[i].command = -1;
+		Measure[i].sudn_time = 0;
 	}
 }
 
@@ -470,7 +471,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 240.0 / bpm,
+	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 240.0 / bpm,movetime = 0;
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 
@@ -571,8 +572,9 @@ void load_tja_notes(int course, LIST_T Song) {
 					case COMMAND_DELAY:
 						delay = Command.val[0];
 						break;
-					case COMMAND_SUDDEN:
+					case COMMAND_SUDDEN:1
 						sudntime = Command.val[0];
+						movetime = sudntime - Command.val[1];
 						isSudden = true;
 						break;
 					case COMMAND_BARLINEON:
@@ -625,6 +627,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].bpm = NextBpm;
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
+				Measure[MeasureCount].sudn_time = movetime
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (240.0 / bpm - sudntime) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll)));
