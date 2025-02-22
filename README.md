@@ -71,7 +71,7 @@ I think it will be stable if the buffer size is about 2500~4000.
 |`SECTION`, `BRANCHSTART`, `BRANCHEND`|⚠️|譜面分岐開始時の挙動がまだ不安定|
 |`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`, `DELAY`, `MEASURE`|✅||
 |`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌|技術的に難しい|
-|`SUDDEN`|❌|実装したいけど意外に難しいので後回し|
+|`SUDDEN`|⚠️|一部動作が無効|
 
 |metadata|Supported?|Comment|
 |---|---|---|
