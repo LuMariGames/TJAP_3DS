@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <ctype.h>
 
+#define C3D_CMDBUF_SIZE 0x3a980
 #define VERSION "1.5.0"
 #define DEFAULT_DIR "sdmc:/tjafiles/"
 #define NOTDEF_DIR	"romfs:/tjafiles/"
