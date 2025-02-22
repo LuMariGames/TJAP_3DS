@@ -33,15 +33,15 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		/*if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
+		if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
 		++cnt[id];
-		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
+		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];
 
 		//旧式だけど念の為残す
-		gettimeofday(&tv, NULL);
+		/*gettimeofday(&tv, NULL);
 		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_usec * 0.000001;
 		++cnt[id];
-		Time[id] = tv.tv_sec + tv.tv_usec * 0.000001 - OffTime[id] + PreTime[id];
+		Time[id] = tv.tv_sec + tv.tv_usec * 0.000001 - OffTime[id] + PreTime[id];*/
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
