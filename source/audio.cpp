@@ -323,7 +323,6 @@ void load_combo() {
 		waveBuf[i].nsamples = sound[i].nsamples;
 		waveBuf[i].looping = sound[i].loop;
 		waveBuf[i].status = NDSP_WBUF_FREE;
-		DSP_FlushDataCache(sound[i].data, sound[i].size);
 		//linearFree(&sound[j].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
