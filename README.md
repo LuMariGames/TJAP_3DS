@@ -1,12 +1,8 @@
 > [!NOTE]
 > ❶：今後のアップデートについて
-> 恐らく次が最後のメジャーアップデートになります。  
+> 恐らくv1.5.0が最後のメジャーアップデートになります。  
 > 不具合等は修正しますが追加要素については  
 > 処理能力がこれ以上追い付かないので、今後の予定は無いです。
->
-> ❷：新規音ゲーに関するお知らせ  
-> 現在「Touch-Keys」という音ゲーの開発をしています。  
-> 完成次第リリース日を告知しますので続報をお待ち下さい。
 
 # TJAP_3DS(日本語)  
 TJAP_3DSは、[togetg](https://github.com/togetg)氏制作の[TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS)のフォークです。  
@@ -55,6 +51,16 @@ Feel free to change the appearance! "Custom skin"
 The operation became unstable with the conventional buffer size, so I added a significant weight reduction with v1.4.6(A).
 I think it will be stable if the buffer size is about 2500~4000.
 (Except for the information described here, it is almost the same as the original work, so please check the original [Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README_en.md) for details.)  
+
+# Screenshots  
+※開発中の内容、カスタムスキンを使用した内容が含まれています。  
+　実際と異なる可能性がある事をお願いします。  
+※This content includes content under development and content using custom skins.  
+　Please note that the actual content may differ.
+
+![My_Skin_Oni](https://github.com/user-attachments/assets/218a89c9-9758-4aa8-9894-cb298dfb45b0)
+![My_Skin_Dani](https://github.com/user-attachments/assets/fe90a3fb-75d4-410f-811d-263ba74398da)  
+![Songs_Select](https://github.com/user-attachments/assets/7b766612-867d-477a-9485-844404a21b60)
 
 # 対応表 / Complete the table
 > `✅` = full supported, `⚠️` = Incorrect behavior, `❌` = Not supported or Ignored,
