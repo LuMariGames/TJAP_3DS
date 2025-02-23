@@ -682,7 +682,7 @@ void load_tja_notes(int course, LIST_T Song) {
 					}
 				}
 				else {
-					if (!isNoComma == false) PreJudge = Measure[MeasureCount].judge_time;
+					if (!isNoComma) PreJudge = Measure[MeasureCount].judge_time;
 					bpm = NextBpm;
 					measure = NextMeasure;
 					delay = 0;
