@@ -19,9 +19,9 @@ double input_number_keyboard(int max_digits,bool isDot,bool isMinus) {	//最大�
 	//swkbdSetPasswordMode(&swkbd, SWKBD_PASSWORD_HIDE_DELAY);
 	swkbdSetValidation(&swkbd, SWKBD_ANYTHING, 0, 0);
 	swkbdSetFeatures(&swkbd, SWKBD_FIXED_WIDTH);
-	if (isDot == true && isMinus == false) swkbdSetNumpadKeys(&swkbd, L'.', 0);
-	if (isDot == false && isMinus == true) swkbdSetNumpadKeys(&swkbd, L'-', 0);
-	if (isDot == true && isMinus==true) swkbdSetNumpadKeys(&swkbd, L'.', L'-');
+	if (isDot && isMinus == false) swkbdSetNumpadKeys(&swkbd, L'.', 0);
+	if (isDot == false && isMinus) swkbdSetNumpadKeys(&swkbd, L'-', 0);
+	if (isDot && isMinus==true) swkbdSetNumpadKeys(&swkbd, L'.', L'-');
 	swkbdInputText(&swkbd, get_buffer(), BUFFER_SIZE);
 	return atof(get_buffer());
 }
@@ -70,7 +70,7 @@ void draw_button_mapping_icon(double x,double y,int key, C2D_Sprite sprites[SPRI
 		break;
 	}
 
-	if (isNotes == true) {
+	if (isNotes) {
 		C2D_SpriteSetPos(&sprites[sprite], x, y);
 		C2D_DrawSpriteTinted(&sprites[sprite], &Tint);
 	}

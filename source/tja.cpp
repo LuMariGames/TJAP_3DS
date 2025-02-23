@@ -98,13 +98,13 @@ void load_tja_head(int course,LIST_T Song) {
 
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
-			if (isCourseMatch == true && Option.player == 1 && strstr(buf, "#START P1") == buf) {
+			if (isCourseMatch && Option.player == 1 && strstr(buf, "#START P1") == buf) {
 				break;
 			}
-			else if (isCourseMatch == true && Option.player == 2 && strstr(buf, "#START P2") == buf) {
+			else if (isCourseMatch && Option.player == 2 && strstr(buf, "#START P2") == buf) {
 				break;
 			}
-			else if (isCourseMatch == true && Option.player == 0 && strstr(buf, "#START") == buf) {
+			else if (isCourseMatch && Option.player == 0 && strstr(buf, "#START") == buf) {
 				break;
 			}
 
@@ -445,7 +445,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
-		if (Measure[i].flag == true && Measure[i].command == -1) {
+		if (Measure[i].flag && Measure[i].command == -1) {
 
 			if (tmp == -1) {	//初回
 				tmp = i;
@@ -515,23 +515,23 @@ void load_tja_notes(int course, LIST_T Song) {
 				continue;
 			}
 
-			if (isStart == false && isCourseMatch == true && Option.player == 1 && strstr(tja_notes[tja_cnt], "#START P1") == tja_notes[tja_cnt]) {
+			if (isStart == false && isCourseMatch && Option.player == 1 && strstr(tja_notes[tja_cnt], "#START P1") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
 			}
-			else if (isStart == false && isCourseMatch == true && Option.player == 2 && strstr(tja_notes[tja_cnt], "#START P2") == tja_notes[tja_cnt]) {
+			else if (isStart == false && isCourseMatch && Option.player == 2 && strstr(tja_notes[tja_cnt], "#START P2") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
 			}
-			else if (isStart == false && isCourseMatch == true && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			else if (isStart == false && isCourseMatch && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
 			}
 
-			if (isStart == true && isCourseMatch == true) {
+			if (isStart && isCourseMatch) {
 
 				//一文字目がコメントアウトの時スキップ
 				if (strstr(tja_notes[tja_cnt], "//") == tja_notes[tja_cnt] || strstr(tja_notes[tja_cnt], "\r") == tja_notes[tja_cnt]) {
@@ -682,7 +682,7 @@ void load_tja_notes(int course, LIST_T Song) {
 					}
 				}
 				else {
-					if (isNoComma == false) PreJudge = Measure[MeasureCount].judge_time;
+					if (!isNoComma == false) PreJudge = Measure[MeasureCount].judge_time;
 					bpm = NextBpm;
 					measure = NextMeasure;
 					delay = 0;
@@ -718,7 +718,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				}
 
 
-				if (isEnd == true) {
+				if (isEnd) {
 					break;
 				}
 
@@ -791,7 +791,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 
 			space = strstr(buf, " ") - buf;
 
-			if (space < comment && isComment == true) {	//値ありコメントあり
+			if (space < comment && isComment) {	//値ありコメントあり
 
 				strlcpy(command, buf + 1, space);
 				strlcpy(value, buf + 1 + strlen(command), comment - strlen(command) + 1);
@@ -805,7 +805,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else {	//値なし
 
 			//コメントあり
-			if (isComment == true) strlcpy(command, buf + 1, comment + 1);
+			if (isComment) strlcpy(command, buf + 1, comment + 1);
 			//コメントなし 改行あり
 			else if (strstr(buf, "\n") != NULL) strlcpy(command, buf + 1, length - 2);
 			//コメントなし　改行なし
@@ -858,8 +858,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		}
 		else if (strcmp(command, "SCROLL") == 0) {
 			Command->knd = COMMAND_SCROLL;
-			if (Option.fixroll == true) Command->val[0] = 1;
-			else if (Option.fixroll == false) Command->val[0] = strtod(value, NULL);
+			if (Option.fixroll) Command->val[0] = 1;
+			else if (!Option.fixroll) Command->val[0] = strtod(value, NULL);
 		}
 		else if (strcmp(command, "DELAY") == 0) {
 			Command->knd = COMMAND_DELAY;

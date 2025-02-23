@@ -178,7 +178,7 @@ void disp_file_list() {
 
 		if ((n + g + cursor) * 20 + 60 >= 0 && (n + g + cursor) * 20 + 60 <= TOP_HEIGHT) {
 
-			if (isGenre == true) {
+			if (isGenre) {
 				
 				draw_select_box(30, (n + g + cursor - 1) * 20 + 60-3,320,20, Genre[List[i].genre].genre_color);
 				snprintf(buf_select, sizeof(buf_select), "%s", Genre[List[i].genre].name);
@@ -191,7 +191,7 @@ void disp_file_list() {
 				}
 			}
 			
-			if (List[i].genre == GENRE_MAX + 1 || (List[i].genre != GENRE_MAX + 1 && Genre[List[i].genre].isOpened == true)) {
+			if (List[i].genre == GENRE_MAX + 1 || (List[i].genre != GENRE_MAX + 1 && Genre[List[i].genre].isOpened)) {
 
 				snprintf(buf_select, sizeof(buf_select), "%s", List[i].title);
 				int x = (List[i].genre != GENRE_MAX + 1) * 25 + 30;
@@ -218,7 +218,7 @@ void disp_file_list() {
 			int level;
 			isCursorGenre = false;
 
-			if (List[i].course[COURSE_DAN] == true) {
+			if (List[i].course[COURSE_DAN]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_DAN;
 				level = List[i].level[COURSE_DAN];
@@ -236,7 +236,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (List[i].course[COURSE_TOWER] == true) {
+			if (List[i].course[COURSE_TOWER]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_TOWER;
 				level = List[i].level[COURSE_TOWER];
@@ -254,7 +254,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (List[i].course[COURSE_EDIT] == true) {
+			if (List[i].course[COURSE_EDIT]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_EDIT;
 				level = List[i].level[COURSE_EDIT];
@@ -272,7 +272,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (List[i].course[COURSE_ONI] == true) {
+			if (List[i].course[COURSE_ONI]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_ONI;
 				level = List[i].level[COURSE_ONI];
@@ -290,7 +290,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (List[i].course[COURSE_HARD] == true) {
+			if (List[i].course[COURSE_HARD]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_HARD;
 				level = List[i].level[COURSE_HARD];
@@ -308,7 +308,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (List[i].course[COURSE_NORMAL] == true) {
+			if (List[i].course[COURSE_NORMAL]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_NORMAL;
 				level = List[i].level[COURSE_NORMAL];
@@ -326,7 +326,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (List[i].course[COURSE_EASY] == true) {
+			if (List[i].course[COURSE_EASY]) {
 
 				if ((n + g + cursor - 1) == course_cursor) course = COURSE_EASY;
 				level = List[i].level[COURSE_EASY];
@@ -344,7 +344,7 @@ void disp_file_list() {
 				++course_count;
 			}
 
-			if (isSelectCourse == true) {
+			if (isSelectCourse) {
 
 				draw_select_text(60, (course_cursor + 1) * 20 + 60, ">>");
 				//snprintf(buf_select, sizeof(buf_select), "%d",course_cursor);
@@ -378,9 +378,9 @@ void update_cursor(int knd) {
 		if (isSelectCourse == false) cursor += 5;
 		play_sound(SOUND_KATSU);
 	}
-	else if (knd == KEY_A && (course_count != 0 || isCursorGenre == true)) {
-		if (isCursorGenre == true) Genre[SelectedGenreId].isOpened = !Genre[SelectedGenreId].isOpened;
-		else if (isSelectCourse == true) isGameStart = true;
+	else if (knd == KEY_A && (course_count != 0 || isCursorGenre)) {
+		if (isCursorGenre) Genre[SelectedGenreId].isOpened = !Genre[SelectedGenreId].isOpened;
+		else if (isSelectCourse) isGameStart = true;
 		else isSelectCourse = true;
 		play_sound(SOUND_DON);
 	}
@@ -440,7 +440,7 @@ void draw_option_text(float x, float y, const char* text, bool state, float* wid
 	if (state == false) {
 		C2D_DrawText(&SelectText, C2D_WithColor, x, y, 1.0f, sizex, sizey, C2D_Color32f(100.0 / 255.0, 100.0 / 255.0, 100.0 / 255.0, 1.0f));
 	}
-	else if (state == true) {
+	else if (state) {
 		C2D_DrawText(&SelectText, C2D_WithColor, x, y, 1.0f, sizex, sizey, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
 	}	
 }

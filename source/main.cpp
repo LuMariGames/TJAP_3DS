@@ -127,8 +127,8 @@ int main() {
 	load_skin();
 	get_skin(&Skin);
 	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
-	if (Option.exse == false) load_sound();
-	else if (Option.exse == true) sd_load_sound();
+	if (!Option.exse) load_sound();
+	else if (Option.exse) sd_load_sound();
 	load_combo();
 	load_sprites();
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
@@ -139,7 +139,7 @@ int main() {
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
 
-		if (isExit == true) break;
+		if (isExit) break;
 
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
@@ -196,11 +196,11 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 			C3D_FrameEnd(0);
 
-			if (isDon == true)   play_sound(SOUND_DON);		//ドン
-			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
+			if (isDon)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
-			if (loadend == true) {
-				if (check_dsp1() == true) scene_state = SCENE_SELECTSONG;
+			if (loadend) {
+				if (check_dsp1()) scene_state = SCENE_SELECTSONG;
 				else { 
 					warning = WARNING_DSP1;
 					scene_state = SCENE_WARNING; 
@@ -257,7 +257,7 @@ int main() {
 			if (key & KEY_B)		update_cursor(KEY_B);
 			if (key & KEY_X)		update_cursor(KEY_X);
 
-			if (get_isGameStart() == true) {
+			if (get_isGameStart()) {
 				scene_state = SCENE_MAINLOAD;
 				cnt = -1;
 			}
@@ -273,7 +273,7 @@ int main() {
 			get_tja_header(&TJA_Header);
 			init_score();
 			init_notes(TJA_Header);
-			if (SelectedSong.course_exist[course] == false) load_tja_notes(-1, SelectedSong);
+			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
@@ -296,7 +296,7 @@ int main() {
 
 		case SCENE_MAINGAME:		//演奏画面
 
-			if (isPause == false) {
+			if (!isPause) {
 
 				if (tp.px != 0 && tp.py != 0) {
 
@@ -335,7 +335,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_TOP]);
 
 			//ダンサー表示
-			if (dance == true && course != COURSE_DAN) {
+			if (dance && course != COURSE_DAN) {
 				//ダンサーのコマ数調整
 				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
 				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
@@ -356,15 +356,15 @@ int main() {
 			draw_gauge(sprites);
 			draw_emblem(sprites);
 
-			if (isNotesStart == true) {
+			if (isNotesStart) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (isPause == false) ++notes_cnt;
+				if (!isPause) ++notes_cnt;
 			}
 			draw_score(sprites);
 			draw_title();
 
 			if (course == COURSE_DAN) draw_condition();
-			if (Option.dispFps == true) draw_fps();
+			if (Option.dispFps) draw_fps();
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
@@ -372,7 +372,7 @@ int main() {
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
-			if (isPause == true) {
+			if (isPause) {
 				tmp = pause_window(tp, key);
 
 				switch (tmp) {
@@ -407,8 +407,8 @@ int main() {
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 
-			if (isDon == true)   play_sound(SOUND_DON);		//ドン
-			if (isKatsu == true) play_sound(SOUND_KATSU);		//カツ
+			if (isDon)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
 			if (key & KEY_SELECT || (key & KEY_START)) {
 				togglePlayback();
@@ -418,23 +418,23 @@ int main() {
 			}
 
 			//譜面が先
-			if (offset > 0 && (isNotesStart == false || isMusicStart == false)) {
+			if (offset > 0 && (isNotesStart == false || !isMusicStart)) {
 
-				if (CurrentTimeMain >= 0 && isNotesStart == false) isNotesStart = true;
-				if (CurrentTimeMain >= offset + FirstMeasureTime && isMusicStart == false) {
+				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
+				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
 			}
 
 			//音楽が先
-			else if (offset <= 0 && (isNotesStart == false || isMusicStart == false)) {
+			else if (offset <= 0 && (isNotesStart == false || !isMusicStart)) {
 
-				if (CurrentTimeMain >= FirstMeasureTime && isPlayMain == false) {
+				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= (-1.0) * offset && isNotesStart == false) {
+				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
 					isNotesStart = true;
 				}
 			}
@@ -453,7 +453,7 @@ int main() {
 					break;
 				}
 			}
-			if ((get_notes_finish() == true && ndspChnIsPlaying(CHANNEL) == false) || (courselife == 0 && course == COURSE_TOWER)) {
+			if ((get_notes_finish() && !ndspChnIsPlaying(CHANNEL)) || (courselife == 0 && course == COURSE_TOWER)) {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
 			}
@@ -482,7 +482,7 @@ int main() {
 
 		//描画終了
 		C3D_FrameEnd(0);
-		if (isPause == false) ++cnt;
+		if (!isPause) ++cnt;
 	}
 	exit_main();
 	return 0;
@@ -504,7 +504,7 @@ inline static void load_sprites() {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
-	if (dance == true) {
+	if (dance) {
 		for (int i = 0, j = dancnt; i < j; ++i) {
 			C2D_SpriteFromSheet(&sprites[SPRITES_NUMER + i], dancerspsh, i);
 			C2D_SpriteSetCenter(&sprites[SPRITES_NUMER + i], 0.5f, 0.5f);
