@@ -270,11 +270,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				PreNotesKnd = 0;
 				}
 			}
-
 			++MeasureCount;
+			if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 			notes_sort();	//ソート
 		}
-		if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 	}
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
