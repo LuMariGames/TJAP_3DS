@@ -63,7 +63,7 @@ void load_sound() {
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
 		sound[i].audiochannel = i;
-		sound[i].interp = NDSP_INTERP_LINEAR;
+		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
 			printf("not enough linear memory available %ld\n", sound[i].size);
@@ -146,7 +146,7 @@ void sd_load_sound() {
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
 		sound[i].audiochannel = i;
-		sound[i].interp = NDSP_INTERP_LINEAR;
+		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
 			printf("not enough linear memory available %ld\n", sound[i].size);
@@ -289,7 +289,7 @@ void load_combo() {
 		sound[i].nsamples = (u32)ov_pcm_total(&sound[i].ovf, -1);
 		sound[i].size = sound[i].nsamples * sound[i].channels * 2;
 		sound[i].audiochannel = SOUND_NUMBER;
-		sound[i].interp = NDSP_INTERP_LINEAR;
+		sound[i].interp = NDSP_INTERP_NONE;
 		sound[i].loop = false;
 		if (linearSpaceFree() < sound[i].size) {
 			printf("not enough linear memory available %ld\n", sound[i].size);
