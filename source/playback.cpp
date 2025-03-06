@@ -99,9 +99,7 @@ void playFile(void* infoIn){
 	int16_t*	buffer2 = NULL;
 	int16_t*	buffer3 = NULL;
 	int16_t*	buffer4 = NULL;
-	int16_t*	buffer5 = NULL;
-	int16_t*	buffer6 = NULL;
-	ndspWaveBuf	waveBuf[6];
+	ndspWaveBuf	waveBuf[4];
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
 	const char*	file = info->file;
@@ -140,8 +138,6 @@ void playFile(void* infoIn){
 	buffer2 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 	buffer3 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 	buffer4 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer5 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer6 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
@@ -167,12 +163,6 @@ void playFile(void* infoIn){
 	waveBuf[3].nsamples = (*decoder.decode)(&buffer4[0]) / (*decoder.channels)();
 	waveBuf[3].data_vaddr = &buffer4[0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
-	waveBuf[4].nsamples = (*decoder.decode)(&buffer5[0]) / (*decoder.channels)();
-	waveBuf[4].data_vaddr = &buffer5[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[4]);
-	waveBuf[5].nsamples = (*decoder.decode)(&buffer6[0]) / (*decoder.channels)();
-	waveBuf[5].data_vaddr = &buffer6[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[5]);	
 	
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
@@ -183,9 +173,7 @@ void playFile(void* infoIn){
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
 			waveBuf[2].status == NDSP_WBUF_DONE &&
-			waveBuf[3].status == NDSP_WBUF_DONE &&
-			waveBuf[4].status == NDSP_WBUF_DONE &&
-			waveBuf[5].status == NDSP_WBUF_DONE)
+			waveBuf[3].status == NDSP_WBUF_DONE)
 			break;
 
 		if(ndspChnIsPaused(CHANNEL) == true || lastbuf == true)
@@ -228,24 +216,6 @@ void playFile(void* infoIn){
 			else if(read < decoder.vorbis_buffer_size) waveBuf[3].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 		}
-		if(waveBuf[4].status == NDSP_WBUF_DONE) {
-			size_t read = (*decoder.decode)(&buffer5[0]);
-			if(read <= 0) {
-				lastbuf = true;
-				continue;
-			}
-			else if(read < decoder.vorbis_buffer_size) waveBuf[4].nsamples = read / (*decoder.channels)();
-			ndspChnWaveBufAdd(CHANNEL, &waveBuf[4]);
-		}
-		if(waveBuf[5].status == NDSP_WBUF_DONE) {
-			size_t read = (*decoder.decode)(&buffer6[0]);
-			if(read <= 0) {
-				lastbuf = true;
-				continue;
-			}
-			else if(read < decoder.vorbis_buffer_size) waveBuf[5].nsamples = read / (*decoder.channels)();
-			ndspChnWaveBufAdd(CHANNEL, &waveBuf[5]);
-		}
 	}
 
 	(*decoder.exit)();
@@ -261,8 +231,6 @@ out:
 	linearFree(buffer2);
 	linearFree(buffer3);
 	linearFree(buffer4);
-	linearFree(buffer5);
-	linearFree(buffer6);
 
 	threadExit(0);
 	return;
