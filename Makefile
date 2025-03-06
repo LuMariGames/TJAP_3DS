@@ -64,18 +64,18 @@ CFLAGS	:=	-Wall -O2 -mword-relocations -finline-functions -faggressive-loop-opti
 
 CFLAGS	+=	$(INCLUDE) -D_3DS__
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++14
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro2d -lcitro3d -lctru -lm -lvorbisidec -logg -ljansson
+LIBS	:= -lcitro2d $(TOPDIR)/library/citro3d/lib/libcitro3d.a $(TOPDIR)/library/citro3d/lib/libcitro3dd.a -lctru -lm -lvorbisidec -logg -ljansson
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS := $(CTRULIB) $(PORTLIBS) library/citro3d
+LIBDIRS := $(CTRULIB) $(PORTLIBS)
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
