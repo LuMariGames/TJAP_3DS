@@ -75,7 +75,7 @@ LIBS	:= -lcitro2d -lcitro3d -lctru -lm -lvorbisidec -logg -ljansson
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS := $(CTRULIB) $(PORTLIBS)
+LIBDIRS := $(CTRULIB) $(PORTLIBS) library/citro3d
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
