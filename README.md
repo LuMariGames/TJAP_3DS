@@ -1,8 +1,7 @@
-> [!NOTE]
-> ❶：今後のアップデートについて
-> 恐らくv1.5.0が最後のメジャーアップデートになります。  
-> 不具合等は修正しますが追加要素については  
-> 処理能力がこれ以上追い付かないので、今後の予定は無いです。
+> [!WARNING]
+> ❶：今後のアップデートについて  
+> 今後のアプデ予定は現状一切無いです。  
+> 要素を追加したい場合はforkをお願いします。
 
 # TJAP_3DS(日本語)  
 TJAP_3DSは、[togetg](https://github.com/togetg)氏制作の[TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS)のフォークです。  
