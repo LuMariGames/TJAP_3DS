@@ -134,6 +134,8 @@ int main() {
 
 	while (aptMainLoop()) {
 
+		C3D_FrameSync();
+
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
@@ -141,7 +143,6 @@ int main() {
 		if (isExit) break;
 
 		bool isDon = false, isKatsu = false;
-		float chkFps = osGetTime() + 1.0 / 60.0;
 		get_option(&Option);
 
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
@@ -482,7 +483,6 @@ int main() {
 
 		//描画終了
 		C3D_FrameEnd(0);
-		while (osGetTime() < chkFps) {}
 		if (!isPause) ++cnt;
 	}
 	exit_main();
