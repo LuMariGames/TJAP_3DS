@@ -56,7 +56,6 @@ void init_main() {
 	gfxSetWide(false);
 	osSetSpeedupEnable(false);
 	gfxSetDoubleBuffering(GFX_TOP, true);
-	C3D_FrameRate(120.0f);
 	//APT_CheckNew3DS(&isNew3ds);
 }
 
@@ -134,8 +133,6 @@ int main() {
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
-
-		C3D_FrameSync();
 
 		hidScanInput();
 		hidTouchRead(&tp);
