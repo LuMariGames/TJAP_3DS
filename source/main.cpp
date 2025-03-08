@@ -119,7 +119,7 @@ int main() {
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1;
-	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000, setfps = 0, gettime = 0;
+	double FirstMeasureTime = INT_MAX, offset = 0, CurrentTimeMain = -1000;
 
 	load_option();
 	get_option(&Option);
@@ -134,7 +134,7 @@ int main() {
 
 	while (aptMainLoop()) {
 
-		setfps = get_current_time(TIME_CLOCK) + 1.0 / 60.0;
+		C3D_FrameSync();
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
@@ -481,8 +481,6 @@ int main() {
 		}
 
 		//描画終了
-		gettime = get_current_time(TIME_CLOCK);
-		svcSleepThread(setfps - gettime * 1000000);
 		C3D_FrameEnd(0);
 		if (!isPause) ++cnt;
 	}
