@@ -481,10 +481,10 @@ int main() {
 		}
 
 		//描画終了
-		C3D_FrameEnd(0);
-		if (!isPause) ++cnt;
 		gettime = get_current_time(TIME_CLOCK);
 		svcSleepThread(setfps - gettime);
+		C3D_FrameEnd(0);
+		if (!isPause) ++cnt;
 	}
 	exit_main();
 	return 0;
