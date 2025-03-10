@@ -271,7 +271,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				}
 			}
 			++MeasureCount;
-			if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 			notes_sort();	//ソート
 		}
 	}
@@ -294,6 +293,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}
 
 	send_gogotime(isGOGOTime);
+
+	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 
 	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 	if (!Option.isStelth) notes_draw(sprites);
