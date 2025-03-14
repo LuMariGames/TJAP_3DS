@@ -171,9 +171,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
+					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
 					//Notes[id].create_time = CurrentTimeNotes;
-					Notes[id].pop_time = Measure[MeasureCount].pop_time+240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
-					Notes[id].judge_time = Measure[MeasureCount].judge_time+240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
+					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
+					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
 
@@ -400,7 +401,7 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 		++JudgeEffectCnt;
 
 		C2D_ImageTint Tint;
-		C2D_AlphaImageTint(&Tint, 1.0 - JudgeEffectCnt * 1.0 / 20);
+		C2D_AlphaImageTint(&Tint, 1.0 - JudgeEffectCnt * 0.05);
 
 		//アニメーション
 		if (CurrentTimeNotes - JudgeMakeTime < 0.05)  JudgeY = 73 + (CurrentTimeNotes - JudgeMakeTime) * 140;
@@ -757,6 +758,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
+	#pragma unroll(NOTES_MAX)
 	for (int i = 0; i < NOTES_MAX; ++i) {	//描画
 
 		if (Notes[i].flag) {
