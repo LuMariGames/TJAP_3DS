@@ -118,8 +118,9 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,sleepTime = 0;
+	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000,fpsTime = 0;
+	long sleepTime = 0;
 
 	load_option();
 	get_option(&Option);
