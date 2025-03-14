@@ -118,8 +118,8 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1;
-	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000,fpsTime = 0,sleepTime = 0;
+	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,sleepTime = 0;
+	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000,fpsTime = 0;
 
 	load_option();
 	get_option(&Option);
@@ -134,7 +134,7 @@ int main() {
 
 	while (aptMainLoop()) {
 
-		fpsTime = get_current_time(TIME_CLOCK) + 1.0/60.0 * 1000000;
+		fpsTime = get_current_time(TIME_CLOCK) + 1.0/60.0;
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
@@ -483,7 +483,7 @@ int main() {
 		//描画終了
 		C3D_FrameEnd(0);
 		if (!isPause) ++cnt;
-		sleepTime = get_current_time(TIME_CLOCK) * 1000000 - fpsTime;
+		sleepTime = (get_current_time(TIME_CLOCK) - fpsTime) * 1000000;
 		usleep(sleepTime);
 	}
 	exit_main();
