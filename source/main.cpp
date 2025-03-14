@@ -339,7 +339,7 @@ int main() {
 				//ダンサーのコマ数調整
 				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
 				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
-				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + (Skin.d1num + Skin.d2num);
+				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d1num + Skin.d2num;
 
 				//1体目
 				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 200, 192);
@@ -459,9 +459,9 @@ int main() {
 			}
 
 			//コンボボイス
-			if ((int)(combo/100) != BeforeCombo && combo < (get_isauto() ? 1600 : 5100) && combo >= 50) {
-				play_sound(combo/100+(get_isauto() ? 55 : 4));
-				BeforeCombo = combo/100;
+			if ((int)(combo*0.01) != BeforeCombo && combo < (get_isauto() ? 1600 : 5100) && combo >= 50) {
+				play_sound(combo*0.01+(get_isauto() ? 55 : 4));
+				BeforeCombo = combo*0.01;
 			}
 			if (combo < 50) {
 				BeforeCombo = -1;
