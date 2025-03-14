@@ -133,7 +133,7 @@ int main() {
 
 	while (aptMainLoop()) {
 
-		fpsTime += 1.0/60.0;
+		fpsTime += 1/59.94f;
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
