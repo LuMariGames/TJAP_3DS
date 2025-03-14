@@ -134,7 +134,7 @@ int main() {
 
 	while (aptMainLoop()) {
 
-		fpsTime = get_current_time(TIME_CLOCK) + 1.0/60.0;
+		fpsTime = get_current_time(TIME_CLOCK) + 1.0/60.0 * 1000000;
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
@@ -483,8 +483,8 @@ int main() {
 		//描画終了
 		C3D_FrameEnd(0);
 		if (!isPause) ++cnt;
-		sleepTime = get_current_time(TIME_CLOCK) - fpsTime;
-		Sleep(sleepTime);
+		sleepTime = get_current_time(TIME_CLOCK) * 1000000 - fpsTime;
+		usleep(sleepTime);
 	}
 	exit_main();
 	return 0;
