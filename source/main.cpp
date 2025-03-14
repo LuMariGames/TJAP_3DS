@@ -128,7 +128,6 @@ int main() {
 	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
-	load_combo();
 	load_sprites();
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
