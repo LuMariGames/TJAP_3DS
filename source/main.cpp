@@ -119,7 +119,7 @@ int main() {
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,sleepTime = 0;
-	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000,fpsTime = 0;
+	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000,fpsTime = get_current_time(TIME_CLOCK);
 
 	load_option();
 	get_option(&Option);
@@ -134,7 +134,7 @@ int main() {
 
 	while (aptMainLoop()) {
 
-		fpsTime = get_current_time(TIME_CLOCK) + 1.0/60.0;
+		fpsTime += 1.0/60.0;
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
