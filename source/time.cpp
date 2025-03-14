@@ -91,7 +91,7 @@ void draw_fps() {
 		fps = FPS_SAMPLE / fps_sum;
 		fps_sum = 0;
 	}
-	snprintf(get_buffer(), BUFFER_SIZE, "%.1ffps", fps);
+	snprintf(get_buffer(), BUFFER_SIZE, "%.8ffps", fps);
 	draw_debug(0, 0, get_buffer());
 }
 
