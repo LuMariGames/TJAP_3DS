@@ -118,9 +118,8 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1;
+	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,sleepTime = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000,fpsTime = 0;
-	long sleepTime = 0;
 
 	load_option();
 	get_option(&Option);
@@ -277,6 +276,7 @@ int main() {
 			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
 			time_ini();
+			fpsTime = get_current_time(TIME_CLOCK);
 			offset = TJA_Header.offset + Option.offset;
 			notes_cnt = 0;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
