@@ -483,8 +483,8 @@ int main() {
 		//描画終了
 		C3D_FrameEnd(0);
 		if (!isPause) ++cnt;
-		sleepTime = (fpsTime - get_current_time(TIME_CLOCK)) * 1000000;
-		usleep(sleepTime);
+		//sleepTime = dummy;
+		usleep((double)(fpsTime - get_current_time(TIME_CLOCK)) * 1000000);
 	}
 	exit_main();
 	return 0;
