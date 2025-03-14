@@ -58,8 +58,8 @@ RSF_PATH				:= resource/app.rsf
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-Wall -O3 -unroll-loops -mword-relocations -finline-functions -faggressive-loop-optimizations \
-			-fomit-frame-pointer -ffunction-sections -unroll-loops \
+CFLAGS	:=	-Wall -O3 -mword-relocations -finline-functions -faggressive-loop-optimizations \
+			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -D_3DS__
@@ -69,7 +69,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	$(ARCH)
 LDFLAGS	=	-specs=3dsx.specs $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro2d $(TOPDIR)/library/citro3d/lib/libcitro3d.a $(TOPDIR)/library/citro3d/lib/libcitro3dd.a -lctru -lm -lvorbisidec -logg -ljansson
+LIBS	:= -lcitro2d -lcitro3d -lctru -lm -lvorbisidec -logg -ljansson
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
