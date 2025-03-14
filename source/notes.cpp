@@ -674,7 +674,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	#pragma unroll 512
+	#pragma unroll 511
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
