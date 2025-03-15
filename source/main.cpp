@@ -192,7 +192,6 @@ int main() {
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
-			C3D_FrameEnd(0);
 
 			if (isDon)   play_sound(SOUND_DON);		//ドン
 			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
@@ -397,7 +396,6 @@ int main() {
 				}
 				if (key & KEY_DUP) toggle_auto();
 			}
-			C3D_FrameEnd(0);
 
 			if (cnt == 0) {
 				FirstMeasureTime = get_FirstMeasureTime();
@@ -481,6 +479,7 @@ int main() {
 		//描画終了
 		C3D_FrameEnd(0);
 		if (!isPause) ++cnt;
+		C3D_FrameSync();
 	}
 	exit_main();
 	return 0;
