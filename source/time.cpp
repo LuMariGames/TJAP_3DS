@@ -76,7 +76,7 @@ int get_time_isStop(int id) {
 	return isStop[id];
 }
 
-#define FPS_SAMPLE 1
+#define FPS_SAMPLE 6
 double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
@@ -91,7 +91,7 @@ void draw_fps() {
 		fps = FPS_SAMPLE / fps_sum;
 		fps_sum = 0;
 	}
-	snprintf(get_buffer(), BUFFER_SIZE, "%.8ffps", fps);
+	snprintf(get_buffer(), BUFFER_SIZE, "%.2ffps", fps);
 	draw_debug(0, 0, get_buffer());
 }
 
