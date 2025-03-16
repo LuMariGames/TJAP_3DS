@@ -283,7 +283,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		if (BarLine[i].flag) {
 
 			BarLine[i].x = BarLine[i].x_ini -
-				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) / (240.0 / Measure[BarLine[i].measure].bpm);
+				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) * (Measure[BarLine[i].measure].bpm / 240.0);
 
 			if (BarLine[i].isDisp) {
 				C2D_DrawRectSolid(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1));
@@ -680,7 +680,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) / (240.0 / Notes[i].bpm);
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
 
 			switch (Notes[i].knd) {
 
