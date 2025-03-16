@@ -281,7 +281,7 @@ int main() {
 			BeforeCombo = -1;
 
 			tmp = check_wave(SelectedSong);
-			if (tmp == -1) scene_state = SCENE_MAINGAME;
+			if (tmp == -1) scene_state = SCENE_DEBUGMAINGAME;
 			else {
 
 				warning = tmp;
@@ -461,6 +461,113 @@ int main() {
 			}
 			if (combo < 50) {
 				BeforeCombo = -1;
+			}
+			break;
+
+		case SCENE_DEBUGMAINGAME:
+
+			if (!isPause) button_game(&isDon, &isKatsu, Option, key);
+
+			C2D_DrawSprite(&sprites[SPRITE_TOP]);
+
+			draw_lane(sprites);
+			draw_gauge(sprites);
+			draw_emblem(sprites);
+
+			if (isNotesStart) {
+				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+				if (!isPause) ++notes_cnt;
+			}
+			draw_score(sprites);
+
+			//下画面
+			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
+
+			if (isPause) {
+				tmp = pause_window(tp, key);
+
+				switch (tmp) {
+				case 1:
+					isPlayMain = true;
+					stopPlayback();
+					scene_state = SCENE_MAINLOAD;
+					break;
+
+				case 2:
+					isPlayMain = true;
+					stopPlayback();
+					cnt = -1;
+					scene_state = SCENE_SELECTSONG;
+					break;
+				}
+
+				if (tmp > -1) {
+					togglePlayback();
+					toggle_time(0);
+					toggle_time(1);
+					isPause = !isPause;
+					play_sound(SOUND_DON);
+				}
+				if (key & KEY_DUP) toggle_auto();
+			}
+
+			if (cnt == 0) {
+				FirstMeasureTime = get_FirstMeasureTime();
+				play_main_music(&isPlayMain, SelectedSong);
+			}
+			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
+
+			if (isDon)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
+
+			if (key & KEY_SELECT || (key & KEY_START)) {
+				togglePlayback();
+				toggle_time(0);
+				toggle_time(1);
+				isPause = !isPause;
+			}
+
+			//譜面が先
+			if (offset > 0 && (isNotesStart == false || !isMusicStart)) {
+
+				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
+				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
+					isPlayMain = true;
+					isMusicStart = true;
+				}
+			}
+
+			//音楽が先
+			else if (offset <= 0 && (isNotesStart == false || !isMusicStart)) {
+
+				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
+					isPlayMain = true;
+					isMusicStart = true;
+				}
+				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
+					isNotesStart = true;
+				}
+			}
+
+			if (TotalBadCount > 0) {
+				switch (Option.special) {
+				case 1:
+					scene_state = SCENE_RESULT;
+					cnt = -1;
+					break;
+
+				case 2:
+					isPlayMain = true;
+					stopPlayback();
+					scene_state = SCENE_MAINLOAD;
+					break;
+				}
+			}
+			if (get_notes_finish() && !ndspChnIsPlaying(CHANNEL)) {
+				scene_state = SCENE_RESULT;
+				cnt = -1;
 			}
 			break;
 
