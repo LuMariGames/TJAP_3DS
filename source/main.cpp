@@ -615,5 +615,5 @@ inline static int time_count(double TIME) noexcept {
 }
 inline static int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
-	return (int)floor(TIME/(960.0/NUM/NowBPM)) % NUM;
+	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
