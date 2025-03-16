@@ -399,6 +399,7 @@ int main() {
 
 			if (cnt == 0) {
 				FirstMeasureTime = get_FirstMeasureTime();
+				play_main_music(&isPlayMain, SelectedSong);
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 
