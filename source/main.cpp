@@ -478,7 +478,6 @@ int main() {
 		//描画終了
 		C3D_FrameEnd(0);
 		if (!isPause) ++cnt;
-		C3D_FrameSync();
 	}
 	exit_main();
 	return 0;
