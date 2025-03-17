@@ -55,7 +55,6 @@ void init_main() {
 	gfxSetWide(false);
 	osSetSpeedupEnable(false);
 	gfxSetDoubleBuffering(GFX_TOP, true);
-	APT_SetAppCpuTimeLimit(80);
 }
 
 void exit_main() {
