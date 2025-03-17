@@ -24,7 +24,6 @@ C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 Thread chartload;
 bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
-//bool isNew3ds = false;
 char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
@@ -56,7 +55,7 @@ void init_main() {
 	gfxSetWide(false);
 	osSetSpeedupEnable(false);
 	gfxSetDoubleBuffering(GFX_TOP, true);
-	//APT_CheckNew3DS(&isNew3ds);
+	APT_SetAppCpuTimeLimit(80);
 }
 
 void exit_main() {
