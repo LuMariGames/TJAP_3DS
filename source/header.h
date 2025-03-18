@@ -37,10 +37,10 @@
 
 #define SPRITES_NUMER 91
 
-#define NOTES_MAX 2048
+#define NOTES_MAX 512
 #define BARLINE_MAX 128
-#define ROLL_MAX 1024
-#define BALLOON_MAX 1024
+#define ROLL_MAX 512
+#define BALLOON_MAX 512
 
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
