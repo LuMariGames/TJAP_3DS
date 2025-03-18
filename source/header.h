@@ -14,7 +14,7 @@
 #define C3D_CMDBUF_SIZE 0x28000
 #define VERSION "1.5.1"
 #define DEFAULT_DIR "sdmc:/tjafiles/"
-#define NOTDEF_DIR	"romfs:/tjafiles/"
+#define NOTDEF_DIR "romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
 #define SKIN_SETTING_FILE "sdmc:/tjafiles/theme/config.json"
 #define PATH_DSP1 "sdmc:/3ds/dspfirm.cdc"
@@ -37,10 +37,10 @@
 
 #define SPRITES_NUMER 91
 
-#define NOTES_MAX 512
+#define NOTES_MAX 2048
 #define BARLINE_MAX 128
-#define ROLL_MAX 512
-#define BALLOON_MAX 512
+#define ROLL_MAX 1024
+#define BALLOON_MAX 1024
 
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
