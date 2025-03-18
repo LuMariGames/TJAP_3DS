@@ -220,8 +220,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.buffer_size = (int)input_number_keyboard(5, false,false);
-			if (Option.buffer_size < 512) Option.buffer_size = 512;
-			else if (Option.buffer_size > 8192) Option.buffer_size = 8192;
+			if (Option.buffer_size < 1024) Option.buffer_size = 1024;
 			put_buffer_size(Option.buffer_size);
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
@@ -236,8 +235,8 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, "offset", true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		if (Option.offset == 0)snprintf(get_buffer(), BUFFER_SIZE, "±%.2f", Option.offset);
-		else if (Option.offset > 0)snprintf(get_buffer(), BUFFER_SIZE, "+%.2f", Option.offset);
+		if (Option.offset == 0)snprintf(get_buffer(), BUFFER_SIZE, "±%.3f", Option.offset);
+		else if (Option.offset > 0)snprintf(get_buffer(), BUFFER_SIZE, "+%.3f", Option.offset);
 		else snprintf(get_buffer(), BUFFER_SIZE, "%.3f", Option.offset);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
@@ -537,7 +536,7 @@ void init_option() {
 	Option.isSwap = false;
 	Option.lang = LANG_JP;
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
-	Option.offset = 0;
+	Option.offset = -0.5;
 	Option.fixroll = false;
 	Option.special = 0;
 	Option.player = 0;
