@@ -903,7 +903,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				break;
 			}
 		}
-		else if (Notes[i].x == -1) break;
 	}
 
 	//割れた風船
@@ -1234,20 +1233,11 @@ void draw_condition() {
 }
 inline void init_notes_structure() {
 
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {
-		Notes[i].flag = false;
-		Notes[i].num = -1;
-		Notes[i].knd = -1;
-		Notes[i].notes_max = -1;
-		Notes[i].x_ini = -1;
-		Notes[i].x = -1;
-		Notes[i].create_time = -1;
-		Notes[i].judge_time = -1;
-		Notes[i].pop_time = -1;
-		Notes[i].bpm = -1;
-		Notes[i].scroll = -1;
-		Notes[i].roll_id = -1;
-		Notes[i].isThrough = false;
+	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
+		delete_notes(i);
+		delete_notes(i+1);
+		delete_notes(i+2);
+		delete_notes(i+3);
 	}
 }
 
