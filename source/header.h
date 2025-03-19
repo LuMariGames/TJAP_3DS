@@ -35,7 +35,7 @@
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
 
-#define SPRITES_NUMER 91
+#define SPRITES_NUMER 92
 
 #define NOTES_MAX 512
 #define BARLINE_MAX 128
@@ -156,6 +156,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い2
 	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである1
 	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである2
+	SPRITE_TOUCH,			//タッチ時の画像
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
