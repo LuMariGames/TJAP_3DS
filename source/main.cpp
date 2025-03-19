@@ -19,7 +19,7 @@ extern int course,courselife,TotalBadCount,combo;
 extern float NowBPM;
 extern bool isGOGO,loadend;
 C2D_Sprite sprites[144];	//画像用
-static C2D_SpriteSheet spriteSheet, dancerspsh;
+static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 Thread chartload;
@@ -189,6 +189,12 @@ int main() {
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+
+			//タッチエフェクト
+			if (touch_cnt > 0) {
+				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
+				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
+			}
 
 			if (isDon)   play_sound(SOUND_DON);		//ドン
 			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
@@ -366,6 +372,12 @@ int main() {
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
+			//タッチエフェクト
+			if (touch_cnt > 0) {
+				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
+				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
+			}
+
 			if (isPause) {
 				tmp = pause_window(tp, key);
 
@@ -485,6 +497,7 @@ inline static void load_sprites() {
 
 	if (exist_file("sdmc:/tjafiles/theme/default.t3x")) spriteSheet = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/default.t3x");
 	else spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
+	otherspsh = C2D_SpriteSheetLoad("romfs:/gfx/other.t3x");
 	if (exist_file("sdmc:/tjafiles/theme/dancer.t3x")) {
 		dancerspsh = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/dancer.t3x");
 		dance = true;
@@ -493,10 +506,14 @@ inline static void load_sprites() {
 
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
 
-	for (int i = 0, j = SPRITES_NUMER; i < j; ++i) {
+	for (int i = 0, j = SPRITES_NUMER - 1; i < j; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
+
+	C2D_SpriteFromSheet(&sprites[SPRITES_NUMER - 1], otherspsh, 0);
+	C2D_SpriteSetCenter(&sprites[SPRITES_NUMER - 1], 0.5f, 0.5f);
+
 	if (dance) {
 		for (int i = 0, j = dancnt; i < j; ++i) {
 			C2D_SpriteFromSheet(&sprites[SPRITES_NUMER + i], dancerspsh, i);
