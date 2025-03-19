@@ -191,7 +191,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			//タッチエフェクト
-			if (touch_cnt > 0) {
+			if (touch_cnt > 0 && (isDon || isKatsu)) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
@@ -255,7 +255,6 @@ int main() {
 			if (key & KEY_LEFT)		update_cursor(KEY_LEFT);
 			if (key & KEY_A)		update_cursor(KEY_A);
 			if (key & KEY_B)		update_cursor(KEY_B);
-			if (key & KEY_X)		update_cursor(KEY_X);
 
 			if (get_isGameStart()) {
 				scene_state = SCENE_MAINLOAD;
@@ -373,7 +372,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			//タッチエフェクト
-			if (touch_cnt > 0) {
+			if (touch_cnt > 0 && (isDon || isKatsu)) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
