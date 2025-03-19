@@ -454,8 +454,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
 		}
 	}
-	if (Measure[tmp].create_time > 0.000) stme = 0;
-	else stme = tmp;
+	stme = tmp;
 	return Measure[tmp].judge_time - Measure[stme].create_time;
 }
 
