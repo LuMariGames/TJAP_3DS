@@ -33,12 +33,12 @@ double get_current_time(int id) {
 
 	if (isStop[id] != 1) {
 
-		//計式タイマー(不具合があったら旧式に戻す)
+		//旧式だけど念の為残す
 		/*if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
 		++cnt[id];
 		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
-		//旧式だけど念の為残す
+		//計式タイマー(不具合があったら旧式に戻す)
 		clock_gettime(CLOCK_MONOTONIC, &tv);
 		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 		++cnt[id];
@@ -77,7 +77,7 @@ int get_time_isStop(int id) {
 	return isStop[id];
 }
 
-#define FPS_SAMPLE 6
+#define FPS_SAMPLE 10
 double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
