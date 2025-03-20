@@ -40,9 +40,9 @@ double get_current_time(int id) {
 
 		//旧式だけど念の為残す
 		clock_gettime(CLOCK_MONOTONIC, &tv);
-		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_usec * resTime;
+		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * resTime;
 		++cnt[id];
-		Time[id] = tv.tv_sec + tv.tv_usec * resTime - OffTime[id] + PreTime[id];
+		Time[id] = tv.tv_sec + tv.tv_nsec * resTime - OffTime[id] + PreTime[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
