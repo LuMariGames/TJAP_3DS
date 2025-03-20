@@ -4,7 +4,8 @@
 #include "tja.h"
 #include "time.h"
 #include "option.h"
-#include <time.h>
+#include <chrono>
+//#include <time.h>
 
 enum msec_status {
 	MSEC_INIT,
@@ -33,15 +34,16 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		/*if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
+		if (cnt[id] == 0) OffTime[id] = std::chrono::high_resolution_clock::now();
 		++cnt[id];
-		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
+		std::chrono::duration<double, std::milli> elapsed = std::chrono::high_resolution_clock::now() - OffTime[id];
+		Time[id] = elapsed * 0.001 - OffTime[id] + PreTime[id];
 
 		//旧式だけど念の為残す
-		gettimeofday(&tv, NULL);
+		/*gettimeofday(&tv, NULL);
 		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_usec * 0.000001;
 		++cnt[id];
-		Time[id] = tv.tv_sec + tv.tv_usec * 0.000001 - OffTime[id] + PreTime[id];
+		Time[id] = tv.tv_sec + tv.tv_usec * 0.000001 - OffTime[id] + PreTime[id];*/
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
