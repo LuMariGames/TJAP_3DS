@@ -4,8 +4,7 @@
 #include "tja.h"
 #include "time.h"
 #include "option.h"
-#include <chrono>
-//#include <time.h>
+#include <time.h>
 
 enum msec_status {
 	MSEC_INIT,
@@ -13,12 +12,13 @@ enum msec_status {
 	MSEC_DIFF,
 	MSEC_LAST_DIFF,
 };
-#define TIME_NUM 5
+#define TIME_NUM 4
 
-struct timeval tv;
+struct timespec tv;
 int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
-double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
+double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM],
+resTime = clock_getres(CLOCK_MONOTONIC, &tv);
 
 double get_current_time(int id) {
 	
@@ -34,16 +34,15 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		if (cnt[id] == 0) OffTime[id] = std::chrono::high_resolution_clock::now();
+		/*if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
 		++cnt[id];
-		std::chrono::duration<double, std::milli> elapsed = std::chrono::high_resolution_clock::now() - OffTime[id];
-		Time[id] = elapsed * 0.001 - OffTime[id] + PreTime[id];
+		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//旧式だけど念の為残す
-		/*gettimeofday(&tv, NULL);
-		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_usec * 0.000001;
+		clock_gettime(CLOCK_MONOTONIC, &tv);
+		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_usec * resTime;
 		++cnt[id];
-		Time[id] = tv.tv_sec + tv.tv_usec * 0.000001 - OffTime[id] + PreTime[id];*/
+		Time[id] = tv.tv_sec + tv.tv_usec * resTime - OffTime[id] + PreTime[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
@@ -61,7 +60,7 @@ void stop_time(int id) {
 		msec[id][n] = 0;
 	}*/
 
- 	PreTime[id] = Time[id] += 0.01785714285;
+ 	PreTime[id] = Time[id] += 0.0178571429;
 	//sec[id] = 0;
 	cnt[id] = 0;
 }
