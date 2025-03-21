@@ -319,7 +319,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					break;
 				case COMMAND_BRANCHSTART:
 
-					if (isLevelHold == false && (Branch.knd != 0 || JudgeRollState == -1) ) {	//連打分岐の時は連打が無くなってから分岐
+					if (isLevelHold == false && (Branch.knd != 0 || JudgeRollState == -1)) {	//連打分岐の時は連打が無くなってから分岐
 
 						Branch.course = start_branch(Branch.knd, Branch.x, Branch.y);
 						Branch.next = true;
@@ -335,8 +335,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			}
 			if (NotFalse == false && Measure[i].judge_time <= CurrentTimeNotes) Measure[i].flag = false;
 		}
-		if (Measure[i].command == COMMAND_SECTION && !Branch.wait &&
-			Measure[i].judge_time <= CurrentTimeNotes && Measure[i].flag) init_branch_section();
+		if (Measure[i].command == COMMAND_SECTION &&
+			Measure[i].judge_time <= CurrentTimeNotes) init_branch_section();
 	}
 
 	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
