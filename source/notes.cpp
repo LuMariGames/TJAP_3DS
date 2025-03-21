@@ -335,7 +335,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			}
 			if (NotFalse == false && Measure[i].judge_time <= CurrentTimeNotes) Measure[i].flag = false;
 		}
-		if (Measure[i].command == COMMAND_SECTION &&
+		if (Measure[i].command == COMMAND_SECTION && Measure[i].flag &&
 			Measure[i].judge_time <= CurrentTimeNotes) init_branch_section();
 	}
 
