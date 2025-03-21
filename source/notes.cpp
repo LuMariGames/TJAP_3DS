@@ -339,6 +339,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			Measure[i].judge_time <= CurrentTimeNotes && Measure[i].flag) init_branch_section();
 	}
 
+	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
+
 	for (int i = MaxMeasureCount; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
