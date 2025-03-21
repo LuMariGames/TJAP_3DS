@@ -297,14 +297,12 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	send_gogotime(isGOGOTime);
 
-	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
-
 	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 	if (!Option.isStelth) notes_draw(sprites);
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
-	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {	//判定時に発動する命令
+	for (int i = 0, j = MEASURE_MAX; i < j; ++i) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag) {
 
