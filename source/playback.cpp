@@ -103,6 +103,7 @@ void playFile(void* infoIn){
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
 	const char*	file = info->file;
+	u64		SetTime; 
 
 	/* Reset previous stop command */
 	stop = false;
@@ -151,17 +152,21 @@ void playFile(void* infoIn){
 
 	while (*info->isPlay == false) svcSleepThread(16667);
 
+	SetTime = osGetTime() + 54;
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer2[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);	
 	waveBuf[2].nsamples = (*decoder.decode)(&buffer3[0]) / (*decoder.channels)();
 	waveBuf[2].data_vaddr = &buffer3[0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 	waveBuf[3].nsamples = (*decoder.decode)(&buffer4[0]) / (*decoder.channels)();
 	waveBuf[3].data_vaddr = &buffer4[0];
+
+	svcSleepThread(SetTime - osGetTime() * 1000);
+
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 	
 	while(ndspChnIsPlaying(CHANNEL) == false);
