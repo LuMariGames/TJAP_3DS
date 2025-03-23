@@ -103,7 +103,7 @@ void playFile(void* infoIn){
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
 	const char*	file = info->file;
-	u64		SetTime; 
+	u64		SetTime = osGetTime() + 64;
 
 	/* Reset previous stop command */
 	stop = false;
@@ -152,7 +152,6 @@ void playFile(void* infoIn){
 
 	while (*info->isPlay == false) svcSleepThread(16667);
 
-	SetTime = osGetTime() + 64;
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
