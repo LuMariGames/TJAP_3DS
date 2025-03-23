@@ -52,7 +52,7 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	APT_SetAppCpuTimeLimit(40);
+	APT_SetAppCpuTimeLimit(35);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
 }
 
