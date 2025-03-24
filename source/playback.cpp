@@ -11,6 +11,7 @@
 
 static volatile bool stop = true;
 extern float mix[12];
+u64 SetTime;
 
 bool togglePlayback(void){
 
@@ -273,6 +274,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
+	SetTime = osGetTime() + 128;
 	chdir(Song.path);
 	changeFile(Song.wave, &playbackInfo, p_isPlayMain);
 }
