@@ -154,12 +154,16 @@ void playFile(void* infoIn){
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
+	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer1, decoder.vorbis_buffer_size * sizeof(int16_t));
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer2[0];
+	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer2, decoder.vorbis_buffer_size * sizeof(int16_t));
 	waveBuf[2].nsamples = (*decoder.decode)(&buffer3[0]) / (*decoder.channels)();
 	waveBuf[2].data_vaddr = &buffer3[0];
+	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer3, decoder.vorbis_buffer_size * sizeof(int16_t));
 	waveBuf[3].nsamples = (*decoder.decode)(&buffer4[0]) / (*decoder.channels)();
 	waveBuf[3].data_vaddr = &buffer4[0];
+	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 
 	svcSleepThread((SetTime - osGetTime()) * 1000);
 
