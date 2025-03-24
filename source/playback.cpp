@@ -192,7 +192,7 @@ void playFile(void* infoIn){
 				continue;
 			}
 			else if(read < decoder.vorbis_buffer_size) waveBuf[0].nsamples = read / (*decoder.channels)();
-			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, buffer1, decoder.vorbis_buffer_size * sizeof(int16_t));
+			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer1, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 		}
 		if(waveBuf[1].status == NDSP_WBUF_DONE) {
@@ -202,7 +202,7 @@ void playFile(void* infoIn){
 				continue;
 			}
 			else if(read < decoder.vorbis_buffer_size) waveBuf[1].nsamples = read / (*decoder.channels)();
-			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, buffer2, decoder.vorbis_buffer_size * sizeof(int16_t));
+			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer2, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 		}
 		if(waveBuf[2].status == NDSP_WBUF_DONE) {
@@ -212,7 +212,7 @@ void playFile(void* infoIn){
 				continue;
 			}
 			else if(read < decoder.vorbis_buffer_size) waveBuf[2].nsamples = read / (*decoder.channels)();
-			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, buffer3, decoder.vorbis_buffer_size * sizeof(int16_t));
+			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer3, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 		}
 		if(waveBuf[3].status == NDSP_WBUF_DONE) {
@@ -222,7 +222,7 @@ void playFile(void* infoIn){
 				continue;
 			}
 			else if(read < decoder.vorbis_buffer_size) waveBuf[3].nsamples = read / (*decoder.channels)();
-			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
+			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 		}
 	}
