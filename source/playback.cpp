@@ -161,7 +161,7 @@ void playFile(void* infoIn){
 	waveBuf[3].nsamples = (*decoder.decode)(&buffer4[0]) / (*decoder.channels)();
 	waveBuf[3].data_vaddr = &buffer4[0];
 
-	svcSleepThread(SetTime - osGetTime());
+	svcSleepThread((SetTime - osGetTime()) * 1000);
 
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
