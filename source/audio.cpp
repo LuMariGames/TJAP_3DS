@@ -97,7 +97,7 @@ void load_sound() {
 		waveBuf[i].nsamples = sound[i].nsamples;
 		waveBuf[i].looping = sound[i].loop;
 		waveBuf[i].status = NDSP_WBUF_FREE;
-		DSP_FlushDataCache(sound[i].data, sound[i].size);
+		svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)sound[i].data, sound[i].size);
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
@@ -180,7 +180,7 @@ void sd_load_sound() {
 		waveBuf[i].nsamples = sound[i].nsamples;
 		waveBuf[i].looping = sound[i].loop;
 		waveBuf[i].status = NDSP_WBUF_FREE;
-		DSP_FlushDataCache(sound[i].data, sound[i].size);
+		svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)sound[i].data, sound[i].size);
 		//linearFree(&sound[i].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
