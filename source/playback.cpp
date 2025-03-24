@@ -103,7 +103,6 @@ void playFile(void* infoIn){
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
 	const char*	file = info->file;
-	u64		SetTime = osGetTime() + 64;
 
 	/* Reset previous stop command */
 	stop = false;
