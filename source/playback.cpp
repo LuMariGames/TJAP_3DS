@@ -11,7 +11,7 @@
 
 static volatile bool stop = true;
 extern float mix[12];
-u64 SetTime;
+double SetTime;
 
 bool togglePlayback(void){
 
@@ -165,6 +165,8 @@ void playFile(void* infoIn){
 	waveBuf[3].data_vaddr = &buffer4[0];
 	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 
+	svcSleepThread(SetTime - (osGetTime() * 0.001));
+
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
@@ -281,7 +283,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
-	SetTime = osGetTime() + 128;
+	SetTime = osGetTime() * 0.001 + 0.128;
 	chdir(Song.path);
 	changeFile(Song.wave, &playbackInfo, p_isPlayMain);
 }
