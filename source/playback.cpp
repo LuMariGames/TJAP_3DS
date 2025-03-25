@@ -11,7 +11,7 @@
 
 static volatile bool stop = true;
 extern float mix[12];
-double SetTime;
+double SetTime[2];
 
 bool togglePlayback(void){
 
@@ -165,13 +165,12 @@ void playFile(void* infoIn){
 	waveBuf[3].data_vaddr = &buffer4[0];
 	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 
-	svcSleepThread(SetTime - (osGetTime() * 0.001));
-
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
-	
+
+	SetTime[1] = osGetTime();
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
@@ -229,6 +228,8 @@ void playFile(void* infoIn){
 			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 		}
+		snprintf(get_buffer(), BUFFER_SIZE, "%d", SetTime[0] - SetTime[1]);
+		draw_debug(300, 0, get_buffer());
 	}
 
 	(*decoder.exit)();
@@ -283,7 +284,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
-	SetTime = osGetTime() * 0.001 + 0.128;
+	SetTime[0] = osGetTime() * 0.001 + 0.128;
 	chdir(Song.path);
 	changeFile(Song.wave, &playbackInfo, p_isPlayMain);
 }
