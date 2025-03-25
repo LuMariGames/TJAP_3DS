@@ -170,7 +170,7 @@ void playFile(void* infoIn){
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 
-	SetTime[1] = osGetTime();
+	SetTime[1] = osGetTime() * 0.001;
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
