@@ -150,7 +150,8 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	while (*info->isPlay == false) svcSleepThread(16667);
+	while (*info->isPlay == false) svcSleepThread(1000);
+	SetTime[0] = osGetTime() * 0.001 + 2.0;
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
@@ -166,6 +167,8 @@ void playFile(void* infoIn){
 	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 
 	SetTime[1] = osGetTime() * 0.001;
+	//svcSleepThread(SetTime[0] - SetTime[1]);
+
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
@@ -275,13 +278,12 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 32768, prio - 1, 1, false);
+	thread = threadCreate(playFile, playbackInfo, 32768, prio - 1, -1, false);
 	return 0;
 }
 
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
-	SetTime[0] = osGetTime() * 0.001 + 2.0;
 	chdir(Song.path);
 	changeFile(Song.wave, &playbackInfo, p_isPlayMain);
 }
