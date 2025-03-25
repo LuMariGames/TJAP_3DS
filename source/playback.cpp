@@ -228,7 +228,7 @@ void playFile(void* infoIn){
 			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 		}
-		snprintf(get_buffer(), BUFFER_SIZE, "%d", SetTime[0] - SetTime[1]);
+		snprintf(get_buffer(), BUFFER_SIZE, "%.4f", SetTime[0] - SetTime[1]);
 		draw_debug(300, 0, get_buffer());
 	}
 
