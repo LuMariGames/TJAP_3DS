@@ -165,7 +165,7 @@ void playFile(void* infoIn){
 	waveBuf[3].data_vaddr = &buffer4[0];
 	svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 
-	svcSleepThread((SetTime - osGetTime()) * 1000);
+	svcSleepThread((osGetTime() - SetTime) * 1000);
 
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
