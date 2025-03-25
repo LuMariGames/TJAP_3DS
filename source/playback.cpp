@@ -104,6 +104,7 @@ void playFile(void* infoIn){
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
 	const char*	file = info->file;
+	SetTime[0] = osGetTime() * 0.001 + 0.128;
 
 	/* Reset previous stop command */
 	stop = false;
@@ -282,7 +283,6 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
-	SetTime[0] = osGetTime() * 0.001 + 0.128;
 	chdir(Song.path);
 	changeFile(Song.wave, &playbackInfo, p_isPlayMain);
 }
