@@ -227,6 +227,11 @@ void playFile(void* infoIn){
 			svcFlushProcessDataCache(CUR_PROCESS_HANDLE, (u32)buffer4, decoder.vorbis_buffer_size * sizeof(int16_t));
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[3]);
 		}
+		if (get_isMusicStart() == true) {
+			snprintf(get_buffer(), BUFFER_SIZE, "Vbt:%.5f", getVorbisTime());
+			draw_debug(0, 185, get_buffer());
+		}
+
 	}
 
 	(*decoder.exit)();
