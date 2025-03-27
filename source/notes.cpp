@@ -1,5 +1,3 @@
-#pragma GCC optimize ("unroll-loops")
-
 #include "header.h"
 #include "main.h"
 #include "time.h"
