@@ -25,7 +25,7 @@
 #define DEFAULT_JUDGE_RANGE_BAD		0.120
 
 #define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
-#define MEASURE_MAX 8192
+#define MEASURE_MAX 16384
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
 #define NOTES_JUDGE_X 93.0	//判定枠の中心のX座標
 #define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
