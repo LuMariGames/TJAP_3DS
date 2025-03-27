@@ -536,7 +536,7 @@ void init_option() {
 	Option.isSwap = false;
 	Option.lang = LANG_JP;
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
-	Option.offset = -0.5;
+	Option.offset = 0.0;
 	Option.fixroll = false;
 	Option.special = 0;
 	Option.player = 0;
