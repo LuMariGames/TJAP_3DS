@@ -23,8 +23,6 @@ AC15から常連モード、条件を達成しないとノルマ失敗！？「�
 見た目を自由に変更！「カスタムスキン」  
 
 ## それ以外の内容  
-従来のバッファサイズだと動作が不安定になって来たのでv1.4.6(A)で大幅な軽量化を加えました。  
-バッファサイズを4000くらいにすると安定するかと思います  
 (ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。)  
 
 # TJAP_3DS (English)
@@ -47,8 +45,6 @@ Regular mode from AC15, quota failure if you don't meet the conditions!? "Dani D
 Feel free to change the appearance! "Custom skin"
 
 ## Other contents
-The operation became unstable with the conventional buffer size, so I added a significant weight reduction with v1.4.6(A).
-I think it will be stable if the buffer size is about 4000.
 (Except for the information described here, it is almost the same as the original work, so please check the original [Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README_en.md) for details.)  
 
 # Screenshots  
@@ -69,12 +65,12 @@ I think it will be stable if the buffer size is about 4000.
 |`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`|✅||
 |`SECTION`, `BRANCHSTART`, `BRANCHEND`|⚠️|譜面分岐開始時の挙動がまだ不安定|
 |`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`, `DELAY`, `MEASURE`|✅||
-|`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌|技術的に難しい|
+|`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌||
 |`SUDDEN`|⚠️|一部動作が無効|
 
 |metadata|Supported?|Comment|
 |---|---|---|
 |`COURSE:0~5`, `LEVEL`, `TITLE`, `OFFSET`|✅||
 |`WAVE`, `BALLOON`, `SONGVOL`, `EXAM1~3`|✅|4条件は非対応なので注意|
-|`COURSE:6`|⚠️|`NEXTSONG`が非対応の為TJAP3等で作られた段位は出来ない。|
-|`DEMOSTART`, `SEVOL`|❌|選曲画面で曲を流せる様にする予定|
+|`COURSE:6`|⚠️|`NEXTSONG`が非対応の為TNDEやOptk等で作られた段位は出来ない。|
+|`DEMOSTART`, `SEVOL`|❌||
