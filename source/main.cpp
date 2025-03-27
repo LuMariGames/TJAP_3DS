@@ -18,7 +18,7 @@
 extern int course,courselife,TotalBadCount,combo;
 extern float NowBPM;
 extern bool isGOGO,loadend;
-extern u64 SetTime[2]
+extern u64 SetTime[2];
 C2D_Sprite sprites[144];	//画像用
 static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
