@@ -18,7 +18,7 @@
 extern int course,courselife,TotalBadCount,combo;
 extern float NowBPM;
 extern bool isGOGO,loadend;
-extern u64 SetTime[2];
+extern double SetTime[2];
 C2D_Sprite sprites[144];	//画像用
 static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
@@ -127,7 +127,7 @@ int main() {
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
 	load_sprites();
-	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
+	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, 1, true);
 
 	while (aptMainLoop()) {
 
@@ -366,7 +366,7 @@ int main() {
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps) draw_fps();
 
-			snprintf(get_buffer(), BUFFER_SIZE, "%d", SetTime[0] - SetTime[1]);
+			snprintf(get_buffer(), BUFFER_SIZE, "%.3f", SetTime[0] - SetTime[1]);
 			draw_debug(0, 0, get_buffer());
 
 			//下画面
