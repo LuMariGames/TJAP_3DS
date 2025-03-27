@@ -150,8 +150,7 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	while (*info->isPlay == false) svcSleepThread(16667);
-	SetTime[0] = osGetTime() + 256;
+	while (*info->isPlay == false) svcSleepThread(100000);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
@@ -162,9 +161,6 @@ void playFile(void* infoIn){
 	waveBuf[3].nsamples = (*decoder.decode)(&buffer4[0]) / (*decoder.channels)();
 	waveBuf[3].data_vaddr = &buffer4[0];
 
-	SetTime[1] = osGetTime();
-	svcSleepThread((SetTime[0] - SetTime[1]) * 1000);
-
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[2]);
@@ -174,7 +170,7 @@ void playFile(void* infoIn){
 
 	while(stop == false){
 		//音切れチェックの間隔(us, この場合100ms毎に確認する)
-		svcSleepThread(50000);
+		svcSleepThread(100000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
 			waveBuf[1].status == NDSP_WBUF_DONE &&
