@@ -18,7 +18,6 @@
 extern int course,courselife,TotalBadCount,combo;
 extern float NowBPM;
 extern bool isGOGO,loadend;
-extern double SetTime[2];
 C2D_Sprite sprites[144];	//画像用
 static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
@@ -365,9 +364,6 @@ int main() {
 
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps) draw_fps();
-
-			snprintf(get_buffer(), BUFFER_SIZE, "%.3f", SetTime[0] - SetTime[1]);
-			draw_debug(0, 0, get_buffer());
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
