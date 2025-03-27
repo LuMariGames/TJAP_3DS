@@ -163,7 +163,7 @@ void playFile(void* infoIn){
 	waveBuf[3].data_vaddr = &buffer4[0];
 
 	SetTime[1] = osGetTime() * 0.001;
-	svcSleepThread(SetTime[0] - SetTime[1]);
+	svcSleepThread((SetTime[0] - SetTime[1]) * 1000);
 
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
