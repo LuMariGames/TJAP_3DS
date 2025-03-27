@@ -24,7 +24,7 @@
 #define DEFAULT_JUDGE_RANGE_NICE	0.100
 #define DEFAULT_JUDGE_RANGE_BAD		0.120
 
-#define NOTES_MEASURE_MAX 512	//一小節の最大ノーツ数+1
+#define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
 #define MEASURE_MAX 8192
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
 #define NOTES_JUDGE_X 93.0	//判定枠の中心のX座標
@@ -84,13 +84,13 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_BALLOON_4,		//風船音符を叩く時に使う画像④
 	SPRITE_BALLOON_5,		//風船音符を叩く時に使う画像⑤
 	SPRITE_BALLOON_6,		//風船音符を叩き終わる時に使う画像
-	SPRITE_JUDGE_PERFECT,	//良
+	SPRITE_JUDGE_PERFECT,		//良
 	SPRITE_JUDGE_NICE,		//可
 	SPRITE_JUDGE_BAD,		//不可
-	SPRITE_JUDGE_CIRCLE,	//判定枠
-	SPRITE_CHART_NORMAL,	//譜面分岐がある譜面で使う画像
-	SPRITE_CHART_EXPERT,	//譜面分岐がある譜面で使う画像
-	SPRITE_CHART_MASTER,	//譜面分岐がある譜面で使う画像
+	SPRITE_JUDGE_CIRCLE,		//判定枠
+	SPRITE_CHART_NORMAL,		//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_EXPERT,		//譜面分岐がある譜面で使う画像
+	SPRITE_CHART_MASTER,		//譜面分岐がある譜面で使う画像
 	SPRITE_LANE_EXPERT,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
 	SPRITE_LANE_MASTER,		//譜面分岐がある譜面で使う画像,レーンと位置を合わせる
 	SPRITE_EFFECT_PERFECT,		//赤花火,良で叩いた時に表示する画像
@@ -148,7 +148,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_HARD,
 	SPRITE_EMBLEM_ONI,
 	SPRITE_EMBLEM_EDIT,
-	SPRITE_EMBLEM_TOWER,	//太鼓タワーの画像
+	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
@@ -239,7 +239,6 @@ enum TIME_KND {
 	TIME_NOTES = 0,	//ノーツが開始(最初の小節が生成)で計測開始,cntはこれに最初にcreate_time加算(マイナス用,通常は0),
 	TIME_MAINGAME,	//メインゲーム,開始時には-1000,1秒後に計測開始,ノーツ・音楽開始にのみ使用
 	TIME_FPS,	//fps計測用
-	TIME_CLOCK,	//垂直同期用
 };
 
 enum WARNING_KND {
