@@ -455,7 +455,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 		}
 	}
 	stme = tmp;
-	return Measure[0].judge_time - Measure[tmp].create_time;
+	return Measure[stme].judge_time - Measure[tmp].create_time;
 }
 
 void load_tja_notes(int course, LIST_T Song) {
