@@ -42,8 +42,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整0
 	double CurrentTimeNotes = get_current_time(TIME_NOTES);	
-	snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
-	draw_debug(0, 185, get_buffer());
+	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
+	//draw_debug(0, 185, get_buffer());
 
 	if (cnt >= 0 && isNotesLoad) {
 
