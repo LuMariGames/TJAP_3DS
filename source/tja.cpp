@@ -455,7 +455,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 		}
 	}
 	stme = tmp;
-	return Measure[tmp].judge_time - Measure[tmp].create_time;
+	return Measure[tmp].judge_time - Measure[stme].create_time;
 }
 
 void load_tja_notes(int course, LIST_T Song) {
@@ -627,7 +627,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].sudn_time = movetime;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 / Measure[MeasureCount].bpm / fabs(scroll));
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 
