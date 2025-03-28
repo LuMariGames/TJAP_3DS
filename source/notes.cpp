@@ -11,7 +11,7 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[256], BalloonCount, TotalFailedCount, NowMeCount, dcd;
-extern int isBranch, comboVoice, course, stme;
+extern int isBranch, comboVoice, course;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern double black;
