@@ -41,9 +41,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整0
-	double CurrentTimeNotes = get_current_time(TIME_NOTES);	
-	snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
-	draw_debug(0, 185, get_buffer());
+	double CurrentTimeNotes = get_current_time(TIME_NOTES) + ((Measure[stme].scroll < 1.0) ? Measure[stme].create_time : 0.0);	
+	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
+	//draw_debug(0, 185, get_buffer());
 
 	if (cnt >= 0 && isNotesLoad) {
 
@@ -354,7 +354,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		TotalFailedCount = dcd;
 	}
 	
-	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
+	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[MeasureCount].bpm, Measure[MeasureCount].measure, Measure[MeasureCount].scroll);
 	draw_debug(0, 20, get_buffer());
@@ -363,7 +363,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", MeasureCount, tja_notes[MeasureCount]);
 	draw_debug(0, 50, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "course:%d", Branch.course);
-	draw_debug(250, 40, get_buffer());
+	draw_debug(250, 40, get_buffer());*/
 }
 
 int find_notes_id() {
