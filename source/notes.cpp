@@ -300,7 +300,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
-	for (int i = 0, j = MEASURE_MAX; i < j; ++i) {	//判定時に発動する命令
+	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
+
+	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {	//判定時に発動する命令
 
 		if ((Measure[i].branch == Branch.course || Measure[i].branch == -1) && Measure[i].flag) {
 
@@ -338,8 +340,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			if (NotFalse == false && Measure[i].judge_time <= CurrentTimeNotes) Measure[i].flag = false;
 		}
 	}
-
-	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
 
 	for (int i = MaxMeasureCount; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
