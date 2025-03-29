@@ -41,9 +41,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整0
-	double CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;	
-	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
-	//draw_debug(0, 185, get_buffer());
+	double CurrentTimeNotes = get_current_time(TIME_NOTES);	
+	snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.2f ctm:%.2f ct:%.2f 0ct:%.2f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
+	draw_debug(0, 185, get_buffer());
 
 	if (cnt >= 0 && isNotesLoad) {
 
@@ -358,7 +358,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	draw_debug(100, 0, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[MeasureCount].bpm, Measure[MeasureCount].measure, Measure[MeasureCount].scroll);
 	draw_debug(0, 20, get_buffer());
-	snprintf(get_buffer(), BUFFER_SIZE, "Judge:%.1f   Create:%.1f   Pop:%.1f", Measure[MeasureCount].judge_time, Measure[MeasureCount].create_time, Measure[MeasureCount].pop_time);
+	snprintf(get_buffer(), BUFFER_SIZE, "Judge:%.3f Create:%.3f Pop:%.3f", Measure[MeasureCount].judge_time, Measure[MeasureCount].create_time, Measure[MeasureCount].pop_time);
 	draw_debug(0, 40, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", MeasureCount, tja_notes[MeasureCount]);
 	draw_debug(0, 50, get_buffer());
