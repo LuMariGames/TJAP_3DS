@@ -276,18 +276,18 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	for (j = 0; j < 5; ++j) {
 		if (combo / powi(10, j) == 0) break;
 	}
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 5; ++i) {
 
 		if (combo >= 10 && combo / powi(10, i) > 0) {
 
 			int n = combo / powi(10, i) % 10;
 
 			if (combo < 100) {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0 + n], 22 + j * 8 - i * 16, 110);
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0 + n], 22 + j * 7 - i * 14, 110);
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0 + n]);
 			}
 			else {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED + n], 22 + j * 8 - i * 16, 110);
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED + n], 22 + j * 7 - i * 14, 110);
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED + n]);
 			}
 		}
@@ -312,14 +312,14 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 
 	//風船
-	for (j = 0; j < 4; ++j) {
+	for (j = 0; j < 5; ++j) {
 		if (CurrentBalloonCount / powi(10, j) == 0) break;
 	}
 	if (CurrentBalloonCount > 0) {
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_COUNT], 110, 35);
 		C2D_DrawSprite(&sprites[SPRITE_BALLOON_COUNT]);
 	}
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 5; ++i) {
 
 		if (CurrentBalloonCount / powi(10, i) > 0) {
 
