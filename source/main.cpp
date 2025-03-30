@@ -52,7 +52,7 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	APT_SetAppCpuTimeLimit(45);
+	APT_SetAppCpuTimeLimit(40);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
 }
 
@@ -324,7 +324,6 @@ int main() {
 				else {
 					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 				}
-
 				button_game(&isDon, &isKatsu, Option, key);
 			}
 
