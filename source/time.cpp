@@ -34,19 +34,15 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		//旧式だけど念の為残す
-		if (id != TIME_NOTES) {
-			if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
-			++cnt[id];
-			Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];
-		}
+		/*if (cnt[id] == 0) OffTime[id] = osGetTime() * 0.001;
+		++cnt[id];
+		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		else {
-			clock_gettime(CLOCK_MONOTONIC, &tv);
-			if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
-			++cnt[id];
-			Time[id] = tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
-		}
+		clock_gettime(CLOCK_MONOTONIC, &tv);
+		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
+		++cnt[id];
+		Time[id] = tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
