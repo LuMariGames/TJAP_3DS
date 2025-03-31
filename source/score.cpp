@@ -283,11 +283,11 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 			int n = combo / powi(10, i) % 10;
 
 			if (combo < 100) {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0 + n], 22 + j * 7 - i * 14, 110);
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0 + n], 26 + j * 7 - i * 14, 110);
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0 + n]);
 			}
 			else {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED + n], 22 + j * 7 - i * 14, 110);
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED + n], 26 + j * 7 - i * 14, 110);
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED + n]);
 			}
 		}
