@@ -450,6 +450,12 @@ int start_branch(int knd, double x, double y) {	//分岐
 		else if (x <= CurrentDaiNotes) branch = COMMAND_E;
 		else branch = COMMAND_N;
 		break;
+	case 4:	//コンボ数
+		int CurrentCombo = CurrentPerfectCount + CurrentNiceCount;
+		if (y <= CurrentCombo) branch = COMMAND_M;
+		else if (x <= CurrentCombo) branch = COMMAND_E;
+		else branch = COMMAND_N;
+		break;
 	default:
 		branch = COMMAND_N;
 		break;
