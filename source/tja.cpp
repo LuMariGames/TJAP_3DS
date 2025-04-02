@@ -874,7 +874,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			case 'p':Command->val[0] = 1; break;	//精度
 			case 's':Command->val[0] = 2; break;	//スコア
 			case 'd':Command->val[0] = 3; break;	//大音符
-			case 'c':Command->val[0] = 4; break;	//大音符
+			case 'c':Command->val[0] = 4; break;	//コンボ数
 			default: break;
 			}
 			int i = 1;
