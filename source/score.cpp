@@ -428,7 +428,7 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 int start_branch(int knd, double x, double y) {	//分岐
 
-	int branch;
+	int branch, CurrentCombo = CurrentPerfectCount + CurrentNiceCount;
 	switch (knd) {
 	case 0:	//連打
 		if (y <= CurrentTotalRollCount) branch = COMMAND_M;
@@ -451,7 +451,6 @@ int start_branch(int knd, double x, double y) {	//分岐
 		else branch = COMMAND_N;
 		break;
 	case 4:	//コンボ数
-		int CurrentCombo = CurrentPerfectCount + CurrentNiceCount;
 		if (y <= CurrentCombo) branch = COMMAND_M;
 		else if (x <= CurrentCombo) branch = COMMAND_E;
 		else branch = COMMAND_N;
