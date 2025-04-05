@@ -5,6 +5,7 @@
 #include "main.h"
 #include "select.h"
 #include "option.h"
+#include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
@@ -160,8 +161,7 @@ void load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "WAVE:") == buf) {
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
-					strcpy_s(temp, 256, Song.wave);
+					strlcpy(Song.wave, buf + 5, strlen(buf) - 6);
 				}
 				continue;
 			}
