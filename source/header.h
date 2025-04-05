@@ -12,7 +12,7 @@
 #include <ctype.h>
 
 #define C3D_CMDBUF_SIZE 0x28000
-#define VERSION "1.5.1"
+#define VERSION "1.5.2"
 #define DEFAULT_DIR "sdmc:/tjafiles/"
 #define NOTDEF_DIR "romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
