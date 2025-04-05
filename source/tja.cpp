@@ -161,7 +161,7 @@ void load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "WAVE:") == buf) {
 				if (buf[5] != '\n' && buf[5] != '\r') {
 					strlcpy(temp, buf + 5, strlen(buf) - 6);
-					Song.wave = (char)temp;
+					strcpy_s(temp, 256, Song.wave);
 				}
 				continue;
 			}
