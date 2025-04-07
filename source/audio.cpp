@@ -41,8 +41,8 @@ void load_sound() {
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
-		sound[i].mix[0] = 1.0f;
-		sound[i].mix[1] = 1.0f;
+		sound[i].mix[0] = 0.8f;
+		sound[i].mix[1] = 0.8f;
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
@@ -124,8 +124,8 @@ void sd_load_sound() {
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
-		sound[i].mix[0] = 1.0f;
-		sound[i].mix[1] = 1.0f;
+		sound[i].mix[0] = 0.8f;
+		sound[i].mix[1] = 0.8f;
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
