@@ -462,8 +462,8 @@ int main() {
 			}
 
 			//コンボボイス
-			if ((int)(combo*0.01) != BeforeCombo && combo < (get_isauto() ? 1600 : 1500) && combo >= 50) {
-				play_sound(combo*0.01+(get_isauto() ? 19 : 4));
+			if ((int)(combo*0.01) != BeforeCombo && combo < 1600 && combo >= 50) {
+				play_sound(combo*0.01+(get_isauto() ? 20 : 4));
 				BeforeCombo = combo*0.01;
 			}
 			if (combo < 50) {
