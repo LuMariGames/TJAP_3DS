@@ -195,7 +195,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[31][30] = {
+	char sound_address[32][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
