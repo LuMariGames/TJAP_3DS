@@ -12,7 +12,7 @@ typedef struct {
 
 	char *title, *subtitle,*wave;
 	int level,balloon[256],songvol,sevol,scoreinit,scorediff,
-		course,style,life,scoremode,total,subtitle_state; //side;
+		course,style,life,scoremode,subtitle_state; //total,side;
 	double bpm, offset; //demostart;
 
 }TJA_HEADER_T;
@@ -29,7 +29,6 @@ typedef struct {
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
 	bool flag,isDispBarLine;
-	char lyric[32];
 
 } MEASURE_T;
 
