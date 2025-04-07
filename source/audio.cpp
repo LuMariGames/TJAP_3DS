@@ -6,8 +6,8 @@
 #include "header.h"
 #include "option.h"
 
-#define AUDIO_BUFFER_SIZE 4000
-#define STACKSIZE (4 * 1000)
+#define AUDIO_BUFFER_SIZE 4096
+#define STACKSIZE (4 * 1024)
 #define SOUND_NUMBER 4
 #define SNUM 34
 
@@ -41,8 +41,8 @@ void load_sound() {
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
-		sound[i].mix[0] = 0.7f;
-		sound[i].mix[1] = 0.7f;
+		sound[i].mix[0] = 0.6f;
+		sound[i].mix[1] = 0.6f;
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
@@ -124,8 +124,8 @@ void sd_load_sound() {
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
-		sound[i].mix[0] = 0.7f;
-		sound[i].mix[1] = 0.7f;
+		sound[i].mix[0] = 0.6f;
+		sound[i].mix[1] = 0.6f;
 		FILE * file = fopen(sound_address[i], "rb");
 		if (file == 0) {
 			printf("no file\n");
