@@ -37,7 +37,6 @@ void init_measure_structure() {
 		Measure[i].notes_count = 0;
 		Measure[i].command = -1;
 		Measure[i].sudn_time = 0;
-		Measure[i].lyric = NULL;
 	}
 }
 
@@ -466,7 +465,6 @@ void load_tja_notes(int course, LIST_T Song) {
 		BeforeBranchFirstMultiMeasure = -1, BeforeBranchNotesCount = 0;
 	bool isStart = false, isEnd = false, isDispBarLine = true, isNoComma = false, isCourseMatch = false,
 		BeforeBranchIsDispBarLine = true, BeforeBranchIsNoComma = false, isSudden = false;
-	char lyrics[32];
 	FILE *fp;
 	COMMAND_T Command;
 	OPTION_T Option;
@@ -576,8 +574,6 @@ void load_tja_notes(int course, LIST_T Song) {
 						movetime = sudntime - Command.val[1];
 						isSudden = true;
 						break;
-					case COMMAND_LYRIC:
-						strcpy(lyrics, Command.value_s);
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
 						break;
@@ -634,7 +630,6 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
-				Measure[MeasureCount].lyric = lyrics;
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
@@ -825,24 +820,16 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		Command->val[1] = 0;
 		Command->val[2] = 0;
 
-		switch (command) {
-		case "START":
-			Command->knd = COMMAND_START;
-			break;
-		case "END":
-			Command->knd = COMMAND_END;
-			break;
-		case "BPMCHANGE":
+		if (strcmp(command, "START") == 0) Command->knd = COMMAND_START;
+		else if (strcmp(command, "END") == 0) Command->knd = COMMAND_END;
+		else if (strcmp(command, "BPMCHANGE") == 0) {
 			Command->knd = COMMAND_BPMCHANGE;
 			Command->val[0] = strtod(value, NULL);
-			break;
-		case "GOGOSTART":
-			Command->knd = COMMAND_GOGOSTART;
-			break;
-		case "GOGOEND":
-			Command->knd = COMMAND_GOGOEND;
-			break;
-		case "MEASURE":
+		}
+		else if (strcmp(command, "GOGOSTART") == 0) Command->knd = COMMAND_GOGOSTART;
+		else if (strcmp(command, "GOGOEND") == 0) Command->knd = COMMAND_GOGOEND;
+
+		else if (strcmp(command, "MEASURE") == 0) {
 			Command->knd = COMMAND_MEASURE;
 			if (strstr(value, "/") != NULL) {
 
@@ -859,31 +846,26 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 				if (strtod(value, NULL) != 0) Command->val[0] = strtod(value, NULL);
 				else Command->val[0] = 1.0;
 			}
-			break;
-		case "SUDDEN":
+		}
+		else if (strcmp(command, "SUDDEN") == 0) {
 			Command->knd = COMMAND_SUDDEN;
 			char* tp;
 			tp = strtok(value, " ");
 			Command->val[0] = strtod(tp, NULL);
 			tp = strtok(NULL, " ");
 			Command->val[1] = strtod(tp, NULL);
-			break;
-		case "SCROLL":
+		}
+		else if (strcmp(command, "SCROLL") == 0) {
 			Command->knd = COMMAND_SCROLL;
 			if (Option.fixroll) Command->val[0] = 1;
 			else if (!Option.fixroll) Command->val[0] = strtod(value, NULL);
-			break;
-		case "DELAY":
+		}
+		else if (strcmp(command, "DELAY") == 0) {
 			Command->knd = COMMAND_DELAY;
 			Command->val[0] = strtod(value, NULL);
-			break;
-		case "LYRIC":
-			Command->knd = COMMAND_LYRIC;
-			break;
-		case "SECTION":
-			Command->knd = COMMAND_SECTION;
-			break;
-		case "BRANCHSTART":
+		}
+		else if (strcmp(command, "SECTION") == 0) Command->knd = COMMAND_SECTION;
+		else if (strcmp(command, "BRANCHSTART") == 0) {
 			Command->knd = COMMAND_BRANCHSTART;
 			char* tp;
 			tp = strtok(value, ",");
@@ -900,37 +882,17 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 				Command->val[i] = strtod(tp, NULL);
 				++i;
 			}
-			break;
-		case "BRANCHEND":
-			Command->knd = COMMAND_BRANCHEND;
-			break;
-		case "N":
-			Command->knd = COMMAND_N;
-			break;
-		case "E":
-			Command->knd = COMMAND_E;
-			break;
-		case "M":
-			Command->knd = COMMAND_M;
-			break;
-		case "LEVELHOLD":
-			Command->knd = COMMAND_LEVELHOLD;
-			break;
-		case "BARLINEOFF":
-			Command->knd = COMMAND_BARLINEOFF;
-			break;
-		case "BARLINEON":
-			Command->knd = COMMAND_BARLINEON;
-			break;
-		/*case "BMSCROLL":
-			Command->knd = COMMAND_BMSCROLL;
-			break;
-		case "HBSCROLL":
-			Command->knd = COMMAND_HBSCROLL;
-			break;*/
-		default:
-			Command->knd = -1;
-			break;
+		}
+		else if (strcmp(command, "BRANCHEND") == 0) Command->knd = COMMAND_BRANCHEND;
+		else if (strcmp(command, "N") == 0) Command->knd = COMMAND_N;
+		else if (strcmp(command, "E") == 0) Command->knd = COMMAND_E;
+		else if (strcmp(command, "M") == 0) Command->knd = COMMAND_M;
+		else if (strcmp(command, "LEVELHOLD") == 0) Command->knd = COMMAND_LEVELHOLD;
+		else if (strcmp(command, "BARLINEOFF") == 0) Command->knd = COMMAND_BARLINEOFF;
+		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
+		/*else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
+		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;*/
+		else Command->knd = -1;
 
 		free(command);
 		free(value);
