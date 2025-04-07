@@ -192,7 +192,7 @@ void load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SONGVOL:") == buf) {
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
-					Current_Header.songvol = atoi(temp) * 0.8;
+					Current_Header.songvol = atoi(temp) * 0.6;
 				}
 				continue;
 			}
@@ -200,7 +200,7 @@ void load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SEVOL:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					Current_Header.sevol = atoi(temp) * 0.8;
+					Current_Header.sevol = atoi(temp) * 0.6;
 				}
 				continue;
 			}
