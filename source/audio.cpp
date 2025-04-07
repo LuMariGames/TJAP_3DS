@@ -228,7 +228,7 @@ void load_combo() {
 		"romfs:/combo/1400meka.ogg",
 	};
 
-	for (int i = 4; i < 71; ++i) {
+	for (int i = 4; i < SNUM; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
