@@ -29,7 +29,8 @@ typedef struct {
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
 	bool flag,isDispBarLine;
-	
+	char lyric[32];
+
 } MEASURE_T;
 
 void load_tja_head(int course, LIST_T Song), load_tja_notes(int course, LIST_T Song), init_tja();
