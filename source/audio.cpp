@@ -9,7 +9,7 @@
 #define AUDIO_BUFFER_SIZE 4000
 #define STACKSIZE (4 * 1000)
 #define SOUND_NUMBER 4
-#define SNUM 71
+#define SNUM 36
 
 typedef struct {
 	float rate;
@@ -195,7 +195,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[67][30] = {
+	char sound_address[31][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
@@ -212,41 +212,6 @@ void load_combo() {
 		"romfs:/combo/1300combo.ogg",
 		"romfs:/combo/1400combo.ogg",
 		"romfs:/combo/1500combo.ogg",
-		"romfs:/combo/1600combo.ogg",
-		"romfs:/combo/1700combo.ogg",
-		"romfs:/combo/1800combo.ogg",
-		"romfs:/combo/1900combo.ogg",
-		"romfs:/combo/2000combo.ogg",
-		"romfs:/combo/2100combo.ogg",
-		"romfs:/combo/2200combo.ogg",
-		"romfs:/combo/2300combo.ogg",
-		"romfs:/combo/2400combo.ogg",
-		"romfs:/combo/2500combo.ogg",
-		"romfs:/combo/2600combo.ogg",
-		"romfs:/combo/2700combo.ogg",
-		"romfs:/combo/2800combo.ogg",
-		"romfs:/combo/2900combo.ogg",
-		"romfs:/combo/3000combo.ogg",
-		"romfs:/combo/3100combo.ogg",
-		"romfs:/combo/3200combo.ogg",
-		"romfs:/combo/3300combo.ogg",
-		"romfs:/combo/3400combo.ogg",
-		"romfs:/combo/3500combo.ogg",
-		"romfs:/combo/3600combo.ogg",
-		"romfs:/combo/3700combo.ogg",
-		"romfs:/combo/3800combo.ogg",
-		"romfs:/combo/3900combo.ogg",
-		"romfs:/combo/4000combo.ogg",
-		"romfs:/combo/4100combo.ogg",
-		"romfs:/combo/4200combo.ogg",
-		"romfs:/combo/4300combo.ogg",
-		"romfs:/combo/4400combo.ogg",
-		"romfs:/combo/4500combo.ogg",
-		"romfs:/combo/4600combo.ogg",
-		"romfs:/combo/4700combo.ogg",
-		"romfs:/combo/4800combo.ogg",
-		"romfs:/combo/4900combo.ogg",
-		"romfs:/combo/5000combo.ogg",
 		"romfs:/combo/50meka.ogg",
 		"romfs:/combo/100meka.ogg",
 		"romfs:/combo/200meka.ogg",
