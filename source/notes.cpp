@@ -95,13 +95,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 						Branch.course = -1;
 						break;
 					}
-
 					NotesCount = 0;
 					++MeasureCount;
 					if (Branch.wait) break;
 					else continue;
 				}
-
 				++NotesCount;
 			}
 
@@ -264,7 +262,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 						RollState = 0;
 						break;
 					}
-
 					++NotesNumber;
 				}
 				else if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) == 0){
@@ -477,7 +474,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	}
 
 	//判定すべきノーツを検索
-	for (int i = 0, j = NOTES_MAX; i < j; ++i) {
+	for (int i = (Option.isAuto ? NOTES_MAX : 0), j = NOTES_MAX; i < j; ++i) {
 
 		if (Notes[i].flag) {
 
@@ -529,10 +526,8 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
 					break;
 				}
-
 				if (Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU) update_score(SPECIAL_PERFECT);
 				else if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU) update_score(PERFECT);
-
 				delete_notes(i);
 			}
 		}
@@ -924,7 +919,6 @@ int get_branch_course() {
 int ctoi(char c) {
 
 	switch (c) {
-	case '0': return 0;
 	case '1': return 1;
 	case '2': return 2;
 	case '3': return 3;
