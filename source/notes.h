@@ -45,7 +45,8 @@ inline void notes_main(
 	char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],
 	MEASURE_T Measure[MEASURE_MAX],
 	int cnt,
-	C2D_Sprite  sprites[SPRITES_NUMER]);
+	C2D_Sprite sprites[SPRITES_NUMER]
+);
 int ctoi(char c);
 int get_branch_course();
 void init_notes(TJA_HEADER_T TJA_Header);
