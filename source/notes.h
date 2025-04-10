@@ -39,7 +39,7 @@ typedef struct {
 
 }BRANCH_T;
 
-inline void notes_main(
+void notes_main(
 	bool isDon,
 	bool isKatsu,
 	char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],
