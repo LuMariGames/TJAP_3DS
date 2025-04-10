@@ -66,8 +66,8 @@ void load_tja_head(int course,LIST_T Song) {
 	Current_Header.wave = (char*)"audio.ogg";
 	Current_Header.offset = 0;
 	Current_Header.balloon[0] = 5;
-	Current_Header.songvol = 100;
-	Current_Header.sevol = 100;
+	Current_Header.songvol = 50;
+	Current_Header.sevol = 50;
 	Current_Header.scoreinit = -1;
 	Current_Header.scorediff = -1;
 	Current_Header.course = course;
