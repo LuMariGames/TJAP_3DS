@@ -366,7 +366,7 @@ int main() {
 			if (Option.dispFps) draw_fps();
 
 			snprintf(get_buffer(), BUFFER_SIZE, "%.3f", (SetTime[0] - SetTime[1]));
-			draw_debug(0, 0, get_buffer());
+			draw_debug(300, 0, get_buffer());
 
 			//下画面
 			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
@@ -428,7 +428,7 @@ int main() {
 			if (offset > 0 && (isNotesStart == false || !isMusicStart)) {
 
 				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
-				if (CurrentTimeMain >= offset && !isMusicStart) {
+				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
@@ -437,11 +437,11 @@ int main() {
 			//音楽が先
 			else if (offset <= 0 && (isNotesStart == false || !isMusicStart)) {
 
-				if (CurrentTimeMain >= 0 && !isPlayMain) {
+				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= 0 && !isNotesStart) {
+				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
 					isNotesStart = true;
 				}
 			}
