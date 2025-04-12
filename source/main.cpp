@@ -437,11 +437,11 @@ int main() {
 			//音楽が先
 			else if (offset <= 0 && (isNotesStart == false || !isMusicStart)) {
 
-				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
+				if (CurrentTimeMain >= 0 && !isPlayMain) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
+				if (CurrentTimeMain >= (-1.0 * offset) + FirstMeasureTime && !isNotesStart) {
 					isNotesStart = true;
 				}
 			}
