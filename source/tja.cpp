@@ -327,13 +327,10 @@ void load_tja_head(int course,LIST_T Song) {
 				}
 				continue;
 			}
-
 			free(temp);
 		}
-
 		fclose(fp);
 		free(temp);
-
 	}
 	else {
 		//tjaファイルが開けなかった時
@@ -455,7 +452,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 		}
 	}
 	stme = tmp;
-	return Measure[tmp].judge_time - ((Measure[stme].scroll < 1.0) ? Measure[stme].create_time : 0.0);
+	return Measure[tmp].judge_time - ((Measure[stme].scroll <= 1.0) ? Measure[stme].create_time : 0.0);
 }
 
 void load_tja_notes(int course, LIST_T Song) {
@@ -508,9 +505,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				else if (strcmp(temp, "Dan") ==   0 || strcmp(temp, "dan") == 0)   CurrentCourse = COURSE_DAN;
 
 				free(temp);
-
 				if (course == CurrentCourse) isCourseMatch = true;
-
 				continue;
 			}
 
@@ -709,7 +704,6 @@ void load_tja_notes(int course, LIST_T Song) {
 							Measure[Measure[MeasureCount].firstmeasure + i].isDispBarLine = false;	//最初の小節は小節線をオフにしない
 						}
 					}
-
 					PreJudge = Measure[MeasureCount].judge_time;
 				}
 				else if (tja_notes[tja_cnt][0] != '#') {
@@ -897,7 +891,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		free(command);
 		free(value);
 	}
-
 	else Command->knd = -1;
 }
 
