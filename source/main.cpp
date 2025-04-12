@@ -441,7 +441,7 @@ int main() {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= (-1.0 * offset) - FirstMeasureTime && !isNotesStart) {
+				if (CurrentTimeMain >= (-1.0 * offset) && !isNotesStart) {
 					isNotesStart = true;
 				}
 			}
