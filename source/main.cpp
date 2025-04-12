@@ -428,7 +428,7 @@ int main() {
 			if (offset > 0 && (isNotesStart == false || !isMusicStart)) {
 
 				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
-				if (CurrentTimeMain >= 0 && !isMusicStart) {
+				if (CurrentTimeMain >= offset && !isMusicStart) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
