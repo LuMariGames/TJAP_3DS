@@ -216,11 +216,11 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_BUFFERSIZE], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%d", get_buffer_size() * 0.0625);
+		snprintf(get_buffer(), BUFFER_SIZE, "%d", get_buffer_size());
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			Option.buffer_size = (int)input_number_keyboard(5, false,false) * 16;
-			if (Option.buffer_size < 8192) Option.buffer_size = 8192;
+			Option.buffer_size = (int)input_number_keyboard(5, false,false);
+			if (Option.buffer_size < 1024) Option.buffer_size = 1024;
 			put_buffer_size(Option.buffer_size);
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
