@@ -744,7 +744,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			delete_notes(i);
 		}
 	}
-
 	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
 }
 
@@ -1136,9 +1135,9 @@ void delete_notes(int i) {
 		Notes[i].notes_max = 0;
 		Notes[i].x_ini = 0;
 		Notes[i].x = 0;
-		Notes[i].create_time = INT_MAX;
-		Notes[i].judge_time = INT_MAX;
-		Notes[i].pop_time = INT_MAX;
+		Notes[i].create_time = 0;
+		Notes[i].judge_time = 0;
+		Notes[i].pop_time = 0;
 		Notes[i].bpm = 0;
 		Notes[i].scroll = 0;
 		Notes[i].roll_id = -1;
