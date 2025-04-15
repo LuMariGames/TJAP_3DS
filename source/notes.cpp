@@ -135,12 +135,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
-					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL) && (PreNotesKnd == NOTES_ROLL || PreNotesKnd == NOTES_BIGROLL )) {	//55558のような表記に対応
-						
+					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL) && (PreNotesKnd == NOTES_ROLL || PreNotesKnd == NOTES_BIGROLL)) {	//55558のような表記に対応
 						continue;
 					}
-
-					if (knd == NOTES_POTATO) knd = NOTES_BALLOON;	//イモ連打は風船に置換
 
 					if (Option.random > 0) {		//ランダム(きまぐれ,でたらめ)
 						if (rand() % 100 < Option.random * 100) {
@@ -269,9 +266,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				}
 			}
 			++MeasureCount;
-			notes_sort();	//ソート
 		}
 	}
+	notes_sort();	//ソート
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 
@@ -289,8 +286,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			if ((BarLine[i].x < 62 && BarLine[i].scroll > 0) || (BarLine[i].x > 400 && BarLine[i].scroll < 0)) BarLine[i].flag = false;
 		}
 	}
-
-	send_gogotime(isGOGOTime);
 
 	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 	if (!Option.isStelth) notes_draw(sprites);
@@ -337,6 +332,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			if (NotFalse == false && Measure[i].judge_time <= CurrentTimeNotes) Measure[i].flag = false;
 		}
 	}
+	send_gogotime(isGOGOTime);
 
 	for (int i = MaxMeasureCount; i > -1; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
@@ -722,6 +718,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 				break;
 			}
 		}
+		else break;
 	}
 
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
@@ -898,6 +895,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				break;
 			}
 		}
+		else break;
 	}
 
 	//割れた風船
@@ -927,7 +925,7 @@ int ctoi(char c) {
 	case '6': return 6;
 	case '7': return 7;
 	case '8': return 8;
-	case '9': return 9;
+	case '9': return 7;
 	default: return 0;
 	}
 }
@@ -1138,9 +1136,9 @@ void delete_notes(int i) {
 		Notes[i].notes_max = 0;
 		Notes[i].x_ini = 0;
 		Notes[i].x = 0;
-		Notes[i].create_time = 0;
-		Notes[i].judge_time = 0;
-		Notes[i].pop_time = 0;
+		Notes[i].create_time = INT_MAX;
+		Notes[i].judge_time = INT_MAX;
+		Notes[i].pop_time = INT_MAX;
 		Notes[i].bpm = 0;
 		Notes[i].scroll = 0;
 		Notes[i].roll_id = -1;
