@@ -506,7 +506,7 @@ int round_down(int arg) {
 
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
-	int NotesCount = 0, i = 0, combo = 0, DiffTmp = 0, BalloonCnt = 0, TmpBaseCeilingPoint = 0, NotesCountMax = 0, RollCnt = 0, RollKnd = 0;
+	int NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollCnt = 0,RollKnd = 0;
 	bool isEND = false;
 	double init_cnt = 0, diff_cnt = 0, gogo = 1, special = 1, roll_start_time = 0, roll_end_time = 0;
 	COMMAND_T Command;
@@ -611,7 +611,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_BALLOON) {		//風船
 
-					TmpBaseCeilingPoint -= (TJA_Header.balloon[BalloonCnt] * 300 + 5000) * gogo;
+					TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[Measure[i].firstmeasure].branch == -1) ? 0 : Measure[Measure[i].firstmeasure].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
