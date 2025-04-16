@@ -65,7 +65,7 @@ void load_tja_head(int course,LIST_T Song) {
 	Current_Header.bpm = 60.0;
 	Current_Header.wave = (char*)"audio.ogg";
 	Current_Header.offset = 0;
-	Current_Header.balloon[0] = 5;
+	Current_Header.balloon[0][0] = 5;
 	Current_Header.songvol = 50;
 	Current_Header.sevol = 50;
 	Current_Header.scoreinit = -1;
@@ -179,10 +179,52 @@ void load_tja_head(int course,LIST_T Song) {
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
 					char *tp = strtok(temp, ",");
-					Current_Header.balloon[0] = atoi(tp);
+					Current_Header.balloon[0][0] = atoi(tp);
 					int cnt = 1;
 					while ((tp = strtok(NULL, ","))) {
-						Current_Header.balloon[cnt] = atoi(tp);
+						Current_Header.balloon[0][cnt] = atoi(tp);
+						++cnt;
+					}
+				}
+				continue;
+			}
+
+			if (strstr(buf, "BALLOONNOM:") == buf) {
+				if (buf[8] != '\n' && buf[8] != '\r') {
+					strlcpy(temp, buf + 8, strlen(buf) - 9);
+					char *tp = strtok(temp, ",");
+					Current_Header.balloon[1][0] = atoi(tp);
+					int cnt = 1;
+					while ((tp = strtok(NULL, ","))) {
+						Current_Header.balloon[1][cnt] = atoi(tp);
+						++cnt;
+					}
+				}
+				continue;
+			}
+
+			if (strstr(buf, "BALLOONEXP:") == buf) {
+				if (buf[8] != '\n' && buf[8] != '\r') {
+					strlcpy(temp, buf + 8, strlen(buf) - 9);
+					char *tp = strtok(temp, ",");
+					Current_Header.balloon[2][0] = atoi(tp);
+					int cnt = 1;
+					while ((tp = strtok(NULL, ","))) {
+						Current_Header.balloon[2][cnt] = atoi(tp);
+						++cnt;
+					}
+				}
+				continue;
+			}
+
+			if (strstr(buf, "BALLOONMAS:") == buf) {
+				if (buf[8] != '\n' && buf[8] != '\r') {
+					strlcpy(temp, buf + 8, strlen(buf) - 9);
+					char *tp = strtok(temp, ",");
+					Current_Header.balloon[3][0] = atoi(tp);
+					int cnt = 1;
+					while ((tp = strtok(NULL, ","))) {
+						Current_Header.balloon[3][cnt] = atoi(tp);
 						++cnt;
 					}
 				}
