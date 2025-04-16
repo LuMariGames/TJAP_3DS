@@ -10,14 +10,14 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[256], BalloonCount, TotalFailedCount, NowMeCount, dcd;
+int balloon[4][256], BalloonCount, TotalFailedCount, NowMeCount, dcd;
 extern int isBranch, comboVoice, course, stme;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern double black;
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
-make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
+make_balloon_start(int NotesId, branch), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
 notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
@@ -203,7 +203,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 					case NOTES_BALLOON:
 						RollState = NOTES_BALLOON;
-						roll_id = make_balloon_start(id);
+						roll_id = make_balloon_start(id, ((Measure[MeasureCount].branch == -1) ? 0 : Measure[MeasureCount].branch - 11));
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
 						}
@@ -1057,7 +1057,7 @@ inline int find_balloon_id() {
 	return -1;
 }
 
-int make_balloon_start(int NotesId) {
+int make_balloon_start(int NotesId, branch) {
 
 	int id = find_balloon_id();
 	if (id != -1) {
@@ -1065,7 +1065,7 @@ int make_balloon_start(int NotesId) {
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
 		BalloonNotes[id].end_id = -1;
-		if (balloon[BalloonCount] != 0) BalloonNotes[id].need_hit = balloon[BalloonCount];
+		if (balloon[branch][BalloonCount] != 0) BalloonNotes[id].need_hit = balloon[branch][BalloonCount];
 		else  BalloonNotes[id].need_hit = 5;
 		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
@@ -1247,8 +1247,11 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	Command.val[2] = 0;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
-	for (int i = 0, j = (int)(sizeof(balloon) / sizeof(balloon[0])); i < j; ++i) {
-		balloon[i] = TJA_Header.balloon[i];
+	for (int i = 0, j = (int)(sizeof(balloon[0]) / sizeof(balloon[0][0])); i < j; ++i) {
+		balloon[0][i] = TJA_Header.balloon[0][i];
+		balloon[1][i] = TJA_Header.balloon[1][i];
+		balloon[2][i] = TJA_Header.balloon[2][i];
+		balloon[3][i] = TJA_Header.balloon[3][i];
 	}
 	NotesNumber = 0;
 	NotesCount = 0;
