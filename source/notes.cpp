@@ -10,7 +10,7 @@
 
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[4][256], BalloonCount, TotalFailedCount, NowMeCount, dcd;
+int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd;
 extern int isBranch, comboVoice, course, stme;
 double bpm, offset;
 float NowBPM = 120.0f;
@@ -347,7 +347,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		TotalFailedCount = dcd;
 	}
 	
-	snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
+	/*snprintf(get_buffer(), BUFFER_SIZE, "cnt :%d", cnt);
 	draw_debug(100, 0, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "Bpm:%.1f     Measure:%.1f     Scroll:%.1f", Measure[MeasureCount].bpm, Measure[MeasureCount].measure, Measure[MeasureCount].scroll);
 	draw_debug(0, 20, get_buffer());
@@ -356,7 +356,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	snprintf(get_buffer(), BUFFER_SIZE, "%d: %s", MeasureCount, tja_notes[MeasureCount]);
 	draw_debug(0, 50, get_buffer());
 	snprintf(get_buffer(), BUFFER_SIZE, "course:%d", Branch.course);
-	draw_debug(250, 40, get_buffer());
+	draw_debug(250, 40, get_buffer());*/
 }
 
 int find_notes_id() {
@@ -1065,11 +1065,11 @@ int make_balloon_start(int NotesId, int branch) {
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
 		BalloonNotes[id].end_id = -1;
-		if (balloon[branch][BalloonCount] != 0) BalloonNotes[id].need_hit = balloon[branch][BalloonCount];
+		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[id].need_hit = balloon[branch][BalloonCount[branch]];
 		else  BalloonNotes[id].need_hit = 5;
 		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
-		++BalloonCount;
+		++BalloonCount[branch];
 		return id;
 	}
 	else return -1;
@@ -1266,7 +1266,10 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	JudgeY = 70;
 	JudgeRollState = -1;
 	//isAuto = true;	//要変更
-	BalloonCount = 0;
+	BalloonCount[0] = 0;
+	BalloonCount[1] = 0;
+	BalloonCount[2] = 0;
+	BalloonCount[3] = 0;
 	BalloonBreakCount = 0;
 	isBalloonBreakDisp = false;
 	isGOGOTime = false;
