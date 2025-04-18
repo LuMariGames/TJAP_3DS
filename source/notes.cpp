@@ -266,9 +266,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				}
 			}
 			++MeasureCount;
+			notes_sort();	//ソート
 		}
 	}
-	notes_sort();	//ソート
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 
@@ -718,7 +718,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 				break;
 			}
 		}
-		else break;
 	}
 
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
@@ -894,7 +893,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				break;
 			}
 		}
-		else break;
 	}
 
 	//割れた風船
