@@ -17,8 +17,7 @@ enum msec_status {
 struct timespec tv;
 int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
-double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM],
-resTime = clock_getres(CLOCK_MONOTONIC, &tv);
+double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
 
 double get_current_time(int id) {
 	
@@ -39,7 +38,7 @@ double get_current_time(int id) {
 		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		clock_gettime(CLOCK_MONOTONIC, &tv);
+		clock_gettime(CLOCK_MONOTONIC_RAW, &tv);
 		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 		++cnt[id];
 		Time[id] = tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
