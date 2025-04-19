@@ -361,11 +361,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
+	#pragma GCC unroll 511
+	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 		if (!Notes[i].flag) return i;
-		if (!Notes[i+1].flag) return i+1;
-		if (!Notes[i+2].flag) return i+2;
-		if (!Notes[i+3].flag) return i+3;
 	}
 	return -1;
 }
@@ -499,6 +497,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
+		#pragma GCC unroll 511
 		for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
