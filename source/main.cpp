@@ -44,7 +44,7 @@ void draw_debug(float x, float y, const char *text) {
 	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
-void init_main() {
+inline void init_main() {
 
 	romfsInit();
 	gfxInitDefault();
@@ -52,11 +52,11 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	APT_SetAppCpuTimeLimit(40);
+	APT_SetAppCpuTimeLimit(42);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
 }
 
-void exit_main() {
+inline void exit_main() {
 
 	C2D_TextBufDelete(g_dynamicBuf);
 
@@ -69,7 +69,7 @@ void exit_main() {
 	exit_skin();
 }
 
-void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int key) {
+inline void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int key) {
 
 	int numKeys = 20;
 
@@ -620,11 +620,11 @@ static int exist_file(const char* path) {
     fclose(fp);
     return 1;
 }
-inline static int time_count(double TIME) noexcept {
+inline int time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
 	return ((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2);
 }
-inline static int dancer_time_count(double TIME, int NUM) noexcept {
+inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
