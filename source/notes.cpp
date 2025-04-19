@@ -361,8 +361,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	#pragma unroll 511
-	for (int i = 0; i < NOTES_MAX - 1; ++i) {
+	#pragma GCC unroll 511
+	for (int i = 0; i < 511; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	return -1;
@@ -498,7 +498,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	if (Option.isAuto) {	//オート
 
 		#pragma GCC unroll 511
-		for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+		for (int i = 0; i < 511; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -667,7 +667,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	get_option(&Option);
 
 	#pragma GCC unroll 511
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//計算
+	for (int i = 0; i < 511; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -721,7 +721,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	}
 
 	#pragma GCC unroll 511
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0; i < 511; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -752,7 +752,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 	int notes_y = 109;
 
 	#pragma GCC unroll 512
-	for (int i = 0; i < NOTES_MAX; ++i) {	//描画
+	for (int i = 0; i < 512; ++i) {	//描画
 
 		if (Notes[i].flag) {
 
