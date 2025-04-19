@@ -361,8 +361,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	#pragma GCC unroll 511
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+	#pragma unroll 511
+	for (int i = 0; i < NOTES_MAX - 1; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	return -1;
