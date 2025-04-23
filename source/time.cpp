@@ -38,7 +38,7 @@ double get_current_time(int id) {
 		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		clock_gettime(CLOCK_MONOTONIC, &tv);
+		clock_gettime(CLOCK_REALTIME, &tv);
 		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 		++cnt[id];
 		Time[id] = tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
