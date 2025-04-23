@@ -11,7 +11,7 @@
 
 static volatile bool stop = true;
 extern float mix[12];
-double SetTime[2];
+//double SetTime[2];
 
 bool togglePlayback(void){
 
@@ -147,15 +147,15 @@ void playFile(void* infoIn){
 	memset(waveBuf, 0, sizeof(waveBuf));
 
 	while (*info->isPlay == false) svcSleepThread(100000);
-	SetTime[0] = osGetTime() * 0.001 + 0.256;
+	//SetTime[0] = osGetTime() * 0.001 + 0.256;
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer2[0];
 
-	SetTime[1] = osGetTime() * 0.001;
-	svcSleepThread((SetTime[0] - SetTime[1]) * 1000000000);
+	//SetTime[1] = osGetTime() * 0.001;
+	//svcSleepThread((SetTime[0] - SetTime[1]) * 1000000000);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 
@@ -235,7 +235,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 131072, prio - 1, 1, false);
+	thread = threadCreate(playFile, playbackInfo, 131072, prio - 1, 0, false);
 	return 0;
 }
 
