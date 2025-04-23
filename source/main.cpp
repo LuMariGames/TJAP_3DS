@@ -52,7 +52,7 @@ inline void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	APT_SetAppCpuTimeLimit(50);
+	APT_SetAppCpuTimeLimit(55);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
 }
 
@@ -275,8 +275,8 @@ int main() {
 			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
 			time_ini();
-			//offset = TJA_Header.offset + Option.offset - 0.256;
-			offset = TJA_Header.offset + Option.offset;
+			offset = TJA_Header.offset + Option.offset - 0.256;
+			//offset = TJA_Header.offset + Option.offset;
 			notes_cnt = 0;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
