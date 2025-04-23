@@ -270,7 +270,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	#pragma GCC unroll 127
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 
 		if (BarLine[i].flag) {
@@ -362,7 +361,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	#pragma GCC unroll 511
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 		if (!Notes[i].flag) return i;
 	}
@@ -371,7 +369,6 @@ int find_notes_id() {
 
 int find_line_id() {
 
-	#pragma GCC unroll 127
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; i += 4) {
 		if (!BarLine[i].flag) return i;
 		if (!BarLine[i+1].flag) return i+1;
@@ -471,7 +468,6 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
-		#pragma GCC unroll 511
 		for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
@@ -532,7 +528,6 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	else if (!Option.isAuto) {			//手動
 
 		//判定すべきノーツを検索
-		#pragma GCC unroll 512
 		for (int i = 0; i < NOTES_MAX; ++i) {
 
 			if (Notes[i].flag) {
@@ -669,7 +664,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	#pragma GCC unroll 511
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
@@ -723,7 +717,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	#pragma GCC unroll 511
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
@@ -754,7 +747,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	#pragma GCC unroll 512
 	for (int i = 0; i < NOTES_MAX; ++i) {	//描画
 
 		if (Notes[i].flag) {
@@ -964,7 +956,6 @@ void delete_roll(int i) {
 
 inline void init_roll__notes() {
 
-	#pragma GCC unroll 255
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 		delete_roll(i);
 	}
@@ -972,7 +963,6 @@ inline void init_roll__notes() {
 
 inline int find_roll_id() {
 
-	#pragma GCC unroll 255
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 		if (!RollNotes[i].flag) return i;
 	}
@@ -996,7 +986,6 @@ inline int make_roll_start(int NotesId) {
 
 static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
-	#pragma GCC unroll 255
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
 		if (RollNotes[i].flag &&
@@ -1037,7 +1026,6 @@ void delete_balloon(int i) {
 
 inline void init_balloon_notes() {
 
-	#pragma GCC unroll 255
 	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
 		delete_balloon(i);
 	}
@@ -1045,7 +1033,6 @@ inline void init_balloon_notes() {
 
 inline int find_balloon_id() {
 
-	#pragma GCC unroll 255
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 		if (!BalloonNotes[i].flag) return i;
 	}
@@ -1072,7 +1059,6 @@ int make_balloon_start(int NotesId, int branch) {
 
 int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
-	#pragma GCC unroll 255
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
 		if (BalloonNotes[i].flag &&
@@ -1143,7 +1129,6 @@ void delete_notes(int i) {
 bool get_notes_finish() {
 
 	if (isNotesLoad) return false;
-	#pragma GCC unroll 511
 	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
 
 		if (Notes[i].flag && !Notes[i].isThrough) return false;
@@ -1199,7 +1184,6 @@ void draw_condition() {
 	char *Cdn1[3] {(char*)exam1[0], (char*)exam2[0], (char*)exam3[0]}, *Cdn2[3] {(char*)exam1[1], (char*)exam2[1], (char*)exam3[1]}, *Cdn3[3]{(char*)exam1[3], (char*)exam2[3], (char*)exam3[3]}, *text = (char*)"%";
 	float width = 0, height = 0, tx = 0;
 
-	#pragma GCC unroll 3
 	for (int j = 0; j < 3; ++j) {
 		if (strcmp(Cdn1[j], "jb") == 0) draw_condition_text(50, 160+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
 		else if (strcmp(Cdn1[j], "jg") == 0) draw_condition_text(50, 160+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
@@ -1222,7 +1206,6 @@ void draw_condition() {
 }
 inline void init_notes_structure() {
 
-	#pragma GCC unroll 511
 	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
 		delete_notes(i);
 		delete_notes(i+1);
@@ -1281,7 +1264,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	isLevelHold = false;
 	PreNotesKnd = 0;
 	TotalFailedCount = 0;
-	#pragma GCC unroll 127
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		BarLine[i].flag = false;
 		BarLine[i].scroll = 0;
