@@ -96,8 +96,8 @@ void playFile(void* infoIn){
 
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
-	int16_t*	buffer1 = NULL;
-	int16_t*	buffer2 = NULL;
+	int8_t*		buffer1 = NULL;
+	int8_t*		buffer2 = NULL;
 	ndspWaveBuf	waveBuf[2];
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
@@ -133,15 +133,15 @@ void playFile(void* infoIn){
 		goto err;
 	}
 	testtest = 99;
-	buffer1 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer2 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer1 = (int8_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int8_t));
+	buffer2 = (int8_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int8_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
 	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_LINEAR);
 	ndspChnSetRate(CHANNEL, (*decoder.rate)());
-	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
+	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM8 : NDSP_FORMAT_MONO_PCM8);
 	ndspChnSetMix(CHANNEL, mix);
 
 	memset(waveBuf, 0, sizeof(waveBuf));
