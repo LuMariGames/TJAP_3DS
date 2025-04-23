@@ -78,8 +78,8 @@ uint64_t fillVorbisBuffer(char* bufferOut)
 		static int current_section;
 		int samplesJustRead =
 			ov_read(&vorbisFile, bufferOut,
-					samplesToRead > 4096 ? 4096	: samplesToRead,
-					&current_section, 1);
+					samplesToRead > 4096 ? 4096 : samplesToRead,
+					0, 1, 1, &current_section);
 
 		if(samplesJustRead < 0)
 			return samplesJustRead;
