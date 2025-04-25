@@ -19,9 +19,6 @@ int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
 int isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
 
-OPTION_T Option;
-get_option(&Option);
-
 double get_current_time(int id) {
 
 	/*if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
@@ -48,7 +45,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id] * Option.musicspeed;
+	return Time[id] * mspeed();
 }
 
 void restart_time(int id) {
@@ -84,7 +81,7 @@ double fps_time[2],fps_cnt,fps_sum,fps;	//要初期化
 void draw_fps() {
 	
 	fps_time[0] = fps_time[1];
-	fps_time[1] = get_current_time(TIME_FPS) / Option.musicspeed;
+	fps_time[1] = get_current_time(TIME_FPS) / mspeed();
 
 	fps_sum += fps_time[1] - fps_time[0];
 	++fps_cnt;
