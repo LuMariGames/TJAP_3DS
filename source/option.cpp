@@ -542,6 +542,10 @@ bool get_isauto() {
 	return Option.isAuto;
 }
 
+float mspeed() {
+	return Option.musicspeed;
+}
+
 void init_option() {
 
 	Option.isAuto = false;
