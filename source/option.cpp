@@ -247,6 +247,22 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.offset = 0;
 		XCnt = 0, ++YCnt;
 
+		//曲のはやさ
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_MUSICSPEED], true, &width, &height);
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		snprintf(get_buffer(), BUFFER_SIZE, "%.2f", Option.musicspeed);
+		draw_option_text(x, y, get_buffer(), true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			Option.musicspeed = input_number_keyboard(5, true,false);
+			if (Option.musicspeed > 2.0) Option.musicspeed = 2.0;
+			else if (Option.musicspeed < 0.5) Option.musicspeed = 0.5;
+		}
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.musicspeed = 1.0;
+		XCnt = 0, ++YCnt;
+
 		//特殊
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SPECIAL], true, &width, &height);
