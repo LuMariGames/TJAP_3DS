@@ -52,7 +52,6 @@ inline void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	APT_SetAppCpuTimeLimit(42);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
 }
 
@@ -126,7 +125,7 @@ int main() {
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
 	load_sprites();
-	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, 1, true);
+	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
 
@@ -205,6 +204,7 @@ int main() {
 					warning = WARNING_DSP1;
 					scene_state = SCENE_WARNING; 
 				}
+				APT_SetAppCpuTimeLimit(65);
 			}
 			break;
 
