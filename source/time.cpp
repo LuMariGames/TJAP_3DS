@@ -22,7 +22,8 @@ double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME
 double get_current_time(int id) {
 
 	OPTION_T Option;
-	
+	get_option(&Option);
+
 	/*if ((id == 0 || id == 1) && get_isMusicStart() == true) { //メインのカウントの時はVorbis基準の時間を返す 要曲終了時の処理
 		//if (isStop[id] != 1) stop_time(id);
 		if (CurrentTime[id] == 0 && Time[id] == 0 && IniVorbisTime[id]==0) IniVorbisTime[id] = getVorbisTime();
@@ -47,7 +48,7 @@ double get_current_time(int id) {
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
-	return Time[id] * (id == 2 : 1 ? Option.musicspeed);
+	return Time[id] * ((id == 2) : 1 ? Option.musicspeed);
 }
 
 void restart_time(int id) {
