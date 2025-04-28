@@ -11,10 +11,10 @@
 #include <unistd.h>
 #include <ctype.h>
 
-#define C3D_CMDBUF_SIZE 0x32000
+#define C3D_CMDBUF_SIZE 0x40000
 #define VERSION "1.5.2"
-#define DECODE_COREID 0
-#define DECODE_MEM 24000
+#define DECODE_COREID 1
+#define DECODE_MEM 65536
 #define DEFAULT_DIR "sdmc:/tjafiles/"
 #define NOTDEF_DIR "romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
