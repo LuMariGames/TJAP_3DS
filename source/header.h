@@ -13,6 +13,8 @@
 
 #define C3D_CMDBUF_SIZE 0x28000
 #define VERSION "1.5.2"
+#define DECODE_COREID 0
+#define DECODE_MEM 32768
 #define DEFAULT_DIR "sdmc:/tjafiles/"
 #define NOTDEF_DIR "romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
@@ -45,7 +47,7 @@
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
 
-#define DEFAULT_BUFFER_SIZE 16384
+#define DEFAULT_BUFFER_SIZE 8192
 
 enum NOTES_KND {
 
