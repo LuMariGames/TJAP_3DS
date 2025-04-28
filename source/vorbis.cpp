@@ -20,7 +20,7 @@ void setVorbis(struct decoder_fn* decoder){
 	decoder->vorbis_buffer_size = vorbis_buffer_size;
 	decoder->decode = &decodeVorbis;
 	decoder->exit = &exitVorbis;
-	decoder->bitrate = &bitrateVorbis;
+	ov_time_seek_page(&vorbisFile, 0);
 }
 
 int initVorbis(const char* file){
@@ -36,7 +36,6 @@ int initVorbis(const char* file){
 		goto out;
 
 	err = 0;
-	ov_time_seek_page(&vorbisFile, 0);
 
 out:
 	return err;
