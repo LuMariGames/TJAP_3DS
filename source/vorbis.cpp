@@ -20,7 +20,7 @@ void setVorbis(struct decoder_fn* decoder){
 	decoder->vorbis_buffer_size = vorbis_buffer_size;
 	decoder->decode = &decodeVorbis;
 	decoder->exit = &exitVorbis;
-	ov_time_seek_page(&vorbisFile, 0);
+	ov_time_seek_page(&vorbisFile, 1);
 }
 
 int initVorbis(const char* file){
@@ -48,11 +48,6 @@ uint32_t rateVorbis(void){
 uint8_t channelVorbis(void)
 {
 	return vi->channels;
-}
-
-long bitrateVorbis(void)
-{
-	return vi->bitrate_upper;
 }
 
 uint64_t decodeVorbis(void* buffer)
