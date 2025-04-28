@@ -76,7 +76,7 @@ uint64_t fillVorbisBuffer(char* bufferOut)
 	while(samplesToRead > 0)
 	{
 		static int current_section;
-		ov_time_seek_page(vorbisFile, 0);
+		ov_time_seek_page(&vorbisFile, 0);
 		int samplesJustRead =
 			ov_read(&vorbisFile, bufferOut,
 					samplesToRead > 4096 ? 4096	: samplesToRead,
