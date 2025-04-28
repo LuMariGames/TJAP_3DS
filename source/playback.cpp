@@ -146,8 +146,8 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	while (*info->isPlay == false) svcSleepThread(100000);
 	SetTime[0] = osGetTime() * 0.001 + 0.256;
+	while (*info->isPlay == false) svcSleepThread(100000);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
@@ -235,7 +235,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, 131072, prio - 1, 1, false);
+	thread = threadCreate(playFile, playbackInfo, DECODE_MEM, prio - 1, DECODE_COREID, false);
 	return 0;
 }
 
