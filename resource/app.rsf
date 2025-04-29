@@ -70,7 +70,7 @@ AccessControlInfo:
   MemoryType                    : Application # Application/System/Base
   SystemMode                    : 64MB # 64MB(Default)/96MB/80MB/72MB/32MB
   IdealProcessor                : 1
-  AffinityMask                  : 1
+  AffinityMask                  : 15
   Priority                      : 16
   MaxCpu                        : 0xFF
   HandleTableSize               : 0x200
@@ -93,8 +93,6 @@ AccessControlInfo:
   # Virtual Address Mappings
   IORegisterMapping:
    - 1ff00000-1ff7ffff    # DSP memory
-   - 1ef00000-1ef00fff    # GPU IO Registers
-   - 1ec46000-1ec46fff    # HID IO Registers
   MemoryMapping: 
    - 1f000000-1f5fffff:r  # VRAM
 
