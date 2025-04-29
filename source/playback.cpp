@@ -11,7 +11,7 @@
 
 static volatile bool stop = true;
 extern float mix[12];
-double SetTime[2];
+double SetTime;
 
 bool togglePlayback(void){
 
@@ -146,7 +146,6 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	SetTime[0] = osGetTime() * 0.001 + 0.256;
 	while (*info->isPlay == false) svcSleepThread(100000);
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
@@ -154,8 +153,6 @@ void playFile(void* infoIn){
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer2[0];
 
-	SetTime[1] = osGetTime() * 0.001;
-	svcSleepThread((SetTime[0] - SetTime[1]) * 1000000000);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 
