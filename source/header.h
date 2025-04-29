@@ -12,7 +12,7 @@
 #include <ctype.h>
 
 #define C3D_CMDBUF_SIZE 0x40000
-#define VERSION "1.5.2"
+#define VERSION "1.5.2(A)"
 #define DECODE_COREID 1
 #define DECODE_MEM 65536
 #define DEFAULT_DIR "sdmc:/tjafiles/"
@@ -39,10 +39,10 @@
 
 #define SPRITES_NUMER 92
 
-#define NOTES_MAX 512
-#define BARLINE_MAX 128
-#define ROLL_MAX 256
-#define BALLOON_MAX 256
+#define NOTES_MAX 1024
+#define BARLINE_MAX 256
+#define ROLL_MAX 512
+#define BALLOON_MAX 512
 
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
