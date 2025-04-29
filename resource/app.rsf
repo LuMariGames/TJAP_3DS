@@ -74,7 +74,7 @@ AccessControlInfo:
   Priority                      : 16
   MaxCpu                        : 0xFF
   HandleTableSize               : 0x200
-  DisableDebug                  : true
+  DisableDebug                  : false
   EnableForceDebug              : false
   CanWriteSharedPage            : true
   CanUsePrivilegedPriority      : false
@@ -83,6 +83,7 @@ AccessControlInfo:
   CanShareDeviceMemory          : true
   RunnableOnSleep               : false
   SpecialMemoryArrange          : true
+  ResourceLimitCategory         : Other
 
   # New3DS Exclusive Process Settings
   SystemModeExt                 : Legacy # Legacy(Default)/124MB/178MB  Legacy:Use Old3DS SystemMode
@@ -93,6 +94,8 @@ AccessControlInfo:
   # Virtual Address Mappings
   IORegisterMapping:
    - 1ff00000-1ff7ffff    # DSP memory
+   - 1ef00000-1ef00fff    # GPU IO Registers
+   - 1ec46000-1ec46fff    # HID IO Registers
   MemoryMapping: 
    - 1f000000-1f5fffff:r  # VRAM
 
