@@ -20,6 +20,7 @@ void setVorbis(struct decoder_fn* decoder){
 	decoder->vorbis_buffer_size = vorbis_buffer_size;
 	decoder->decode = &decodeVorbis;
 	decoder->exit = &exitVorbis;
+	ov_time_seek(&vorbisFile, 0);
 }
 
 int initVorbis(const char* file){
