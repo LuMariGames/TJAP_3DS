@@ -1,4 +1,4 @@
-#include <tremor/vorbisfile.h>
+#include <vorbis/vorbisfile.h>
 #include <ogg/ogg.h>
 #include <stdio.h>
 #include <stdlib.h>
