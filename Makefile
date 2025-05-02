@@ -56,7 +56,7 @@ RSF_PATH				:= resource/app.rsf
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
+ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft -mfpmath=both
 
 CFLAGS	:=	-g -Wall -Ofast -mword-relocations -finline-functions -fomit-frame-pointer \
 			-ffunction-sections -ffast-math \
@@ -69,7 +69,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro2d -lcitro3d -lctru -lm -lvorbisidec -logg -ljansson
+LIBS	:= -lcitro2d -lcitro3d -lctru -lm $(TOPDIR)/libvorbisfile.lib -logg -ljansson
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
