@@ -72,8 +72,8 @@ uint64_t fillVorbisBuffer(char* bufferOut)
 		static int current_section;
 		int samplesJustRead =
 			ov_read(&vorbisFile, bufferOut,
-					samplesToRead > 4096 ? 4096	: samplesToRead,
-					&current_section);
+					samplesToRead > 4096 ? 4096 : samplesToRead,
+					0, 1, 1, &current_section);
 
 		if(samplesJustRead < 0)
 			return samplesJustRead;
@@ -86,7 +86,7 @@ uint64_t fillVorbisBuffer(char* bufferOut)
 		bufferOut += samplesJustRead;
 	}
 	//vorbis_time = (double)ov_time_tell(&vorbisFile)/1000.0;
-	return samplesRead / sizeof(int16_t);
+	return samplesRead / sizeof(int8_t);
 }
 
 int isVorbis(const char *in){
