@@ -1,3 +1,4 @@
+#include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 #include <ogg/ogg.h>
 #include <stdio.h>
