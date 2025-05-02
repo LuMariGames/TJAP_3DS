@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <tremor/ivorbisfile.h>
+#include "tremor/vorbisfile.h"
 #include <ogg/ogg.h>
 #include "playback.h"
 
