@@ -38,7 +38,7 @@ AccessControlInfo:
    #- CategorySystemApplication
    - CategoryHardwareCheck
    - CategoryFileSystemTool
-   - Debug
+   #- Debug
    #- TwlCardBackup
    #- TwlNandData
    - Boss
@@ -77,7 +77,7 @@ AccessControlInfo:
   DisableDebug                  : false
   EnableForceDebug              : false
   CanWriteSharedPage            : true
-  CanUsePrivilegedPriority      : false
+  CanUsePrivilegedPriority      : true
   CanUseNonAlphabetAndNumber    : true
   PermitMainFunctionArgument    : true
   CanShareDeviceMemory          : true
@@ -93,8 +93,6 @@ AccessControlInfo:
   # Virtual Address Mappings
   IORegisterMapping:
    - 1ff00000-1ff7ffff    # DSP memory
-   - 1ef00000-1ef00fff    # GPU IO Registers
-   - 1ec46000-1ec46fff    # HID IO Registers
   MemoryMapping: 
    - 1f000000-1f5fffff:r  # VRAM
 
