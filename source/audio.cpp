@@ -1,4 +1,8 @@
-#include "tremor/vorbisfile.h"
+#pragma comment (lib, "ogg.lib")
+#pragma comment (lib, "vorbis.lib")
+#pragma comment (lib, "vorbisfile.lib")
+
+#include <tremor/vorbisfile.h>
 #include <ogg/ogg.h>
 #include <stdio.h>
 #include <stdlib.h>
