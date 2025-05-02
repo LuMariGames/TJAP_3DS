@@ -1,7 +1,3 @@
-#pragma gcc comment (lib, "ogg.lib")
-#pragma gcc comment (lib, "vorbis.lib")
-#pragma gcc comment (lib, "vorbisfile.lib")
-
 #include <tremor/vorbisfile.h>
 #include <ogg/ogg.h>
 #include <stdio.h>
