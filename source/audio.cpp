@@ -77,7 +77,7 @@ void load_sound() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, 0, 2, 1, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
@@ -160,7 +160,7 @@ void sd_load_sound() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, 0, 2, 1, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
@@ -268,7 +268,7 @@ void load_combo() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, 0, 2, 1, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
