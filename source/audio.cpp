@@ -1,5 +1,4 @@
-#include <vorbis/codec.h>
-#include <vorbis/vorbisfile.h>
+#include <tremor/ivorbisfile.h>
 #include <ogg/ogg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -78,7 +77,7 @@ void load_sound() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, 0, 2, 1, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
@@ -161,7 +160,7 @@ void sd_load_sound() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, 0, 2, 1, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
@@ -269,7 +268,7 @@ void load_combo() {
 		int eof = 0;
 		int currentSection;
 		while (!eof) {
-			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, 0, 2, 1, &currentSection);
+			long ret = ov_read(&sound[i].ovf, &sound[i].data[offset], AUDIO_BUFFER_SIZE, &currentSection);
 			if (ret == 0) {
 				eof = 1;
 			}
