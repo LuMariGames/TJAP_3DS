@@ -129,7 +129,7 @@ const char Text[3][60][128] = {
 		"Dan-i Dojo",
 		"Auto",
 		"Velocidad",
-		"canciones Velocidad",
+		"Canción velocidad",
 		"Invisible",
 		"Inversa",
 		"Random",
