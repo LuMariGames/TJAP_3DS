@@ -99,6 +99,7 @@ SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 PICAFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.v.pica)))
 SHLISTFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.shlist)))
 GFXFILES	:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.t3s)))
+FONTFILES	:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.ttf)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
 
 #---------------------------------------------------------------------------------
@@ -119,10 +120,12 @@ endif
 ifeq ($(GFXBUILD),$(BUILD))
 #---------------------------------------------------------------------------------
 export T3XFILES :=  $(GFXFILES:.t3s=.t3x)
+export EFONTFILES	:=  $(FONTFILES:.ttf=.bcfnt)
 #---------------------------------------------------------------------------------
 else
 #---------------------------------------------------------------------------------
 export ROMFS_T3XFILES	:=	$(patsubst %.t3s, $(GFXBUILD)/%.t3x, $(GFXFILES))
+export ROMFS_FONTFILES	:=	$(patsubst %.ttf, $(GFXBUILD)/%.bcfnt, $(FONTFILES))
 export T3XHFILES		:=	$(patsubst %.t3s, $(BUILD)/%.h, $(GFXFILES))
 #---------------------------------------------------------------------------------
 endif
@@ -199,7 +202,7 @@ endif
 
 #---------------------------------------------------------------------------------
 
-all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(ROMFS_FONTFILES) $(T3XHFILES)
 	@echo Building 3dsx...
 	@$(MAKE) -j -s --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 	@echo
@@ -239,6 +242,12 @@ $(GFXBUILD)/%.t3x	$(BUILD)/%.h	:	%.t3s
 	@tex3ds -i $< -H $(BUILD)/$*.h -d $(DEPSDIR)/$*.d -o $(GFXBUILD)/$*.t3x
 
 #---------------------------------------------------------------------------------
+$(GFXBUILD)/%.bcfnt :		%.ttf
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@mkbcfnt -o $(GFXBUILD)/$*.bcfnt $<
+
+#---------------------------------------------------------------------------------
 else
 
 #---------------------------------------------------------------------------------
@@ -262,6 +271,12 @@ $(OUTPUT).elf	:	$(OFILES)
 .PRECIOUS	:	%.t3x
 #---------------------------------------------------------------------------------
 %.t3x.o	%_t3x.h :	%.t3x
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#---------------------------------------------------------------------------------
+%.bcfnt.o	%_bcfnt.h :	%.bcfnt
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	@$(bin2o)
@@ -297,6 +312,12 @@ endef
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	@tex3ds -i $< -H $*.h -d $*.d -o $*.t3x
+
+#---------------------------------------------------------------------------------
+%.bcfnt :		%.ttf
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@mkbcfnt -o $*.bcfnt $<
 
 -include $(DEPSDIR)/*.d
 
