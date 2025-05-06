@@ -47,9 +47,7 @@ void notes_main(
 	int cnt,
 	C2D_Sprite sprites[SPRITES_NUMER]
 );
-int ctoi(char c);
-int get_branch_course();
+int ctoi(char c), get_branch_course();
 void init_notes(TJA_HEADER_T TJA_Header);
 bool get_notes_finish();
-void draw_title();
-void draw_condition();
+void draw_title(), draw_condition(), fontfree();
