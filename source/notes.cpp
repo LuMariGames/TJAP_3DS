@@ -1148,7 +1148,7 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	float size = 0.6;
+	float size = 0.5;
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
@@ -1160,7 +1160,7 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	float size = 0.6;
+	float size = 0.5;
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
