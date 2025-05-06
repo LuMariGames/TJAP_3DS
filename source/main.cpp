@@ -55,10 +55,11 @@ inline void init_main() {
 	//gfxSetDoubleBuffering(GFX_TOP, true);
 }
 
-inline void exit_main() {
+void exit_main() {
 
 	C2D_TextBufDelete(g_dynamicBuf);
 
+	fontfree();
 	C2D_Fini();
 	C3D_Fini();
 	gfxExit();
