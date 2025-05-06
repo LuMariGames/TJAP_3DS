@@ -50,4 +50,4 @@ void notes_main(
 int ctoi(char c), get_branch_course();
 void init_notes(TJA_HEADER_T TJA_Header);
 bool get_notes_finish();
-void draw_title(), draw_condition(), fontfree();
+void draw_title(), draw_condition(), newfont(), fontfree();
