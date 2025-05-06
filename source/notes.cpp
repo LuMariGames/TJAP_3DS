@@ -1138,7 +1138,7 @@ bool get_notes_finish() {
 
 C2D_TextBuf g_NotesText = C2D_TextBufNew(4096);
 C2D_Text NotesText;
-C2D_Font font = C2D_FontLoad("romfs:/gfx/taiko.bcfnt");
+C2D_Font font;
 
 void draw_notes_text(float x, float y, const char *text, float *width, float *height) {
 
@@ -1277,6 +1277,9 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
+}
+void newfont() {
+	font = C2D_FontLoad("romfs:/gfx/taiko.bcfnt");
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
