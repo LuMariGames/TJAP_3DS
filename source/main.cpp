@@ -44,7 +44,7 @@ void draw_debug(float x, float y, const char *text) {
 	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
-inline void init_main() {
+void init_main() {
 
 	romfsInit();
 	gfxInitDefault();
@@ -53,6 +53,7 @@ inline void init_main() {
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
+	newfont();
 }
 
 void exit_main() {
