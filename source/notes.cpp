@@ -1152,8 +1152,8 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
-	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, size, size, C2D_Color32f(0, 0, 0, 1.0f));
-	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, (size * 1.1), (size * 1.1), C2D_Color32f(1, 1, 1, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, (size * 1.1), (size * 1.1), C2D_Color32f(0, 0, 0, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, size, size, C2D_Color32f(1, 1, 1, 1.0f));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
@@ -1165,8 +1165,8 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
-	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, size, size, C2D_Color32f(0, 0, 0, 1.0f));
-	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, (size * 1.1), (size * 1.1), C2D_Color32f(1, 1, 1, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, (size * 1.1), (size * 1.1), C2D_Color32f(0, 0, 0, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, size, size, C2D_Color32f(1, 1, 1, 1.0f));
 }
 
 void draw_title() {
