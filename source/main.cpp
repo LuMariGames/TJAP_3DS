@@ -365,9 +365,10 @@ int main() {
 
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps) draw_fps();
+			u32 botc = (isKatsu : C2D_Color32(0x73, 0xF7, 0xEF, 0xFF) ? C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
 
 			//下画面
-			C2D_TargetClear(bottom, (isKatsu : C2D_Color32(0x73, 0xF7, 0xEF, 0xFF) ? C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF)));
+			C2D_TargetClear(bottom, botc);
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
