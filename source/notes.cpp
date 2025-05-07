@@ -1148,7 +1148,7 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	float size = 0.55;
+	float size = 0.6;
 
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 
@@ -1174,7 +1174,7 @@ void draw_title() {
 	float width = 0, height = 0;
 
 	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) draw_notes_text(TOP_WIDTH, 20, Header.subtitle, &width, &height);
-	draw_notes_text(TOP_WIDTH, 0, Header.title, &width, &height);
+	draw_notes_text(TOP_WIDTH - 5, 5, Header.title, &width, &height);
 }
 
 void draw_condition() {
