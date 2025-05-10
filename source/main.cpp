@@ -168,7 +168,7 @@ int main() {
 					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 					touch_cnt < 2) {
 					isDon = true;
-					tch_cnt = 15;
+					tch_cnt = 6;
 					++touch_cnt;
 				}
 				else if (
@@ -178,7 +178,7 @@ int main() {
 						)&&
 					touch_cnt < 2) {
 					isKatsu = true;
-					tch_cnt = 15;
+					tch_cnt = 6;
 					++touch_cnt;
 				}
 			}
@@ -197,7 +197,7 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			//タッチエフェクト
-			if (tch_cnt > 0 && (isDon || isKatsu)) {
+			if (tch_cnt > 0) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
@@ -316,7 +316,7 @@ int main() {
 						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 						touch_cnt < 2) {
 						isDon = true;
-						tch_cnt = 15;
+						tch_cnt = 6;
 						++touch_cnt;
 					}
 					else if (
@@ -326,7 +326,7 @@ int main() {
 							)&&
 						touch_cnt < 2) {
 						isKatsu = true;
-						tch_cnt = 15;
+						tch_cnt = 6;
 						++touch_cnt;
 					}
 				}
@@ -376,14 +376,14 @@ int main() {
 			if (Option.dispFps) draw_fps();
 
 			//下画面
-			if (isKatsu) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
+			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
 			else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			//タッチエフェクト
-			if (touch_cnt > 0 && (isDon || isKatsu)) {
+			if (tch_cnt > 0) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
