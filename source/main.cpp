@@ -186,10 +186,18 @@ int main() {
 			button_game(&isDon, &isKatsu, Option, key);
 
 			//下画面
-			C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
-			C3D_FrameDrawOn(bottom);
-			C2D_SceneTarget(bottom);
-			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			if (isKatsu) {
+				C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
+				C3D_FrameDrawOn(bottom);
+				C2D_SceneTarget(bottom);
+				C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			}
+			else {
+				C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
+				C3D_FrameDrawOn(bottom);
+				C2D_SceneTarget(bottom);
+				C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			}
 
 			//タッチエフェクト
 			if (touch_cnt > 0 && (isDon || isKatsu)) {
