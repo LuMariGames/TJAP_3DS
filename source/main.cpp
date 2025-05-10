@@ -187,7 +187,7 @@ int main() {
 			}
 			button_game(&isDon, &isKatsu, Option, key);
 			if (isKatsu) katsu_cnt = 6;
-			if (isDon) katsu_cnt = 0;
+			else if (isDon) katsu_cnt = 0;
 
 			//下画面
 			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
@@ -316,6 +316,7 @@ int main() {
 						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 						touch_cnt < 2) {
 						isDon = true;
+						tch_cnt = 6;
 						++touch_cnt;
 					}
 					else if (
@@ -325,6 +326,7 @@ int main() {
 							)&&
 						touch_cnt < 2) {
 						isKatsu = true;
+						tch_cnt = 6;
 						++touch_cnt;
 					}
 				}
@@ -332,6 +334,8 @@ int main() {
 					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 				}
 				button_game(&isDon, &isKatsu, Option, key);
+				if (isKatsu) katsu_cnt = 6;
+				else if (isDon) katsu_cnt = 0;
 			}
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
