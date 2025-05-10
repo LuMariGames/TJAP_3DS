@@ -12,7 +12,7 @@
 #include <ctype.h>
 
 #define C3D_CMDBUF_SIZE 0x40000
-#define VERSION "1.5.2(A)"
+#define VERSION "1.5.3"
 #define DECODE_COREID 1
 #define DECODE_MEM 65536
 #define DEFAULT_DIR "sdmc:/tjafiles/"
