@@ -168,7 +168,7 @@ int main() {
 					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 					touch_cnt < 2) {
 					isDon = true;
-					tch_cnt = 6;
+					tch_cnt = 15;
 					++touch_cnt;
 				}
 				else if (
@@ -178,7 +178,7 @@ int main() {
 						)&&
 					touch_cnt < 2) {
 					isKatsu = true;
-					tch_cnt = 6;
+					tch_cnt = 15;
 					++touch_cnt;
 				}
 			}
@@ -186,7 +186,7 @@ int main() {
 				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 			}
 			button_game(&isDon, &isKatsu, Option, key);
-			if (isKatsu) katsu_cnt = 6;
+			if (isKatsu) katsu_cnt = 30;
 			else if (isDon) katsu_cnt = 0;
 
 			//下画面
@@ -316,7 +316,7 @@ int main() {
 						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 						touch_cnt < 2) {
 						isDon = true;
-						tch_cnt = 6;
+						tch_cnt = 15;
 						++touch_cnt;
 					}
 					else if (
@@ -326,7 +326,7 @@ int main() {
 							)&&
 						touch_cnt < 2) {
 						isKatsu = true;
-						tch_cnt = 6;
+						tch_cnt = 15;
 						++touch_cnt;
 					}
 				}
@@ -334,7 +334,7 @@ int main() {
 					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 				}
 				button_game(&isDon, &isKatsu, Option, key);
-				if (isKatsu) katsu_cnt = 6;
+				if (isKatsu) katsu_cnt = 30;
 				else if (isDon) katsu_cnt = 0;
 			}
 
