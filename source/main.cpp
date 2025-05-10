@@ -116,7 +116,7 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1;
+	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,katsu_cnt = 0, tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 
 	load_option();
@@ -168,6 +168,7 @@ int main() {
 					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 					touch_cnt < 2) {
 					isDon = true;
+					tch_cnt = 6;
 					++touch_cnt;
 				}
 				else if (
@@ -177,6 +178,7 @@ int main() {
 						)&&
 					touch_cnt < 2) {
 					isKatsu = true;
+					tch_cnt = 6;
 					++touch_cnt;
 				}
 			}
@@ -184,16 +186,18 @@ int main() {
 				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 			}
 			button_game(&isDon, &isKatsu, Option, key);
+			if (isKatsu) katsu_cnt = 6;
+			if (isDon) katsu_cnt = 0;
 
 			//下画面
-			if (isKatsu) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
+			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
 			else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
 			//タッチエフェクト
-			if (touch_cnt > 0 && (isDon || isKatsu)) {
+			if (tch_cnt > 0 && (isDon || isKatsu)) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
@@ -489,7 +493,11 @@ int main() {
 
 		//描画終了
 		C3D_FrameEnd(0);
-		if (!isPause) ++cnt;
+		if (!isPause) {
+			++cnt;
+			if (katsu_cnt > 0) --katsu_cnt;
+			if (tch_cnt > 0) --tch_cnt;
+		}
 	}
 	exit_main();
 	return 0;
