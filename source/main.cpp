@@ -99,7 +99,8 @@ bool check_dsp1() { //DSP1を起動しているか確認
 	return true;
 }
 
-int touch_x, touch_y, touch_cnt,PreTouch_x,PreTouch_y;	//タッチ用
+int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
+memtch_x,memtch_y;
 
 int main() {
 
@@ -169,6 +170,7 @@ int main() {
 					touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
+					memtch_x = tp.px, memtch_y = tp.py;
 					++touch_cnt;
 				}
 				else if (
@@ -179,6 +181,7 @@ int main() {
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
+					memtch_x = tp.px, memtch_y = tp.py;
 					++touch_cnt;
 				}
 			}
@@ -198,7 +201,7 @@ int main() {
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
-				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
+				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
 
@@ -317,6 +320,7 @@ int main() {
 						touch_cnt < 2) {
 						isDon = true;
 						tch_cnt = 6;
+						memtch_x = tp.px, memtch_y = tp.py;
 						++touch_cnt;
 					}
 					else if (
@@ -327,6 +331,7 @@ int main() {
 						touch_cnt < 2) {
 						isKatsu = true;
 						tch_cnt = 6;
+						memtch_x = tp.px, memtch_y = tp.py;
 						++touch_cnt;
 					}
 				}
@@ -384,7 +389,7 @@ int main() {
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
-				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], touch_x, touch_y);
+				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
 				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
 			}
 
