@@ -301,6 +301,7 @@ int main() {
 				select_ini();
 			}
 			cnt = -60;
+			play_main_music(&isPlayMain, SelectedSong);
 			break;
 
 		case SCENE_MAINGAME:		//演奏画面
@@ -423,7 +424,6 @@ int main() {
 
 			if (cnt == 0) {
 				FirstMeasureTime = get_FirstMeasureTime();
-				play_main_music(&isPlayMain, SelectedSong);
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
 
