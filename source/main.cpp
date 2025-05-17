@@ -285,7 +285,7 @@ int main() {
 			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
 			time_ini();
-			offset = TJA_Header.offset + Option.offset - 0.512;
+			offset = TJA_Header.offset + Option.offset - 0.640;
 			notes_cnt = 0;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
