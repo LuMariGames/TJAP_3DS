@@ -47,7 +47,7 @@
 #define LIST_MAX 16384		//選曲リストの最大数
 #define GENRE_MAX 512		//ジャンルの最大数
 
-#define DEFAULT_BUFFER_SIZE 262144
+#define DEFAULT_BUFFER_SIZE 131072
 
 enum NOTES_KND {
 
