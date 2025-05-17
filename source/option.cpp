@@ -213,7 +213,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 	case 2:
 		XSense = 65, YSense = 30, XCnt = 0, YCnt = 1, gap = 100;
 		//バッファ
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		/*x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_BUFFERSIZE], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		snprintf(get_buffer(), BUFFER_SIZE, "%d", get_buffer_size());
@@ -229,7 +229,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			Option.buffer_size = DEFAULT_BUFFER_SIZE;
 			put_buffer_size(Option.buffer_size);
 		}
-		XCnt = 0, ++YCnt;
+		XCnt = 0, ++YCnt;*/
 
 		//offset
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
