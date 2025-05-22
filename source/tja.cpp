@@ -7,8 +7,8 @@
 #include "option.h"
 #include <stdio.h>
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam1[4], *exam2[4], *exam3[4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[3], gaugelife;
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -76,15 +76,22 @@ void load_tja_head(int course,LIST_T Song) {
 	//Current_Header.demostart = 0;
 	//Current_Header.side = 3;
 	Current_Header.scoremode = 2;
-	exam1[0] = (char*)"";
-	exam1[1] = (char*)"";
-	exam1[3] = (char*)"";
-	exam2[0] = (char*)"";
-	exam2[1] = (char*)"";
-	exam2[3] = (char*)"";
-	exam3[0] = (char*)"";
-	exam3[1] = (char*)"";
-	exam3[3] = (char*)"";
+	exam[0][0] = (char*)"";
+	exam[0][1] = (char*)"";
+	exam[0][2] = (char*)"";
+	exam[0][3] = (char*)"";
+	exam[1][0] = (char*)"";
+	exam[1][1] = (char*)"";
+	exam[1][2] = (char*)"";
+	exam[1][3] = (char*)"";
+	exam[2][0] = (char*)"";
+	exam[2][1] = (char*)"";
+	exam[2][2] = (char*)"";
+	exam[2][3] = (char*)"";
+	exam[3][0] = (char*)"";
+	exam[3][1] = (char*)"";
+	exam[3][2] = (char*)"";
+	exam[3][3] = (char*)"";
 
 	chdir(Song.path);
 	int cnt = -1;
@@ -288,10 +295,10 @@ void load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *a = strtok(temp, ",");
-					exam1[0] = a;
+					exam[0][0] = a;
 					cnt = 1;
 					while ((a = strtok(NULL, ","))) {
-						exam1[cnt] = a;
+						exam[0][cnt] = a;
 						if (cnt == 1) redCdn[0] = atoi(a);
 						++cnt;
 					}
@@ -303,10 +310,10 @@ void load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *b = strtok(temp, ",");
-					exam2[0] = b;
+					exam[1][0] = b;
 					cnt = 1;
 					while ((b = strtok(NULL, ","))) {
-						exam2[cnt] = b;
+						exam[1][cnt] = b;
 						if (cnt == 1) redCdn[1] = atoi(b);
 						++cnt;
 					}
@@ -318,11 +325,26 @@ void load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *c = strtok(temp, ",");
-					exam3[0] = c;
+					exam[2][0] = c;
 					cnt = 1;
 					while ((c = strtok(NULL, ","))) {
-						exam3[cnt] = c;
+						exam[2][cnt] = c;
 						if (cnt == 1) redCdn[2] = atoi(c);
+						++cnt;
+					}
+				}
+				continue;
+			}
+
+			if (strstr(buf, "EXAM4:") == buf) {
+				if (buf[6] != '\n' && buf[6] != '\r') {
+					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					char *c = strtok(temp, ",");
+					exam[3][0] = c;
+					cnt = 1;
+					while ((c = strtok(NULL, ","))) {
+						exam[3][cnt] = c;
+						if (cnt == 1) redCdn[3] = atoi(c);
 						++cnt;
 					}
 				}
