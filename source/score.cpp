@@ -5,8 +5,8 @@
 #include "score.h"
 #include "result.h"
 
-extern int gaugelife, redCdn[3];
-extern char *exam1[4], *exam2[4], *exam3[4];
+extern int gaugelife, redCdn[4];
+extern char *exam[4][4];
 bool isGOGO;
 int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, TotalPerfectCount, TotalNiceCount, TotalBadCount,
 CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalCount,
@@ -483,16 +483,18 @@ int dan_condition() {
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100)};
     
 	for (int i = 0; i < 7; ++i) {
-		if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "l") == 0 && counts[i] >= redCdn[0]) ||
-		(strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "l") == 0 && counts[i] >= redCdn[1]) ||
-		(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "l") == 0 && counts[i] >= redCdn[2])) ++isBadCondition;
+		if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "l") == 0 && counts[i] >= redCdn[0]) ||
+		(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "l") == 0 && counts[i] >= redCdn[1]) ||
+		(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "l") == 0 && counts[i] >= redCdn[2]) ||
+		(strcmp(exam[3][0], types[i]) == 0 && strcmp(exam[3][3], "l") == 0 && counts[i] >= redCdn[3])) ++isBadCondition;
 	}
 
 	if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
 		for (int i = 0; i < 7; ++i) {
-			if ((strcmp(exam1[0], types[i]) == 0 && strcmp(exam1[3], "m") == 0 && counts[i] <= redCdn[0]) ||
-			(strcmp(exam2[0], types[i]) == 0 && strcmp(exam2[3], "m") == 0 && counts[i] <= redCdn[1]) ||
-			(strcmp(exam3[0], types[i]) == 0 && strcmp(exam3[3], "m") == 0 && counts[i] <= redCdn[2])) ++isBadCondition;
+			if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "m") == 0 && counts[i] <= redCdn[0]) ||
+			(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "m") == 0 && counts[i] <= redCdn[1]) ||
+			(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "m") == 0 && counts[i] <= redCdn[2]) ||
+			(strcmp(exam[3][0], types[i]) == 0 && strcmp(exam[3][3], "m") == 0 && counts[i] <= redCdn[3])) ++isBadCondition;
 		}
 	}
 	return isBadCondition;
