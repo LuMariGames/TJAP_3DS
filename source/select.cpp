@@ -390,12 +390,6 @@ void update_cursor(int knd) {
 		course_cursor = 0;
 		play_sound(SOUND_KATSU);
 	}
-	else if (knd == KEY_X) {
-		isSelectCourse = false;
-		srand(time(NULL));
-		cursor = rand() % (SongNumber - ClosedSongNumber) + GenreNumber;
-		play_sound(SOUND_DON);
-	}
 }
 
 C2D_TextBuf g_SelectText = C2D_TextBufNew(4096);
