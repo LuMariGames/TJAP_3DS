@@ -1051,7 +1051,12 @@ int make_balloon_start(int NotesId, int branch) {
 		else  BalloonNotes[id].need_hit = 5;
 		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
-		++BalloonCount[branch];
+		if (branch == 0) ++BalloonCount[0];
+		else {
+			++BalloonCount[1];
+			++BalloonCount[2];
+			++BalloonCount[3];
+		}
 		return id;
 	}
 	else return -1;
