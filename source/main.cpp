@@ -53,14 +53,14 @@ void init_main() {
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
-	//newfont();
+	newfont();
 }
 
 void exit_main() {
 
 	C2D_TextBufDelete(g_dynamicBuf);
 
-	//fontfree();
+	fontfree();
 	C2D_Fini();
 	C3D_Fini();
 	gfxExit();
