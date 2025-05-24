@@ -109,6 +109,11 @@ double getVorbisTime() {
 	if (get_isMusicStart() == true) return vorbis_time = (double)ov_time_tell(&vorbisFile);	//再生前に呼び出すとクラッシュ
 	else return -1000;
 }
+int setVorbisTime(double after_time) {
+
+	int time = after_time * 1000;
+	return ov_time_seek(&vorbisFile, time);
+}
 
 int get_buffer_size() {
 	return (int)vorbis_buffer_size;
