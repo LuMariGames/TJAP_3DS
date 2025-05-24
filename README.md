@@ -16,28 +16,30 @@ AC15から常連モード、条件を達成しないとノルマ失敗！？「�
 ### 技術的な部分  
 右から来る常識を覆す「マイナススクロール」  
 見た目を自由に変更！「カスタムスキン」  
+v1.5.3からはバッファサイズを撤廃し、より高音質で楽しめる様に！  
 
-## それ以外の内容  
+## その他の内容  
 (ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。)  
 
 # TJAP_3DS (English)
-TJAP_3DS is a fork of [TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS) produced by Mr. [togetg](https://github.com/togetg)
-New options such as Tokkun and fixed scroll and skin changes,
-And it is a personally improved software added to the Taiko Tower, Dani Dojo and the large volume.
+TJAP_3DS is a fork of [TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS) produced by Mr. [togetg](https://github.com/togetg)  
+New options such as Tokkun and fixed scroll and skin changes,  
+And it is a personally improved software added to the Taiko Tower, Dani Dojo and the large volume.  
 
 ## List of new elements
 ### Option
-Tokkun, "Tokushu" with perfect
-"Speed (fixed)" that makes it easy to see even sheet music that is difficult to see
-"Roll speed" that allows you to speed up and slow down the automatic time
+Tokkun, "Tokushu" with perfect  
+"Speed (fixed)" that makes it easy to see even sheet music that is difficult to see  
+"Roll speed" that allows you to speed up and slow down the automatic time  
 
 ### Course mode
-CS7 mode, aim to clear the quota without making no! "Taiko Tower"
-Regular mode from AC15, quota failure if you don't meet the conditions!? "Dani Dojo"
+CS7 mode, aim to clear the quota without making no! "Taiko Tower"  
+Regular mode from AC15, quota failure if you don't meet the conditions!? "Dani Dojo"  
 
 ### Technical part
-"Negative scroll" that overturns the common sense coming from the right
-Feel free to change the appearance! "Custom skin"
+"Negative scroll" that overturns the common sense coming from the right  
+Feel free to change the appearance! "Custom skin"  
+Starting with v1.5.3, the buffer size has been eliminated, allowing you to enjoy higher quality music!  
 
 ## Other contents
 (Except for the information described here, it is almost the same as the original work, so please check the original [Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README_en.md) for details.)  
