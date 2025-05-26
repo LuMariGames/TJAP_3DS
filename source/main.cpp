@@ -621,7 +621,7 @@ inline int pause_window(touchPosition tp, unsigned int key) noexcept {
 
 	draw_window_text(-1, margin + 30, Text[get_lang()][TEXT_CONTINUE], &width, &height);		//続ける
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 30;
-	if ((y < tp.py && y + heiht > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 0;
+	if ((y < tp.py && y + height > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 0;
 
 	draw_window_text(-1, margin + 80, Text[get_lang()][TEXT_STARTOVER], &width, &height);		//はじめから
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 80;
