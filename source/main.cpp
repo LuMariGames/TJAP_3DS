@@ -30,6 +30,7 @@ bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
 static void load_sprites();
+void draw_don(float x, float y, const char *text), debug_touch(int x,int y);
 static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
@@ -42,6 +43,14 @@ void draw_debug(float x, float y, const char *text) {
 	C2D_TextParse(&dynText, g_dynamicBuf, text);
 	C2D_TextOptimize(&dynText);
 	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(0.0f, 1.0f, 0.0f, 1.0f));
+}
+
+void draw_don(float x, float y, const char *text) {
+
+	C2D_TextBufClear(g_dynamicBuf);
+	C2D_TextParse(&dynText, g_dynamicBuf, text);
+	C2D_TextOptimize(&dynText);
+	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(247.0/255.0, 74.0/255.0, 33.0/255.0, 1.0f));
 }
 
 void init_main() {
@@ -117,7 +126,7 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,katsu_cnt = 0, tch_cnt = 0;
+	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 
 	load_option();
@@ -189,8 +198,14 @@ int main() {
 				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 			}
 			button_game(&isDon, &isKatsu, Option, key);
-			if (isKatsu) katsu_cnt = 30;
-			else if (isDon) katsu_cnt = 0;
+			if (isKatsu) {
+				katsu_cnt = 30;
+				don_cnt = 0;
+			}
+			else if (isDon) {
+				katsu_cnt = 0;
+				don_cnt = 30;
+			}
 
 			//下画面
 			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
@@ -198,6 +213,8 @@ int main() {
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+
+			if (don_cnt > 0) debug_touch(tp.px, tp.py);
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
@@ -340,8 +357,14 @@ int main() {
 					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 				}
 				button_game(&isDon, &isKatsu, Option, key);
-				if (isKatsu) katsu_cnt = 30;
-				else if (isDon) katsu_cnt = 0;
+				if (isKatsu) {
+					katsu_cnt = 30;
+					don_cnt = 0;
+				}
+				else if (isDon) {
+					katsu_cnt = 0;
+					don_cnt = 30;
+				}
 			}
 
 			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
@@ -387,6 +410,8 @@ int main() {
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+
+			if (don_cnt > 0) debug_touch(tp.px, tp.py);
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
@@ -504,6 +529,7 @@ int main() {
 		C3D_FrameEnd(0);
 		if (!isPause) {
 			++cnt;
+			if (don_cnt > 0) --don_cnt; 
 			if (katsu_cnt > 0) --katsu_cnt;
 			if (tch_cnt > 0) --tch_cnt;
 		}
@@ -580,6 +606,16 @@ int powi(int x, int y) {	//なぜかpowのキャストが上手くいかない�
 		ans = ans * x;
 	}
 	return ans;
+}
+
+void debug_touch(int x,int y) {
+
+	snprintf(buffer, sizeof(buffer), "%d:%d:%.1f\n%d:%d:%d", 
+		PreTouch_x-touch_x,
+		PreTouch_y-touch_y,
+		pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5), 
+		touch_x,touch_y,touch_cnt);
+	draw_don(0, 0, buffer);
 }
 
 C2D_TextBuf g_MainText = C2D_TextBufNew(4096);
