@@ -30,7 +30,6 @@ bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
 static void load_sprites();
-void draw_don(float x, float y, const char *text), debug_touch(int x,int y);
 static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
 
 void draw_debug(float x, float y, const char *text) {
@@ -43,14 +42,6 @@ void draw_debug(float x, float y, const char *text) {
 	C2D_TextParse(&dynText, g_dynamicBuf, text);
 	C2D_TextOptimize(&dynText);
 	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(0.0f, 1.0f, 0.0f, 1.0f));
-}
-
-void draw_don(float x, float y, const char *text) {
-
-	C2D_TextBufClear(g_dynamicBuf);
-	C2D_TextParse(&dynText, g_dynamicBuf, text);
-	C2D_TextOptimize(&dynText);
-	C2D_DrawText(&dynText, C2D_WithColor, x, y, 0.5f, 0.5f, 0.5f, C2D_Color32f(247.0/255.0, 74.0/255.0, 33.0/255.0, 1.0f));
 }
 
 void init_main() {
@@ -411,7 +402,7 @@ int main() {
 			C2D_SceneTarget(bottom);
 			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
 
-			if (don_cnt > 0) debug_touch(tp.px, tp.py);
+			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32f(247.0/255.0, 74.0/255.0, 33.0/255.0, 1.0f));
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
@@ -608,16 +599,6 @@ int powi(int x, int y) {	//なぜかpowのキャストが上手くいかない�
 	return ans;
 }
 
-void debug_touch(int x,int y) {
-
-	snprintf(buffer, sizeof(buffer), "%d:%d:%.1f\n%d:%d:%d", 
-		PreTouch_x-touch_x,
-		PreTouch_y-touch_y,
-		pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5), 
-		touch_x,touch_y,touch_cnt);
-	draw_don(0, 0, buffer);
-}
-
 C2D_TextBuf g_MainText = C2D_TextBufNew(4096);
 C2D_Text MainText;
 
@@ -640,7 +621,7 @@ inline int pause_window(touchPosition tp, unsigned int key) noexcept {
 
 	draw_window_text(-1, margin + 30, Text[get_lang()][TEXT_CONTINUE], &width, &height);		//続ける
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 30;
-	if ((y < tp.py && y + height > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 0;
+	if ((y < tp.py && y + heiht > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 0;
 
 	draw_window_text(-1, margin + 80, Text[get_lang()][TEXT_STARTOVER], &width, &height);		//はじめから
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 80;
