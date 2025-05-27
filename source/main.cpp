@@ -203,14 +203,14 @@ int main() {
 			else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
-			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
 
 			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32f(247.0/255.0, 74.0/255.0, 33.0/255.0, 0.5f));
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
-				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
+				C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
 			}
 
 			if (isDon)   play_sound(SOUND_DON);		//ドン
@@ -358,10 +358,10 @@ int main() {
 				}
 			}
 
-			C2D_DrawSprite(&sprites[SPRITE_TOP_2]);
+			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
-			C2D_DrawSprite(&sprites[SPRITE_TOP_3]);
-			C2D_DrawSprite(&sprites[SPRITE_TOP]);
+			C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
+			C2D_DrawImage(sprites[SPRITE_TOP].image, &sprites[SPRITE_TOP].params, NULL);
 
 			//ダンサー表示
 			if (dance && course != COURSE_DAN) {
@@ -400,14 +400,14 @@ int main() {
 			else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
-			C2D_DrawSprite(&sprites[SPRITE_BOTTOM]);
+			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
 
 			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32f(247.0/255.0, 74.0/255.0, 33.0/255.0, 0.5f));
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
-				C2D_DrawSprite(&sprites[SPRITE_TOUCH]);
+				C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
 			}
 
 			if (isPause) {
