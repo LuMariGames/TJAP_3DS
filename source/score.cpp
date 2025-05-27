@@ -299,7 +299,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 	if (CurrentRollCount > 0) {
 		C2D_SpriteSetPos(&sprites[SPRITE_ROLL_COUNT], 110, 35);
-		C2D_DrawSprite(&sprites[SPRITE_ROLL_COUNT]);
+		C2D_DrawImage(sprites[SPRITE_ROLL_COUNT].image, &sprites[SPRITE_ROLL_COUNT].params, NULL);
 	}
 	for (int i = 0; i < 4; ++i) {
 
@@ -317,7 +317,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 	if (CurrentBalloonCount > 0) {
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_COUNT], 110, 35);
-		C2D_DrawSprite(&sprites[SPRITE_BALLOON_COUNT]);
+		C2D_DrawImage(sprites[SPRITE_BALLOON_COUNT].image, &sprites[SPRITE_BALLOON_COUNT].params, NULL);
 	}
 	for (int i = 0; i < 5; ++i) {
 
@@ -352,10 +352,10 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	if ((Gauge.score / 200) * 200 >= Gauge.soul) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 0.8);
-		C2D_DrawSpriteTinted(&sprites[SPRITE_SOUL_EFFECT], &Tint);
-		C2D_DrawSprite(&sprites[SPRITE_SOUL_ON]);
+		C2D_DrawImage(sprites[SPRITE_SOUL_EFFECT].image, &sprites[SPRITE_SOUL_EFFECT].params, &Tint);
+		C2D_DrawImage(sprites[SPRITE_SOUL_ON].image, &sprites[SPRITE_SOUL_ON].params, NULL);
 	}
-	else C2D_DrawSprite(&sprites[SPRITE_SOUL_OFF]);
+	else C2D_DrawImage(sprites[SPRITE_SOUL_OFF].image, &sprites[SPRITE_SOUL_OFF].params, NULL);
 }
 
 void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
@@ -380,10 +380,10 @@ void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	if ((Gauge.score / 200) * 200 >= Gauge.soul) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 0.8);
-		C2D_DrawSpriteTinted(&sprites[SPRITE_SOUL_EFFECT], &Tint);
-		C2D_DrawSprite(&sprites[SPRITE_SOUL_ON]);
+		C2D_DrawImage(sprites[SPRITE_SOUL_EFFECT].image, &sprites[SPRITE_SOUL_EFFECT].params, &Tint);
+		C2D_DrawImage(sprites[SPRITE_SOUL_ON].image, &sprites[SPRITE_SOUL_ON].params, NULL);
 	}
-	else C2D_DrawSprite(&sprites[SPRITE_SOUL_OFF]);
+	else C2D_DrawImage(sprites[SPRITE_SOUL_OFF].image, &sprites[SPRITE_SOUL_OFF].params, NULL);
 }
 
 void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
@@ -397,32 +397,32 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		case COMMAND_N:
 		default:
 			C2D_SpriteSetPos(&sprites[SPRITE_CHART_NORMAL], 350, 110);
-			C2D_DrawSprite(&sprites[SPRITE_CHART_NORMAL]);
+			C2D_DrawImage(sprites[SPRITE_CHART_NORMAL].image, &sprites[SPRITE_CHART_NORMAL].params, NULL);
 			break;
 
 		case COMMAND_E:
 			C2D_SpriteSetPos(&sprites[SPRITE_LANE_EXPERT], 233, 109);
-			C2D_DrawSprite(&sprites[SPRITE_LANE_EXPERT]);
+			C2D_DrawImage(sprites[SPRITE_LANE_EXPERT].image, &sprites[SPRITE_LANE_EXPERT].params, NULL);
 			C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 350, 110);
-			C2D_DrawSprite(&sprites[SPRITE_CHART_EXPERT]);
+			C2D_DrawImage(sprites[SPRITE_CHART_EXPERT].image, &sprites[SPRITE_CHART_EXPERT].params, NULL);
 			break;
 
 		case COMMAND_M:
 			C2D_SpriteSetPos(&sprites[SPRITE_LANE_MASTER], 233, 109);
-			C2D_DrawSprite(&sprites[SPRITE_LANE_MASTER]);
+			C2D_DrawImage(sprites[SPRITE_LANE_MASTER].image, &sprites[SPRITE_LANE_MASTER].params, NULL);
 			C2D_SpriteSetPos(&sprites[SPRITE_CHART_MASTER], 350, 110);
-			C2D_DrawSprite(&sprites[SPRITE_CHART_MASTER]);
+			C2D_DrawImage(sprites[SPRITE_CHART_MASTER].image, &sprites[SPRITE_CHART_MASTER].params, NULL);
 			break;
 		}
 	}
 
 	C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_CIRCLE], NOTES_JUDGE_X, 109);
-	C2D_DrawSprite(&sprites[SPRITE_JUDGE_CIRCLE]);
+	C2D_DrawImage(sprites[SPRITE_JUDGE_CIRCLE].image, &sprites[SPRITE_JUDGE_CIRCLE].params, NULL);
 
 	if (isGOGO == true) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 0.8);
-		C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_GOGO], &Tint);
+		C2D_DrawImage(sprites[SPRITE_EFFECT_GOGO].image, &sprites[SPRITE_EFFECT_GOGO].params, &Tint);
 	}
 }
 
@@ -808,31 +808,31 @@ void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	switch (TJA_Header.course) {
 	case COURSE_EASY:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EASY]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_EASY].image, &sprites[SPRITE_EMBLEM_EASY].params, NULL);
 		break;
 	case COURSE_NORMAL:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 204.0 / 255.0, 34.0 / 255.0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_NORMAL]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_NORMAL].image, &sprites[SPRITE_EMBLEM_NORMAL].params, NULL);
 		break;
 	case COURSE_HARD:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(51.0 / 255.0, 170.0 / 255.0, 187.0 / 255.0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_HARD]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_HARD].image, &sprites[SPRITE_EMBLEM_HARD].params, NULL);
 		break;
 	case COURSE_ONI:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 34.0 / 255.0, 204.0 / 255.0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_ONI]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_ONI].image, &sprites[SPRITE_EMBLEM_ONI].params, NULL);
 		break;
 	case COURSE_EDIT:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 34.0 / 255.0, 1, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_EDIT]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_EDIT].image, &sprites[SPRITE_EMBLEM_EDIT].params, NULL);
 		break;
 	case COURSE_TOWER:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 86.0 / 255.0, 12.0 / 255.0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_TOWER]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_TOWER].image, &sprites[SPRITE_EMBLEM_TOWER].params, NULL);
 		break;
 	case COURSE_DAN:
 		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(14.0 / 255.0, 88.0 / 255.0, 129.0 / 255.0, 1));
-		C2D_DrawSprite(&sprites[SPRITE_EMBLEM_DAN]);
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_DAN].image, &sprites[SPRITE_EMBLEM_DAN].params, NULL);
 		break;
 	}
 }
