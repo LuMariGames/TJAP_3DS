@@ -402,32 +402,32 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 		switch (JudgeDispknd) {
 
 		case PERFECT:			//良
-			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_PERFECT], &Tint);
+			C2D_DrawImage(sprites[SPRITE_EFFECT_PERFECT].image, &sprites[SPRITE_EFFECT_PERFECT].params, &Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_PERFECT]);
+			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image, &sprites[SPRITE_JUDGE_PERFECT].params, NULL);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
-			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT], &Tint);
+			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_PERFECT].image, &sprites[SPRITE_EFFECT_SPECIAL_PERFECT].params, &Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_PERFECT]);
+			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image, &sprites[SPRITE_JUDGE_PERFECT].params, NULL);
 			break;
 
 		case NICE:				//可
-			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_NICE], &Tint);
+			C2D_DrawImage(sprites[SPRITE_EFFECT_NICE].image, &sprites[SPRITE_EFFECT_NICE].params, &Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE]);
+			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image, &sprites[SPRITE_JUDGE_NICE].params, NULL);
 			break;
 
 		case SPECIAL_NICE:		//特可
-			C2D_DrawSpriteTinted(&sprites[SPRITE_EFFECT_SPECIAL_NICE], &Tint);
+			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_NICE].image, &sprites[SPRITE_EFFECT_SPECIAL_NICE].params, &Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_NICE]);
+			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image, &sprites[SPRITE_JUDGE_NICE].params, NULL);
 			break;
 
 		case BAD:				//不可
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], 92, JudgeY);
-			C2D_DrawSprite(&sprites[SPRITE_JUDGE_BAD]);
+			C2D_DrawImage(sprites[SPRITE_JUDGE_BAD].image, &sprites[SPRITE_JUDGE_BAD].params, NULL);
 			break;
 
 		}
@@ -756,25 +756,25 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
 				C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
-				C2D_DrawSprite(&sprites[SPRITE_DON]);
+				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, NULL);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_KATSU].params.pos.y = notes_y;
 				C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
-				C2D_DrawSprite(&sprites[SPRITE_KATSU]);
+				C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, NULL);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
 				C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
-				C2D_DrawSprite(&sprites[SPRITE_BIG_DON]);
+				C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, NULL);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
 				C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
-				C2D_DrawSprite(&sprites[SPRITE_BIG_KATSU]);
+				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, NULL);
 				break;
 			case NOTES_ROLL:
 
@@ -788,20 +788,20 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
+							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawSprite(&sprites[SPRITE_ROLL_INT]);
+							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
 						}
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
 					C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
-					C2D_DrawSprite(&sprites[SPRITE_ROLL_START]);
+					C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 				}
 				break;
 
@@ -817,20 +817,20 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
+							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_INT]);
+							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
 						}
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
 					C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
-					C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_START]);
+					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					break;
 				}
 
@@ -840,37 +840,37 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					sprites[SPRITE_BALLOON].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y = notes_y;
-					C2D_DrawSprite(&sprites[SPRITE_BALLOON]);
+					C2D_DrawImage(sprites[SPRITE_BALLOON].image, &sprites[SPRITE_BALLOON].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
 					sprites[SPRITE_BALLOON_1].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_1].params.pos.y = notes_y;
-					C2D_DrawSprite(&sprites[SPRITE_BALLOON_1]);
+					C2D_DrawImage(sprites[SPRITE_BALLOON_1].image, &sprites[SPRITE_BALLOON_1].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4f) {
 
 					sprites[SPRITE_BALLOON_2].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_2].params.pos.y = notes_y;
-					C2D_DrawSprite(&sprites[SPRITE_BALLOON_2]);
+					C2D_DrawImage(sprites[SPRITE_BALLOON_2].image, &sprites[SPRITE_BALLOON_2].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6f) {
 
 					sprites[SPRITE_BALLOON_3].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_3].params.pos.y = notes_y;
-					C2D_DrawSprite(&sprites[SPRITE_BALLOON_3]);
+					C2D_DrawImage(sprites[SPRITE_BALLOON_3].image, &sprites[SPRITE_BALLOON_3].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8f) {
 
 					sprites[SPRITE_BALLOON_4].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_4].params.pos.y = notes_y;
-					C2D_DrawSprite(&sprites[SPRITE_BALLOON_4]);
+					C2D_DrawImage(sprites[SPRITE_BALLOON_4].image, &sprites[SPRITE_BALLOON_4].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
 					sprites[SPRITE_BALLOON_5].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_5].params.pos.y = notes_y;
-					C2D_DrawSprite(&sprites[SPRITE_BALLOON_5]);
+					C2D_DrawImage(sprites[SPRITE_BALLOON_5].image, &sprites[SPRITE_BALLOON_5].params, NULL);
 				}
 				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
@@ -879,14 +879,14 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
 				C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
-				C2D_DrawSprite(&sprites[SPRITE_ROLL_END]);
+				C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, NULL);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y = notes_y;
 				C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
-				C2D_DrawSprite(&sprites[SPRITE_BIG_ROLL_END]);
+				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, NULL);
 				break;
 			}
 		}
@@ -898,7 +898,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, BalloonBreakCount / 40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6], NOTES_JUDGE_X, notes_y);
-		C2D_DrawSpriteTinted(&sprites[SPRITE_BALLOON_6], &Tint);
+		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image, &sprites[SPRITE_BALLOON_6].params, &Tint);
 	}
 	if (BalloonBreakCount <= 0) isBalloonBreakDisp = false;
 }
