@@ -335,7 +335,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	send_gogotime(isGOGOTime);
 
 	for (int i = MaxMeasureCount; i > -1; --i) {
-		if (Measure[i].command == -1 && Measure[i].judge_time < CurrentTimeNotes) {
+		if (Measure[i].command != -1 && Measure[i].judge_time <= CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			break;
 		}
