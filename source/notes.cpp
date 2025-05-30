@@ -336,7 +336,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	NowBPM = Measure[0].bpm;
 	for (int i = MaxMeasureCount; i > 0; --i) {
-		if (Measure[i].bpm != Measure[i-1].bpm && Measure[i].judge_time <= CurrentTimeNotes) {
+		if (Measure[i].bpm != Measure[i-1].bpm && Measure[i].pop_time <= CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			break;
 		}
