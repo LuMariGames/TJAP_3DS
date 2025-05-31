@@ -39,6 +39,7 @@ void sort_list() {	//曲をジャンル順にソート
 void load_file_main(void *arg) {
 
 	load_combo();
+	newfont();
 	chdir(DEFAULT_DIR);
 	load_file_list(DEFAULT_DIR);
 	SongNumber = SongCount;
