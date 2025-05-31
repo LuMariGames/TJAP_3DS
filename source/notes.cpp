@@ -1144,18 +1144,13 @@ bool get_notes_finish() {
 
 C2D_TextBuf g_NotesText = C2D_TextBufNew(4096);
 C2D_Text NotesText;
-C2D_Font font[2];
+C2D_Font font[1];
 
 void draw_notes_text(float x, float y, const char *text, float *width, float *height) {
 
 	OPTION_T Option;
 	get_option(&Option);
 	float size = 0.6;
-
-	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font[1], g_NotesText, text);
-	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(0,0,0,1.0f));
 
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font[0], g_NotesText, text);
@@ -1288,10 +1283,8 @@ int sign(double A) {	//正か負かの判別
 }
 void newfont() {
 	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
-	font[1] = C2D_FontLoad("romfs:/gfx/out.bcfnt");
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font[0]);
-	C2D_FontFree(font[1]);
 }
