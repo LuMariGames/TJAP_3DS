@@ -53,7 +53,6 @@ void init_main() {
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
 	//gfxSetDoubleBuffering(GFX_TOP, true);
-	newfont();
 }
 
 void exit_main() {
