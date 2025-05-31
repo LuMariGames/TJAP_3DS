@@ -1155,7 +1155,7 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font[0], g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(1,1,1,1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 
 }
 
