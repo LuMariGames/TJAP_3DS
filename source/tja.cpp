@@ -66,8 +66,8 @@ void load_tja_head(int course,LIST_T Song) {
 	Current_Header.wave = (char*)"audio.ogg";
 	Current_Header.offset = 0;
 	Current_Header.balloon[0][0] = 5;
-	Current_Header.songvol = 100;
-	Current_Header.sevol = 100;
+	Current_Header.songvol = 80;
+	Current_Header.sevol = 80;
 	Current_Header.scoreinit = -1;
 	Current_Header.scorediff = -1;
 	Current_Header.course = course;
@@ -241,7 +241,7 @@ void load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SONGVOL:") == buf) {
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
-					Current_Header.songvol = atoi(temp);
+					Current_Header.songvol = atoi(temp) * 0.8;
 				}
 				continue;
 			}
@@ -249,7 +249,7 @@ void load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SEVOL:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					Current_Header.sevol = atoi(temp);
+					Current_Header.sevol = atoi(temp) * 0.8;
 				}
 				continue;
 			}
