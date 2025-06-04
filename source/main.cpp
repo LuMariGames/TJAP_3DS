@@ -221,7 +221,7 @@ int main() {
 					warning = WARNING_DSP1;
 					scene_state = SCENE_WARNING; 
 				}
-				APT_SetAppCpuTimeLimit(35);
+				APT_SetAppCpuTimeLimit(45);
 			}
 			break;
 
