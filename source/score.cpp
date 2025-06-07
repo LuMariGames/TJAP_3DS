@@ -793,7 +793,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		if (strcmp(exam[0][0], "g") == 0 && strcmp(exam[0][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[0] / 100.00);
 		else if (strcmp(exam[1][0], "g") == 0 && strcmp(exam[1][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[1] / 100.00);
 		else if (strcmp(exam[2][0], "g") == 0 && strcmp(exam[2][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[2] / 100.00);
-		else if (strcmp(exam[3][0], "g") == 0 && strcmp(exam[3][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[2] / 100.00);
+		else if (strcmp(exam[3][0], "g") == 0 && strcmp(exam[3][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[3] / 100.00);
 		break;
 	}
 	//init_score_after();
