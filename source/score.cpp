@@ -480,7 +480,7 @@ void send_gogotime(bool arg) {
 int dan_condition() {
 	int isBadCondition = 0; //ここで何回条件に反しているかをリセットする
 	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
-	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (Gauge.norma / Gauge.soul * 100.0)};
+	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.norma / Gauge.soul * 100.0)};
     
 	for (int i = 0; i < 7; ++i) {
 		if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "l") == 0 && counts[i] >= redCdn[0]) ||
