@@ -404,7 +404,7 @@ int main() {
 			C2D_SceneTarget(bottom);
 			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
 
-			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32f(0xF7, 0x4A, 0x21, 0x7F));
+			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7, 0x4A, 0x21, 0x7F));
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
