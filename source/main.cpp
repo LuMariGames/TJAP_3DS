@@ -361,7 +361,7 @@ int main() {
 			}
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
-			C2D_DrawSprite(&sprites[time_count(CurrentTimeMain)]);
+			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 			C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image, &sprites[SPRITE_TOP].params, NULL);
 
@@ -661,7 +661,7 @@ static int exist_file(const char* path) {
 }
 inline int time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
-	return ((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2);
+	return ((int)floor(TIME*(NowBPM/60.0*(isGOGO*0.5))) % 2)+(isGOGO*2);
 }
 inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
