@@ -358,7 +358,7 @@ int main() {
 			}
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
-			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
+			C2D_DrawSprite(&sprites[time_count(CurrentTimeMain)]);
 			C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image, &sprites[SPRITE_TOP].params, NULL);
 
@@ -370,14 +370,13 @@ int main() {
 				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d1num + Skin.d2num;
 
 				//1体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime1], 200, 192);
-				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime1]);
+				C2D_DrawSprite(&sprites[mintime1]);
 				//2体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime2], 100, 192);
-				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime2]);
+				C2D_SpriteSetPos(&sprites[mintime2], 100, 192);
+				C2D_DrawSprite(&sprites[mintime2]);
 				//3体目
-				C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + mintime3], 300, 192);
-				C2D_DrawSprite(&sprites[SPRITE_DANCER_0 + mintime3]);
+				C2D_SpriteSetPos(&sprites[mintime3], 300, 192);
+				C2D_DrawSprite(&sprites[mintime3]);
 			}
 
 			draw_lane(sprites);
@@ -401,7 +400,7 @@ int main() {
 			C2D_SceneTarget(bottom);
 			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
 
-			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32f(247.0/255.0, 74.0/255.0, 33.0/255.0, 0.5f));
+			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32f(0xF7, 0x4A, 0x21, 0x7F));
 
 			//タッチエフェクト
 			if (tch_cnt > 0) {
@@ -566,7 +565,6 @@ inline static void load_sprites() {
 	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
-
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH * 0.5, 200);
@@ -575,7 +573,10 @@ inline static void load_sprites() {
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
-	for (int i = 0; i < 7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
+	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
+	for (int i = 0; i < Skin.d1num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 200, 192);
+	for (int i = Skin.d1num; i < Skin.d2num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 100, 192);
+	for (int i = Skin.d1num + Skin.d2num; i < Skin.d3num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 300, 192);
 }
 
 bool get_isPause() {
@@ -658,10 +659,10 @@ static int exist_file(const char* path) {
     return 1;
 }
 inline int time_count(double TIME) noexcept {
-	if (TIME < 0) return 0;
-	return ((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2);
+	if (TIME < 0) return SPRITE_DONCHAN_0 + 0;
+	return SPRITE_DONCHAN_0 + ((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2);
 }
 inline int dancer_time_count(double TIME, int NUM) noexcept {
-	if (TIME < 0) return 0;
-	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
+	if (TIME < 0) return SPRITE_DANCER_0 + 0;
+	return SPRITE_DANCER_0 + (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
