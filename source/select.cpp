@@ -22,6 +22,7 @@ int GenreNumber = 0;		//ジャンルの総数
 int ClosedSongNumber = 0;	//閉じたジャンル内の曲数
 int GenreCount = 0,SongCount = 0,cursor = 0,course_cursor = 0,course_count = 0,SelectedId = 0,SelectedGenreId = 0 ,course = COURSE_ONI;
 bool isSelectCourse = false,isCursorGenre = false,isGameStart = false,loadend = false;
+extern C2D_Font font[1];
 
 int cmp_list(const void* p, const void* q) {	//比較用
 
@@ -399,7 +400,7 @@ C2D_Text SelectText;
 void draw_select_text(float x, float y, const char* text,int color) {	//color省略可(0xffffff)
 
 	C2D_TextBufClear(g_SelectText);
-	C2D_TextParse(&SelectText, g_SelectText, text);
+	C2D_TextFontParse(&SelectText, font[0], g_SelectText, text);
 	C2D_TextOptimize(&SelectText);
 	float r = ((color >> 16) & 0xFF)/255.0;
 	float g = ((color >> 8) & 0xFF)/255.0;
@@ -410,7 +411,7 @@ void draw_select_text(float x, float y, const char* text,int color) {	//color省
 void draw_result_text(float x, float y, float size, const char* text) {
 
 	C2D_TextBufClear(g_SelectText);
-	C2D_TextParse(&SelectText, g_SelectText, text);
+	C2D_TextFontParse(&SelectText, font[0], g_SelectText, text);
 	C2D_TextOptimize(&SelectText);
 	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 0.5f, size, size, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
 }
