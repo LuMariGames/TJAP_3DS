@@ -63,6 +63,8 @@ void exit_main() {
 	C2D_Fini();
 	C3D_Fini();
 	C2D_SpriteSheetFree(spriteSheet);
+	C2D_SpriteSheetFree(otherspsh);
+	C2D_SpriteSheetFree(dancerspsh);
 	gfxExit();
 	romfsExit();
 	exit_music();
