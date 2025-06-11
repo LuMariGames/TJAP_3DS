@@ -127,6 +127,9 @@ int main() {
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
 	load_sprites();
+	for (int i = 0; i < Skin.d1num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 200, 192);
+	for (int i = Skin.d1num; i < Skin.d2num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 100, 192);
+	for (int i = Skin.d1num + Skin.d2num; i < Skin.d3num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 300, 192);
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
@@ -370,13 +373,10 @@ int main() {
 				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d1num + Skin.d2num;
 
 				//1体目
-				C2D_SpriteSetPos(&sprites[mintime1], 200, 192);
 				C2D_DrawImage(sprites[mintime1].image, &sprites[mintime1].params, NULL);
 				//2体目
-				C2D_SpriteSetPos(&sprites[mintime2], 100, 192);
 				C2D_DrawImage(sprites[mintime2].image, &sprites[mintime2].params, NULL);
 				//3体目
-				C2D_SpriteSetPos(&sprites[mintime3], 300, 192);
 				C2D_DrawImage(sprites[mintime3].image, &sprites[mintime3].params, NULL);
 			}
 
@@ -658,9 +658,9 @@ static int exist_file(const char* path) {
 }
 inline int time_count(double TIME) noexcept {
 	if (TIME < 0) return SPRITE_DONCHAN_0 + 0;
-	return SPRITE_DONCHAN_0 + ((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2);
+	return SPRITE_DONCHAN_0 + (((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2));
 }
 inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return SPRITE_DANCER_0 + 0;
-	return SPRITE_DANCER_0 + (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
+	return SPRITE_DANCER_0 + ((int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM);
 }
