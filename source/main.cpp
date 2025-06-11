@@ -127,9 +127,11 @@ int main() {
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
 	load_sprites();
-	for (int i = 0; i < Skin.d1num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 200, 192);
-	for (int i = Skin.d1num; i < Skin.d2num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 100, 192);
-	for (int i = Skin.d1num + Skin.d2num; i < Skin.d3num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 300, 192);
+	if (dance) {
+		for (int i = 0; i < Skin.d1num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 200, 192);
+		for (int i = Skin.d1num; i < Skin.d2num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 100, 192);
+		for (int i = Skin.d1num + Skin.d2num; i < Skin.d3num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 300, 192);
+	}
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
@@ -368,16 +370,16 @@ int main() {
 			//ダンサー表示
 			if (dance && course != COURSE_DAN) {
 				//ダンサーのコマ数調整
-				mintime1 = Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
-				mintime2 = Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
-				mintime3 = Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d1num + Skin.d2num;
+				mintime1 = SPRITE_DANCER_0 + Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
+				mintime2 = SPRITE_DANCER_0 + Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
+				mintime3 = SPRITE_DANCER_0 + Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d1num + Skin.d2num;
 
 				//1体目
-				C2D_DrawImage(sprites[mintime1].image, &sprites[mintime1].params, NULL);
+				C2D_DrawSprite(&sprites[mintime1]);
 				//2体目
-				C2D_DrawImage(sprites[mintime2].image, &sprites[mintime2].params, NULL);
+				C2D_DrawSprite(&sprites[mintime2]);
 				//3体目
-				C2D_DrawImage(sprites[mintime3].image, &sprites[mintime3].params, NULL);
+				C2D_DrawSprite(&sprites[mintime3]);
 			}
 
 			draw_lane(sprites);
@@ -657,10 +659,10 @@ static int exist_file(const char* path) {
     return 1;
 }
 inline int time_count(double TIME) noexcept {
-	if (TIME < 0) return SPRITE_DONCHAN_0 + 0;
-	return SPRITE_DONCHAN_0 + (((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2));
+	if (TIME < 0) return 0;
+	return ((int)floor(TIME*(NowBPM/60.0)) % 2)+(isGOGO*2);
 }
 inline int dancer_time_count(double TIME, int NUM) noexcept {
-	if (TIME < 0) return SPRITE_DANCER_0 + 0;
-	return SPRITE_DANCER_0 + ((int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM);
+	if (TIME < 0) return 0;
+	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
