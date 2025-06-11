@@ -661,7 +661,7 @@ static int exist_file(const char* path) {
 }
 inline int time_count(double TIME) noexcept {
 	if (TIME < 0) return 0;
-	return ((int)floor(TIME*(NowBPM/60.0*(0.5+isGOGO*0.5))) % 2)+(isGOGO*2);
+	return ((int)floor(TIME*(NowBPM/60.0*(2-isGOGO))) % 2)+(isGOGO*2);
 }
 inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
