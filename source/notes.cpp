@@ -7,14 +7,14 @@
 #include "score.h"
 #include "vorbis.h"
 #include "option.h"
-
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd;
-extern int isBranch, comboVoice, course, stme;
 double bpm, offset;
 float NowBPM = 120.0f;
+extern int isBranch, comboVoice, course, stme;
 extern double black;
+C2D_Font font[1];
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId, int branch), sign(double A), make_balloon_end(int NotesId);
@@ -1144,7 +1144,6 @@ bool get_notes_finish() {
 
 C2D_TextBuf g_NotesText = C2D_TextBufNew(4096);
 C2D_Text NotesText;
-C2D_Font font[1];
 
 void draw_notes_text(float x, float y, const char *text, float *width, float *height) {
 
