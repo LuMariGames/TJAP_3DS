@@ -62,6 +62,7 @@ void exit_main() {
 	fontfree();
 	C2D_Fini();
 	C3D_Fini();
+	C2D_SpriteSheetFree(spriteSheet);
 	gfxExit();
 	romfsExit();
 	exit_music();
@@ -127,11 +128,6 @@ int main() {
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
 	load_sprites();
-	if (dance) {
-		for (int i = 0; i < Skin.d1num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 200, 192);
-		for (int i = Skin.d1num; i < Skin.d2num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 100, 192);
-		for (int i = Skin.d1num + Skin.d2num; i < Skin.d3num; ++i) C2D_SpriteSetPos(&sprites[SPRITE_DANCER_0 + i], 300, 192);
-	}
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
 	while (aptMainLoop()) {
@@ -375,10 +371,13 @@ int main() {
 				mintime3 = SPRITE_DANCER_0 + Skin.d3anime[dancer_time_count(CurrentTimeMain, Skin.d3total)] + Skin.d1num + Skin.d2num;
 
 				//1体目
+				C2D_SpriteSetPos(&sprites[mintime1], 200, 192);
 				C2D_DrawSprite(&sprites[mintime1]);
 				//2体目
+				C2D_SpriteSetPos(&sprites[mintime2], 100, 192);
 				C2D_DrawSprite(&sprites[mintime2]);
 				//3体目
+				C2D_SpriteSetPos(&sprites[mintime3], 300, 192);
 				C2D_DrawSprite(&sprites[mintime3]);
 			}
 
