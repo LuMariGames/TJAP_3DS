@@ -499,7 +499,7 @@ int main() {
 					break;
 				}
 			}
-			if ((get_notes_finish() && !ndspChnIsPlaying(CHANNEL)) || (courselife == 0 && course == COURSE_TOWER) && (Option.special != 3)) {
+			if (((get_notes_finish() && !ndspChnIsPlaying(CHANNEL)) || (courselife == 0 && course == COURSE_TOWER)) && Option.special != 3) {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
 			}
