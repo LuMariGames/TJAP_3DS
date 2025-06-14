@@ -286,10 +286,6 @@ int main() {
 
 		case SCENE_MAINLOAD:	 //ロード中
 
-			if (Option.special == 3) {
-				randselect();
-				get_SelectedId(&SelectedSong, &course);
-			}
 			init_tja();
 			load_tja_head(course, SelectedSong);
 			//init_main_music();
@@ -298,10 +294,6 @@ int main() {
 			init_notes(TJA_Header);
 			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
-
-			if (course >= COURSE_TOWER) {
-				break;
-			}
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
 			notes_cnt = 0;
@@ -499,13 +491,9 @@ int main() {
 					break;
 				}
 			}
-			if (((get_notes_finish() && !ndspChnIsPlaying(CHANNEL)) || (courselife == 0 && course == COURSE_TOWER)) && Option.special != 3) {
+			if ((get_notes_finish() && !ndspChnIsPlaying(CHANNEL)) || (courselife == 0 && course == COURSE_TOWER)) {
 				scene_state = SCENE_RESULT;
 				cnt = -1;
-			}
-			if (get_notes_finish() && !ndspChnIsPlaying(CHANNEL) && Option.special == 3) {
-				stopPlayback();
-				scene_state = SCENE_MAINLOAD;
 			}
 
 			//コンボボイス
