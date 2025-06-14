@@ -299,7 +299,7 @@ int main() {
 			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
 
-			if (course <= COURSE_TOWER) {
+			if (course >= COURSE_TOWER) {
 				break;
 			}
 			time_ini();
