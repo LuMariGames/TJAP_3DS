@@ -459,11 +459,6 @@ bool get_isGameStart() {
 	return isGameStart;
 }
 
-void randselect() {
-	srand((unsigned int)time(NULL));
-	SelectedId = rand() % SongNumber + 1;
-}
-
 void select_ini() {
 	//cursor = 0;
 	course_cursor = 0;
