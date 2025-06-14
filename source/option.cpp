@@ -269,10 +269,9 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		if (Option.special == 1) draw_option_text(x, y, Text[Option.lang][TEXT_KANPEKI], true, &width, &height);
 		else if (Option.special == 2) draw_option_text(x, y, Text[Option.lang][TEXT_TOKUN], true, &width, &height);
-		else if (Option.special == 3) draw_option_text(x, y, Text[Option.lang][TEXT_MEDLEY], true, &width, &height);
 		else draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			opv = ++Option.special % 4;
+			opv = ++Option.special % 3;
 			Option.special = opv;
 		}
 		XCnt = 0, ++YCnt;
