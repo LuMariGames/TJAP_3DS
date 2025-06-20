@@ -68,6 +68,6 @@ Starting with v1.5.3, the buffer size has been eliminated, allowing you to enjoy
 |metadata|Supported?|Comment|
 |---|---|---|
 |`COURSE:0~5`, `LEVEL`, `TITLE`, `OFFSET`|✅||
-|`WAVE`, `BALLOON`, `SONGVOL`, `EXAM1~3`|✅|4条件は非対応なので注意|
+|`WAVE`, `BALLOON`, `SONGVOL`, `EXAM1~4`|✅|個別条件は非対応なので注意|
 |`COURSE:6`|⚠️|`NEXTSONG`が非対応の為TNDEやOptk等で作られた段位は出来ない。|
 |`DEMOSTART`, `SEVOL`|❌||
