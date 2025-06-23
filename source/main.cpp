@@ -157,7 +157,7 @@ int main() {
 
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			draw_select_text(120, 70, get_buffer());
-			draw_select_text(120, 100, "Now Loading...(本体を閉じないで下さい)");
+			draw_select_text(120, 100, "Now Loading...");
 
 			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
