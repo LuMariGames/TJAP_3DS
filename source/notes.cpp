@@ -17,7 +17,7 @@ extern double black;
 C2D_Font font[1];
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
-make_balloon_start(int NotesId, int branch), sign(double A), make_balloon_end(int NotesId);
+make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
 notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
@@ -334,7 +334,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}
 	send_gogotime(isGOGOTime);
 
-	NowBPM = bpm;
 	for (int i = MaxMeasureCount; i >= 0; --i) {
 		if (Measure[i].command == -1 && Measure[i].judge_time <= CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
@@ -439,7 +438,7 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 }
 
-inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt) {
+inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt, int branch) {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -462,6 +461,15 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
 		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
+			if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[i].need_hit = balloon[branch][BalloonCount[branch]];
+			else  BalloonNotes[i].need_hit = 5;
+			BalloonNotes[i].current_hit = 0;
+			if (branch == 0) ++BalloonCount[0];
+			else {
+				++BalloonCount[1];
+				++BalloonCount[2];
+				++BalloonCount[3];
+			}
 			JudgeBalloonState = i;
 			break;
 		}
@@ -1040,7 +1048,7 @@ inline int find_balloon_id() {
 	return -1;
 }
 
-int make_balloon_start(int NotesId, int branch) {
+int make_balloon_start(int NotesId) {
 
 	int id = find_balloon_id();
 	if (id != -1) {
@@ -1048,16 +1056,7 @@ int make_balloon_start(int NotesId, int branch) {
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
 		BalloonNotes[id].end_id = -1;
-		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[id].need_hit = balloon[branch][BalloonCount[branch]];
-		else  BalloonNotes[id].need_hit = 5;
-		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
-		if (branch == 0) ++BalloonCount[0];
-		else {
-			++BalloonCount[1];
-			++BalloonCount[2];
-			++BalloonCount[3];
-		}
 		return id;
 	}
 	else return -1;
@@ -1232,6 +1231,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	Command.val[2] = 0;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
+	NowBPM = bpm;
 	for (int i = 0, j = (int)(sizeof(balloon[0]) / sizeof(balloon[0][0])); i < j; ++i) {
 		balloon[0][i] = TJA_Header.balloon[0][i];
 		balloon[1][i] = TJA_Header.balloon[1][i];
