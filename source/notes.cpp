@@ -9,7 +9,7 @@
 #include "option.h"
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd;
+int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -463,17 +463,20 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
 			if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[i].need_hit = balloon[branch][BalloonCount[branch]];
 			else  BalloonNotes[i].need_hit = 5;
-			BalloonNotes[i].current_hit = 0;
-			if (branch == 0) ++BalloonCount[0];
-			else {
-				++BalloonCount[1];
-				++BalloonCount[2];
-				++BalloonCount[3];
-			}
 			JudgeBalloonState = i;
 			break;
 		}
 	}
+	if (JBS != JudgeBalloonState && JudgeBalloonState == -1) {
+		BalloonNotes[i].current_hit = 0;
+		if (branch == 0) ++BalloonCount[0];
+		else {
+			++BalloonCount[1];
+			++BalloonCount[2];
+			++BalloonCount[3];
+		}
+	}
+	JBS = JudgeBalloonState;
 
 	if (Option.isAuto) {	//オート
 
