@@ -461,20 +461,22 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
 		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
-			if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[i].need_hit = balloon[branch][BalloonCount[branch]];
-			else  BalloonNotes[i].need_hit = 5;
 			JudgeBalloonState = i;
 			break;
 		}
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState == -1) {
-		BalloonNotes[JBS].current_hit = 0;
 		if (branch == 0) ++BalloonCount[0];
 		else {
 			++BalloonCount[1];
 			++BalloonCount[2];
 			++BalloonCount[3];
 		}
+	}
+	else if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
+		BalloonNotes[JudgeBalloonState].current_hit = 0;
+		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
+		else  BalloonNotes[JudgeBalloonState].need_hit = 5;
 	}
 	JBS = JudgeBalloonState;
 
