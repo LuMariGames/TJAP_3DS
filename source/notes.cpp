@@ -203,7 +203,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 					case NOTES_BALLOON:
 						RollState = NOTES_BALLOON;
-						roll_id = make_balloon_start(id, ((Measure[MeasureCount].branch == -1) ? 0 : Measure[MeasureCount].branch - 11));
+						roll_id = make_balloon_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
 						}
@@ -749,7 +749,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			delete_notes(i);
 		}
 	}
-	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
+	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt, ((Measure[MeasureCount].branch == -1) ? 0 : Measure[MeasureCount].branch - 11));
 }
 
 inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
