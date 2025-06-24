@@ -468,7 +468,6 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 		}
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState == -1) {
-		BalloonNotes[i].current_hit = 0;
 		if (branch == 0) ++BalloonCount[0];
 		else {
 			++BalloonCount[1];
