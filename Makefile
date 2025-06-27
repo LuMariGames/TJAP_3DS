@@ -58,13 +58,13 @@ RSF_PATH				:= resource/app.rsf
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -O3 -mword-relocations -finline-functions -fomit-frame-pointer \
+CFLAGS	:=	-g -Wall -Ofast -mword-relocations -finline-functions -fomit-frame-pointer \
 			-ffunction-sections -ffast-math \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -D_3DS__
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++14
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
