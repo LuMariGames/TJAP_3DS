@@ -148,11 +148,11 @@ void playFile(void* infoIn){
 
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer1[0];
+	while (*info->isPlay == false) svcSleepThread(100000);
+
+	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer2[0];
-
-	while (*info->isPlay == false) svcSleepThread(100000);
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 
 	while(ndspChnIsPlaying(CHANNEL) == false);
