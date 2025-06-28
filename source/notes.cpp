@@ -1160,8 +1160,8 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_TextOptimize(&NotesText);
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 	
-	C2D_DrawText(&NotesText, C2D_WithColor, x - (*width * 1.166666), y, 1.0f, 0.7f, 0.7f, C2D_Color32f(0, 0, 0, 1.0f));
-	C2D_DrawText(&NotesText, C2D_WithColor, x-*width, y, 1.0f, 0.6f, 0.6f, C2D_Color32f(1, 1, 1, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AtBaseline, x-*width, y, 1.0f, 0.7f, 0.7f, C2D_Color32f(0, 0, 0, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AtBaseline, x-*width, y, 1.0f, 0.6f, 0.6f, C2D_Color32f(1, 1, 1, 1.0f));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
