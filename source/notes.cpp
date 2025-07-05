@@ -765,7 +765,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0; i < Notes.size(); ++i) {	//描画
+	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
 
 		if (Notes[i].flag) {
 
@@ -954,8 +954,7 @@ int notes_cmp(const void *p, const void *q) {	//比較用
 }
 
 void notes_sort() {	//ノーツを出現順にソート
-	int n = sizeof Notes / sizeof(NOTES_T);
-	qsort(Notes, n, sizeof(NOTES_T), notes_cmp);
+	qsort(Notes.data(), Notes.size(), sizeof(NOTES_T), notes_cmp);
 }
 
 void delete_roll(int i) {
@@ -1124,7 +1123,7 @@ void delete_notes(int i) {
 		}
 	}
 
-	if (i >= 0 && i < Notes.size()) {
+	if (i >= 0 && i < (int)Notes.size()) {
 		Notes[i].flag = false;
 		Notes[i].num = 0;
 		Notes[i].knd = 0;
