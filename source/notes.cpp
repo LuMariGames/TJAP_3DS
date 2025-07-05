@@ -22,7 +22,7 @@ void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2
 notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
-NOTES_T Notes[NOTES_MAX];
+std::vector<NOTES_T> Notes;
 COMMAND_T Command;
 BARLINE_T BarLine[BARLINE_MAX];
 ROLL_T RollNotes[ROLL_MAX];
@@ -361,7 +361,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
+		if (!Notes[i].flag) return i;
+	}
+	Notes.resize(Notes.size() * 2);
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	return -1;
@@ -482,7 +486,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
-		for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+		for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -542,7 +546,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	else if (!Option.isAuto) {			//手動
 
 		//判定すべきノーツを検索
-		for (int i = 0; i < NOTES_MAX; ++i) {
+		for (int i = 0, j = Notes.size(); i < j; ++i) {
 
 			if (Notes[i].flag) {
 
@@ -678,7 +682,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//計算
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -731,7 +735,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -761,7 +765,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0; i < NOTES_MAX; ++i) {	//描画
+	for (int i = 0; i < Notes.size(); ++i) {	//描画
 
 		if (Notes[i].flag) {
 
@@ -1120,7 +1124,7 @@ void delete_notes(int i) {
 		}
 	}
 
-	if (i >= 0 && i < NOTES_MAX) {
+	if (i >= 0 && i < Notes.size()) {
 		Notes[i].flag = false;
 		Notes[i].num = 0;
 		Notes[i].knd = 0;
@@ -1139,7 +1143,7 @@ void delete_notes(int i) {
 bool get_notes_finish() {
 
 	if (isNotesLoad) return false;
-	for (int i = 0, j = NOTES_MAX - 1; i < j; ++i) {
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 
 		if (Notes[i].flag && !Notes[i].isThrough) return false;
 	}
@@ -1212,7 +1216,7 @@ void draw_condition() {
 }
 inline void init_notes_structure() {
 
-	for (int i = 0, j = NOTES_MAX - 1; i < j; i += 4) {
+	for (int i = 0, j = Notes.size() - 1; i < j; i += 4) {
 		delete_notes(i);
 		delete_notes(i+1);
 		delete_notes(i+2);
@@ -1280,14 +1284,21 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].isDisp = false;
 	}
 	dcd = 0;
+	Notes.clear();
+	Notes.resize(256);
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
 void newfont() {
 	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
+	Notes.reserve(2048);
+	Notes.resize(256);
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font[0]);
+	Notes.resize(2048);
+	Notes.clear();
+	Notes.shrink_to_fit();
 }
