@@ -10,6 +10,8 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <vector>
+#include <iostream>
 
 #define C3D_CMDBUF_SIZE 0x40000
 #define VERSION "1.5.4(B)"
