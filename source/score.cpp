@@ -665,7 +665,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 
 	if ((TJA_Header.scoreinit == -1 || TJA_Header.scorediff == -1) && (scoremode == 1 || scoremode == 2)) {	//新配点と旧配点
-		diff = (int)((TmpBaseCeilingPoint - combo / 100.0 * 10000) / (init_cnt * 4 + diff_cnt));
+		diff = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / (init_cnt * 4 + diff_cnt);
 		init = diff * 4;
 	}
 	else if (scoremode == 0) {
