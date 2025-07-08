@@ -618,19 +618,19 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_ROLL) {			//連打
 
-					roll_start_time = Measure[i].judge_time + 60.0 / Measure[i].bpm * 4 * Measure[i].measure * i / NotesCountMax;
+					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
 					RollKnd = NOTES_ROLL;
 				}
 				else if (knd == NOTES_BIGROLL) {		//大連打
 
-					roll_start_time = Measure[i].judge_time + 60.0 / Measure[i].bpm * 4 * Measure[i].measure * i / NotesCountMax;
+					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
 					RollKnd = NOTES_BIGROLL;
 				}
 				else if (knd == NOTES_ROLLEND) {
 
 					if (roll_start_time != 0) {
 
-						roll_end_time = Measure[i].judge_time + 60.0 / Measure[i].bpm * 4 * Measure[i].measure * i / NotesCountMax;
+						roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
 						RollCnt = (int)((roll_end_time - roll_start_time) / (1.0 / 12.0));
 
 						if (RollKnd == NOTES_ROLL) {
@@ -665,7 +665,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 
 	if ((TJA_Header.scoreinit == -1 || TJA_Header.scorediff == -1) && (scoremode == 1 || scoremode == 2)) {	//新配点と旧配点
-		diff = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / (init_cnt * 4 + diff_cnt);
+		diff = (int)((TmpBaseCeilingPoint - combo / 100.0 * 10000) / (init_cnt * 4 + diff_cnt));
 		init = diff * 4;
 	}
 	else if (scoremode == 0) {
