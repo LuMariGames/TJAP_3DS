@@ -613,7 +613,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_BALLOON) {		//風船
 
-					TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[Measure[i].firstmeasure].branch == -1) ? 0 : Measure[Measure[i].firstmeasure].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
+					TmpBaseCeilingPoint -= ((TJA_Header.balloon[((Measure[Measure[i].firstmeasure].branch == -1) ? 0 : Measure[Measure[i].firstmeasure].branch - 11)][BalloonCnt]) * 300 + 5000) * gogo;
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -665,7 +665,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 
 	if ((TJA_Header.scoreinit == -1 || TJA_Header.scorediff == -1) && (scoremode == 1 || scoremode == 2)) {	//新配点と旧配点
-		diff = (TmpBaseCeilingPoint - (int)(PerfectNotesCount / 100) * 10000) / (init_cnt * 4 + diff_cnt);
+		diff = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / (init_cnt * 4 + diff_cnt);
 		init = diff * 4;
 	}
 	else if (scoremode == 0) {
