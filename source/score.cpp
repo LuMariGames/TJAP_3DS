@@ -151,22 +151,22 @@ void update_score(int knd) {
 	case ROLL:
 		if (scoremode == 0 || scoremode == 1) {	//旧配点
 			if (isGOGO == true) {
-				TotalScore += 120;
-				CurrentScore += 120;
-			}
-			else {
-				TotalScore += 100;
-				CurrentScore += 100;
-			}
-		}
-		else if (scoremode == 2) {	//新配点
-			if (isGOGO == true) {
 				TotalScore += 360;
 				CurrentScore += 360;
 			}
 			else {
 				TotalScore += 300;
 				CurrentScore += 300;
+			}
+		}
+		else if (scoremode == 2) {	//新配点
+			if (isGOGO == true) {
+				TotalScore += 120;
+				CurrentScore += 120;
+			}
+			else {
+				TotalScore += 100;
+				CurrentScore += 100;
 			}
 		}
 
@@ -613,7 +613,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_BALLOON) {		//風船
 
-					TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[Measure[i].firstmeasure].branch == -1) ? 0 : Measure[Measure[i].firstmeasure].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
+					TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
