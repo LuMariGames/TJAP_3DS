@@ -635,8 +635,8 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
-								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 360;
-								else TmpBaseCeilingPoint -= RollCnt * 300;
+								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 120;
+								else TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 							if (scoremode == 2) {
 								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 120;
@@ -645,8 +645,8 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
-								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 430 * gogo;
-								else TmpBaseCeilingPoint -= RollCnt * 360 * gogo;
+								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
+								else TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
 							if (scoremode == 1) {
 								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
