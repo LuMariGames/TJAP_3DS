@@ -773,25 +773,21 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, NULL);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_KATSU].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, NULL);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, NULL);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, NULL);
 				break;
 			case NOTES_ROLL:
@@ -818,7 +814,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
 					C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 				}
 				break;
@@ -847,7 +842,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-					C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
 					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					break;
 				}
@@ -895,14 +889,12 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, NULL);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y = notes_y;
-				C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, NULL);
 				break;
