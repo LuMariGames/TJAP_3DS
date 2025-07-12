@@ -578,6 +578,16 @@ inline static void load_sprites() {
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
 	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
+
+	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_LINEAR);
 }
 
 bool get_isPause() {
