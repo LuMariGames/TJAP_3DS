@@ -470,7 +470,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 			break;
 		}
 	}
-	else if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
+	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
 		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
 		else  BalloonNotes[JudgeBalloonState].need_hit = 5;
