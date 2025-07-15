@@ -656,6 +656,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BranchCourse = -1;
 						break;
 					case COMMAND_SECTION:
+						BranchCourse = -1;
 						Measure[MeasureCount].command = COMMAND_SECTION;
 						break;
 					case COMMAND_END:
