@@ -79,7 +79,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 					switch (Command.knd) {
 					case COMMAND_END:
-						Branch.course = -1;
 						isNotesLoad = false;
 						break;
 					case COMMAND_BRANCHSTART:
