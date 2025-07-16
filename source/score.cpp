@@ -491,10 +491,10 @@ int dan_condition() {
 
 	if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
 		for (int i = 0; i < 7; ++i) {
-			if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "m") == 0 && counts[i] <= redCdn[0]) ||
-			(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "m") == 0 && counts[i] <= redCdn[1]) ||
-			(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "m") == 0 && counts[i] <= redCdn[2]) ||
-			(strcmp(exam[3][0], types[i]) == 0 && strcmp(exam[3][3], "m") == 0 && counts[i] <= redCdn[3])) ++isBadCondition;
+			if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "m") == 0 && counts[i] < redCdn[0]) ||
+			(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "m") == 0 && counts[i] < redCdn[1]) ||
+			(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "m") == 0 && counts[i] < redCdn[2]) ||
+			(strcmp(exam[3][0], types[i]) == 0 && strcmp(exam[3][3], "m") == 0 && counts[i] < redCdn[3])) ++isBadCondition;
 		}
 	}
 	return isBadCondition;
