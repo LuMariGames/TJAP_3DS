@@ -3,7 +3,7 @@
 
 typedef struct {
 	int num, notes_max, knd, roll_id, text_id;
-	double create_time, judge_time, pop_time, hb_time, bpm, scroll, x_ini;
+	double create_time, judge_time, pop_time, bpm, scroll, x_ini;
 	bool flag, isThrough;
 	float x;
 	C2D_Sprite spr;
@@ -46,8 +46,8 @@ void notes_main(
 	MEASURE_T Measure[MEASURE_MAX],
 	int cnt,
 	C2D_Sprite sprites[SPRITES_NUMER]
-);
+),
+init_notes(TJA_HEADER_T TJA_Header), draw_title(),
+draw_condition(), newfont(), fontfree();
 int ctoi(char c), get_branch_course();
-void init_notes(TJA_HEADER_T TJA_Header);
 bool get_notes_finish();
-void draw_title(), draw_condition(), newfont(), fontfree();
