@@ -684,9 +684,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag) {
 
-			if (i > 0 && CurrentTimeNotes < Notes[i].judge_time) Notes[i].hb_time = ((CurrentTimeNotes - Notes[i].pop_time) * (NowBPM / Notes[i].bpm)) + Notes[i-1].hb_time;
-			else if (i > 0) Notes[i].hb_time = Notes[i].pop_time;
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].hb_time) * (Notes[i].bpm / 240.0);
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
 
 			switch (Notes[i].knd) {
 
