@@ -2,7 +2,7 @@
 #include "tja.h"
 
 typedef struct {
-	int num, notes_max, knd, roll_id, text_id;
+	int num, notes_max, knd, roll_id, branch_id;
 	double create_time, judge_time, pop_time, bpm, scroll, x_ini;
 	bool flag, isThrough;
 	float x;
