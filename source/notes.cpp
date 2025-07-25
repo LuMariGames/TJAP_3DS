@@ -1144,24 +1144,19 @@ C2D_Text NotesText;
 
 void draw_notes_text(float x, float y, const char *text, float *width, float *height) {
 
-	OPTION_T Option;
-	get_option(&Option);
 	float size = 0.6;
-
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font[0], g_NotesText, text);
+	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
 
+	float size = 0.55;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	float size = 0.55;
-
-	C2D_TextGetDimensions(&NotesText, size, size, width, height);
-
 	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
