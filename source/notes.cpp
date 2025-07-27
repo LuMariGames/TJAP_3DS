@@ -261,9 +261,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					}
 					++NotesNumber;
 				}
-				else if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) == 0){
-				PreNotesKnd = 0;
-				}
 			}
 			++MeasureCount;
 			notes_sort();	//ソート
