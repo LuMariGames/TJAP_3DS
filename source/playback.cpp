@@ -96,8 +96,7 @@ void playFile(void* infoIn){
 
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
-	int16_t*	buffer1 = NULL;
-	int16_t*	buffer2 = NULL;
+	int16_t*	buffer[2] = {NULL};
 	ndspWaveBuf	waveBuf[2];
 	bool		lastbuf = false, isNdspInit = false;
 	int		ret = -1;
@@ -133,8 +132,8 @@ void playFile(void* infoIn){
 		goto err;
 	}
 	testtest = 99;
-	buffer1 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer2 = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer[0] = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer[1] = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
@@ -146,13 +145,13 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	waveBuf[0].nsamples = (*decoder.decode)(&buffer1[0]) / (*decoder.channels)();
-	waveBuf[0].data_vaddr = &buffer1[0];
+	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
+	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);
 
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
-	waveBuf[1].nsamples = (*decoder.decode)(&buffer2[0]) / (*decoder.channels)();
-	waveBuf[1].data_vaddr = &buffer2[0];
+	waveBuf[1].nsamples = (*decoder.decode)(&buffer[1][0]) / (*decoder.channels)();
+	waveBuf[1].data_vaddr = &buffer[1][0];
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 
 	while(ndspChnIsPlaying(CHANNEL) == false);
@@ -169,7 +168,7 @@ void playFile(void* infoIn){
 
 		//音声処理
 		if(waveBuf[0].status == NDSP_WBUF_DONE) {
-			size_t read = (*decoder.decode)(&buffer1[0]);
+			size_t read = (*decoder.decode)(&buffer[0][0]);
 			if(read <= 0) {
 				lastbuf = true;
 				continue;
@@ -178,7 +177,7 @@ void playFile(void* infoIn){
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 		}
 		if(waveBuf[1].status == NDSP_WBUF_DONE) {
-			size_t read = (*decoder.decode)(&buffer2[0]);
+			size_t read = (*decoder.decode)(&buffer[1][0]);
 			if(read <= 0) {
 				lastbuf = true;
 				continue;
@@ -197,8 +196,8 @@ out:
 	}
 
 	delete(info->file);
-	linearFree(buffer1);
-	linearFree(buffer2);
+	linearFree(buffer[0]);
+	linearFree(buffer[1]);
 
 	threadExit(0);
 	return;
