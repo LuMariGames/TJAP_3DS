@@ -1265,7 +1265,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	}
 	dcd = 0;
 	Notes.clear();
-	Notes.resize(256);
+	Notes.resize(64);
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
@@ -1273,7 +1273,7 @@ int sign(double A) {	//正か負かの判別
 void newfont() {
 	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
 	Notes.reserve(2048);
-	Notes.resize(256);
+	Notes.resize(64);
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
