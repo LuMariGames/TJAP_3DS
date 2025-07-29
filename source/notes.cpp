@@ -1154,6 +1154,7 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
+	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
