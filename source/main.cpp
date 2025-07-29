@@ -528,7 +528,7 @@ int main() {
 		}
 	}
 	exit_main();
-	return 0;
+	exit(0)
 }
 
 inline static void load_sprites() {
