@@ -134,11 +134,11 @@ int main() {
 
 	while (aptMainLoop()) {
 
+		if (isExit) break;
+
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
-
-		if (isExit) break;
 
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
