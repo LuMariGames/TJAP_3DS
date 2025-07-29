@@ -1280,4 +1280,6 @@ void fontfree() {
 	C2D_FontFree(font);
 	Notes.clear();
 	std::vector<NOTES_T>().swap(Notes);
+
+	asm volatile ("mov sp, #0x08000000");
 }
