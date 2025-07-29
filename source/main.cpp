@@ -65,11 +65,11 @@ void exit_main() {
 	C2D_SpriteSheetFree(spriteSheet);
 	C2D_SpriteSheetFree(otherspsh);
 	C2D_SpriteSheetFree(dancerspsh);
-	gfxExit();
-	romfsExit();
 	exit_music();
 	exit_option();
 	exit_skin();
+	gfxExit();
+	romfsExit();
 }
 
 inline void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int key) {
