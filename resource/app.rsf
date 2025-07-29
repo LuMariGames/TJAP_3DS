@@ -35,11 +35,11 @@ AccessControlInfo:
   # FS:USER Archive Access Permissions
   # Uncomment as required
   FileSystemAccess:
-   - CategorySystemApplication
+   #- CategorySystemApplication
    - CategoryHardwareCheck
    - CategoryFileSystemTool
-   - Debug
-   - TwlCardBackup
+   #- Debug
+   #- TwlCardBackup
    #- TwlNandData
    - Boss
    - DirectSdmc
@@ -47,21 +47,21 @@ AccessControlInfo:
    #- CtrNandRo
    #- CtrNandRw
    #- CtrNandRoWrite
-   - CategorySystemSettings
-   - CardBoard
-   - ExportImportIvs
+   #- CategorySystemSettings
+   #- CardBoard
+   #- ExportImportIvs
    - DirectSdmcWrite
-   - SwitchCleanup
-   - SaveDataMove
-   - Shop
+   #- SwitchCleanup
+   #- SaveDataMove
+   #- Shop
    - Shell
    - CategoryHomeMenu
   IoAccessControl:
    #- FsMountNand
    #- FsMountNandRoWrite
-   - FsMountTwln
+   #- FsMountTwln
    #- FsMountWnand
-   - FsMountCardSpi
+   #- FsMountCardSpi
    - UseSdif3
    - CreateSeed
    #- UseCardSpi
@@ -87,7 +87,7 @@ AccessControlInfo:
   # New3DS Exclusive Process Settings
   SystemModeExt                 : Legacy # Legacy(Default)/124MB/178MB  Legacy:Use Old3DS SystemMode
   CpuSpeed                      : 268MHz # 268MHz(Default)/804MHz
-  EnableL2Cache                 : false # false(default)/true
+  EnableL2Cache                 : true # false(default)/true
   CanAccessCore2                : false
 
   # Virtual Address Mappings
