@@ -1183,7 +1183,7 @@ void draw_condition() {
 		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
 		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
 		tx += width;
-		draw_condition_text(50+width, 154+20*j, exam[j][1], &width, &height);
+		draw_condition_text(50+tx, 154+20*j, exam[j][1], &width, &height);
 		tx += width;
 
 		if (strcmp(exam[j][0], "g") == 0) {
