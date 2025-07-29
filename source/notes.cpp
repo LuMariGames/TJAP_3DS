@@ -1279,5 +1279,5 @@ void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font);
 	Notes.clear();
-	Notes.reset();
+	std::vector<NOTES_T>().swap(Notes);
 }
