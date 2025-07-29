@@ -1278,6 +1278,6 @@ void newfont() {
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font);
-	Notes.clear();
-	std::vector<NOTES_T>().swap(Notes);
+	Notes.resize(0);
+	Notes.shrink_to_fit();
 }
