@@ -22,7 +22,7 @@ void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2
 notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
-std::vector<NOTES_T> Notes;
+std::unique_ptr<std::vector<NOTES_T>> Notes;
 COMMAND_T Command;
 BARLINE_T BarLine[BARLINE_MAX];
 ROLL_T RollNotes[ROLL_MAX];
@@ -1272,6 +1272,7 @@ int sign(double A) {	//正か負かの判別
 }
 void newfont() {
 	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
+	Notes = std::make_unique<std::vector<NOTES_T>>();
 	Notes.reserve(2048);
 	Notes.resize(64);
 }
@@ -1279,5 +1280,5 @@ void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font);
 	Notes.clear();
-	std::vector<NOTES_T>().swap(Notes); // 完全初期化
+	Notes.reset();
 }
