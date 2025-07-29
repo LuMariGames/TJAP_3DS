@@ -14,7 +14,7 @@ double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
-C2D_Font font[1];
+C2D_Font font;
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
@@ -1271,14 +1271,15 @@ int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
 void newfont() {
-	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
+	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
 	Notes.reserve(2048);
 	Notes.resize(64);
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
-	C2D_FontFree(font[0]);
+	C2D_FontFree(font);
 	Notes.resize(2048);
 	Notes.clear();
 	Notes.shrink_to_fit();
+	Notes = std::vector<NOTES_T>();
 }
