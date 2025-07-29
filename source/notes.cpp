@@ -1281,5 +1281,4 @@ void fontfree() {
 	Notes.resize(2048);
 	Notes.clear();
 	Notes.shrink_to_fit();
-	Notes = std::vector<NOTES_T>();
 }
