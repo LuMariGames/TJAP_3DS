@@ -1176,6 +1176,8 @@ void draw_condition() {
 	float width = 0, height = 0, tx = 0;
 
 	for (int j = 0; j < 4; ++j) {
+
+		tx = 0;
 		if (strcmp(exam[j][0], "jb") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
 		else if (strcmp(exam[j][0], "jg") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
 		else if (strcmp(exam[j][0], "jp") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
