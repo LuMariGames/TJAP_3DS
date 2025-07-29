@@ -28,7 +28,6 @@ char buffer[BUFFER_SIZE];
 int dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
-std::vector<NOTES_T> Notes;
 
 static void load_sprites();
 static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
@@ -58,8 +57,6 @@ void init_main() {
 
 void exit_main() {
 
-	Notes.clear();
-	std::vector<NOTES_T>().swap(Notes);
 	C2D_TextBufDelete(g_dynamicBuf);
 
 	fontfree();
