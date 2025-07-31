@@ -386,7 +386,7 @@ void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	else C2D_DrawImage(sprites[SPRITE_SOUL_OFF].image, &sprites[SPRITE_SOUL_OFF].params, NULL);
 }
 
-void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
+void draw_lane(C2D_Sprite sprites[SPRITES_NUMER], int kcnt, int dcnt) {
 
 
 	if (get_isBranch() == true) {
@@ -416,9 +416,10 @@ void draw_lane(C2D_Sprite  sprites[SPRITES_NUMER]) {
 		}
 	}
 
+	if (kcnt > 0) C2D_DrawRectangle(62,86,0,338,46,C2D_Color32(0x00,0xA9,0xFD,0xFF),C2D_Color32(0x00,0xA9,0xFD,0x00),C2D_Color32(0x00,0xA9,0xFD,0xFF),C2D_Color32(0x00,0xA9,0xFD,0x00));
+	else if (dcnt > 0) C2D_DrawRectangle(62,86,0,338,46,C2D_Color32(0xFD,0x00,0x00,0xFF),C2D_Color32(0xFD,0x00,0x00,0x00),C2D_Color32(0xFD,0x00,0x00,0xFF),C2D_Color32(0xFD,0x00,0x00,0x00));
 	C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_CIRCLE], NOTES_JUDGE_X, 109);
 	C2D_DrawImage(sprites[SPRITE_JUDGE_CIRCLE].image, &sprites[SPRITE_JUDGE_CIRCLE].params, NULL);
-
 	if (isGOGO == true) {
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, 0.8);
