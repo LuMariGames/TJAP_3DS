@@ -380,7 +380,7 @@ int main() {
 				C2D_DrawSprite(&sprites[mintime3]);
 			}
 
-			draw_lane(sprites);
+			draw_lane(sprites, katsu_cnt, don_cnt);
 			draw_gauge(sprites);
 			draw_emblem(sprites);
 
