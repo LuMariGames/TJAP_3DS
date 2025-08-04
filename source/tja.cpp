@@ -7,7 +7,7 @@
 #include "option.h"
 #include <stdio.h>
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX] = {"0,"}, *exam[4][4];
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
