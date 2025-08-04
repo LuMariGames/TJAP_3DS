@@ -30,7 +30,6 @@ ndspWaveBuf waveBuf[SNUM];
 void load_sound() {
 
 	ndspInit();
-	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspSetOutputCount(1);
 	char sound_address[SOUND_NUMBER][30] = {
 		"romfs:/don.ogg",
@@ -113,7 +112,6 @@ void load_sound() {
 void sd_load_sound() {
 
 	ndspInit();
-	ndspSetOutputMode(NDSP_OUTPUT_STEREO);
 	ndspSetOutputCount(1);
 	char sound_address[SOUND_NUMBER][40] = {
 		"sdmc:/tjafiles/theme/don.ogg",
