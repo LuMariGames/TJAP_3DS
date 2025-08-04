@@ -203,7 +203,6 @@ int main() {
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
-
 			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7, 0x4A, 0x21, 0x7F));
 
 			//タッチエフェクト
@@ -221,7 +220,6 @@ int main() {
 					warning = WARNING_DSP1;
 					scene_state = SCENE_WARNING; 
 				}
-				APT_SetAppCpuTimeLimit(55);
 			}
 			break;
 
@@ -299,6 +297,7 @@ int main() {
 			CurrentTimeMain = -1000;
 			BeforeCombo = -1;
 
+			APT_SetAppCpuTimeLimit(50);
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
 			else {
@@ -400,7 +399,6 @@ int main() {
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
 			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
-
 			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7, 0x4A, 0x21, 0x7F));
 
 			//タッチエフェクト
@@ -675,3 +673,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
