@@ -220,6 +220,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 		threadJoin(thread, U64_MAX);
 		threadFree(thread);
 		thread = NULL;
+		APT_SetAppCpuTimeLimit(5);
 	}
 
 	if (ep_file == NULL || playbackInfo == NULL)
