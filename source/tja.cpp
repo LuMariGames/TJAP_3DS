@@ -505,7 +505,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	OPTION_T Option;
 	get_option(&Option);
 	int tmp = -1, tmp2 = 0;
-	stte = Option.measure - 1;
+	stme = 0, stte = Option.measure - 1;
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
@@ -515,15 +515,19 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 				tmp = i;
 				continue;
 			}
-			if (Measure[i].judge_time < Measure[tmp].judge_time) stme = tmp = i;
+			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
 			if (Option.measure > 0) {
 				++tmp2;
 				if (Option.measure == tmp2) {
 					stme = i;
 					break;
 				}
-				else if (stte == tmp2) stte = i;
+				else if (stte == tmp2) {
+					stte = i;
+					continue;
+				}
 			}
+			stme = tmp;
 		}
 	}
 	return Measure[stme].judge_time - Measure[stme].create_time;
