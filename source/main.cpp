@@ -307,7 +307,6 @@ int main() {
 				select_ini();
 			}
 			cnt = -60;
-			if (Option.measure > 0 && !get_isBranch()) setVorbisTime(offset * (-1.0) + get_StartTime());
 			play_main_music(&isPlayMain, SelectedSong);
 			break;
 
@@ -685,3 +684,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
