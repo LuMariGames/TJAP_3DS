@@ -516,7 +516,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 				continue;
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
-			if (Option.measure > 0 && Measure[i].firstmeasure == i) {
+			if (Option.measure > 0) {
 				++tmp2;
 				if (Option.measure == tmp2) {
 					stme = i;
