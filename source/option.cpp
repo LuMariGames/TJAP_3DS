@@ -729,6 +729,7 @@ void get_option(OPTION_T *TMP) {
 	TMP->special = Option.special;
 	TMP->exse = Option.exse;
 	TMP->player = Option.player;
+	TMP->measure = Option.measure;
 	black = Option.blacktext;
 	if (Option.Voice == 0) comboVoice = INT_MAX;
 	else comboVoice = Option.Voice;
