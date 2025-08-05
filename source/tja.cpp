@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, stte, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -505,6 +505,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	OPTION_T Option;
 	get_option(&Option);
 	int tmp = -1, tmp2 = 0;
+	stte = Option.measure - 1;
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
@@ -521,6 +522,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 					stme = i;
 					break;
 				}
+				else if (stte == tmp2) stte = i;
 			}
 		}
 	}
@@ -980,5 +982,5 @@ bool get_isBranch() {
 	return isBranch;
 }
 double get_StartTime() {
-	return Current_Header.offset * (-1.0) + Measure[stme].create_time;
+	return Current_Header.offset * (-1.0) + Measure[stte].create_time;
 }
