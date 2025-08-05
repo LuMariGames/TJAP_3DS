@@ -308,7 +308,6 @@ int main() {
 			}
 			cnt = -60;
 			play_main_music(&isPlayMain, SelectedSong);
-			if (Option.measure > 0 && !get_isBranch()) setVorbisTime(offset * (-1.0) + get_StartTime());
 			break;
 
 		case SCENE_MAINGAME:		//演奏画面
@@ -475,7 +474,7 @@ int main() {
 
 			else if (Option.measure > 0) {
 
-				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
+				if (CurrentTimeMain >= 0 && !isPlayMain) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
@@ -685,6 +684,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
