@@ -982,5 +982,5 @@ bool get_isBranch() {
 	return isBranch;
 }
 double get_StartTime() {
-	return Measure[stte].create_time;
+	return TJA_Header.offset + Measure[stte].create_time;
 }
