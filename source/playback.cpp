@@ -143,11 +143,11 @@ void playFile(void* infoIn){
 	ndspChnSetMix(CHANNEL, mix);
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (get_ismeasure()) setVorbisTime(starttime());
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);
 
+	if (get_ismeasure()) setVorbisTime((starttime() * -1.0) ? (starttime() * -1000000000) : 0);
 	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer[1][0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer[1][0];
