@@ -968,7 +968,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 double get_FirstMeasureTime() {
 	return MainFirstMeasureTime;
 }
-
 int get_MeasureId_From_OriginalId(int id) {
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
@@ -977,7 +976,9 @@ int get_MeasureId_From_OriginalId(int id) {
 	}
 	return -1;
 }
-
 bool get_isBranch() {
 	return isBranch;
+}
+double get_StartTime() {
+	return Measure[stme].judge_time;
 }
