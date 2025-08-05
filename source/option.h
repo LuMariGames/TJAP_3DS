@@ -260,6 +260,7 @@ enum Text_knd {
 	TEXT_PLAYER,
 	TEXT_1P,
 	TEXT_2P,
+	TEXT_MEASURE,
 };
 
 int get_lang();
