@@ -264,6 +264,7 @@ enum Text_knd {
 };
 
 int get_lang();
-bool get_isauto();
+bool get_isauto(),get_ismeasure();
 float mspeed();
-void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]),toggle_auto(),get_option(OPTION_T *TMP),init_option(),load_option(),exit_option(),save_option();
+void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]),
+toggle_auto(),get_option(OPTION_T *TMP),init_option(),load_option(),exit_option(),save_option();
