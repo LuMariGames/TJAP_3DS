@@ -94,6 +94,8 @@ int testtest = 0;
 
 void playFile(void* infoIn){
 
+	TJA_HEADER_T TJA_Header;
+	get_tja_header(&TJA_Header);
 	struct decoder_fn decoder;
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
 	int16_t*	buffer[2] = {NULL};
@@ -141,9 +143,9 @@ void playFile(void* infoIn){
 	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
 	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
 	ndspChnSetMix(CHANNEL, mix);
-
 	memset(waveBuf, 0, sizeof(waveBuf));
 
+	if (Option.measure > 0 && !get_isBranch()) setVorbisTime(get_StartTime());
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);
