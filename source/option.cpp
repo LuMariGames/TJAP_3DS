@@ -525,11 +525,11 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		}
 		XCnt = 0, ++YCnt;
 
-		//連打速度(AUTO)
+		//特訓モード的な奴
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_MEASURE], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.Voice);
+		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.measure);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.measure = input_number_keyboard(4, false,false);
