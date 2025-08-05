@@ -986,5 +986,5 @@ bool get_isBranch() {
 	return isBranch;
 }
 double get_StartTime() {
-	return Current_Header.offset * (-1.0) + Measure[stte].create_time;
+	return Current_Header.offset * (-1.0) + Measure[stme].judge_time;
 }
