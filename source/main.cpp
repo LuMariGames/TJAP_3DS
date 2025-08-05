@@ -452,7 +452,7 @@ int main() {
 			}
 
 			//譜面が先
-			if (offset > 0 && (isNotesStart == false || !isMusicStart) && (Option.measure = 0 || get_isBranch())) {
+			if (offset > 0 && (isNotesStart == false || !isMusicStart) && Option.measure <= 0) {
 
 				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
 				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
@@ -462,7 +462,7 @@ int main() {
 			}
 
 			//音楽が先
-			else if (offset <= 0 && (isNotesStart == false || !isMusicStart) && (Option.measure = 0 || get_isBranch())) {
+			else if (offset <= 0 && (isNotesStart == false || !isMusicStart) && Option.measure <= 0) {
 
 				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
@@ -473,7 +473,7 @@ int main() {
 				}
 			}
 
-			else if (Option.measure > 0 && !get_isBranch()) {
+			else if (Option.measure > 0) {
 
 				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
@@ -685,5 +685,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
