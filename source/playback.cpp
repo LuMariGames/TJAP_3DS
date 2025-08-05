@@ -145,7 +145,7 @@ void playFile(void* infoIn){
 	ndspChnSetMix(CHANNEL, mix);
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (Option.measure > 0 && !get_isBranch()) setVorbisTime(get_StartTime());
+	if (get_ismeasure() && !get_isBranch()) setVorbisTime(get_StartTime());
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);
