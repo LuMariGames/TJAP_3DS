@@ -547,15 +547,15 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 int get_lang() {
 	return Option.lang;
 }
-
 void toggle_auto() {
 	Option.isAuto = !Option.isAuto;
 }
-
 bool get_isauto() {
 	return Option.isAuto;
 }
-
+bool get_ismeasure() {
+	return (Option.measure > 0);
+}
 float mspeed() {
 	return Option.musicspeed;
 }
