@@ -141,9 +141,9 @@ void playFile(void* infoIn){
 	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
 	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
 	ndspChnSetMix(CHANNEL, mix);
+
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (get_ismeasure()) setVorbisTime(starttime());
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);

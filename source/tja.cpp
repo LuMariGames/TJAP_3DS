@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, stte, redCdn[4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -502,10 +502,7 @@ void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソ
 
 double calc_first_measure_time() {	//最初に到達する小節の所要時間を計算
 
-	OPTION_T Option;
-	get_option(&Option);
-	int tmp = -1, tmp2 = 0, tmp3 = -1;
-	stme = 0,stte = 0;
+	int tmp = -1;
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
@@ -516,21 +513,10 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 				continue;
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
-			if (Option.measure > 0) {
-				++tmp2;
-				if (Option.measure == tmp2) {
-					stme = i;
-					break;
-				}
-				else if ((Option.measure - 1) == tmp2) {
-					stte = i;
-					continue;
-				}
-			}
-			stme = tmp;
 		}
 	}
-	return Measure[stme].judge_time - Measure[stme].create_time;
+	stme = tmp;
+	return Measure[tmp].judge_time - Measure[stme].create_time;
 }
 
 void load_tja_notes(int course, LIST_T Song) {
@@ -974,6 +960,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 double get_FirstMeasureTime() {
 	return MainFirstMeasureTime;
 }
+
 int get_MeasureId_From_OriginalId(int id) {
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
@@ -982,9 +969,7 @@ int get_MeasureId_From_OriginalId(int id) {
 	}
 	return -1;
 }
+
 bool get_isBranch() {
 	return isBranch;
-}
-double get_StartTime() {
-	return fabs(Current_Header.offset) + Measure[stte].create_time;
 }

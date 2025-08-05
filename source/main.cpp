@@ -451,7 +451,7 @@ int main() {
 			}
 
 			//譜面が先
-			if (offset > 0 && (isNotesStart == false || !isMusicStart) && Option.measure <= 0) {
+			if (offset > 0 && (isNotesStart == false || !isMusicStart)) {
 
 				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
 				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
@@ -461,7 +461,7 @@ int main() {
 			}
 
 			//音楽が先
-			else if (offset <= 0 && (isNotesStart == false || !isMusicStart) && Option.measure <= 0) {
+			else if (offset <= 0 && (isNotesStart == false || !isMusicStart)) {
 
 				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
@@ -472,17 +472,6 @@ int main() {
 				}
 			}
 
-			else if (Option.measure > 0) {
-
-				if (CurrentTimeMain >= (starttime() * -1.0) && !isPlayMain) {
-					isPlayMain = true;
-					isMusicStart = true;
-				}
-				if (CurrentTimeMain >= 0 && !isNotesStart) {
-					isNotesStart = true;
-				}
-			}
-			
 			if (TotalBadCount > 0) {
 				switch (Option.special) {
 				case 1:
@@ -683,8 +672,5 @@ inline int time_count(double TIME) noexcept {
 inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
-}
-double starttime() {
-	return get_StartTime();
 }
 
