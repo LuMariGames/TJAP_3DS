@@ -58,6 +58,7 @@ const char Text[3][60][128] = {
 		"ﾌﾟﾚｲﾔｰ(双打用)",
 		"1P",
 		"2P",
+		"特訓モード",
 	},
 	{
 		"ON",
@@ -116,6 +117,7 @@ const char Text[3][60][128] = {
 		"Player",
 		"1P",
 		"2P",
+		"Training Mode",
 	},
 	{
 		"Sí",
@@ -174,12 +176,13 @@ const char Text[3][60][128] = {
 		"Jugador",
 		"1P",
 		"2P",
+		"Modo de entrenamiento",
 	}
 };
 
 typedef struct {
 
-	int lang,buffer_size,Voice,special,player;
+	int lang,buffer_size,Voice,special,player,measure;
 	bool isAuto,isStelth,isSwap,dispFps,fixroll,exse;
 	float speed,random,offset,blacktext,musicspeed,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
