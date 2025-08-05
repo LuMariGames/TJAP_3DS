@@ -502,7 +502,9 @@ void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソ
 
 double calc_first_measure_time() {	//最初に到達する小節の所要時間を計算
 
-	int tmp = -1;
+	OPTION_T Option;
+	get_option(&Option);
+	int tmp = -1, tmp2 = 0;
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
@@ -512,11 +514,17 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 				tmp = i;
 				continue;
 			}
-			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
+			if (Measure[i].judge_time < Measure[tmp].judge_time) stme = tmp = i;
+			if (Option.measure > 0 && !get_isBranch()) {
+				++tmp2;
+				if (Option.measure == tmp2) {
+					stme = i;
+					break;
+				}
+			}
 		}
 	}
-	stme = tmp;
-	return Measure[tmp].judge_time - Measure[stme].create_time;
+	return Measure[stme].judge_time - Measure[stme].create_time;
 }
 
 void load_tja_notes(int course, LIST_T Song) {
