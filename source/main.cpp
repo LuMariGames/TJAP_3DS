@@ -474,7 +474,7 @@ int main() {
 
 			else if (Option.measure > 0) {
 
-				if (CurrentTimeMain >= 0 && !isPlayMain) {
+				if (CurrentTimeMain >= (starttime() * -1.0) && !isPlayMain) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
@@ -687,3 +687,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
