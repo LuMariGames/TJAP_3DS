@@ -167,18 +167,18 @@ void disp_file_list() {
 
 	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
-		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL && Genre[List[i].genre].isOpened) {
+		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
 		}
-		else ++SNum;
+		++SNum;
 	}
 	if (isSearch) {
-		if (cursor > 0) cursor = -1 * (SNum - 1);
-		if (cursor < -1 * (SNum - 1)) cursor = 0;
+		if (cursor > 0) cursor = -1 * (SNum - ClosedSongNumber - 1);
+		if (cursor < -1 * (SNum - ClosedSongNumber - 1)) cursor = 0;
 	}
 	else {
 		if (cursor > 0) cursor = -1 * (SongNumber + GenreNumber - ClosedSongNumber - 1);
-		if (cursor < -1 * (SongNumber + GenreNumber - ClosedSongNumber- 1)) cursor = 0;
+		if (cursor < -1 * (SongNumber + GenreNumber - ClosedSongNumber - 1)) cursor = 0;
 	}
 	ClosedSongNumber = 0;
 
@@ -223,7 +223,7 @@ void disp_file_list() {
 			}
 		}
 
-		if (List[i].genre != GENRE_MAX + 1 && Genre[List[i].genre].isOpened == false) {
+		if (List[i].genre != GENRE_MAX + 1 && !Genre[List[i].genre].isOpened) {
 
 			++ClosedSongNumber;
 			continue;
