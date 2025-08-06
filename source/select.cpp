@@ -165,7 +165,7 @@ void disp_file_list() {
 	bool isGenre = false, isSearch = false;
 	course_count = 0;
 
-	isSearch = ((strcmp(Option.SongTitle, "\0") != 0)　? true : false);
+	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
 		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
