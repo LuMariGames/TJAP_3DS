@@ -551,7 +551,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) strcpy(Option.SongTitle, "\0)";
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) strcpy(Option.SongTitle, "\0");
 		XCnt = 0, ++YCnt;
 		break;
 	}
