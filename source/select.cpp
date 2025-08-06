@@ -170,7 +170,7 @@ void disp_file_list() {
 		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
 		}
-		++SNum;
+		else ++SNum;
 	}
 	if (isSearch) {
 		if (cursor > 0) cursor = -1 * (SNum - 1);
