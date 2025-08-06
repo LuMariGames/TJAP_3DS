@@ -167,7 +167,7 @@ void disp_file_list() {
 
 	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
-		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
+		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL && Genre[List[i].genre].isOpened) {
 			continue;
 		}
 		else ++SNum;
