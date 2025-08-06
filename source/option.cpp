@@ -506,7 +506,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		break;
 
 	case 5:
-		snprintf(get_buffer(), BUFFER_SIZE, "試験的設定");
+		snprintf(get_buffer(), BUFFER_SIZE, "実験的設定");
 		draw_option_text(320, 0, get_buffer(), true, &width, &height);
 		draw_option_text(320-width, 0, get_buffer(), true, &width, &height);
 		XSense = 65, YSense = 30, XCnt = 0, YCnt = 1, gap = 100;
