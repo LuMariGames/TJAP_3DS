@@ -25,7 +25,17 @@ double input_number_keyboard(int max_digits,bool isDot,bool isMinus) {	//最大�
 	swkbdInputText(&swkbd, get_buffer(), BUFFER_SIZE);
 	return atof(get_buffer());
 }
+char* input_normal_keyboard() {
 
+	SwkbdState swkbd;
+	swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 2, -1);
+	swkbdSetHintText(&swkbd, "曲名を入力");
+	swkbdSetFeatures(&swkbd, SWKBD_PREDICTIVE_INPUT);
+	swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "閉じる", false);
+	swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "検索", true);
+	swkbdInputText(&swkbd, get_buffer(), BUFFER_SIZE);
+	return get_buffer();
+}
 void init_button_mapping() {
 
 	Option.KEY_A = KEY_KATSU;
@@ -523,6 +533,21 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			opv = ++Option.player % 3;
 			Option.player = opv;
 		}
+		XCnt = 0, ++YCnt;
+
+		//楽曲検索
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		snprintf(get_buffer(), BUFFER_SIZE, "%s", Option.SongTitle);
+		draw_option_text(x, y, get_buffer(), true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			char* test = input_normal_keyboard();
+			strcpy(Option.SongTitle, test);
+		}
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.Voice = 2;
 		XCnt = 0, ++YCnt;
 		break;
 	}
