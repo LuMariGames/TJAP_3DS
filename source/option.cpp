@@ -542,7 +542,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%s", Option.SongTitle);
+		snprintf(get_buffer(), 257, "%s", Option.SongTitle);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			char* test = input_normal_keyboard();
