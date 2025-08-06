@@ -158,6 +158,8 @@ void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
 
 void disp_file_list() {
 
+	OPTION_T Option;
+	get_option(&Option);
 	int n = 0, g = 0;	//コース用調整、ジャンル用調整
 	bool isGenre = false;
 	course_count = 0;
@@ -169,6 +171,12 @@ void disp_file_list() {
 
 	for (int i = 0; i < SongNumber; ++i) {
 
+		if (strcmp(Option.SongTitle, NULL) == 0) {
+			continue;
+		}
+		else if (strstr(List[i].title, Option.SongTitle) == false) {
+			continue;
+		}
 		isGenre = false;
 
 		if (List[i].genre != GENRE_MAX + 1 && (i == 0 || List[i].genre != List[i - 1].genre)) {	//ジャンルの最初の曲
@@ -176,7 +184,6 @@ void disp_file_list() {
 			++g;
 			isGenre = true;
 		}
-
 
 		if ((n + g + cursor) * 20 + 60 >= 0 && (n + g + cursor) * 20 + 60 <= TOP_HEIGHT) {
 
