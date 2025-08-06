@@ -182,7 +182,7 @@ void disp_file_list() {
 	}
 	ClosedSongNumber = 0;
 
-	for (int i = 0; i < SNum; ++i) {
+	for (int i = 0; i < SongNumber; ++i) {
 
 		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
