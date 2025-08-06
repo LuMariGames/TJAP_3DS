@@ -34,9 +34,6 @@ char* input_normal_keyboard() {
 	swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "閉じる", false);
 	swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "検索", true);
 	swkbdInputText(&swkbd, get_buffer(), BUFFER_SIZE);
-	if (strstr(get_buffer(), "")) {
-		return NULL;
-	}
 	return get_buffer();
 }
 void init_button_mapping() {
