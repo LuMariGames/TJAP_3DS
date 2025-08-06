@@ -174,7 +174,7 @@ void disp_file_list() {
 		if (strcmp(Option.SongTitle, "\0") == 0) {
 			continue;
 		}
-		else if (strstr(List[i].title, Option.SongTitle) == false) {
+		else if (strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
 		}
 		isGenre = false;
