@@ -58,6 +58,7 @@ const char Text[3][60][128] = {
 		"ﾌﾟﾚｲﾔｰ(双打用)",
 		"1P",
 		"2P",
+		"楽曲検索",
 	},
 	{
 		"ON",
@@ -116,6 +117,7 @@ const char Text[3][60][128] = {
 		"Player",
 		"1P",
 		"2P",
+		"Song search",
 	},
 	{
 		"Sí",
@@ -174,6 +176,7 @@ const char Text[3][60][128] = {
 		"Jugador",
 		"1P",
 		"2P",
+		"Búsqueda de canciones",
 	}
 };
 
@@ -257,6 +260,7 @@ enum Text_knd {
 	TEXT_PLAYER,
 	TEXT_1P,
 	TEXT_2P,
+	TEXT_SEARCH,
 };
 
 int get_lang();
