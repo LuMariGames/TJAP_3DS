@@ -160,23 +160,36 @@ void disp_file_list() {
 
 	OPTION_T Option;
 	get_option(&Option);
-	int n = 0, g = 0;	//コース用調整、ジャンル用調整
-	bool isGenre = false;
+	int n = 0, g = 0,	//コース用調整、ジャンル用調整
+	SNum = 0;
+	bool isGenre = false, isSearch = false;
 	course_count = 0;
 
-	if (cursor > 0) cursor = -1 * (SongNumber + GenreNumber - ClosedSongNumber - 1);
-	if (cursor < -1 * (SongNumber + GenreNumber - ClosedSongNumber- 1)) cursor = 0;
-
+	isSearch = ((strcmp(Option.SongTitle, "\0") != 0)　? true : false);
+	for (int i = 0; i < SongNumber; ++i) {
+		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
+			continue;
+		}
+		++SNum;
+	}
+	if (isSearch) {
+		if (cursor > 0) cursor = -1 * (SNum - 1);
+		if (cursor < -1 * (SNum - 1)) cursor = 0;
+	}
+	else {
+		if (cursor > 0) cursor = -1 * (SongNumber + GenreNumber - ClosedSongNumber - 1);
+		if (cursor < -1 * (SongNumber + GenreNumber - ClosedSongNumber- 1)) cursor = 0;
+	}
 	ClosedSongNumber = 0;
 
-	for (int i = 0; i < SongNumber; ++i) {
+	for (int i = 0; i < SNum; ++i) {
 
-		if (strcmp(Option.SongTitle, "\0") != 0 && strstr(List[i].title, Option.SongTitle) == NULL) {
+		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
 		}
 		isGenre = false;
 
-		if (List[i].genre != GENRE_MAX + 1 && (i == 0 || List[i].genre != List[i - 1].genre)) {	//ジャンルの最初の曲
+		if (!isSearch && List[i].genre != GENRE_MAX + 1 && (i == 0 || List[i].genre != List[i - 1].genre)) {	//ジャンルの最初の曲
 
 			++g;
 			isGenre = true;
