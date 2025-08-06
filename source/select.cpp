@@ -171,10 +171,7 @@ void disp_file_list() {
 
 	for (int i = 0; i < SongNumber; ++i) {
 
-		if (strcmp(Option.SongTitle, "\0") == 0) {
-			continue;
-		}
-		else if (strstr(List[i].title, Option.SongTitle) == NULL) {
+		if (strcmp(Option.SongTitle, NULL) != 0 && strstr(List[i].title, Option.SongTitle) == NULL) {
 			continue;
 		}
 		isGenre = false;
