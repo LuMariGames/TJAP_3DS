@@ -86,6 +86,10 @@ void update_score(int knd) {
 		DiffMul = (combo + 1) / 10;
 		if (combo > 100) DiffMul = 10;
 	}
+	else if (scoremode == 3) {	//ニジイロ配点
+		DiffMul = 0;
+		GOGOMul = 1.0;
+	}
 
 	HitScore = init + diff * DiffMul;
 
@@ -169,6 +173,10 @@ void update_score(int knd) {
 				CurrentScore += 100;
 			}
 		}
+		else if (scoremode == 3) {	//ニジイロ配点
+			TotalScore += 100;
+			CurrentScore += 100;
+		}
 
 		if (knd == ROLL) {
 			++CurrentRollCount;
@@ -198,19 +206,25 @@ void update_score(int knd) {
 				CurrentScore += 200;
 			}
 		}
+		else if (scoremode == 3) {	//ニジイロ配点
+			TotalScore += 100;
+			CurrentScore += 100;
+		}
 		++CurrentTotalRollCount;
 		++TotalRollCount;
 		++CurrentRollCount;
 		break;
 
 	case BALLOON_BREAK:
-		if (isGOGO == true) {
-			TotalScore += 6000;
-			CurrentScore += 6000;
-		}
-		else {
-			TotalScore += 5000;
-			CurrentScore += 5000;
+		if (scoremode != 3) {
+			if (isGOGO == true) {
+				TotalScore += 6000;
+				CurrentScore += 6000;
+			}
+			else {
+				TotalScore += 5000;
+				CurrentScore += 5000;
+			}
 		}
 		++TotalRollCount;
 		break;
@@ -574,7 +588,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			++i;
 			continue;
 		}
-
+		if (scoremode == 3) gogo = 1.0
 		while (notes[i][NotesCount] != ',' && notes[i][NotesCount] != '\n' && notes[i][NotesCount] != '/') {
 
 			++NotesCount;
@@ -607,6 +621,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						else if (combo >= 50 && combo <= 99) DiffTmp = 4;
 						else if (combo >= 100) DiffTmp = 8;
 					}
+					else if (scoremode == 3) DiffTmp = 0;	//ニジイロ配点
 
 					diff_cnt += DiffTmp * gogo * special;
 
@@ -614,7 +629,8 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_BALLOON) {		//風船
 
-					TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
+					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
+					else TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -643,6 +659,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 120;
 								else TmpBaseCeilingPoint -= RollCnt * 100;
 							}
+							if (scoremode == 3) TmpBaseCeilingPoint -= RollCnt * 100;
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
@@ -653,6 +670,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
 								else TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
+							if (scoremode == 3) TmpBaseCeilingPoint -= RollCnt * 100;
 						}
 						roll_start_time = 0;
 						roll_end_time = 0;
@@ -673,13 +691,17 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		init = 1000;
 		diff = 1000;
 	}
+	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
+		init = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / init_cnt;
+		diff = 0;
+	}
 
 	Gauge.perfect = 10000.0 / PerfectNotesCount;
 
 	switch (TJA_Header.course) {	//ゲージの伸び率の計算
 	case 0:		//かんたん
-		Gauge.nice = Gauge.perfect * 3 / 4;
-		Gauge.bad = Gauge.perfect / 2;
+		Gauge.nice = Gauge.perfect * 3.0 / 4.0;
+		Gauge.bad = Gauge.perfect / 2.0;
 		if (level <= 1) {
 			Gauge.norma = 3600;
 			Gauge.soul = 6000;
@@ -695,19 +717,19 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		break;
 
 	case 1:		//ふつう
-		Gauge.nice = Gauge.perfect * 3 / 4;
+		Gauge.nice = Gauge.perfect * 3.0 / 4.0;
 		if (level <= 2) {
-			Gauge.bad = Gauge.perfect / 2;
+			Gauge.bad = Gauge.perfect / 2.0;
 			Gauge.norma = 4595;
 			Gauge.soul = 6560;
 		}
 		else if (level == 3) {
-			Gauge.bad = Gauge.perfect / 2;
+			Gauge.bad = Gauge.perfect / 2.0;
 			Gauge.norma = 4868;
 			Gauge.soul = 6955;
 		}
 		else if (level == 4) {
-			Gauge.bad = Gauge.perfect * 3 / 4;
+			Gauge.bad = Gauge.perfect * 3.0 / 4.0;
 			Gauge.norma = 4925;
 			Gauge.soul = 7035;
 		}
@@ -719,9 +741,9 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		break;
 
 	case 2:		//むずかしい
-		Gauge.nice = Gauge.perfect * 3 / 4;
+		Gauge.nice = Gauge.perfect * 3.0 / 4.0;
 		if (level <= 2) {
-			Gauge.bad = Gauge.perfect / 2;
+			Gauge.bad = Gauge.perfect / 2.0;
 			Gauge.norma = 5450;
 			Gauge.soul = 7750;
 		}
@@ -731,17 +753,17 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			Gauge.soul = 7250;
 		}
 		else if (level <= 4) {
-			Gauge.bad = Gauge.perfect * 7 / 6;
+			Gauge.bad = Gauge.perfect * 7.0 / 6.0;
 			Gauge.norma = 4840;
 			Gauge.soul = 6910;
 		}
 		else if (level <= 5) {
-			Gauge.bad = Gauge.perfect * 5 / 4;
+			Gauge.bad = Gauge.perfect * 5.0 / 4.0;
 			Gauge.norma = 4724;
 			Gauge.soul = 6750;
 		}
 		else if (level >= 6) {
-			Gauge.bad = Gauge.perfect * 5 / 4;
+			Gauge.bad = Gauge.perfect * 5.0 / 4.0;
 			Gauge.norma = 4812;
 			Gauge.soul = 6875;
 		}
@@ -749,19 +771,19 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 	case 3:		//おに
 	default:
-		Gauge.nice = Gauge.perfect / 2;
+		Gauge.nice = Gauge.perfect / 2.0;
 		if (level <= 7) {
-			Gauge.bad = Gauge.perfect * 8 / 5;
+			Gauge.bad = Gauge.perfect * 8.0 / 5.0;
 			Gauge.norma = 5660;
 			Gauge.soul = 7075;
 		}
 		else if (level == 8) {
-			Gauge.bad = Gauge.perfect * 2;
+			Gauge.bad = Gauge.perfect * 2.0;
 			Gauge.norma = 5600;
 			Gauge.soul = 7000;
 		}
 		else if (level >= 9) {
-			Gauge.bad = Gauge.perfect * 2;
+			Gauge.bad = Gauge.perfect * 2.0;
 			Gauge.norma = 6000;
 			Gauge.soul = 7500;
 		}
@@ -769,7 +791,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 	case 5:		//太鼓タワー
 		Gauge.perfect = 0;
-		Gauge.nice = Gauge.perfect / 2;
+		Gauge.nice = Gauge.perfect / 2.0;
 		Gauge.bad = 1000;
 		Gauge.norma = gaugelife * 1000;
 		Gauge.soul = gaugelife * 1000;
@@ -777,17 +799,17 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		break;
 
 	case 6:		//段位道場
-		Gauge.nice = Gauge.perfect / 2;
+		Gauge.nice = Gauge.perfect / 2.0;
 		if (level <= 7) {
-			Gauge.bad = Gauge.perfect * 8 / 5;
+			Gauge.bad = Gauge.perfect * 8.0 / 5.0;
 			Gauge.soul = 7075;
 		}
 		else if (level == 8) {
-			Gauge.bad = Gauge.perfect * 2;
+			Gauge.bad = Gauge.perfect * 2.0;
 			Gauge.soul = 7000;
 		}
 		else if (level >= 9) {
-			Gauge.bad = Gauge.perfect * 2;
+			Gauge.bad = Gauge.perfect * 2.0;
 			Gauge.soul = 7500;
 		}
 		Gauge.norma = Gauge.soul;
