@@ -40,7 +40,7 @@ char* input_normal_keyboard() {
 		swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "cerca", false);
 		swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "buscar", true);
 	}
-	else (Option.lang == LANG_JP) {
+	else {
 		swkbdSetHintText(&swkbd, "曲名を入力");
 		swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "閉じる", false);
 		swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "検索", true);
