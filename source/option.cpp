@@ -537,18 +537,22 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 
 		//楽曲検索
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		if (strcmp(Option.SongTitle, "\0") != 0) snprintf(get_buffer(), 257, "%s", Option.SongTitle);
-		else snprintf(get_buffer(), BUFFER_SIZE, Text[Option.lang][TEXT_SEARCH]);
-		draw_option_text(x, y, get_buffer(), true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			char* test = input_normal_keyboard();
-			strcpy(Option.SongTitle, test);
-		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
+		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt += 2;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) strcpy(Option.SongTitle, "\0");
 		XCnt = 0, ++YCnt;
+
+		C2D_DrawRectSolid(0,y,0,400,height,C2D_Color32f(0,0,0,1));
+		if (strcmp(Option.SongTitle, "\0") != 0) {
+			snprintf(get_buffer(), 257, "%s", Option.SongTitle);
+			draw_option_text(x, y, get_buffer(), true, &width, &height);
+		}
+		if ((y < py && y + height > py && 0 < px && 400 > px) && key & KEY_TOUCH) {
+			char* test = input_normal_keyboard();
+			strcpy(Option.SongTitle, test);
+		}
+
 		break;
 	}
 
