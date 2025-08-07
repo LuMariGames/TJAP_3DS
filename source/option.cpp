@@ -556,7 +556,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		XCnt = 0, ++YCnt;
 
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		C2D_DrawRectSolid(5,y,0,390,height,C2D_Color32(0x33,0x33,0x33,0xFF));
+		C2D_DrawRectSolid(2,y,0,316,height,C2D_Color32(0x33,0x33,0x33,0xFF));
 		if (strcmp(Option.SongTitle, "\0") != 0) {
 			snprintf(get_buffer(), 257, "%s", Option.SongTitle);
 			draw_option_text(x, y, get_buffer(), true, &width, &height);
