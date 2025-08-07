@@ -550,7 +550,8 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		//楽曲検索
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, XCnt += 2;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) strcpy(Option.SongTitle, "\0");
 		XCnt = 0, ++YCnt;
