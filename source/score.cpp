@@ -588,7 +588,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			++i;
 			continue;
 		}
-		if (scoremode == 3) gogo = 1.0
+		if (scoremode == 3) gogo = 1.0;
 		while (notes[i][NotesCount] != ',' && notes[i][NotesCount] != '\n' && notes[i][NotesCount] != '/') {
 
 			++NotesCount;
