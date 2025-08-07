@@ -106,8 +106,8 @@ void update_score(int knd) {
 		break;
 
 	case SPECIAL_PERFECT:
-		TotalScore += round_down(HitScore * GOGOMul) * 2;
-		CurrentScore += round_down(HitScore * GOGOMul) * 2;
+		TotalScore += round_down(HitScore * GOGOMul) * (scoremode == 3 ? 1 : 2);
+		CurrentScore += round_down(HitScore * GOGOMul) * (scoremode == 3 ? 1 : 2);
 		++combo;
 		isCombo = true;
 		++TotalPerfectCount;
@@ -127,8 +127,8 @@ void update_score(int knd) {
 		break;
 
 	case SPECIAL_NICE:
-		TotalScore += round_down(HitScore - 10);
-		CurrentScore += round_down(HitScore - 10);
+		TotalScore += round_down((scoremode == 3) ? (HitScore / 2) : (HitScore - 10));
+		CurrentScore += round_down((scoremode == 3) ? (HitScore / 2) : (HitScore - 10));
 		++combo;
 		isCombo = true;
 		++TotalNiceCount;
