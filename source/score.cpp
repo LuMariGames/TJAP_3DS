@@ -553,6 +553,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		BaseCeilingPoint = 3000000;
 		break;
 	}
+	if (scoremode == 3) BaseCeilingPoint = 1000000;
 	TmpBaseCeilingPoint = BaseCeilingPoint;
 
 
