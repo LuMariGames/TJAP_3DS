@@ -168,6 +168,7 @@ int main() {
 					isDon = true;
 					tch_cnt = 6;
 					memtch_x = tp.px, memtch_y = tp.py;
+					++touch_cnt;
 				}
 				else if ((key & KEY_TOUCH ||
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 ) &&
@@ -175,6 +176,7 @@ int main() {
 					isKatsu = true;
 					tch_cnt = 6;
 					memtch_x = tp.px, memtch_y = tp.py;
+					++touch_cnt;
 				}
 			}
 			else {
@@ -660,6 +662,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
