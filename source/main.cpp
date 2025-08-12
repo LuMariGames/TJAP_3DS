@@ -123,7 +123,6 @@ int main() {
 	get_option(&Option);
 	load_skin();
 	get_skin(&Skin);
-	QTMS_SetQtmStatus(QTM_STATUS_UNAVAILABLE);
 	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
@@ -162,27 +161,20 @@ int main() {
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
 
-				if (
-					(key & KEY_TOUCH || 
-						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0
-					) &&
+				if ((key & KEY_TOUCH || 
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 					touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
 					memtch_x = tp.px, memtch_y = tp.py;
-					++touch_cnt;
 				}
-				else if (
-					(
-					key & KEY_TOUCH ||
-					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 
-						)&&
+				else if ((key & KEY_TOUCH ||
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 ) &&
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
 					memtch_x = tp.px, memtch_y = tp.py;
-					++touch_cnt;
 				}
 			}
 			else {
@@ -320,22 +312,16 @@ int main() {
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
 					touch_x = tp.px, touch_y = tp.py;
 
-					if (
-						(key & KEY_TOUCH || 
-							pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0
-						) &&
-						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
-						touch_cnt < 2) {
+					if ((key & KEY_TOUCH || 
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
+						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 && touch_cnt < 2) {
 						isDon = true;
 						tch_cnt = 6;
 						memtch_x = tp.px, memtch_y = tp.py;
 						++touch_cnt;
 					}
-					else if (
-						(
-						key & KEY_TOUCH ||
-						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 
-							)&&
+					else if ((key & KEY_TOUCH ||
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 						touch_cnt < 2) {
 						isKatsu = true;
 						tch_cnt = 6;
@@ -674,5 +660,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
