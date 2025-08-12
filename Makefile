@@ -69,7 +69,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro2d -lcitro3d libctru.a -lm -lvorbisidec -logg -ljansson
+LIBS	:= -lcitro2d -lcitro3d $(TOPDIR)/libctru.a -lm -lvorbisidec -logg -ljansson
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
