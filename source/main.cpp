@@ -227,15 +227,15 @@ int main() {
 
 			switch (warning) {
 			case WARNING_DSP1:
-				tmp = message_window(tp, key, TEXT_WARNING_DSP1);
+				tmp = message_window(tp[0], key, TEXT_WARNING_DSP1);
 				break;
 
 			case WARNING_WAVE_NO_EXIST:
-				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NO_EXIST);
+				tmp = message_window(tp[0], key, TEXT_WARNING_WAVE_NO_EXIST);
 				break;
 
 			case WARNING_WAVE_NOT_OGG:
-				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NOT_OGG);
+				tmp = message_window(tp[0], key, TEXT_WARNING_WAVE_NOT_OGG);
 				break;
 			}
 			if (tmp == 1 || key & KEY_A) {
@@ -397,7 +397,7 @@ int main() {
 			}
 
 			if (isPause) {
-				tmp = pause_window(tp, key);
+				tmp = pause_window(tp[0], key);
 
 				switch (tmp) {
 				case 1:
@@ -616,15 +616,15 @@ inline int pause_window(touchPosition tp, unsigned int key) noexcept {
 
 	draw_window_text(-1, margin + 30, Text[get_lang()][TEXT_CONTINUE], &width, &height);		//続ける
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 30;
-	if ((y < tp[0].py && y + height > tp[0].py && x < tp[0].px && x + width > tp[0].px) && key & KEY_TOUCH) result = 0;
+	if ((y < tp.py && y + height > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 0;
 
 	draw_window_text(-1, margin + 80, Text[get_lang()][TEXT_STARTOVER], &width, &height);		//はじめから
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 80;
-	if ((y < tp[0].py && y + height > tp[0].py && x < tp[0].px && x + width > tp[0].px) && key & KEY_TOUCH) result = 1;
+	if ((y < tp.py && y + height > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 1;
 
 	draw_window_text(-1, margin + 130, Text[get_lang()][TEXT_RETURNSELECT], &width, &height);	//曲選択に戻る
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 130;
-	if ((y < tp[0].py && y + height > tp[0].py && x < tp[0].px && x + width > tp[0].px) && key & KEY_TOUCH) result = 2;
+	if ((y < tp.py && y + height > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 2;
 
 	return result;
 }
@@ -639,7 +639,7 @@ inline int message_window(touchPosition tp, unsigned int key,int text) {
 
 	draw_window_text(-1, margin + 150, "OK", &width, &height);
 	x = BOTTOM_WIDTH / 2 - width / 2, y = margin + 150;
-	if ((y < tp[0].py && y + height > tp[0].py && x < tp[0].px && x + width > tp[0].px) && key & KEY_TOUCH) result = 1;
+	if ((y < tp.py && y + height > tp.py && x < tp.px && x + width > tp.px) && key & KEY_TOUCH) result = 1;
 
 	return result;
 }
@@ -662,9 +662,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
-
-
-
-
-
-
