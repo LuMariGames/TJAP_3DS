@@ -123,6 +123,7 @@ int main() {
 	get_option(&Option);
 	load_skin();
 	get_skin(&Skin);
+	QTMS_SetQtmStatus(QTM_STATUS_UNAVAILABLE);
 	dn_x = Skin.don_x, dn_y = Skin.don_y, dg_x = Skin.don_gogo_x, dg_y = Skin.don_gogo_y;
 	if (!Option.exse) load_sound();
 	else if (Option.exse) sd_load_sound();
@@ -673,4 +674,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
