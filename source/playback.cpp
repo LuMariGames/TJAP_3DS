@@ -2,6 +2,7 @@
 
 #include "header.h"
 #include "vorbis.h"
+#include "mp3.h"
 #include "main.h"
 #include "select.h"
 #include "option.h"
