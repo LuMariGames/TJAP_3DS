@@ -1,7 +1,3 @@
-#pragma once
-
-#include "select.h"
-
 #define CHANNEL 5
 
 enum file_types{
