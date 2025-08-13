@@ -51,7 +51,7 @@ int initMp3(const char* file)
 	mpg123_format_none(mh);
 	mpg123_format(mh, rate, channels, encoding);
 
-	*buffSize = mpg123_outblock(mh) * 16;
+	*buffSize = mpg123_outblock(mh) * 32;
 	return 0;
 }
 
