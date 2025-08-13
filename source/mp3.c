@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include "mp3.h"
-#include "playback.h"
 
 static size_t*			buffSize;
 static mpg123_handle	*mh = NULL;
