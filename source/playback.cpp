@@ -5,6 +5,7 @@
 #include "mp3.h"
 #include "main.h"
 #include "option.h"
+#include "select.h"
 
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
