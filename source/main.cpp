@@ -135,6 +135,7 @@ int main() {
 
 		hidScanInput();
 		hidTouchRead(&tp[0]);
+		hidTouchRead(&tp[0]);
 		unsigned int key = hidKeysDown();
 
 		bool isDon = false, isKatsu = false;
@@ -662,3 +663,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
