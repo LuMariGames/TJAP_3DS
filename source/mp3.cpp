@@ -81,7 +81,7 @@ void exitMp3(void)
 
 int isMp3(const char *path)
 {
-#if 0
+#if 1
 	int err;
 	int result = 1;
 	mpg123_handle *mh = NULL;
