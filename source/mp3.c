@@ -16,13 +16,7 @@ static uint32_t rateMp3(void);
 static uint8_t channelMp3(void);
 static uint64_t decodeMp3(void* buffer);
 static void exitMp3(void);
-static size_t getFileSamplesMp3(void);
 
-/**
- * Set decoder parameters for MP3.
- *
- * \param	decoder Structure to store parameters.
- */
 void setMp3(struct decoder_fn* decoder)
 {
 	decoder->init = &initMp3;
@@ -33,12 +27,6 @@ void setMp3(struct decoder_fn* decoder)
 	decoder->exit = &exitMp3;
 }
 
-/**
- * Initialise MP3 decoder.
- *
- * \param	file	Location of MP3 file to play.
- * \return			0 on success, else failure.
- */
 int initMp3(const char* file)
 {
 	int err = 0;
@@ -60,48 +48,23 @@ int initMp3(const char* file)
 		return -1;
 	}
 
-	/*
-	 * Ensure that this output format will not change (it might, when we allow
-	 * it).
-	 */
 	mpg123_format_none(mh);
 	mpg123_format(mh, rate, channels, encoding);
 
-	/*
-	 * Buffer could be almost any size here, mpg123_outblock() is just some
-	 * recommendation. The size should be a multiple of the PCM frame size.
-	 */
 	*buffSize = mpg123_outblock(mh) * 16;
-
 	return 0;
 }
 
-/**
- * Get sampling rate of MP3 file.
- *
- * \return	Sampling rate.
- */
 uint32_t rateMp3(void)
 {
 	return rate;
 }
 
-/**
- * Get number of channels of MP3 file.
- *
- * \return	Number of channels for opened file.
- */
 uint8_t channelMp3(void)
 {
 	return channels;
 }
 
-/**
- * Decode part of open MP3 file.
- *
- * \param buffer	Decoded output.
- * \return			Samples read for each channel.
- */
 uint64_t decodeMp3(void* buffer)
 {
 	size_t done = 0;
@@ -109,9 +72,6 @@ uint64_t decodeMp3(void* buffer)
 	return done / (sizeof(int16_t));
 }
 
-/**
- * Free MP3 decoder.
- */
 void exitMp3(void)
 {
 	mpg123_close(mh);
@@ -119,12 +79,6 @@ void exitMp3(void)
 	mpg123_exit();
 }
 
-/**
- * Check if a file is a valid MP3 file.
- * 
- * \param path	Path to the MP3 file.
- * \return		0 if valid MP3, 1 if not valid.
- */
 int isMp3(const char *path)
 {
 #if 0
