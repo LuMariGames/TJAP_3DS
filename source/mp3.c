@@ -35,7 +35,6 @@ void setMp3(struct decoder_fn* decoder)
 	buffSize = &(decoder->buffSize);
 	decoder->decode = &decodeMp3;
 	decoder->exit = &exitMp3;
-	decoder->getFileSamples = &getFileSamplesMp3;
 }
 
 static size_t getFileSamplesMp3(void)
