@@ -28,22 +28,9 @@ void setMp3(struct decoder_fn* decoder)
 	decoder->init = &initMp3;
 	decoder->rate = &rateMp3;
 	decoder->channels = &channelMp3;
-	/*
-	 * buffSize changes depending on input file. So we set buffSize later when
-	 * decoder is initialised.
-	 */
 	buffSize = &(decoder->buffSize);
 	decoder->decode = &decodeMp3;
 	decoder->exit = &exitMp3;
-}
-
-static size_t getFileSamplesMp3(void)
-{
-	off_t len = mpg123_length(mh);
-	if(len == MPG123_ERR)
-		return 0;
-	
-	return len * (size_t)channels;
 }
 
 /**
