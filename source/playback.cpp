@@ -267,7 +267,7 @@ int check_wave(LIST_T Song) { //音楽ファイルの確認
 	int result = getFileType(Song.wave);
 
 	if (result == -1) return WARNING_WAVE_NO_EXIST;
-	else if (result != FILE_TYPE_VORBIS) return WARNING_WAVE_NOT_OGG;
+	else if (result != FILE_TYPE_VORBIS || result != FILE_TYPE_MP3) return WARNING_WAVE_NOT_OGG;
 
 	return -1;
 }
