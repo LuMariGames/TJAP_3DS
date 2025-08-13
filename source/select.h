@@ -19,5 +19,6 @@ void load_file_main(void *arg), get_SelectedId(LIST_T *TMP, int *arg), get_resul
 void draw_result_text(float x, float y, float size, const char *text);
 void calc_result_text(const char *text, float *width, float *height);
 bool get_isGameStart();
-void draw_select_text(float x, float y, const char* text, int color = 0xffffff), disp_file_list();
+void draw_select_text(float x, float y, const char* text, int color = 0xffffff);
+void disp_file_list();
 void draw_option_text(float x, float y, const char *text, bool state, float *width, float *height, float sizex = 0.7, float sizey = 0.7);
