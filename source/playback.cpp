@@ -110,7 +110,9 @@ void playFile(void* infoIn){
 		case FILE_TYPE_VORBIS:
 			setVorbis(&decoder);
 			break;
-
+		case FILE_TYPE_MP3:
+			setMp3(&decoder);
+			break;
 		default:
 			goto err;
 	}
@@ -132,8 +134,8 @@ void playFile(void* infoIn){
 		goto err;
 	}
 	testtest = 99;
-	buffer[0] = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
-	buffer[1] = (int16_t*)linearAlloc(decoder.vorbis_buffer_size * sizeof(int16_t));
+	buffer[0] = (int16_t*)linearAlloc(decoder.buffSize * sizeof(int16_t));
+	buffer[1] = (int16_t*)linearAlloc(decoder.buffSize * sizeof(int16_t));
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
@@ -172,7 +174,7 @@ void playFile(void* infoIn){
 				lastbuf = true;
 				continue;
 			}
-			else if(read < decoder.vorbis_buffer_size) waveBuf[0].nsamples = read / (*decoder.channels)();
+			else if(read < decoder.buffSize) waveBuf[0].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
 		}
 		if(waveBuf[1].status == NDSP_WBUF_DONE) {
@@ -181,7 +183,7 @@ void playFile(void* infoIn){
 				lastbuf = true;
 				continue;
 			}
-			else if(read < decoder.vorbis_buffer_size) waveBuf[1].nsamples = read / (*decoder.channels)();
+			else if(read < decoder.buffSize) waveBuf[1].nsamples = read / (*decoder.channels)();
 			ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
 		}
 	}
