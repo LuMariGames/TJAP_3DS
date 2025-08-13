@@ -1,3 +1,5 @@
+﻿#pragma once
+
 #include <stdint.h>
 #include "playback.h"
 
