@@ -105,7 +105,7 @@ int main() {
 
 	init_main();
 
-	touchPosition tp[8];	//下画面タッチした座標
+	touchPosition tp;	//下画面タッチした座標
 
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
@@ -134,7 +134,7 @@ int main() {
 		if (isExit) break;
 
 		hidScanInput();
-		hidTouchRead(&tp[0]);
+		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
 
 		bool isDon = false, isKatsu = false;
@@ -156,18 +156,18 @@ int main() {
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
 
-			if (tp[0].px != 0 && tp[0].py != 0) {	//タッチ位置の取得
+			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
-				touch_x = tp[0].px, touch_y = tp[0].py;
+				touch_x = tp.px, touch_y = tp.py;
 
 				if ((key & KEY_TOUCH || 
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
-					(tp[0].px - 160)*(tp[0].px - 160) + (tp[0].py - 135)*(tp[0].py - 135) <= 105 * 105 &&
+					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
 					touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
-					memtch_x = touch_x, memtch_y = touch_y;
+					memtch_x = tp.px, memtch_y = tp.py;
 					++touch_cnt;
 				}
 				else if ((key & KEY_TOUCH ||
@@ -175,7 +175,7 @@ int main() {
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
-					memtch_x = touch_x, memtch_y = touch_y;
+					memtch_x = tp.px, memtch_y = tp.py;
 					++touch_cnt;
 				}
 			}
@@ -227,15 +227,15 @@ int main() {
 
 			switch (warning) {
 			case WARNING_DSP1:
-				tmp = message_window(tp[0], key, TEXT_WARNING_DSP1);
+				tmp = message_window(tp, key, TEXT_WARNING_DSP1);
 				break;
 
 			case WARNING_WAVE_NO_EXIST:
-				tmp = message_window(tp[0], key, TEXT_WARNING_WAVE_NO_EXIST);
+				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NO_EXIST);
 				break;
 
 			case WARNING_WAVE_NOT_OGG:
-				tmp = message_window(tp[0], key, TEXT_WARNING_WAVE_NOT_OGG);
+				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NOT_OGG);
 				break;
 			}
 			if (tmp == 1 || key & KEY_A) {
@@ -257,7 +257,7 @@ int main() {
 			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
 			C3D_FrameDrawOn(bottom);
 			C2D_SceneTarget(bottom);
-			draw_option(tp[0].px, tp[0].py, key, sprites);
+			draw_option(tp.px, tp.py, key, sprites);
 
 			if (key & KEY_UP)		update_cursor(KEY_UP);
 			if (key & KEY_DOWN)		update_cursor(KEY_DOWN);
@@ -309,17 +309,17 @@ int main() {
 
 			if (!isPause) {
 
-				if (tp[0].px != 0 && tp[0].py != 0) {
+				if (tp.px != 0 && tp.py != 0) {
 
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
-					touch_x = tp[0].px, touch_y = tp[0].py;
+					touch_x = tp.px, touch_y = tp.py;
 
 					if ((key & KEY_TOUCH || 
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
-						(tp[0].px - 160)*(tp[0].px - 160) + (tp[0].py - 135)*(tp[0].py - 135) <= 105 * 105 && touch_cnt < 2) {
+						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 && touch_cnt < 2) {
 						isDon = true;
 						tch_cnt = 6;
-						memtch_x = touch_x, memtch_y = touch_y;
+						memtch_x = tp.px, memtch_y = tp.py;
 						++touch_cnt;
 					}
 					else if ((key & KEY_TOUCH ||
@@ -327,7 +327,7 @@ int main() {
 						touch_cnt < 2) {
 						isKatsu = true;
 						tch_cnt = 6;
-						memtch_x = touch_x, memtch_y = touch_y;
+						memtch_x = tp.px, memtch_y = tp.py;
 						++touch_cnt;
 					}
 				}
@@ -397,7 +397,7 @@ int main() {
 			}
 
 			if (isPause) {
-				tmp = pause_window(tp[0], key);
+				tmp = pause_window(tp, key);
 
 				switch (tmp) {
 				case 1:
@@ -662,5 +662,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
-
-
