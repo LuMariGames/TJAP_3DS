@@ -1,3 +1,6 @@
+#pragma once
+#include "select.h"
+
 #define CHANNEL 5
 
 enum file_types{
@@ -24,15 +27,8 @@ struct playbackInfo_t{
 	bool*		isPlay;
 };
 
-bool togglePlayback(void);
-void stopPlayback(void);
-bool isPlaying(void);
-int getFileType(const char *file);
-void playFile(void* infoIn);
-
+bool togglePlayback(void), isPlaying(void);
+void stopPlayback(void), playFile(void* infoIn);
+int getFileType(const char *file), check_wave(LIST_T Song);
 int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo,bool *p_isPlayMain);
-void play_main_music(bool *p_isPlayMain, LIST_T Song);
-void pasue_main_music();
-void stop_main_music();
-void init_main_music();
-int check_wave(LIST_T Song);
+void play_main_music(bool *p_isPlayMain, LIST_T Song), pasue_main_music(), stop_main_music(), init_main_music();
