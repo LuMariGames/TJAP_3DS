@@ -13,6 +13,7 @@
 #include "skin.h"
 #include "result.h"
 #include "main.h"
+#include "mp3.h"
 #include "vorbis.h"
 
 extern int course,courselife,TotalBadCount,combo;
@@ -663,4 +664,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
