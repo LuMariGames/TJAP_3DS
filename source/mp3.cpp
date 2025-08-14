@@ -27,8 +27,19 @@ void setMp3(struct decoder_fn* decoder)
 	decoder->exit = &exitMp3;
 }
 
-int initMp3(const char* file) {
+int initMp3(const char* file)
+{
+	int err = 0;
 	int encoding = 0;
+
+	if((err = mpg123_init()) != MPG123_OK)
+		return err;
+
+	if((mh = mpg123_new(NULL, &err)) == NULL)
+	{
+		printf("Error: %s\n", mpg123_plain_strerror(err));
+		return err;
+	}
 
 	if(mpg123_open(mh, file) != MPG123_OK ||
 			mpg123_getformat(mh, (long *) &rate, (int *) &channels, &encoding) != MPG123_OK)
@@ -36,11 +47,10 @@ int initMp3(const char* file) {
 		printf("Trouble with mpg123: %s\n", mpg123_strerror(mh));
 		return -1;
 	}
-
 	mpg123_format_none(mh);
 	mpg123_format(mh, rate, channels, encoding);
-
 	*buffSize = mpg123_outblock(mh) * 64;
+
 	return 0;
 }
 
@@ -61,23 +71,16 @@ uint64_t decodeMp3(void* buffer)
 	return done / (sizeof(int16_t));
 }
 
-void exitMp3(void) {
+void exitMp3(void)
+{
 	mpg123_close(mh);
-}
-void init_mpg123() {
-	int err = 0;
-	mpg123_init();
-	mh = mpg123_new(NULL, &err);
-}
-void exit_mpg123() {
 	mpg123_delete(mh);
 	mpg123_exit();
-	mh = NULL;
 }
 
 int isMp3(const char *path)
 {
-#if 1
+#if 0
 	int err;
 	int result = 1;
 	mpg123_handle *mh = NULL;
@@ -85,11 +88,19 @@ int isMp3(const char *path)
 	int channels, encoding;
 
 	// Initialise the library
-	if (mpg123_init() != MPG123_OK) goto out;
+	if (mpg123_init() != MPG123_OK)
+		goto out;
 
 	// Create a decoder handle
 	mh = mpg123_new(NULL, &err);
-	if (!mh) goto exit_init;
+	if (!mh)
+		goto exit_init;
+
+	// skip ID3v2 tags rather than parsing them (so tag-only files don’t count as valid mp3)
+	mpg123_param(mh, MPG123_SKIP_ID3V2, 1, 0);
+
+	// limit how many bytes to scan for a frame sync (e.g. 2048 bytes)
+	mpg123_param(mh, MPG123_RESYNC_LIMIT, 2048, 0);
 
 	// Try opening the file
 	err = mpg123_open(mh, path);
@@ -99,6 +110,14 @@ int isMp3(const char *path)
 	// Query the decoded format
 	if (mpg123_getformat(mh, &rate, &channels, &encoding) != MPG123_OK)
 		goto close_handle;
+
+	// Parse first frame in file
+	err = mpg123_framebyframe_next(mh);
+	if (err != MPG123_OK)
+	{
+		// If we can't read the first frame, it's not a valid MP3
+		goto close_handle;
+	}
 
 	// All checks passed: valid MP3
 	result = 0;
