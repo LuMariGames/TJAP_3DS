@@ -32,9 +32,6 @@ int initMp3(const char* file)
 	int err = 0;
 	int encoding = 0;
 
-	if((err = mpg123_init()) != MPG123_OK)
-		return err;
-
 	if((mh = mpg123_new(NULL, &err)) == NULL)
 	{
 		printf("Error: %s\n", mpg123_plain_strerror(err));
@@ -162,6 +159,9 @@ out:
 #endif
 }
 
+void init_mpg123() {
+	mpg123_init();
+}
 void exit_mpg123() {
 	mpg123_exit();
 }
