@@ -292,7 +292,6 @@ int main() {
 			CurrentTimeMain = -1000;
 			BeforeCombo = -1;
 
-			APT_SetAppCpuTimeLimit(50);
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
 			else {
@@ -662,6 +661,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
