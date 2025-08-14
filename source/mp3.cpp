@@ -76,6 +76,7 @@ void exitMp3(void)
 {
 	mpg123_close(mh);
 	mpg123_delete(mh);
+	mh = NULL;
 }
 
 int isMp3(const char *path)
