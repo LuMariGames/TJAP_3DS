@@ -72,7 +72,6 @@ uint64_t decodeMp3(void* buffer)
 void exitMp3(void)
 {
 	mpg123_close(mh);
-	mpg123_delete(mh);
 	mh = NULL;
 }
 
@@ -157,7 +156,9 @@ out:
 
 void init_mpg123() {
 	mpg123_init();
+	mh = mpg123_new(NULL, &err);
 }
 void exit_mpg123() {
+	mpg123_delete(mh);
 	mpg123_exit();
 }
