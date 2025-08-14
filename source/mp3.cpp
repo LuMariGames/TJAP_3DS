@@ -72,16 +72,10 @@ void exitMp3(void)
 int isMp3(const char *path)
 {
 #if 1
-	int err;
 	int result = 1;
-	mpg123_handle *mh = NULL;
 	long rate;
 	int channels, encoding;
 
-	// Create a decoder handle
-	mpg123_init();
-	mh = mpg123_new(NULL, &err);
-	
 	// skip ID3v2 tags rather than parsing them (so tag-only files don’t count as valid mp3)
 	mpg123_param(mh, MPG123_SKIP_ID3V2, 1, 0);
 
