@@ -91,12 +91,6 @@ int isMp3(const char *path)
 	mh = mpg123_new(NULL, &err);
 	if (!mh) goto exit_init;
 
-	// skip ID3v2 tags rather than parsing them (so tag-only files don’t count as valid mp3)
-	mpg123_param(mh, MPG123_SKIP_ID3V2, 1, 0);
-
-	// limit how many bytes to scan for a frame sync (e.g. 2048 bytes)
-	mpg123_param(mh, MPG123_RESYNC_LIMIT, 2048, 0);
-
 	// Try opening the file
 	err = mpg123_open(mh, path);
 	if (err != MPG123_OK)
@@ -105,14 +99,6 @@ int isMp3(const char *path)
 	// Query the decoded format
 	if (mpg123_getformat(mh, &rate, &channels, &encoding) != MPG123_OK)
 		goto close_handle;
-
-	// Parse first frame in file
-	err = mpg123_framebyframe_next(mh);
-	if (err != MPG123_OK)
-	{
-		// If we can't read the first frame, it's not a valid MP3
-		goto close_handle;
-	}
 
 	// All checks passed: valid MP3
 	result = 0;
