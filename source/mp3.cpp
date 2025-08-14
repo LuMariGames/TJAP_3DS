@@ -31,6 +31,12 @@ int initMp3(const char* file)
 {
 	int encoding = 0;
 
+	if((mh = mpg123_new(NULL, &err)) == NULL)
+	{
+		printf("Error: %s\n", mpg123_plain_strerror(err));
+		return err;
+	}
+
 	if(mpg123_open(mh, file) != MPG123_OK ||
 			mpg123_getformat(mh, (long *) &rate, (int *) &channels, &encoding) != MPG123_OK)
 	{
@@ -62,10 +68,17 @@ uint64_t decodeMp3(void* buffer)
 	return done / (sizeof(int16_t));
 }
 
-void exitMp3(void)
-{
+void exitMp3(void) {
 	mpg123_close(mh);
 	mh = NULL;
+}
+void init_mpg123() {
+	int err = 0;
+	mpg123_init();
+}
+void exit_mpg123() {
+	mpg123_delete(mh);
+	mpg123_exit();
 }
 
 int isMp3(const char *path)
@@ -73,8 +86,16 @@ int isMp3(const char *path)
 #if 1
 	int err;
 	int result = 1;
+	mpg123_handle *mh = NULL;
 	long rate;
 	int channels, encoding;
+
+	// Initialise the library
+	if (mpg123_init() != MPG123_OK) goto out;
+
+	// Create a decoder handle
+	mh = mpg123_new(NULL, &err);
+	if (!mh) goto exit_init;
 
 	// skip ID3v2 tags rather than parsing them (so tag-only files don’t count as valid mp3)
 	mpg123_param(mh, MPG123_SKIP_ID3V2, 1, 0);
@@ -134,14 +155,4 @@ out:
 	fclose(f);
     return ret;
 #endif
-}
-
-void init_mpg123() {
-	int err = 0;
-	mpg123_init();
-	mh = mpg123_new(NULL, &err);
-}
-void exit_mpg123() {
-	mpg123_delete(mh);
-	mpg123_exit();
 }
