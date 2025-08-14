@@ -72,6 +72,7 @@ void exitMp3(void)
 int isMp3(const char *path)
 {
 #if 1
+	int err;
 	int result = 1;
 	long rate;
 	int channels, encoding;
@@ -107,9 +108,6 @@ close_handle:
 
 exit_handle:
 	mpg123_delete(mh);
-
-exit_init:
-	mpg123_exit();
 
 out:
 	return result;
