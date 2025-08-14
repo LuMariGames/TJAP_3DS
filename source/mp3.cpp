@@ -161,3 +161,6 @@ out:
 #endif
 }
 
+void exit_mpg123() {
+	mpg123_exit();
+}
