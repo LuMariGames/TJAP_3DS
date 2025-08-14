@@ -59,6 +59,7 @@ void exit_main() {
 
 	C2D_TextBufDelete(g_dynamicBuf);
 
+	exit_mpg123();
 	fontfree();
 	C2D_Fini();
 	C3D_Fini();
@@ -662,3 +663,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
