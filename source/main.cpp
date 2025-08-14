@@ -53,14 +53,12 @@ void init_main() {
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	init_mpg123();
 }
 
 void exit_main() {
 
 	C2D_TextBufDelete(g_dynamicBuf);
 
-	exit_mpg123();
 	fontfree();
 	C2D_Fini();
 	C3D_Fini();
@@ -664,6 +662,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
