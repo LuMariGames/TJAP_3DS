@@ -76,8 +76,10 @@ int getFileType(const char *file){
 
 		default:
 
-			if (isMp3(file) == 0)
+			if((fileSig << 16) == 0xFBFF0000 || (fileSig << 16) == 0xFAFF0000 || (fileSig << 8) == 0x33444900) {
 				file_type = FILE_TYPE_MP3;
+				break;
+			}
 			break;
 	}
 
