@@ -198,6 +198,7 @@ out:
 	linearFree(buffer[0]);
 	linearFree(buffer[1]);
 
+	APT_SetAppCpuTimeLimit(5);
 	threadExit(0);
 	return;
 
@@ -228,6 +229,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->file = strdup(ep_file);
 	playbackInfo->isPlay = p_isPlayMain;
 
+	APT_SetAppCpuTimeLimit(50);
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
 	thread = threadCreate(playFile, playbackInfo, DECODE_MEM, prio - 1, DECODE_COREID, false);
 	return 0;
