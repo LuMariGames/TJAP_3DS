@@ -27,15 +27,8 @@ void setMp3(struct decoder_fn* decoder)
 	decoder->exit = &exitMp3;
 }
 
-int initMp3(const char* file)
-{
+int initMp3(const char* file) {
 	int encoding = 0;
-
-	if((mh = mpg123_new(NULL, &err)) == NULL)
-	{
-		printf("Error: %s\n", mpg123_plain_strerror(err));
-		return err;
-	}
 
 	if(mpg123_open(mh, file) != MPG123_OK ||
 			mpg123_getformat(mh, (long *) &rate, (int *) &channels, &encoding) != MPG123_OK)
@@ -70,15 +63,16 @@ uint64_t decodeMp3(void* buffer)
 
 void exitMp3(void) {
 	mpg123_close(mh);
-	mh = NULL;
 }
 void init_mpg123() {
 	int err = 0;
 	mpg123_init();
+	mh = mpg123_new(NULL, &err);
 }
 void exit_mpg123() {
 	mpg123_delete(mh);
 	mpg123_exit();
+	mh = NULL;
 }
 
 int isMp3(const char *path)
@@ -129,6 +123,11 @@ close_handle:
 exit_handle:
 	mpg123_delete(mh);
 
+exit_init:
+	mpg123_exit();
+
+out:
+	return result;
 #else
     unsigned char buf[4];
 	FILE *f = fopen(path, "rb");
