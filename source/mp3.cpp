@@ -29,7 +29,6 @@ void setMp3(struct decoder_fn* decoder)
 
 int initMp3(const char* file)
 {
-	int err = 0;
 	int encoding = 0;
 
 	if(mpg123_open(mh, file) != MPG123_OK ||
@@ -109,8 +108,6 @@ close_handle:
 exit_handle:
 	mpg123_delete(mh);
 
-out:
-	return result;
 #else
     unsigned char buf[4];
 	FILE *f = fopen(path, "rb");
@@ -140,6 +137,7 @@ out:
 }
 
 void init_mpg123() {
+	int err = 0;
 	mpg123_init();
 	mh = mpg123_new(NULL, &err);
 }
