@@ -85,10 +85,6 @@ int isMp3(const char *path)
 	long rate;
 	int channels, encoding;
 
-	// Initialise the library
-	if (mpg123_init() != MPG123_OK)
-		goto out;
-
 	// Create a decoder handle
 	mh = mpg123_new(NULL, &err);
 	if (!mh)
