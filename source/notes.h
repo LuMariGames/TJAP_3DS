@@ -3,7 +3,7 @@
 
 typedef struct {
 	int num, notes_max, knd, roll_id, branch_id;
-	double create_time, judge_time, pop_time, bpm, scroll, x_ini;
+	float create_time, judge_time, pop_time, bpm, scroll, x_ini;
 	bool flag, isThrough;
 	float x;
 
@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
 	int measure;
-	double create_time, scroll, x_ini;
+	float create_time, scroll, x_ini;
 	bool flag, isDisp;
 	float x;
 
