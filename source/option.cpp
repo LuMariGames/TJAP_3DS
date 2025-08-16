@@ -173,8 +173,8 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.speed = input_number_keyboard(5, true,false);
-			if (Option.speed > 10.0) Option.speed = 10.0;
-			else if (Option.speed < 1.0) Option.speed = 1.0;
+			if (Option.speed > 8.0) Option.speed = 8.0;
+			else if (Option.speed < 0.5) Option.speed = 0.5;
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
