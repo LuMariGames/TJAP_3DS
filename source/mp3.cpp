@@ -40,7 +40,6 @@ int initMp3(const char* file)
 		printf("Error: %s\n", mpg123_plain_strerror(err));
 		return err;
 	}
-	mpg123_param(mh, MPG123_DOWN_SAMPLE, 1, 1.0);
 
 	if(mpg123_open(mh, file) != MPG123_OK ||
 			mpg123_getformat(mh, (long *) &rate, (int *) &channels, &encoding) != MPG123_OK)
@@ -52,6 +51,7 @@ int initMp3(const char* file)
 	mpg123_format(mh, rate, channels, encoding);
 	mpg123_seek(mh, 0, SEEK_SET);
 	*buffSize = mpg123_outblock(mh) * 8;
+	mpg123_param(mh, MPG123_DOWN_SAMPLE, 1, 1.0);
 	return 0;
 }
 
