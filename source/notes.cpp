@@ -29,7 +29,7 @@ ROLL_T RollNotes[ROLL_MAX];
 BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
-int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd, roll_id,
+int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
 NotesNumber;	//何番目のノーツか
 bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
 double JudgeMakeTime,JudgeY,JudgeEffectCnt;
@@ -166,7 +166,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
-					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
+					float NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
 					//Notes[id].create_time = CurrentTimeNotes;
 					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
@@ -174,6 +174,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].isThrough = false;
 
 					PreNotesKnd = knd;
+
+					int roll_id = -1;
 
 					switch (Notes[id].knd) {
 
@@ -214,6 +216,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 						switch (RollState) {
 						case NOTES_ROLL:
+							roll_id = make_roll_end(id);
 							if (roll_id != -1) {
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_ROLLEND;
@@ -225,6 +228,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 							break;
 
 						case NOTES_BIGROLL:
+							roll_id = make_roll_end(id);
 							if (roll_id != -1) {
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_BIGROLLEND;
@@ -236,6 +240,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 							break;
 
 						case NOTES_BALLOON:
+							roll_id = make_balloon_end(id);
 							if (roll_id != -1) {
 								BalloonNotes[roll_id].end_id = id;
 								Notes[id].roll_id = roll_id;
@@ -251,7 +256,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 							Notes[id].flag = false;
 							break;
 						}
-						roll_id = -1;
 						RollState = 0;
 						break;
 					}
@@ -369,9 +373,9 @@ int find_line_id() {
 
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; i += 4) {
 		if (!BarLine[i].flag) return i;
-		if (!BarLine[i+1].flag) return i+1;
-		if (!BarLine[i+2].flag) return i+2;
-		if (!BarLine[i+3].flag) return i+3;
+		else if (!BarLine[i+1].flag) return i+1;
+		else if (!BarLine[i+2].flag) return i+2;
+		else if (!BarLine[i+3].flag) return i+3;
 	}
 	return -1;
 }
@@ -1058,7 +1062,7 @@ int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].flag &&
+		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].x != NOTES_JUDGE_X　&&
 			BalloonNotes[i].start_id != -1 &&
 			BalloonNotes[i].end_id == -1) return i;
 	}
@@ -1264,7 +1268,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].isDisp = false;
 	}
 	dcd = 0;
-	roll_id = -1;
 	Notes.clear();
 	Notes.resize(64);
 }
