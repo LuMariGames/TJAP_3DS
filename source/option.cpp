@@ -277,7 +277,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
 			Option.musicspeed = input_number_keyboard(5, true,false);
-			if (Option.musicspeed > 1.5) Option.musicspeed = 1.5;
+			if (Option.musicspeed > 2.0) Option.musicspeed = 2.0;
 			else if (Option.musicspeed < 0.5) Option.musicspeed = 0.5;
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
