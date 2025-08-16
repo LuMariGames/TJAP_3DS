@@ -12,7 +12,6 @@
 
 static volatile bool stop = true;
 extern float mix[12];
-//double SetTime[2];
 
 bool togglePlayback(void){
 
@@ -229,7 +228,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->file = strdup(ep_file);
 	playbackInfo->isPlay = p_isPlayMain;
 
-	APT_SetAppCpuTimeLimit(45);
+	APT_SetAppCpuTimeLimit(50);
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
 	thread = threadCreate(playFile, playbackInfo, DECODE_MEM, prio - 1, DECODE_COREID, false);
 	return 0;
