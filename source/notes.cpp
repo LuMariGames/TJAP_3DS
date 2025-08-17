@@ -1278,7 +1278,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].measure = 0;
 		BarLine[i].x_ini = 0;
 		BarLine[i].create_time = 0;
-		BarLine[i].isDisp = true;
+		BarLine[i].isDisp = false;
 	}
 	dcd = 0;
 	Notes.clear();
