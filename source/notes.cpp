@@ -30,7 +30,7 @@ COMMAND_T Command;
 BRANCH_T Branch;
 
 int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
-NotesNumber, NotesEndNum;	//何番目のノーツか
+NotesNumber;	//何番目のノーツか
 bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
 double JudgeMakeTime,JudgeY,JudgeEffectCnt;
 
@@ -473,7 +473,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
-		for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {
+		for (int i = 0, j = NotesNumber; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -533,7 +533,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	else if (!Option.isAuto) {			//手動
 
 		//判定すべきノーツを検索
-		for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {
+		for (int i = 0, j = NotesNumber; i < j; ++i) {
 
 			if (Notes[i].flag) {
 
@@ -669,7 +669,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {	//計算
+	for (int i = 0, j = NotesNumber; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -714,10 +714,9 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 				break;
 			}
 		}
-		else ++NotesEndNum;
 	}
 
-	for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = NotesNumber; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -747,7 +746,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {	//描画
+	for (int i = 0, j = NotesNumber; i < j; ++i) {	//描画
 
 		if (Notes[i].flag) {
 
@@ -1241,7 +1240,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		balloon[3][i] = TJA_Header.balloon[3][i];
 	}
 	NotesNumber = 0;
-	NotesEndNum = 0;
 	NotesCount = 0;
 	NowMeCount = 0;
 	RollState = 0;
