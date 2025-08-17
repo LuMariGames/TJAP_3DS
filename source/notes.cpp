@@ -9,7 +9,7 @@
 #include "option.h"
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
+int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -17,10 +17,10 @@ extern double black;
 C2D_Font font;
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
-make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
+make_balloon_start(int NotesId, int branch), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
 notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
-notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
+notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
 
 std::vector<NOTES_T> Notes;
 std::vector<BARLINE_T> BarLine;
@@ -41,11 +41,12 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
+	double CurrentTimeNotes = 0;
+	if (cnt >= 0) CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
 	//draw_debug(0, 185, get_buffer());
 
-	if (cnt >= 0 && isNotesLoad) {
+	if (cnt <= 0 || isNotesLoad) {
 
 		//分岐
 		if (Branch.next) {
@@ -58,7 +59,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			Branch.next = false;
 		}
 
-		while (Measure[MeasureCount].create_time <= CurrentTimeNotes && !Branch.wait) {
+		while (!Branch.wait || Measure[MeasureCount].create_time <= CurrentTimeNotes) {
 
 			NotesCount = 0;
 
@@ -167,7 +168,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
 					float NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
-					//Notes[id].create_time = CurrentTimeNotes;
+					//Notes[id].create_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
@@ -203,7 +204,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 					case NOTES_BALLOON:
 						RollState = NOTES_BALLOON;
-						roll_id = make_balloon_start(id);
+						roll_id = make_balloon_start(id, ((Measure[MeasureCount].branch == -1) ? 0 : Measure[MeasureCount].branch - 11));
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
 						}
@@ -267,6 +268,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
+	if (cnt <= 0) return;
 	for (int i = 0, j = BarLine.size(); i < j; ++i) {
 
 		if (BarLine[i].flag) {
@@ -274,7 +276,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			BarLine[i].x = BarLine[i].x_ini -
 				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) * (Measure[BarLine[i].measure].bpm / 240.0);
 
-			if (BarLine[i].isDisp) {
+			if ((BarLine[i].x > 62 && BarLine[i].x < 400) && BarLine[i].isDisp) {
 				C2D_DrawRectSolid(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1));
 
 				//snprintf(buf_notes, sizeof(buf_notes), "%d", Measure[BarLine[i].measure].branch);
@@ -284,7 +286,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites, Measure);
+	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 	if (!Option.isStelth) notes_draw(sprites);
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
@@ -441,7 +443,7 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 }
 
-inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt, int branch) {
+inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt) {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -468,22 +470,10 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 			break;
 		}
 	}
-	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
-		BalloonNotes[JudgeBalloonState].current_hit = 0;
-		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
-		else  BalloonNotes[JudgeBalloonState].need_hit = 5;
-		if (branch == 0) ++BalloonCount[0];
-		else {
-			++BalloonCount[1];
-			++BalloonCount[2];
-			++BalloonCount[3];
-		}
-	}
-	JBS = JudgeBalloonState;
 
 	if (Option.isAuto) {	//オート
 
-		for (int i = 0, j = Notes.size(); i < j; ++i) {
+		for (int i = 0, j = NotesNumber; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -543,7 +533,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	else if (!Option.isAuto) {			//手動
 
 		//判定すべきノーツを検索
-		for (int i = 0, j = Notes.size(); i < j; ++i) {
+		for (int i = 0, j = NotesNumber; i < j; ++i) {
 
 			if (Notes[i].flag) {
 
@@ -674,19 +664,17 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	}
 }
 
-void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]) {
+void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//計算
+	for (int i = 0, j = NotesNumber; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
 			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
-
 			switch (Notes[i].knd) {
-
 			case NOTES_ROLL:
 			case NOTES_BIGROLL:
 				if (Notes[i].roll_id != -1 && RollNotes[Notes[i].roll_id].flag) {
@@ -694,7 +682,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					RollNotes[Notes[i].roll_id].start_id = i;
 				}
 				break;
-
 			case NOTES_ROLLEND:
 			case NOTES_BIGROLLEND:
 				if (Notes[i].roll_id != -1 && RollNotes[Notes[i].roll_id].flag) {
@@ -702,14 +689,12 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					RollNotes[Notes[i].roll_id].end_id = i;
 				}
 				break;
-
 			case NOTES_BALLOON:
 				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
 				}
 				break;
-
 			case NOTES_BALLOONEND:
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].end_id = i;
@@ -718,7 +703,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					delete_notes(i);
 				}
 				break;
-
 			case NOTES_DON:
 			case NOTES_KATSU:
 			case NOTES_BIGDON:
@@ -732,7 +716,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = NotesNumber; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -755,44 +739,52 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			delete_notes(i);
 		}
 	}
-	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt, ((Measure[MeasureCount].branch == -1) ? 0 : Measure[MeasureCount].branch - 11));
+	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt);
 }
 
 inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
+	for (int i = 0, j = NotesNumber; i < j; ++i) {	//描画
 
 		if (Notes[i].flag) {
 
 			switch (Notes[i].knd) {
 			case NOTES_DON:
-				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
-				sprites[SPRITE_DON].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, NULL);
+				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
+					sprites[SPRITE_DON].params.pos.x = Notes[i].x;
+					sprites[SPRITE_DON].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, NULL);
+				}
 				break;
 			case NOTES_KATSU:
-				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
-				sprites[SPRITE_KATSU].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, NULL);
+				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
+					sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
+					sprites[SPRITE_KATSU].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, NULL);
+				}
 				break;
 			case NOTES_BIGDON:
-				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
-				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, NULL);
+				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
+					sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, NULL);
+				}
 				break;
 			case NOTES_BIGKATSU:
-				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
-				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, NULL);
+				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
+					sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, NULL);
+				}
 				break;
 			case NOTES_ROLL:
 
 				if (RollNotes[Notes[i].roll_id].flag) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0f) end_x = TOP_WIDTH + 20.0f;
+					if (RollNotes[Notes[i].roll_id].end_id == -1) end_x = TOP_WIDTH + 20.0f;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
@@ -811,7 +803,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
+					if (Notes[i].x >= 20 && Notes[i].x <= 420) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 				}
 				break;
 
@@ -820,7 +812,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				if (RollNotes[Notes[i].roll_id].flag) {
 
 					double end_x;
-					if (RollNotes[Notes[i].roll_id].end_id == -1 || RollNotes[Notes[i].roll_id].end_x >= 420.0f) end_x = TOP_WIDTH + 20.0f;
+					if (RollNotes[Notes[i].roll_id].end_id == -1) end_x = TOP_WIDTH + 20.0f;
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
@@ -839,7 +831,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
+					if (Notes[i].x >= 20 && Notes[i].x <= 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					break;
 				}
 
@@ -849,7 +841,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					sprites[SPRITE_BALLOON].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_BALLOON].image, &sprites[SPRITE_BALLOON].params, NULL);
+					if (Notes[i].x >= 20 && Notes[i].x <= 420) C2D_DrawImage(sprites[SPRITE_BALLOON].image, &sprites[SPRITE_BALLOON].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
@@ -887,13 +879,13 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				sprites[SPRITE_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
-				C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, NULL);
+				if (Notes[i].x >= 20 && Notes[i].x <= 420) C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, NULL);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y = notes_y;
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
-				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, NULL);
+				if (Notes[i].x >= 20 && Notes[i].x <= 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, NULL);
 				break;
 			}
 		}
@@ -1024,7 +1016,7 @@ void make_balloon_break() {
 
 void delete_balloon(int i) {
 
-	if (i >= 0 && i < BalloonNotes.size()) {
+	if (i >= 0 && i < (int)BalloonNotes.size()) {
 		BalloonNotes[i].id = -1;
 		BalloonNotes[i].start_id = -1;
 		BalloonNotes[i].end_id = -1;
@@ -1036,7 +1028,7 @@ void delete_balloon(int i) {
 
 inline void init_balloon_notes() {
 
-	for (int i = 0; i < BalloonNotes.size(); ++i) {
+	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
 		delete_balloon(i);
 	}
 }
@@ -1053,7 +1045,7 @@ inline int find_balloon_id() {
 	return -1;
 }
 
-int make_balloon_start(int NotesId) {
+int make_balloon_start(int NotesId, int branch) {
 
 	int id = find_balloon_id();
 	if (id != -1) {
@@ -1061,6 +1053,15 @@ int make_balloon_start(int NotesId) {
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
 		BalloonNotes[id].end_id = -1;
+		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[id].need_hit = balloon[branch][BalloonCount[branch]];
+		else  BalloonNotes[id].need_hit = 5;
+		if (branch == 0) ++BalloonCount[0];
+		else {
+			++BalloonCount[1];
+			++BalloonCount[2];
+			++BalloonCount[3];
+		}
+		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
 		return id;
 	}
@@ -1281,28 +1282,31 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	BarLine.clear();
 	BarLine.resize(64);
 	RollNotes.clear();
-	RollNotes.resize(64);
+	RollNotes.resize(16);
 	BalloonNotes.clear();
-	BalloonNotes.resize(64);
+	BalloonNotes.resize(16);
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
 void newfont() {
 	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
-	Notes.reserve(2048);
+	Notes.reserve(16384);
 	Notes.resize(64);
-	BarLine.reserve(512);
+	BarLine.reserve(2048);
 	BarLine.resize(64);
 	RollNotes.reserve(512);
-	RollNotes.resize(64);
+	RollNotes.resize(16);
 	BalloonNotes.reserve(512);
-	BalloonNotes.resize(64);
+	BalloonNotes.resize(16);
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font);
 	Notes.clear();
+	BarLine.clear();
+	RollNotes.clear();
+	BalloonNotes.clear();
 	std::vector<NOTES_T>().swap(Notes);
 	std::vector<BARLINE_T>().swap(BarLine);
 	std::vector<ROLL_T>().swap(RollNotes);
