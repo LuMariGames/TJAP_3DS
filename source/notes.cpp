@@ -756,7 +756,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		if (Notes[i].flag) {
 
-			if (Notes[i].x == NULL) break;
+			if (std::isnan(Notes[i].x)) break;
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
@@ -1133,7 +1133,7 @@ void delete_notes(int i) {
 		Notes[i].knd = 0;
 		Notes[i].notes_max = 0;
 		Notes[i].x_ini = 0;
-		Notes[i].x = NULL;
+		Notes[i].x = std::nan("");
 		Notes[i].create_time = 0;
 		Notes[i].judge_time = 0;
 		Notes[i].pop_time = 0;
