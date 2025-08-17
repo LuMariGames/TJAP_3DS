@@ -468,18 +468,6 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 			break;
 		}
 	}
-	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
-		BalloonNotes[JudgeBalloonState].current_hit = 0;
-		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
-		else  BalloonNotes[JudgeBalloonState].need_hit = 5;
-		if (branch == 0) ++BalloonCount[0];
-		else {
-			++BalloonCount[1];
-			++BalloonCount[2];
-			++BalloonCount[3];
-		}
-	}
-	JBS = JudgeBalloonState;
 
 	if (Option.isAuto) {	//オート
 
@@ -1061,7 +1049,11 @@ int make_balloon_start(int NotesId) {
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
 		BalloonNotes[id].end_id = -1;
+		if (balloon[BalloonCount] != 0) BalloonNotes[id].need_hit = balloon[BalloonCount];
+		else  BalloonNotes[id].need_hit = 5;
+		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
+		++BalloonCount;
 		return id;
 	}
 	else return -1;
