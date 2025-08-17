@@ -304,6 +304,7 @@ int main() {
 			}
 			cnt = -60;
 			tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+			play_main_music(&isPlayMain, SelectedSong);
 			break;
 
 		case SCENE_MAINGAME:		//演奏画面
@@ -663,6 +664,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
