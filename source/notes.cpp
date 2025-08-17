@@ -1057,8 +1057,8 @@ int make_balloon_start(int NotesId, int branch) {
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
 		BalloonNotes[id].end_id = -1;
-		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
-		else  BalloonNotes[JudgeBalloonState].need_hit = 5;
+		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[id].need_hit = balloon[branch][BalloonCount[branch]];
+		else  BalloonNotes[id].need_hit = 5;
 		if (branch == 0) ++BalloonCount[0];
 		else {
 			++BalloonCount[1];
