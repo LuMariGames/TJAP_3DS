@@ -42,11 +42,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes = 0;
-	if (!isNotesLoad) CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
+	if (cnt >= 0) CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
 	//draw_debug(0, 185, get_buffer());
 
-	if (cnt >= 0 && isNotesLoad) {
+	if (cnt <= 0 || isNotesLoad) {
 
 		//分岐
 		if (Branch.next) {
@@ -59,7 +59,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 			Branch.next = false;
 		}
 
-		while (!Branch.wait) {
+		while (!Branch.wait || Measure[MeasureCount].create_time <= CurrentTimeNotes) {
 
 			NotesCount = 0;
 
@@ -268,6 +268,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
+	if (cnt <= 0) return;
 	for (int i = 0, j = BarLine.size(); i < j; ++i) {
 
 		if (BarLine[i].flag) {
