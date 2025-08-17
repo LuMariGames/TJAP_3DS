@@ -1295,19 +1295,22 @@ int sign(double A) {	//正か負かの判別
 }
 void newfont() {
 	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
-	Notes.reserve(2048);
+	Notes.reserve(16384);
 	Notes.resize(64);
-	BarLine.reserve(512);
+	BarLine.reserve(1024);
 	BarLine.resize(64);
 	RollNotes.reserve(512);
-	RollNotes.resize(64);
+	RollNotes.resize(16);
 	BalloonNotes.reserve(512);
-	BalloonNotes.resize(64);
+	BalloonNotes.resize(16);
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
 	C2D_FontFree(font);
 	Notes.clear();
+	BarLine.clear();
+	RollNotes.clear();
+	BalloonNotes.clear();
 	std::vector<NOTES_T>().swap(Notes);
 	std::vector<BARLINE_T>().swap(BarLine);
 	std::vector<ROLL_T>().swap(RollNotes);
