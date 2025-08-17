@@ -441,7 +441,7 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 
 }
 
-inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt, int branch) {
+inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int cnt) {
 
 	OPTION_T Option;
 	get_option(&Option);
