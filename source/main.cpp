@@ -286,7 +286,7 @@ int main() {
 			else load_tja_notes(course, SelectedSong);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
-			notes_cnt = 0;
+			notes_cnt = -1;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX;
 			CurrentTimeMain = -1000;
@@ -302,6 +302,7 @@ int main() {
 			}
 			cnt = -60;
 			play_main_music(&isPlayMain, SelectedSong);
+			tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 			break;
 
 		case SCENE_MAINGAME:		//演奏画面
@@ -661,6 +662,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
