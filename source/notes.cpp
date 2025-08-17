@@ -267,7 +267,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = 0, j = BarLine.size() - 1; i < j; ++i) {
+	for (int i = 0, j = BarLine.size(); i < j; ++i) {
 
 		if (BarLine[i].flag) {
 
@@ -359,11 +359,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = Notes.size(); i < j; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	Notes.resize(Notes.size() * 2);
-	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = Notes.size(); i < j; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	return -1;
@@ -371,11 +371,11 @@ int find_notes_id() {
 
 int find_line_id() {
 
-	for (int i = 0, j = BarLine.size() - 1; i < j; ++i) {
+	for (int i = 0, j = BarLine.size(); i < j; ++i) {
 		if (!BarLine[i].flag) return i;
 	}
 	BarLine.resize(BarLine.size() * 2);
-	for (int i = 0, j = BarLine.size() - 1; i < j; ++i) {
+	for (int i = 0, j = BarLine.size(); i < j; ++i) {
 		if (!BarLine[i].flag) return i;
 	}
 	return -1;
@@ -452,7 +452,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	JudgeRollState = -1;
 
 	//連打の状態
-	for (int i = 0, j = RollNotes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
 
 		if (RollNotes[i].flag &&
 			Notes[RollNotes[i].start_id].judge_time < CurrentTimeNotes &&
@@ -461,7 +461,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	//風船の処理
 	int JudgeBalloonState = -1;
-	for (int i = 0, j = BalloonNotes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
 
 		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
 			JudgeBalloonState = i;
@@ -483,7 +483,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
-		for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
+		for (int i = 0, j = Notes.size(); i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -679,7 +679,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//計算
+	for (int i = 0, j = Notes.size(); i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -732,7 +732,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = Notes.size(); i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -962,18 +962,18 @@ void delete_roll(int i) {
 
 inline void init_roll__notes() {
 
-	for (int i = 0, j = RollNotes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
 		delete_roll(i);
 	}
 }
 
 inline int find_roll_id() {
 
-	for (int i = 0, j = RollNotes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
 		if (!RollNotes[i].flag) return i;
 	}
 	RollNotes.resize(RollNotes.size() * 2);
-	for (int i = 0, j = RollNotes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
 		if (!RollNotes[i].flag) return i;
 	}
 	return -1;
@@ -996,7 +996,7 @@ inline int make_roll_start(int NotesId) {
 
 static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
-	for (int i = 0, j = RollNotes.size() - 1; i < j; ++i) {
+	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
 
 		if (RollNotes[i].flag &&
 			RollNotes[i].start_x != -1 &&
@@ -1304,4 +1304,7 @@ void fontfree() {
 	C2D_FontFree(font);
 	Notes.clear();
 	std::vector<NOTES_T>().swap(Notes);
+	std::vector<BARLINE_T>().swap(BarLine);
+	std::vector<ROLL_T>().swap(RollNotes);
+	std::vector<BALLOON_T>().swap(BalloonNotes);
 }
