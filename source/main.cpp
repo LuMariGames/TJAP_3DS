@@ -276,6 +276,8 @@ int main() {
 
 		case SCENE_MAINLOAD:	 //ロード中
 
+			draw_select_text(0, 225, "Now Loading...");
+			C3D_FrameEnd(0);
 			init_tja();
 			load_tja_head(course, SelectedSong);
 			//init_main_music();
@@ -662,6 +664,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
+
 
 
 
