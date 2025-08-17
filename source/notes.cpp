@@ -9,7 +9,7 @@
 #include "option.h"
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
+int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -30,7 +30,7 @@ COMMAND_T Command;
 BRANCH_T Branch;
 
 int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
-NotesNumber;	//何番目のノーツか
+NotesNumber, NotesEndNum;	//何番目のノーツか
 bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
 double JudgeMakeTime,JudgeY,JudgeEffectCnt;
 
@@ -473,7 +473,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
-		for (int i = 0, j = Notes.size(); i < j; ++i) {
+		for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -533,7 +533,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	else if (!Option.isAuto) {			//手動
 
 		//判定すべきノーツを検索
-		for (int i = 0, j = Notes.size(); i < j; ++i) {
+		for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {
 
 			if (Notes[i].flag) {
 
@@ -669,14 +669,12 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//計算
+	for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
-			if (fabs(Notes[i].pop_time - CurrentTimeNotes) <= (240.0 * Notes[i].scroll / Notes[i].bpm)) Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
-
+			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
 			switch (Notes[i].knd) {
-
 			case NOTES_ROLL:
 			case NOTES_BIGROLL:
 				if (Notes[i].roll_id != -1 && RollNotes[Notes[i].roll_id].flag) {
@@ -684,7 +682,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					RollNotes[Notes[i].roll_id].start_id = i;
 				}
 				break;
-
 			case NOTES_ROLLEND:
 			case NOTES_BIGROLLEND:
 				if (Notes[i].roll_id != -1 && RollNotes[Notes[i].roll_id].flag) {
@@ -692,14 +689,12 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					RollNotes[Notes[i].roll_id].end_id = i;
 				}
 				break;
-
 			case NOTES_BALLOON:
 				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
 				}
 				break;
-
 			case NOTES_BALLOONEND:
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].end_id = i;
@@ -708,7 +703,6 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					delete_notes(i);
 				}
 				break;
-
 			case NOTES_DON:
 			case NOTES_KATSU:
 			case NOTES_BIGDON:
@@ -720,9 +714,10 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 				break;
 			}
 		}
+		else ++NotesEndNum;
 	}
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -752,11 +747,10 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
+	for (int i = NotesEndNum, j = NotesNumber; i < j; ++i) {	//描画
 
 		if (Notes[i].flag) {
 
-			if (std::isnan(Notes[i].x)) break;
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
@@ -1133,7 +1127,7 @@ void delete_notes(int i) {
 		Notes[i].knd = 0;
 		Notes[i].notes_max = 0;
 		Notes[i].x_ini = 0;
-		Notes[i].x = std::nan("");
+		Notes[i].x = 0;
 		Notes[i].create_time = 0;
 		Notes[i].judge_time = 0;
 		Notes[i].pop_time = 0;
@@ -1247,6 +1241,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		balloon[3][i] = TJA_Header.balloon[3][i];
 	}
 	NotesNumber = 0;
+	NotesEndNum = 0;
 	NotesCount = 0;
 	NowMeCount = 0;
 	RollState = 0;
@@ -1289,9 +1284,9 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	BarLine.clear();
 	BarLine.resize(64);
 	RollNotes.clear();
-	RollNotes.resize(64);
+	RollNotes.resize(16);
 	BalloonNotes.clear();
-	BalloonNotes.resize(64);
+	BalloonNotes.resize(16);
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
@@ -1300,7 +1295,7 @@ void newfont() {
 	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
 	Notes.reserve(16384);
 	Notes.resize(64);
-	BarLine.reserve(1024);
+	BarLine.reserve(2048);
 	BarLine.resize(64);
 	RollNotes.reserve(512);
 	RollNotes.resize(16);
