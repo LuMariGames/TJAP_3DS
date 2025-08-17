@@ -1067,7 +1067,6 @@ int make_balloon_start(int NotesId, int branch) {
 		}
 		BalloonNotes[id].current_hit = 0;
 		BalloonNotes[id].flag = true;
-		++BalloonCount;
 		return id;
 	}
 	else return -1;
