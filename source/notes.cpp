@@ -167,7 +167,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
 					float NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
-					//Notes[id].create_time = CurrentTimeNotes;
+					//Notes[id].create_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
@@ -764,7 +764,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
 
-		if (Notes[i].flag) {
+		if (Notes[i].flag && (Notes[i].x >= 20 && Notes[i].x <= 420)) {
 
 			switch (Notes[i].knd) {
 			case NOTES_DON:
