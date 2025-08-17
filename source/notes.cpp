@@ -268,7 +268,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	if (cnt <= 0) return;
+	if (cnt < 0) return;
 	for (int i = 0, j = BarLine.size(); i < j; ++i) {
 
 		if (BarLine[i].flag) {
