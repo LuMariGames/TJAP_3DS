@@ -483,18 +483,18 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	fclose(fp);
 }
 
-void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソート
+void sort_measure_insertion(MEASURE_T t[], int array_size) {	//judge_timeでソート
 
 	for (int i = 1; i < array_size; ++i) {
 
 		MEASURE_T temp = t[i];
-		if (t[i - 1].create_time > temp.create_time) {
+		if (t[i - 1].judge_time > temp.judge_time) {
 
 			int j = i;
 			do {
 				t[j] = t[j - 1];
 				--j;
-			} while (j > 0 && t[j - 1].create_time > temp.create_time);
+			} while (j > 0 && t[j - 1].judge_time > temp.judge_time);
 			t[j] = temp;
 		}
 	}
