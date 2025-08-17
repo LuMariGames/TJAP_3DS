@@ -673,7 +673,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
+			if (fabs(Notes[i].pop_time - CurrentTimeNotes) <= (240.0 * Notes[i].scroll / Notes[i].bpm)) Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
 
 			switch (Notes[i].knd) {
 
@@ -756,6 +756,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		if (Notes[i].flag) {
 
+			if (Notes[i].x == NULL) break;
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				if (Notes[i].x >= 20 && Notes[i].x <= 420) {
@@ -1132,7 +1133,7 @@ void delete_notes(int i) {
 		Notes[i].knd = 0;
 		Notes[i].notes_max = 0;
 		Notes[i].x_ini = 0;
-		Notes[i].x = 0;
+		Notes[i].x = NULL;
 		Notes[i].create_time = 0;
 		Notes[i].judge_time = 0;
 		Notes[i].pop_time = 0;
