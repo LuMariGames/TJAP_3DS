@@ -1032,7 +1032,7 @@ void delete_balloon(int i) {
 
 inline void init_balloon_notes() {
 
-	for (int i = 0; i < BalloonNotes.size(); ++i) {
+	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
 		delete_balloon(i);
 	}
 }
