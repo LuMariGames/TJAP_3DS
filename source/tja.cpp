@@ -723,7 +723,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
 						BeforeBranchMoveTime = movetime;
-						strlcpy(Beforely, ly, sizeof(Beforeby));
+						strlcpy(Beforely, ly, sizeof(Beforely));
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
 						break;
 					case COMMAND_M:
