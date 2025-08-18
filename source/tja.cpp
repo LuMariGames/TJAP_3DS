@@ -37,7 +37,7 @@ void init_measure_structure() {
 		Measure[i].notes_count = 0;
 		Measure[i].command = -1;
 		Measure[i].sudn_time = 0;
-		strcpy(Measure[i].lyric, " 　\0");
+		strlcpy(Measure[i].lyric, "", sizeof(Measure[i].lyric));
 	}
 }
 
@@ -535,7 +535,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
-	char ly[64] = " \0", Beforely[64] = " 　 　 　 　\0";
+	char ly[64] = "", Beforely[64] = "";
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
