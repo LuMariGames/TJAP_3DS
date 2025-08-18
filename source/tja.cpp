@@ -664,7 +664,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						isEnd = true;
 						break;
 					case COMMAND_LYRIC:
-						strcpy(ly, Command.value_s);
+						strncpy(ly, Command.value_s, strnlen(Command.value_s) - 1);
 						break;
 					}
 				}
