@@ -984,9 +984,13 @@ bool get_isBranch() {
 }
 
 void lntrim(char *str) {  
-	char *p;  
-	p = strchr(str, '\n');  
-	if(p != NULL) {  
-		*p = '\0';  
-	}  
-}  
+	char *p, *q;
+	p = strchr(str, '\n');
+	q = strchr(str, '\r');
+	if(p != NULL) {
+		*p = '\0';
+	}
+	if(q != NULL) {
+		*q = '\0';
+	}
+}
