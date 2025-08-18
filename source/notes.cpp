@@ -19,7 +19,7 @@ C2D_Font font;
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
+notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
 std::vector<NOTES_T> Notes;
@@ -334,6 +334,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {
 		if (MaxJudgeTime < Measure[i].judge_time && Measure[i].judge_time <= CurrentTimeNotes) {
+			draw_lyric_text(Measure[i].lyric);
 			NowBPM = Measure[i].bpm;
 			MaxJudgeTime = Measure[i].judge_time;
 		}
@@ -1155,6 +1156,15 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
+}
+
+inline void draw_lyric_text(const char *text) {
+
+	float size = 0.55;
+	C2D_TextBufClear(g_NotesText);
+	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
+	C2D_TextOptimize(&NotesText);
+	C2D_DrawText(&NotesText, C2D_AtBaseline | C2D_AlignCenter, 200, 240, 1.0f, size, size);
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
