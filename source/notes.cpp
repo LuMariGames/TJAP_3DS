@@ -1166,7 +1166,7 @@ inline void draw_lyric_text(const char *text) {
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_AlignCenter, 200, 222, 1.0f, size, size);
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0x10, 0x10, 0xFF, 0xFF));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
