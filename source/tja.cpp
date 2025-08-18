@@ -694,7 +694,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
-				snprintf(Measure[MeasureCount].lyric, strlen(ly) + 2, "  %s  ", ly);
+				snprintf(Measure[MeasureCount].lyric, 64, "　　%s　　", ly);
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
