@@ -694,7 +694,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
-				Measure[MeasureCount].lyric = ly;
+				strcpy(Measure[MeasureCount].lyric, ly);
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
@@ -721,7 +721,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
 						BeforeBranchMoveTime = movetime;
-						Beforely = ly;
+						strcpy(Beforely, ly);
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
 						break;
 					case COMMAND_M:
@@ -743,7 +743,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
 						movetime = BeforeBranchMoveTime;
-						ly = Beforely;
+						strcpy(ly, Beforely);
 						break;
 					}
 				}
