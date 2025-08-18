@@ -5,12 +5,12 @@ typedef struct {
 
 	int knd, data[3],test;
 	double val[3];
-	char* command_s = u8"",*notes = u8"",*value_s = u8"";
+	char* command_s,*notes,*value_s;
 } COMMAND_T;
 
 typedef struct {
 
-	char *title = u8"", *subtitle = u8"",*wave = u8"";
+	char *title, *subtitle,*wave;
 	int level,balloon[4][256],songvol,sevol,scoreinit,scorediff,
 		course,style,life,scoremode,subtitle_state; //total,side;
 	double bpm, offset; //demostart;
