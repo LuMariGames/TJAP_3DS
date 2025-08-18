@@ -331,15 +331,17 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}
 	send_gogotime(isGOGOTime);
 	double MaxJudgeTime = 0.0;
+	int NowMeasure = 0;
 
 	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {
 		if (MaxJudgeTime < Measure[i].judge_time && Measure[i].judge_time <= CurrentTimeNotes) {
-			draw_lyric_text(Measure[i].lyric);
 			NowBPM = Measure[i].bpm;
 			MaxJudgeTime = Measure[i].judge_time;
+			NowMeasure = i;
 		}
 	}
 
+	draw_lyric_text(Measure[NowMeasure].lyric);
 	if (course == COURSE_DAN) dcd = dan_condition();
 	if (TotalFailedCount != dcd) {
 		play_sound(SOUND_FAILED);
@@ -1160,9 +1162,9 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 
 inline void draw_lyric_text(const char *text) {
 
-	float size = 0.55;
+	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
+	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_AtBaseline | C2D_AlignCenter, 200, 240, 1.0f, size, size);
 }
