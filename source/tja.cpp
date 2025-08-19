@@ -16,7 +16,7 @@ float mix[12];
 TJA_HEADER_T Current_Header;
 MEASURE_T Measure[MEASURE_MAX];
 
-void get_command_value(char* buf, COMMAND_T *Command), lntrim(char *str);
+void get_command_value(char* buf, COMMAND_T *Command);
 
 void init_measure_structure() {
 
@@ -535,7 +535,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
-	char ly[64] = u8" ", Beforely[64] = u8" ";
+	char ly[64] = " ", Beforely[64] = " ";
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
@@ -665,7 +665,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						isEnd = true;
 						break;
 					case COMMAND_LYRIC:
-						snprintf(ly, sizeof(ly), u8"%s", Command.value_s);
+						strlcpy(ly, Command.value_s, strlen(Command.value_s));
 						break;
 					}
 				}
@@ -695,7 +695,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
-				strlcpy(Measure[MeasureCount].lyric, ly, strlen(ly) - 1);
+				strlcpy(Measure[MeasureCount].lyric, ly, sizeof(Measure[MeasureCount].lyric));
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
@@ -980,16 +980,4 @@ int get_MeasureId_From_OriginalId(int id) {
 }
 bool get_isBranch() {
 	return isBranch;
-}
-
-void lntrim(char *str) {  
-	char *p, *q;
-	p = strchr(str, '\n');
-	q = strchr(str, '\r');
-	if(p != NULL) {
-		*p = '\0';
-	}
-	if(q != NULL) {
-		*q = '\0';
-	}
 }
