@@ -1302,7 +1302,7 @@ int sign(double A) {	//正か負かの判別
 }
 void newfont() {
 	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
-	font[1] = C2D_FontLoadSystem(CFG_LANGUAGE_JP);
+	font[1] = C2D_FontLoadSystem(CFG_REGION_JPN);
 	Notes.reserve(2048);
 	Notes.resize(64);
 	BarLine.reserve(512);
