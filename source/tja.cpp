@@ -666,7 +666,6 @@ void load_tja_notes(int course, LIST_T Song) {
 						break;
 					case COMMAND_LYRIC:
 						strlcpy(ly, Command.value_s, sizeof(ly));
-						ly[strlen(Command.value_s)] = '\0';
 						break;
 					}
 				}
