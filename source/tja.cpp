@@ -535,7 +535,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
-	char ly[64] = " ", Beforely[64] = " ";
+	char ly[64] = "", Beforely[64] = "";
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
@@ -665,7 +665,8 @@ void load_tja_notes(int course, LIST_T Song) {
 						isEnd = true;
 						break;
 					case COMMAND_LYRIC:
-						strlcpy(ly, Command.value_s, strlen(Command.value_s));
+						strlcpy(ly, Command.value_s, sizeof(ly));
+						ly[strlen(Command.value_s)] = '\0';
 						break;
 					}
 				}
