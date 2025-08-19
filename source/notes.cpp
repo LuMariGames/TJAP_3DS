@@ -14,7 +14,7 @@ double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
-C2D_Font font;
+C2D_Font font[2];
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
@@ -1155,7 +1155,7 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
+	C2D_TextFontParse(&NotesText, font[0], g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
@@ -1164,7 +1164,7 @@ inline void draw_lyric_text(const char *text) {
 
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
+	C2D_TextFontParse(&NotesText, font[1], g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
@@ -1301,7 +1301,8 @@ int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
 void newfont() {
-	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
+	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
+	font[1] = C2D_FontLoadSystem(CFG_LANGUAGE_JAPANESE);
 	Notes.reserve(2048);
 	Notes.resize(64);
 	BarLine.reserve(512);
@@ -1313,7 +1314,8 @@ void newfont() {
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
-	C2D_FontFree(font);
+	C2D_FontFree(font[0]);
+	C2D_FontFree(font[1]);
 	Notes.clear();
 	std::vector<NOTES_T>().swap(Notes);
 	std::vector<BARLINE_T>().swap(BarLine);
