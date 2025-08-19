@@ -635,6 +635,9 @@ void load_tja_notes(int course, LIST_T Song) {
 						movetime = sudntime - Command.val[1];
 						isSudden = true;
 						break;
+					case COMMAND_LYRIC:
+						strlcpy(ly, Command.value_s, sizeof(ly));
+						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
 						break;
@@ -663,9 +666,6 @@ void load_tja_notes(int course, LIST_T Song) {
 					case COMMAND_END:
 						BranchCourse = -1;
 						isEnd = true;
-						break;
-					case COMMAND_LYRIC:
-						strlcpy(ly, Command.value_s, sizeof(ly));
 						break;
 					}
 				}
@@ -858,12 +858,12 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			if (space < comment && isComment) {	//値ありコメントあり
 
 				strlcpy(command, buf + 1, space);
-				strlcpy(value, buf + 1 + strlen(command), comment - strlen(command) + 1);
+				strlcpy(value, buf + 1 + space, comment - strlen(command) + 1);
 
 			}
 			else {	//値ありコメントなし
 				strlcpy(command, buf + 1, space);
-				strlcpy(value, buf + 1 + strlen(command), length - strlen(command));
+				strlcpy(value, buf + 1 + space, length - strlen(command));
 			}
 		}
 		else {	//値なし
