@@ -1164,7 +1164,7 @@ inline void draw_lyric_text(const char *text) {
 
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextParse(&NotesText, g_NotesText, text);
+	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
