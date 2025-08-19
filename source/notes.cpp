@@ -14,19 +14,19 @@ double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
-C2D_Font font[2];
+C2D_Font font;
 
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
+notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
 std::vector<NOTES_T> Notes;
-std::vector<BARLINE_T> BarLine;
-std::vector<ROLL_T> RollNotes;
-std::vector<BALLOON_T> BalloonNotes;
 COMMAND_T Command;
+BARLINE_T BarLine[BARLINE_MAX];
+ROLL_T RollNotes[ROLL_MAX];
+BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
 int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
@@ -166,7 +166,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
-					float NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
+					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
 					//Notes[id].create_time = CurrentTimeNotes;
 					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
@@ -267,7 +267,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	for (int i = 0, j = BarLine.size(); i < j; ++i) {
+	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 
 		if (BarLine[i].flag) {
 
@@ -331,17 +331,14 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	}
 	send_gogotime(isGOGOTime);
 	double MaxJudgeTime = 0.0;
-	int NowMeasure = 0;
 
 	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {
 		if (MaxJudgeTime < Measure[i].judge_time && Measure[i].judge_time <= CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			MaxJudgeTime = Measure[i].judge_time;
-			NowMeasure = i;
 		}
 	}
 
-	draw_lyric_text(Measure[NowMeasure].lyric);
 	if (course == COURSE_DAN) dcd = dan_condition();
 	if (TotalFailedCount != dcd) {
 		play_sound(SOUND_FAILED);
@@ -362,11 +359,11 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 int find_notes_id() {
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	Notes.resize(Notes.size() * 2);
-	for (int i = 0, j = Notes.size(); i < j; ++i) {
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 		if (!Notes[i].flag) return i;
 	}
 	return -1;
@@ -374,12 +371,11 @@ int find_notes_id() {
 
 int find_line_id() {
 
-	for (int i = 0, j = BarLine.size(); i < j; ++i) {
+	for (int i = 0, j = BARLINE_MAX - 1; i < j; i += 4) {
 		if (!BarLine[i].flag) return i;
-	}
-	BarLine.resize(BarLine.size() * 2);
-	for (int i = 0, j = BarLine.size(); i < j; ++i) {
-		if (!BarLine[i].flag) return i;
+		if (!BarLine[i+1].flag) return i+1;
+		if (!BarLine[i+2].flag) return i+2;
+		if (!BarLine[i+3].flag) return i+3;
 	}
 	return -1;
 }
@@ -455,7 +451,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	JudgeRollState = -1;
 
 	//連打の状態
-	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
+	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
 		if (RollNotes[i].flag &&
 			Notes[RollNotes[i].start_id].judge_time < CurrentTimeNotes &&
@@ -464,7 +460,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	//風船の処理
 	int JudgeBalloonState = -1;
-	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
+	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
 		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
 			JudgeBalloonState = i;
@@ -486,7 +482,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 
 	if (Option.isAuto) {	//オート
 
-		for (int i = 0, j = Notes.size(); i < j; ++i) {
+		for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 
 			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
@@ -682,7 +678,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//計算
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -735,7 +731,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 		}
 	}
 
-	for (int i = 0, j = Notes.size(); i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -951,7 +947,7 @@ void notes_sort() {	//ノーツを出現順にソート
 
 void delete_roll(int i) {
 
-	if (i >= 0 && i < (int)RollNotes.size()) {
+	if (i >= 0 && i < ROLL_MAX) {
 		if (RollNotes[i].start_id != -1 && Notes[RollNotes[i].start_id].flag) delete_notes(RollNotes[i].start_id);
 		RollNotes[i].id = -1;
 		RollNotes[i].start_x = -1;
@@ -965,18 +961,14 @@ void delete_roll(int i) {
 
 inline void init_roll__notes() {
 
-	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
+	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 		delete_roll(i);
 	}
 }
 
 inline int find_roll_id() {
 
-	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
-		if (!RollNotes[i].flag) return i;
-	}
-	RollNotes.resize(RollNotes.size() * 2);
-	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
+	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 		if (!RollNotes[i].flag) return i;
 	}
 	return -1;
@@ -999,7 +991,7 @@ inline int make_roll_start(int NotesId) {
 
 static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
-	for (int i = 0, j = RollNotes.size(); i < j; ++i) {
+	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
 		if (RollNotes[i].flag &&
 			RollNotes[i].start_x != -1 &&
@@ -1027,7 +1019,7 @@ void make_balloon_break() {
 
 void delete_balloon(int i) {
 
-	if (i >= 0 && i < (int)BalloonNotes.size()) {
+	if (i >= 0 && i < BALLOON_MAX) {
 		BalloonNotes[i].id = -1;
 		BalloonNotes[i].start_id = -1;
 		BalloonNotes[i].end_id = -1;
@@ -1039,18 +1031,14 @@ void delete_balloon(int i) {
 
 inline void init_balloon_notes() {
 
-	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
+	for (int i = 0; i < BALLOON_MAX - 1; ++i) {
 		delete_balloon(i);
 	}
 }
 
 inline int find_balloon_id() {
 
-	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
-		if (!BalloonNotes[i].flag) return i;
-	}
-	BalloonNotes.resize(BalloonNotes.size() * 2);
-	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
+	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 		if (!BalloonNotes[i].flag) return i;
 	}
 	return -1;
@@ -1072,9 +1060,10 @@ int make_balloon_start(int NotesId) {
 
 int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
-	for (int i = 0, j = BalloonNotes.size(); i < j; ++i) {
+	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].flag && BalloonNotes[i].start_id != -1 &&
+		if (BalloonNotes[i].flag &&
+			BalloonNotes[i].start_id != -1 &&
 			BalloonNotes[i].end_id == -1) return i;
 	}
 	return -1;
@@ -1141,7 +1130,7 @@ void delete_notes(int i) {
 bool get_notes_finish() {
 
 	if (isNotesLoad) return false;
-	for (int i = 0, j = Notes.size(); i < j; ++i) {
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 
 		if (Notes[i].flag && !Notes[i].isThrough) return false;
 	}
@@ -1155,18 +1144,9 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font[0], g_NotesText, text);
+	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
-}
-
-inline void draw_lyric_text(const char *text) {
-
-	float size = 0.6;
-	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font[1], g_NotesText, text);
-	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
@@ -1220,7 +1200,7 @@ void draw_condition() {
 }
 inline void init_notes_structure() {
 
-	for (int i = 0, j = Notes.size(); i < j; i += 4) {
+	for (int i = 0, j = Notes.size() - 1; i < j; i += 4) {
 		delete_notes(i);
 		delete_notes(i+1);
 		delete_notes(i+2);
@@ -1279,7 +1259,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	isLevelHold = false;
 	PreNotesKnd = 0;
 	TotalFailedCount = 0;
-	for (int i = 0, j = BarLine.size(); i < j; ++i) {
+	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		BarLine[i].flag = false;
 		BarLine[i].scroll = 0;
 		BarLine[i].measure = 0;
@@ -1290,35 +1270,18 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	dcd = 0;
 	Notes.clear();
 	Notes.resize(64);
-	BarLine.clear();
-	BarLine.resize(64);
-	RollNotes.clear();
-	RollNotes.resize(64);
-	BalloonNotes.clear();
-	BalloonNotes.resize(64);
 }
 int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
 void newfont() {
-	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
-	font[1] = C2D_FontLoadSystem(CFG_REGION_JPN);
+	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
 	Notes.reserve(2048);
 	Notes.resize(64);
-	BarLine.reserve(512);
-	BarLine.resize(64);
-	RollNotes.reserve(512);
-	RollNotes.resize(64);
-	BalloonNotes.reserve(512);
-	BalloonNotes.resize(64);
 }
 void fontfree() {
 	C2D_TextBufDelete(g_NotesText);
-	C2D_FontFree(font[0]);
-	C2D_FontFree(font[1]);
+	C2D_FontFree(font);
 	Notes.clear();
 	std::vector<NOTES_T>().swap(Notes);
-	std::vector<BARLINE_T>().swap(BarLine);
-	std::vector<ROLL_T>().swap(RollNotes);
-	std::vector<BALLOON_T>().swap(BalloonNotes);
 }
