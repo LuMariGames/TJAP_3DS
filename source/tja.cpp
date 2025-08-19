@@ -858,12 +858,12 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			if (space < comment && isComment) {	//値ありコメントあり
 
 				strlcpy(command, buf + 1, space);
-				strlcpy(value, buf + 1 + space, comment - strlen(command) + 1);
+				strlcpy(value, buf + 1 + strlen(command), comment - strlen(command) + 1);
 
 			}
 			else {	//値ありコメントなし
 				strlcpy(command, buf + 1, space);
-				strlcpy(value, buf + 1 + space, length - strlen(command));
+				strlcpy(value, buf + 1 + strlen(command), length - strlen(command));
 			}
 		}
 		else {	//値なし
