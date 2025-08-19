@@ -535,7 +535,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
-	char ly[64] = "多分ね", Beforely[64] = "";
+	char ly[64] = "", Beforely[64] = "";
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
@@ -636,7 +636,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						isSudden = true;
 						break;
 					case COMMAND_LYRIC:
-						strlcpy(ly, Command.value_s, sizeof(ly));
+						strncpy(ly, Command.value_s, sizeof(ly));
 						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
@@ -695,7 +695,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
-				strlcpy(Measure[MeasureCount].lyric, ly, sizeof(Measure[MeasureCount].lyric));
+				strncpy(Measure[MeasureCount].lyric, ly, sizeof(Measure[MeasureCount].lyric));
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
@@ -722,7 +722,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
 						BeforeBranchMoveTime = movetime;
-						strlcpy(Beforely, ly, sizeof(Beforely));
+						strncpy(Beforely, ly, sizeof(Beforely));
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
 						break;
 					case COMMAND_M:
@@ -744,7 +744,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
 						movetime = BeforeBranchMoveTime;
-						strlcpy(ly, Beforely, sizeof(ly));
+						strncpy(ly, Beforely, sizeof(ly));
 						break;
 					}
 				}
