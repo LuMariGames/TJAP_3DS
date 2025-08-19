@@ -880,7 +880,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 
 
 		Command->command_s = command;
-		Command->value_s = value;
 		Command->val[0] = 0;
 		Command->val[1] = 0;
 		Command->val[2] = 0;
