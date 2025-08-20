@@ -636,7 +636,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						isSudden = true;
 						break;
 					case COMMAND_LYRIC:
-						strncpy(ly, Command.value_s, sizeof(ly));
+						strncpy(ly, Command.value_s, sizeof(ly) - 1);
 						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
