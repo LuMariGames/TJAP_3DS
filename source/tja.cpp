@@ -956,7 +956,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
 		else if (strcmp(command, "LYRIC") == 0) {
 			Command->knd = COMMAND_LYRIC;
-			strlcpy(Command->value_s, buf + 7, length - 8);
+			strlcpy(value, buf + 7, length - 8);
+			Command->value_s = value;
 		}
 		/*else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
 		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;*/
