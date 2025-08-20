@@ -19,7 +19,7 @@ C2D_Font font;
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i),
+notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
 notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
 std::vector<NOTES_T> Notes;
@@ -1156,7 +1156,7 @@ inline void draw_lyric_text(const char *text) {
 
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextFontParse(&NotesText, font[1], g_NotesText, text);
+	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
