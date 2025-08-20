@@ -341,7 +341,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
-	draw_lyric_text(Measure[NowMeasure].lyric);
+	draw_lyric_text(Measure[NowMeasure].lyric.c_str);
 	if (course == COURSE_DAN) dcd = dan_condition();
 	if (TotalFailedCount != dcd) {
 		play_sound(SOUND_FAILED);
