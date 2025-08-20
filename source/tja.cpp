@@ -636,7 +636,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						isSudden = true;
 						break;
 					case COMMAND_LYRIC:
-						strncpy(ly, Command.value_s, sizeof(ly) - 1);
+						strlcpy(ly, (char*)Command.value_s, sizeof(ly) - 1);
 						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
@@ -695,7 +695,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
-				strncpy(Measure[MeasureCount].lyric, ly, sizeof(Measure[MeasureCount].lyric));
+				strlcpy(Measure[MeasureCount].lyric, ly, sizeof(Measure[MeasureCount].lyric));
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
@@ -722,7 +722,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
 						BeforeBranchMoveTime = movetime;
-						strncpy(Beforely, ly, sizeof(Beforely));
+						strlcpy(Beforely, ly, sizeof(Beforely));
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
 						break;
 					case COMMAND_M:
@@ -744,7 +744,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
 						movetime = BeforeBranchMoveTime;
-						strncpy(ly, Beforely, sizeof(ly));
+						strlcpy(ly, Beforely, sizeof(ly));
 						break;
 					}
 				}
@@ -957,7 +957,7 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "LYRIC") == 0) {
 			Command->knd = COMMAND_LYRIC;
 			strlcpy(value, buf + 7, length - 8);
-			Command->value_s = value;
+			*Command->value_s = value;
 		}
 		/*else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
 		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;*/
