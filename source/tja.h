@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "select.h"
 
 typedef struct {
@@ -29,6 +29,7 @@ typedef struct {
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
 	bool flag,isDispBarLine;
+	char lyric[64];
 
 } MEASURE_T;
 
