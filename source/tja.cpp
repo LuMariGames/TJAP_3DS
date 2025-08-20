@@ -37,6 +37,7 @@ void init_measure_structure() {
 		Measure[i].notes_count = 0;
 		Measure[i].command = -1;
 		Measure[i].sudn_time = 0;
+		strlcpy(Measure[i].lyric, "", sizeof(Measure[i].lyric));
 	}
 }
 
@@ -534,6 +535,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
+	char ly[64] = "", Beforely[64] = "";
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
@@ -565,8 +567,8 @@ void load_tja_notes(int course, LIST_T Song) {
 				else if (strcmp(temp, "Hard") ==   0 || strcmp(temp, "hard") == 0)   CurrentCourse = COURSE_HARD;
 				else if (strcmp(temp, "Oni") ==    0 || strcmp(temp, "oni") == 0)    CurrentCourse = COURSE_ONI;
 				else if (strcmp(temp, "Edit") ==   0 || strcmp(temp, "edit") == 0)   CurrentCourse = COURSE_EDIT;
-				else if (strcmp(temp, "Tower") ==   0 || strcmp(temp, "tower") == 0)   CurrentCourse = COURSE_TOWER;
-				else if (strcmp(temp, "Dan") ==   0 || strcmp(temp, "dan") == 0)   CurrentCourse = COURSE_DAN;
+				else if (strcmp(temp, "Tower") ==  0 || strcmp(temp, "tower") == 0)  CurrentCourse = COURSE_TOWER;
+				else if (strcmp(temp, "Dan") ==    0 || strcmp(temp, "dan") == 0)    CurrentCourse = COURSE_DAN;
 
 				free(temp);
 				if (course == CurrentCourse) isCourseMatch = true;
@@ -633,6 +635,9 @@ void load_tja_notes(int course, LIST_T Song) {
 						movetime = sudntime - Command.val[1];
 						isSudden = true;
 						break;
+					case COMMAND_LYRIC:
+						strncpy(ly, Command.value_s, sizeof(ly));
+						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine = true;
 						break;
@@ -690,6 +695,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
+				strncpy(Measure[MeasureCount].lyric, ly, sizeof(Measure[MeasureCount].lyric));
 
 				if (tja_notes[tja_cnt][0] == '#') {
 
@@ -716,6 +722,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
 						BeforeBranchMoveTime = movetime;
+						strncpy(Beforely, ly, sizeof(Beforely));
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
 						break;
 					case COMMAND_M:
@@ -737,6 +744,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
 						movetime = BeforeBranchMoveTime;
+						strncpy(ly, Beforely, sizeof(ly));
 						break;
 					}
 				}
@@ -763,7 +771,7 @@ void load_tja_notes(int course, LIST_T Song) {
 								* Measure[Measure[MeasureCount].firstmeasure + i - 1].notes_count / Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
 							Measure[Measure[MeasureCount].firstmeasure + i].pop_time    = Measure[Measure[MeasureCount].firstmeasure + i].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[Measure[MeasureCount].firstmeasure + i].bpm * NOTES_AREA);
-							Measure[Measure[MeasureCount].firstmeasure + i].create_time = Measure[Measure[MeasureCount].firstmeasure + i].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[Measure[MeasureCount].firstmeasure + i].bpm * (NOTES_AREA * fabs(Measure[Measure[MeasureCount].firstmeasure + i].scroll)));
+							Measure[Measure[MeasureCount].firstmeasure + i].create_time = Measure[Measure[MeasureCount].firstmeasure + i].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[Measure[MeasureCount].firstmeasure + i].bpm * (NOTES_AREA * fabs(Measure[Measure[MeasureCount].firstmeasure + i].scroll * Option.speed)));
 							percent = (double)Measure[Measure[MeasureCount].firstmeasure + i].notes_count / (double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 
 							Measure[Measure[MeasureCount].firstmeasure + i].isDispBarLine = false;	//最初の小節は小節線をオフにしない
@@ -872,7 +880,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 
 
 		Command->command_s = command;
-		Command->value_s = value;
 		Command->val[0] = 0;
 		Command->val[1] = 0;
 		Command->val[2] = 0;
@@ -947,6 +954,10 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "LEVELHOLD") == 0) Command->knd = COMMAND_LEVELHOLD;
 		else if (strcmp(command, "BARLINEOFF") == 0) Command->knd = COMMAND_BARLINEOFF;
 		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
+		else if (strcmp(command, "LYRIC") == 0) {
+			Command->knd = COMMAND_LYRIC;
+			strlcpy(Command->value_s, buf + 7, length - 8);
+		}
 		/*else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
 		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;*/
 		else Command->knd = -1;
@@ -969,7 +980,6 @@ int get_MeasureId_From_OriginalId(int id) {
 	}
 	return -1;
 }
-
 bool get_isBranch() {
 	return isBranch;
 }
