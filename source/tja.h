@@ -30,7 +30,7 @@ typedef struct {
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
 	bool flag,isDispBarLine;
-	char lyric[64];
+	std::string lyric;
 
 } MEASURE_T;
 
