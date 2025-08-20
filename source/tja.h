@@ -6,7 +6,7 @@ typedef struct {
 
 	int knd, data[3],test;
 	double val[3];
-	std::string command_s,notes,value_s;
+	string command_s,notes,value_s;
 } COMMAND_T;
 
 typedef struct {
