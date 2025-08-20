@@ -37,7 +37,7 @@ void init_measure_structure() {
 		Measure[i].notes_count = 0;
 		Measure[i].command = -1;
 		Measure[i].sudn_time = 0;
-		strlcpy(Measure[i].lyric, "", sizeof(Measure[i].lyric));
+		Measure[i].lyric = "";
 	}
 }
 
