@@ -53,6 +53,7 @@ Starting with v1.5.3, the buffer size has been eliminated, allowing you to enjoy
 ![My_Skin_Oni](https://github.com/user-attachments/assets/218a89c9-9758-4aa8-9894-cb298dfb45b0)
 ![My_Skin_Dani](https://github.com/user-attachments/assets/fe90a3fb-75d4-410f-811d-263ba74398da)  
 ![Songs_Select](https://github.com/user-attachments/assets/7b766612-867d-477a-9485-844404a21b60)
+![SubTitle Search](https://github.com/user-attachments/assets/0c59da77-3ace-4f30-8680-cfc685594e01)
 
 # 対応表 / Complete the table
 > `✅` = full supported, `⚠️` = Incorrect behavior, `❌` = Not supported or Ignored,
