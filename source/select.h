@@ -4,7 +4,7 @@
 typedef struct {
 
 	int level[7],x,y,tmp,genre;
-	char title[256],path[256],tja[256],wave[256];
+	char title[256],subtitle[256],path[256],tja[256],wave[256];
 	bool course[7],course_exist[5];
 } LIST_T;
 
