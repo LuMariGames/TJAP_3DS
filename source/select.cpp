@@ -167,7 +167,7 @@ void disp_file_list() {
 	const char* firstTwo = Option.SongTitle;
 
 	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
-	isSubT = ((strstr(List[i].title, "\s") == 0) ? true : false);
+	isSubT = ((strstr(Option.SongTitle, "\s") == 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
 		if (isSearch &&
 			((isSubT && strstr(List[i].title, firstTwo + 2) == NULL) ||
@@ -188,7 +188,9 @@ void disp_file_list() {
 
 	for (int i = 0; i < SongNumber; ++i) {
 
-		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
+		if (isSearch &&
+			((isSubT && strstr(List[i].title, firstTwo + 2) == NULL) ||
+			(!isSubT && strstr(List[i].title, Option.SongTitle) == NULL))) {
 			continue;
 		}
 		isGenre = false;
