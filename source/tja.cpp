@@ -431,13 +431,11 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 				}
 				continue;
 			}
-			if (cnt == 0) {
-				if (strstr(buf, "TITLE:") == buf+3 && strstr(buf, "SUBTITLE:") == 0) {
-					if (buf[9] != '\n' && buf[9] != '\r') {
-						strlcpy(List->title, buf + 9, strlen(buf) - 10);
-					}
-					continue;
+			if (strstr(buf, "SUBTITLE:") == buf) {
+				if (buf[9] != '\n' && buf[9] != '\r') {
+					strlcpy(List->subtitle, buf + 9, strlen(buf) - 10);
 				}
+				continue;
 			}
 
 			if (strstr(buf, "WAVE:") == buf) {
@@ -458,8 +456,6 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 					else if (strcmp(temp, "Edit") == 0 || strcmp(temp, "edit") == 0)   course = COURSE_EDIT;
 					else if (strcmp(temp, "Tower") == 0 || strcmp(temp, "tower") == 0)   course = COURSE_TOWER;
 					else if (strcmp(temp, "Dan") == 0 || strcmp(temp, "dan") == 0)   course = COURSE_DAN;
-
-
 					List->course[course] = true;
 					List->course_exist[course] = true;
 				}
@@ -471,7 +467,6 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					List->level[course] = atoi(temp);
-
 					List->course[course] = true;
 				}
 				continue;
