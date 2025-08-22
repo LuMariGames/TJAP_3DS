@@ -170,7 +170,7 @@ void disp_file_list() {
 	isSubT = ((strcmp("--", Option.SongTitle) < 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
 		if (isSearch &&
-			((isSubT && strstr(List[i].title, firstTwo + 2) == NULL) ||
+			((isSubT && strstr(List[i].subtitle, firstTwo + 2) == NULL) ||
 			(!isSubT && strstr(List[i].title, Option.SongTitle) == NULL))) {
 			continue;
 		}
@@ -189,7 +189,7 @@ void disp_file_list() {
 	for (int i = 0; i < SongNumber; ++i) {
 
 		if (isSearch &&
-			((isSubT && strstr(List[i].title, firstTwo + 2) == NULL) ||
+			((isSubT && strstr(List[i].subtitle, firstTwo + 2) == NULL) ||
 			(!isSubT && strstr(List[i].title, Option.SongTitle) == NULL))) {
 			continue;
 		}
@@ -474,6 +474,7 @@ void get_SelectedId(LIST_T* TMP, int* arg) {
 	strlcpy(TMP->tja, List[SelectedId].tja, strlen(List[SelectedId].tja) + 1);
 	strlcpy(TMP->path, List[SelectedId].path, strlen(List[SelectedId].path) + 1);
 	strlcpy(TMP->title, List[SelectedId].title, strlen(List[SelectedId].title) + 1);
+	strlcpy(TMP->subtitle, List[SelectedId].subtitle, strlen(List[SelectedId].subtitle) + 1);
 	strlcpy(TMP->wave, List[SelectedId].wave, strlen(List[SelectedId].wave) + 1);
 	*arg = course;
 }
