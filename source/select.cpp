@@ -162,12 +162,16 @@ void disp_file_list() {
 	get_option(&Option);
 	int n = 0, g = 0,	//コース用調整、ジャンル用調整
 	SNum = 0;
-	bool isGenre = false, isSearch = false;
+	bool isGenre = false, isSearch = false, isSubT = false;
 	course_count = 0;
+	const char* firstTwo = Option.SongTitle;
 
 	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
+	isSubT = ((strstr(List[i].title, "\s") == 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
-		if (isSearch && strstr(List[i].title, Option.SongTitle) == NULL) {
+		if (isSearch &&
+			((isSubT && strstr(List[i].title, firstTwo + 2) == NULL) ||
+			(!isSubT && strstr(List[i].title, Option.SongTitle) == NULL))) {
 			continue;
 		}
 		++SNum;
