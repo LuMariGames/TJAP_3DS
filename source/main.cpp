@@ -289,9 +289,9 @@ int main() {
 			init_notes(TJA_Header);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
-			notes_cnt = 0, OpMeCnt = Option.measure;
+			notes_cnt = 0, BeforeCombo = -1;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
-			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000, BeforeCombo = -1;
+			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_LOADSCRE;
@@ -734,6 +734,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
