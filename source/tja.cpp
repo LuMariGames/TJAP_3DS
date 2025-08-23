@@ -526,7 +526,6 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 			stme = tmp;
 		}
 	}
-	stme = tmp;
 	return Measure[stme].judge_time - Measure[stme].create_time;
 }
 
