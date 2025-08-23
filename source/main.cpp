@@ -277,6 +277,8 @@ int main() {
 
 		case SCENE_MAINLOAD:	 //ロード中
 
+			draw_select_text(0, 225, "Now Loading...");
+			C3D_FrameEnd(0);
 			init_tja();
 			load_tja_head(course, SelectedSong);
 			//init_main_music();
@@ -292,17 +294,75 @@ int main() {
 			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000, BeforeCombo = -1;
 
 			tmp = check_wave(SelectedSong);
-			if (tmp == -1) scene_state = SCENE_MAINGAME;
+			if (tmp == -1) scene_state = SCENE_LOADSCRE;
 			else {
 
 				warning = tmp;
 				scene_state = SCENE_WARNING;
 				select_ini();
 			}
-			cnt = ((OpMeCnt == 0) ? -60 : -120);
+			cnt = -150;
 			play_main_music(&isPlayMain, SelectedSong);
 			break;
 
+		case SCENE_LOADSCRE:
+
+			draw_select_text(0, 225, "Now Loading...");
+			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
+
+				PreTouch_x = touch_x, PreTouch_y = touch_y;
+				touch_x = tp.px, touch_y = tp.py;
+
+				if ((key & KEY_TOUCH || 
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
+					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
+					touch_cnt < 2) {
+					isDon = true;
+					tch_cnt = 6;
+					memtch_x = tp.px, memtch_y = tp.py;
+					++touch_cnt;
+				}
+				else if ((key & KEY_TOUCH ||
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 ) &&
+					touch_cnt < 2) {
+					isKatsu = true;
+					tch_cnt = 6;
+					memtch_x = tp.px, memtch_y = tp.py;
+					++touch_cnt;
+				}
+			}
+			else {
+				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
+			}
+			button_game(&isDon, &isKatsu, Option, key);
+			if (isKatsu) {
+				katsu_cnt = 30;
+				don_cnt = 0;
+			}
+			else if (isDon) {
+				katsu_cnt = 0;
+				don_cnt = 30;
+			}
+
+			//下画面
+			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
+			else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
+			C3D_FrameDrawOn(bottom);
+			C2D_SceneTarget(bottom);
+			C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
+			if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7, 0x4A, 0x21, 0x7F));
+
+			//タッチエフェクト
+			if (tch_cnt > 0) {
+				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
+				C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
+			}
+			if (isDon)   play_sound(SOUND_DON);		//ドン
+			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
+
+			if (cnt == -1) scene_state = SCENE_MAINGAME;
+			break;
+			
 		case SCENE_MAINGAME:		//演奏画面
 
 			if (!isPause) {
@@ -674,6 +734,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
