@@ -513,11 +513,10 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
 			if (Measure[i].command == COMMAND_END) break;
-			if (Option.measure > 0) {
+			if (Option.measure > 0 && Measure[i].firstmeasure == -1) {
 				++tmp2;
 				if (Option.measure == tmp2) {
 					stme = i;
-					stte = i - 1;
 					break;
 				}
 			}
