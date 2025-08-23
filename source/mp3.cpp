@@ -50,9 +50,9 @@ int initMp3(const char* file)
 	}
 	mpg123_format_none(mh);
 	mpg123_format(mh, rate, channels, encoding);
-	mpg123_seek(mh, (int)(rate * SeekTime), SEEK_SET);
 	*buffSize = mpg123_outblock(mh) * 8;
 	mpg123_param(mh, MPG123_DOWN_SAMPLE, 1, 1.0);
+	mpg123_seek(mh, (off_t)(rate * SeekTime), SEEK_SET);
 	return 0;
 }
 
