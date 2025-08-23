@@ -10,7 +10,6 @@ static size_t*			buffSize;
 static mpg123_handle	*mh = NULL;
 static uint32_t			rate;
 static uint8_t			channels;
-static float 			SeekTime = 0.0f;
 
 static int initMp3(const char* file);
 static uint32_t rateMp3(void);
@@ -52,7 +51,6 @@ int initMp3(const char* file)
 	mpg123_format(mh, rate, channels, encoding);
 	*buffSize = mpg123_outblock(mh) * 8;
 	mpg123_param(mh, MPG123_DOWN_SAMPLE, 1, 1.0);
-	mpg123_seek(mh, (uint32_t)(rate * SeekTime), SEEK_SET);
 	return 0;
 }
 
@@ -66,14 +64,14 @@ uint8_t channelMp3(void)
 }
 void seekMp3(float time)
 {
-	SeekTime = time;
+	mpg123_seek(mh, (uint32_t)(rate * time), SEEK_SET);
 }
 
 uint64_t decodeMp3(void* buffer)
 {
 	size_t done = 0;
 	mpg123_read(mh, buffer, *buffSize, &done);
-	return done / (sizeof(int16_t));
+	return done / izeof(int16_t));
 }
 
 void exitMp3(void)
