@@ -736,6 +736,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 	if (TIME < 0) return 0;
 	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
 }
-double starttime() {
-	return get_StartTime();
+double starttime(int OpMeCnt) {
+	return get_StartTime(OpMeCnt);
 }
