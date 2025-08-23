@@ -108,8 +108,6 @@ double getVorbisTime() {
 	else return -1000;
 }
 int setVorbisTime(double after_time) {
-
-	if (ov_time_total(&vorbisFile, -1) >= after_time) return ov_pcm_seek(&vorbisFile, 0);
 	return ov_pcm_seek(&vorbisFile, (after_time * vi->rate));
 }
 
