@@ -64,6 +64,10 @@ uint8_t channelMp3(void)
 {
 	return channels;
 }
+void seekMp3(float time)
+{
+	SeekTime = time;
+}
 
 uint64_t decodeMp3(void* buffer)
 {
