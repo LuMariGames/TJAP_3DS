@@ -993,5 +993,5 @@ bool get_isBranch() {
 	return isBranch;
 }
 double get_StartTime() {
-	return fabs(Current_Header.offset) + Measure[stte].create_time;
+	return ((stte != 0) ? fabs(Current_Header.offset) + Measure[stte].create_time : 0);
 }
