@@ -567,6 +567,20 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			strcpy(Option.SongTitle, test);
 		}
 		XCnt = 0, ++YCnt;
+
+		//特訓モード的な奴
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_MEASURE], true, &width, &height);
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.measure);
+		draw_option_text(x, y, get_buffer(), true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			Option.measure = input_number_keyboard(4, false,false);
+		}
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.measure = 0;
+		XCnt = 0, ++YCnt;
 		break;
 	}
 
@@ -576,17 +590,17 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 int get_lang() {
 	return Option.lang;
 }
-
 void toggle_auto() {
 	Option.isAuto = !Option.isAuto;
 }
-
 bool get_isauto() {
 	return Option.isAuto;
 }
-
 float mspeed() {
 	return Option.musicspeed;
+}
+bool get_ismeasure() {
+	return (Option.measure > 0);
 }
 
 void init_option() {
@@ -607,7 +621,7 @@ void init_option() {
 	Option.judge_range_perfect = DEFAULT_JUDGE_RANGE_PERFECT;
 	Option.judge_range_nice = DEFAULT_JUDGE_RANGE_NICE;
 	Option.judge_range_bad = DEFAULT_JUDGE_RANGE_BAD;
-
+	Option.measure = 0;
 	init_button_mapping();
 
 	option_page = 1;
@@ -758,6 +772,7 @@ void get_option(OPTION_T *TMP) {
 	TMP->special = Option.special;
 	TMP->exse = Option.exse;
 	TMP->player = Option.player;
+	TMP->measure = Option.measure;
 	strcpy(TMP->SongTitle, Option.SongTitle);
 	black = Option.blacktext;
 	if (Option.Voice == 0) comboVoice = INT_MAX;
