@@ -455,6 +455,11 @@ int main() {
 			}
 
 			if (isPause) {
+				if (Option.measure > 0) {
+					snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.measure);
+					draw_debug(0, 0, get_buffer());
+				}
+
 				tmp = pause_window(tp, key);
 
 				switch (tmp) {
@@ -734,10 +739,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
-
-
-
-
