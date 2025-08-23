@@ -151,8 +151,6 @@ void playFile(void* infoIn){
 		case FILE_TYPE_MP3:
 			if (get_ismeasure()) seekMp3(starttime());
 			break;
-		default:
-			goto err;
 	}
 	
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
