@@ -299,7 +299,7 @@ int main() {
 				scene_state = SCENE_WARNING;
 				select_ini();
 			}
-			cnt = ((OpMeCnt == 0) ? -60 : -120;
+			cnt = ((OpMeCnt == 0) ? -60 : -120);
 			play_main_music(&isPlayMain, SelectedSong);
 			break;
 
@@ -674,5 +674,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
