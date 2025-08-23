@@ -398,13 +398,6 @@ int main() {
 				tmp = pause_window(tp, key);
 
 				switch (tmp) {
-				case 0:
-					if (Option.measure != OpMeCnt) {
-						isPlayMain = true;
-						stopPlayback();
-						scene_state = SCENE_MAINLOAD;
-					}
-					break;
 				case 1:
 					isPlayMain = true;
 					stopPlayback();
@@ -681,3 +674,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
