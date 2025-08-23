@@ -143,7 +143,18 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if (get_ismeasure()) setVorbisTime(starttime());
+	switch(getFileType(file))
+	{
+		case FILE_TYPE_VORBIS:
+			if (get_ismeasure()) setVorbisTime(starttime());
+			break;
+		case FILE_TYPE_MP3:
+			if (get_ismeasure()) seekMp3(starttime());
+			break;
+		default:
+			goto err;
+	}
+	
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);
