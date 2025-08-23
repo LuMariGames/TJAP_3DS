@@ -71,7 +71,7 @@ uint64_t decodeMp3(void* buffer)
 {
 	size_t done = 0;
 	mpg123_read(mh, buffer, *buffSize, &done);
-	return done / izeof(int16_t));
+	return done / sizeof(int16_t);
 }
 
 void exitMp3(void)
