@@ -116,7 +116,7 @@ int main() {
 	SKIN_T Skin;
 
 	int cnt = 0,notes_cnt = 0,scene_state = SCENE_SELECTLOAD,warning = -1,course = COURSE_ONI,tmp = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
+	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0,OpMeCnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 
 	load_option();
@@ -248,6 +248,7 @@ int main() {
 
 			if (cnt == 0) {
 				select_ini();
+				set_measure();
 			}
 
 			disp_file_list();
@@ -286,11 +287,9 @@ int main() {
 			init_notes(TJA_Header);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
-			notes_cnt = 0;
+			notes_cnt = 0, OpMeCnt = Option.measure;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
-			FirstMeasureTime = INT_MAX;
-			CurrentTimeMain = -1000;
-			BeforeCombo = -1;
+			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000, BeforeCombo = -1;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_MAINGAME;
@@ -399,12 +398,18 @@ int main() {
 				tmp = pause_window(tp, key);
 
 				switch (tmp) {
+				case 0:
+					if (Option.measure != OpMeCnt) {
+						isPlayMain = true;
+						stopPlayback();
+						scene_state = SCENE_MAINLOAD;
+					}
+					break;
 				case 1:
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
 					break;
-
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
@@ -421,6 +426,8 @@ int main() {
 					play_sound(SOUND_DON);
 				}
 				if (key & KEY_DUP) toggle_auto();
+				if (key & KEY_DLEFT) min_measure();
+				if (key & KEY_DRIGHT) plus_measure();
 			}
 
 			if (cnt == 0) {
@@ -674,4 +681,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
