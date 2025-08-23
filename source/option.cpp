@@ -589,10 +589,10 @@ bool get_ismeasure() {
 	return (Option.measure > 0);
 }
 void plus_measure() {
-	++Option.measure;
+	if (Option.measure < MEASURE_MAX) ++Option.measure;
 }
 void min_measure() {
-	--Option.measure;
+	if (Option.measure > 0) --Option.measure;
 }
 void set_measure() {
 	Option.measure = 0;
