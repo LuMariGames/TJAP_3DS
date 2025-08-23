@@ -108,9 +108,7 @@ double getVorbisTime() {
 	else return -1000;
 }
 int setVorbisTime(double after_time) {
-
-	int time = after_time * 1000;
-	return ov_time_seek(&vorbisFile, time);
+	return ov_pcw_seek(&vorbisFile, (after_time * vi->rate));
 }
 
 int get_buffer_size() {
