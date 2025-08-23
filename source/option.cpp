@@ -567,20 +567,6 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 			strcpy(Option.SongTitle, test);
 		}
 		XCnt = 0, ++YCnt;
-
-		//特訓モード的な奴
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_MEASURE], true, &width, &height);
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.measure);
-		draw_option_text(x, y, get_buffer(), true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			Option.measure = input_number_keyboard(4, false,false);
-		}
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.measure = 0;
-		XCnt = 0, ++YCnt;
 		break;
 	}
 
@@ -601,6 +587,15 @@ float mspeed() {
 }
 bool get_ismeasure() {
 	return (Option.measure > 0);
+}
+void plus_measure() {
+	++Option.measure;
+}
+void min_measure() {
+	--Option.measure;
+}
+void set_measure() {
+	Option.measure = 0;
 }
 
 void init_option() {
