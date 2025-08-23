@@ -991,6 +991,9 @@ int get_MeasureId_From_OriginalId(int id) {
 bool get_isBranch() {
 	return isBranch;
 }
-double get_StartTime(int OpMeCnt) {
-	return ((OpMeCnt != 0) ? (Current_Header.offset * -1.0) + (Measure[stme].judge_time - 240.0 / Measure[stme].bpm) : 0);
+double get_StartTime() {
+
+	OPTION_T Option;
+	get_option(&Option);
+	return ((Option.measure > 0) ? (Current_Header.offset * -1.0) + (Measure[stme].judge_time - 240.0 / Measure[stme].bpm) : 0);
 }
