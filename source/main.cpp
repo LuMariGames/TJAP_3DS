@@ -360,7 +360,7 @@ int main() {
 			if (isDon)   play_sound(SOUND_DON);		//ドン
 			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
-			if (cnt == -1) scene_state = SCENE_MAINGAME;
+			if (cnt == -60) scene_state = SCENE_MAINGAME;
 			break;
 			
 		case SCENE_MAINGAME:		//演奏画面
@@ -734,6 +734,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
