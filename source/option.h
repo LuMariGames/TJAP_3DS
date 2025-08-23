@@ -59,6 +59,7 @@ const char Text[3][60][128] = {
 		"1P",
 		"2P",
 		"楽曲検索",
+		"特訓モード",
 	},
 	{
 		"ON",
@@ -118,6 +119,7 @@ const char Text[3][60][128] = {
 		"1P",
 		"2P",
 		"Song search",
+		"Training Mode",
 	},
 	{
 		"Sí",
@@ -177,12 +179,13 @@ const char Text[3][60][128] = {
 		"1P",
 		"2P",
 		"Búsqueda de canciones",
+		"Modo de entrenamiento",
 	}
 };
 
 typedef struct {
 
-	int lang,buffer_size,Voice,special,player;
+	int lang,buffer_size,Voice,special,player,measure;
 	bool isAuto,isStelth,isSwap,dispFps,fixroll,exse;
 	float speed,random,offset,blacktext,musicspeed,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
@@ -262,9 +265,11 @@ enum Text_knd {
 	TEXT_1P,
 	TEXT_2P,
 	TEXT_SEARCH,
+	TEXT_MEASURE,
 };
 
 int get_lang();
-bool get_isauto();
+bool get_isauto(),get_ismeasure();
 float mspeed();
-void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]),toggle_auto(),get_option(OPTION_T *TMP),init_option(),load_option(),exit_option(),save_option();
+void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]),
+toggle_auto(),get_option(OPTION_T *TMP),init_option(),load_option(),exit_option(),save_option();
