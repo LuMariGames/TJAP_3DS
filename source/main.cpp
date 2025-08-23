@@ -281,9 +281,9 @@ int main() {
 			//init_main_music();
 			get_tja_header(&TJA_Header);
 			init_score();
-			init_notes(TJA_Header);
 			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
 			else load_tja_notes(course, SelectedSong);
+			init_notes(TJA_Header);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
 			notes_cnt = 0;
@@ -674,3 +674,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
