@@ -41,7 +41,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes = get_current_time(TIME_NOTES) + ((starttime() == 0) ? Measure[stme].create_time : Measure[stme].judge_time);
+	double CurrentTimeNotes = get_current_time(TIME_NOTES) + ((Option.measure == 0) ? Measure[stme].create_time : Measure[stme].judge_time);
 	if (cnt == 0) Branch.course = Measure[stme].branch;
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
 	//draw_debug(0, 185, get_buffer());
