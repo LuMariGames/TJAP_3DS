@@ -47,7 +47,7 @@ void init_tja() {
 	tja_cnt = 0;
 	MeasureMaxNumber = 0;
 	if (get_ismeasure()) {
-		MainFirstMeasureTime = calc_first_measure_time();
+		calc_first_measure_time();
 		MainFirstMeasureTime = Measure[stme].bpm;
 	}
 	else MainFirstMeasureTime = 0;
@@ -999,5 +999,5 @@ double get_StartTime() {
 
 	OPTION_T Option;
 	get_option(&Option);
-	return ((get_ismeasure()) ? ((Current_Header.offset + Option.offset) * -1.0) + (Measure[stme].pop_time) : 0);
+	return ((Option.measure > 0) ? ((Current_Header.offset + Option.offset) * -1.0) + (Measure[stme].pop_time) : 0);
 }
