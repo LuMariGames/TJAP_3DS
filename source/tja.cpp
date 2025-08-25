@@ -617,6 +617,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				}
 				else {
 					isNoComma = false;
+					Measure[MeasureCount].original_id = MeasureCount;
 				}
 
 				if (tja_notes[tja_cnt][0] == '#') {
