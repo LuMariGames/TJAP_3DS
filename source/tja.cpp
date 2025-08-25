@@ -16,7 +16,7 @@ float mix[12];
 TJA_HEADER_T Current_Header;
 MEASURE_T Measure[MEASURE_MAX];
 
-void get_command_value(char* buf, COMMAND_T *Command);
+void get_command_value(char* buf, COMMAND_T *Command), sort_measure_insertion(MEASURE_T t[], int array_size);
 double calc_first_measure_time();
 
 void init_measure_structure() {
