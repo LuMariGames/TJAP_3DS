@@ -46,11 +46,7 @@ void init_tja() {
 
 	tja_cnt = 0;
 	MeasureMaxNumber = 0;
-	if (get_ismeasure()) {
-		MainFirstMeasureTime = calc_first_measure_time();
-		MainFirstMeasureTime = Measure[stme].bpm;
-	}
-	else MainFirstMeasureTime = 0;
+	MainFirstMeasureTime = 0;
 	init_measure_structure();
 	isBranch = false;
 }
@@ -543,7 +539,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = ((Option.measure > 0) ? MainFirstMeasureTime : Current_Header.bpm),NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
+	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 	std::string ly = "", Beforely = "";
@@ -697,13 +693,13 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].flag = true;
 				Measure[MeasureCount].notes = tja_cnt;
 				Measure[MeasureCount].firstmeasure = FirstMultiMeasure;
-				Measure[MeasureCount].bpm = NextBpm;
+				Measure[MeasureCount].bpm = bpm;
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
 				Measure[MeasureCount].sudn_time = movetime;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
-				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
+				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (NextBpm * NOTES_AREA);
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (NextBpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 				Measure[MeasureCount].lyric = ly;
