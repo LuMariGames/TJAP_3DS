@@ -44,7 +44,6 @@ void init_measure_structure() {
 
 void init_tja() {
 
-	init_measure_structure();
 	tja_cnt = 0;
 	MeasureMaxNumber = 0;
 	if (get_ismeasure()) {
@@ -52,6 +51,7 @@ void init_tja() {
 		MainFirstMeasureTime = Measure[stme].bpm;
 	}
 	else MainFirstMeasureTime = 0;
+	init_measure_structure();
 	isBranch = false;
 }
 
