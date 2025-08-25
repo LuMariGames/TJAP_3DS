@@ -48,8 +48,6 @@ void init_tja() {
 	MeasureMaxNumber = 0;
 	if (get_ismeasure()) {
 		MainFirstMeasureTime = calc_first_measure_time();
-		sort_measure_insertion(Measure, MEASURE_MAX);
-		stme = get_MeasureId_From_OriginalId(stme);
 		MainFirstMeasureTime = Measure[stme].bpm;
 	}
 	else MainFirstMeasureTime = 0;
