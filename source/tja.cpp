@@ -693,13 +693,13 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].flag = true;
 				Measure[MeasureCount].notes = tja_cnt;
 				Measure[MeasureCount].firstmeasure = FirstMultiMeasure;
-				Measure[MeasureCount].bpm = bpm;
+				Measure[MeasureCount].bpm = NextBpm;
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
 				Measure[MeasureCount].sudn_time = movetime;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
-				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (NextBpm * NOTES_AREA);
-				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (NextBpm * (NOTES_AREA * fabs(scroll * Option.speed)));
+				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
+				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll * Option.speed)));
 				Measure[MeasureCount].isDispBarLine = isDispBarLine;
 				Measure[MeasureCount].branch = BranchCourse;
 				Measure[MeasureCount].lyric = ly;
