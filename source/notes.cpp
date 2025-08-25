@@ -29,7 +29,7 @@ ROLL_T RollNotes[ROLL_MAX];
 BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
-int MeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
+int MeasureCount, MinMeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
 NotesNumber;	//何番目のノーツか
 bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
 double JudgeMakeTime,JudgeY,JudgeEffectCnt;
@@ -41,12 +41,12 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes = get_current_time(TIME_NOTES) + ((Option.measure == 0) ? Measure[stme].create_time : Measure[stme].judge_time);
+	double CurrentTimeNotes = get_current_time(TIME_NOTES) + ((Option.measure == 0) ? Measure[stme].create_time : Measure[MinMeasureCount].judge_time);
 	if (cnt == 0) Branch.course = Measure[stme].branch;
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
 	//draw_debug(0, 185, get_buffer());
 
-	if (cnt >= 0 && isNotesLoad) {
+	if (isNotesLoad) {
 
 		//分岐
 		if (Branch.next) {
@@ -136,6 +136,10 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
+					if (MeasureCount < MinMeasureCount && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
+					else if (MeasureCount < MinMeasureCount && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) ++BalloonCount[1]; ++BalloonCount[2]; ++BalloonCount[3];
+
+					if (MeasureCount < MinMeasureCount) continue;
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
 						continue;
 					}
@@ -268,6 +272,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 		}
 	}
 
+	if (cnt < 0) return;
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 
 		if (BarLine[i].flag) {
@@ -1247,7 +1252,8 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	NotesCount = 0;
 	NowMeCount = 0;
 	RollState = 0;
-	MeasureCount = stme;
+	MeasureCount = 0;
+	MinMeasureCount = ((Option.measure != 0) ? stme : -1);
 	MaxMeasureCount = 0;
 	isNotesLoad = true;
 	isJudgeDisp = false;
