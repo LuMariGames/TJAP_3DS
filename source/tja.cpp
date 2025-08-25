@@ -816,8 +816,9 @@ void load_tja_notes(int course, LIST_T Song) {
 		calc_base_score(Measure, tja_notes);
 
 		fclose(fp);
-		sort_measure_insertion(Measure, MEASURE_MAX);
 		MainFirstMeasureTime = calc_first_measure_time();
+		sort_measure_insertion(Measure, MEASURE_MAX);
+		stme = get_MeasureId_From_OriginalId(stme);
 	}
 }
 
