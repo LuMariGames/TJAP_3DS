@@ -289,7 +289,7 @@ int main() {
 			init_notes(TJA_Header);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
-			notes_cnt = 0, BeforeCombo = -1;
+			notes_cnt = -1, BeforeCombo = -1;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000;
 
@@ -303,6 +303,8 @@ int main() {
 			}
 			cnt = -150;
 			play_main_music(&isPlayMain, SelectedSong);
+			tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+			notes_cnt = 0;
 			break;
 
 		case SCENE_LOADSCRE:
@@ -739,3 +741,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
