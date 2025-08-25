@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, stte, redCdn[4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -46,7 +46,11 @@ void init_tja() {
 	init_measure_structure();
 	tja_cnt = 0;
 	MeasureMaxNumber = 0;
-	MainFirstMeasureTime = 0;
+	if (get_ismeasure()) {
+		calc_first_measure_time();
+		MainFirstMeasureTime = Measure[stme].bpm;
+	}
+	else MainFirstMeasureTime = 0;
 	isBranch = false;
 }
 
@@ -501,7 +505,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	OPTION_T Option;
 	get_option(&Option);
 	int tmp = -1, tmp2 = 0;
-	stme = 0,stte = 0;
+	stme = 0;
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
@@ -538,7 +542,7 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
+	double bpm = ((get_ismeasure()) ? MainFirstMeasureTime : Current_Header.bpm),NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
 		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 	std::string ly = "", Beforely = "";
@@ -554,7 +558,6 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
 		PreJudge = FirstMeasureTime;
-
 
 		while (
 			(fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) &&
@@ -993,7 +996,5 @@ bool get_isBranch() {
 }
 double get_StartTime() {
 
-	OPTION_T Option;
-	get_option(&Option);
-	return ((Option.measure > 0) ? ((Current_Header.offset + Option.offset) * -1.0) + (Measure[stme].create_time) : 0);
+	return ((get_ismeasure()) ? ((Current_Header.offset + Option.offset) * -1.0) + (Measure[stme].pop_time) : 0);
 }
