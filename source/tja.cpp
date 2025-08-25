@@ -46,7 +46,7 @@ void init_tja() {
 
 	tja_cnt = 0;
 	MeasureMaxNumber = 0;
-	if (Option.measure > 0) {
+	if (get_ismeasure()) {
 		MainFirstMeasureTime = calc_first_measure_time();
 		sort_measure_insertion(Measure, MEASURE_MAX);
 		stme = get_MeasureId_From_OriginalId(stme);
