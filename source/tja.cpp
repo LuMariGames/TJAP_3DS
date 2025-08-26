@@ -1003,5 +1003,5 @@ double get_StartTime() {
 
 	OPTION_T Option;
 	get_option(&Option);
-	return ((Option.measure > 0) ? ((Current_Header.offset + Option.offset) * -1.0) + (Measure[stme].judge_time - (240.0 / Measure[stte].bpm)) : 0);
+	return ((Option.measure > 0) ? ((Current_Header.offset + Option.offset) * -1.0) + (Measure[stme].judge_time - (240.0 / Current_Header.bpm)) : 0);
 }
