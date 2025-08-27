@@ -39,5 +39,5 @@ tja_to_notes(bool isDnon, bool isKatsu, int count, C2D_Sprite sprites[SPRITES_NU
 load_tja_head_simple(LIST_T *List), get_tja_header(TJA_HEADER_T *TJA_Header),
 init_tja(), get_command_value(char* buf, COMMAND_T *Command);
 double get_FirstMeasureTime(),get_StartTime();
-int get_MeasureId_From_OriginalId(int id);
+int get_MeasureId_From_OriginalId(int id), get_edme();
 bool get_isBranch();
