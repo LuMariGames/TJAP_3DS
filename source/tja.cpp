@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme, redCdn[4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -514,10 +514,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
 			if ((Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) ++tmp2;
-			if (Measure[i].command == COMMAND_END) {
-				edme = tmp2;
-				break;
-			}
+			if (Measure[i].command == COMMAND_END) edme = tmp2;
 			if (Option.measure > tmp2 && (Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) stme = i;
 			else if (Option.measure <= 0) stme = tmp;
 		}
