@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, stte, redCdn[4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -502,7 +502,7 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 	OPTION_T Option;
 	get_option(&Option);
 	int tmp = -1, tmp2 = 0;
-	stme = 0, stte = -1;
+	stme = 0, edme = 0;
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
 
@@ -513,20 +513,13 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 				continue;
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
-			if (Measure[i].command == COMMAND_END) break;
-			if (Option.measure >= 0 && (Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) {
-				if ((Option.measure - 1) == tmp2) {
-					stte = i;
-				}
+			if ((Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) ++tmp2;
+			if (Measure[i].command == COMMAND_END) {
+				edme = tmp2;
+				break;
 			}
-			if (Option.measure > 0 && (Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) {
-				++tmp2;
-				if (Option.measure == tmp2) {
-					stme = i;
-					break;
-				}
-			}
-			stme = tmp;
+			if (Option.measure > tmp2 && (Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) stme = i;
+			else if (Option.measure <= 0) stme = tmp;
 		}
 	}
 	return Measure[stme].judge_time - Measure[stme].create_time;
