@@ -514,9 +514,12 @@ double calc_first_measure_time() {	//最初に到達する小節の所要時間�
 			}
 			if (Measure[i].judge_time < Measure[tmp].judge_time) tmp = i;
 			if ((Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) ++tmp2;
-			if (Measure[i].command == COMMAND_END) edme = tmp2;
 			if (Option.measure > tmp2 && (Measure[i].branch <= COMMAND_N) && (Measure[i].firstmeasure == -1 || Measure[i].firstmeasure == i)) stme = i;
 			else if (Option.measure <= 0) stme = tmp;
+		}
+		if (Measure[i].command == COMMAND_END) {
+			edme = tmp2;
+			break;
 		}
 	}
 	return Measure[stme].judge_time - Measure[stme].create_time;
