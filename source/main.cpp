@@ -486,7 +486,7 @@ int main() {
 					play_sound(SOUND_DON);
 				}
 				if (key & KEY_DUP) toggle_auto();
-				if (key & KEY_DLEFT) min_measure();
+				if ((key & KEY_DLEFT) && (Option.measure < get_edme())) min_measure();
 				if (key & KEY_DRIGHT) plus_measure();
 			}
 
@@ -741,6 +741,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
