@@ -167,7 +167,7 @@ void disp_file_list() {
 	const char* firstTwo = Option.SongTitle;
 
 	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
-	isSubT = ((strcmp(Option.SongTitle, "--") >= 0) ? true : false);
+	isSubT = ((strcmp(Option.SongTitle, "--") > 0) ? true : false);
 	for (int i = 0; i < SongNumber; ++i) {
 		if (isSearch &&
 			((isSubT && strstr(List[i].subtitle, firstTwo + 2) == NULL) ||
