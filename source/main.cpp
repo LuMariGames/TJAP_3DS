@@ -16,7 +16,7 @@
 #include "mp3.h"
 #include "vorbis.h"
 
-extern int course,courselife,TotalBadCount,combo;
+extern int course,courselife,TotalBadCount,combo,edme;
 extern float NowBPM;
 extern bool isGOGO,loadend;
 C2D_Sprite sprites[144];	//画像用
@@ -458,7 +458,7 @@ int main() {
 
 			if (isPause) {
 				if (Option.measure > 0) {
-					snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.measure);
+					snprintf(get_buffer(), BUFFER_SIZE, "%d / %d小節目", Option.measure, edme);
 					draw_debug(0, 0, get_buffer());
 				}
 
@@ -741,4 +741,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
