@@ -994,3 +994,6 @@ double get_StartTime() {
 	get_option(&Option);
 	return ((Option.measure > 0) ? ((Current_Header.offset * -1.0 + Option.offset) + (Measure[stme].create_time - (240.0 / Current_Header.bpm))) : 0);
 }
+int get_edme() {
+	return edme;
+}
