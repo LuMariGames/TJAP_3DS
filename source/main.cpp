@@ -161,7 +161,7 @@ int main() {
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				if (key & KEY_TOUCH) {
 					touch_x = tp.px, touch_y = tp.py;
-					int dx = (touch_x - PreTouch_x), dy = (touch_x - PreTouch_y);
+					int dx = (touch_x - PreTouch_x), dy = (touch_y - PreTouch_y);
 					if (touch_x != dx) touch_x += dx;
 					if (touch_y != dy) touch_y += dy;
 				}
@@ -759,6 +759,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
