@@ -163,8 +163,8 @@ int main() {
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
 					int dx = (int)(touch_x) - (int)(PreTouch_x);
 					int dy = (int)(touch_y) - (int)(PreTouch_y);
-					tp.px = static_cast<uint16_t>(touch_x + dx);
-					tp.py = static_cast<uint16_t>(touch_y + dy);
+					tp.px = (uint16_t)(touch_x + dx);
+					tp.py = (uint16_t)(touch_y + dy);
 				}
 				touch_x = tp.px, touch_y = tp.py;
 
@@ -324,8 +324,8 @@ int main() {
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
 					int dx = (int)(touch_x) - (int)(PreTouch_x);
 					int dy = (int)(touch_y) - (int)(PreTouch_y);
-					tp.px = static_cast<uint16_t>(touch_x + dx);
-					tp.py = static_cast<uint16_t>(touch_y + dy);
+					tp.px = (uint16_t)(touch_x + dx);
+					tp.py = (uint16_t)(touch_y + dy);
 				}
 				touch_x = tp.px, touch_y = tp.py;
 
@@ -390,8 +390,8 @@ int main() {
 					if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
 						int dx = (int)(touch_x) - (int)(PreTouch_x);
 						int dy = (int)(touch_y) - (int)(PreTouch_y);
-						tp.px = static_cast<uint16_t>(touch_x + dx);
-						tp.py = static_cast<uint16_t>(touch_y + dy);
+						tp.px = (uint16_t)(touch_x + dx);
+						tp.py = (uint16_t)(touch_y + dy);
 					}
 					touch_x = tp.px, touch_y = tp.py;
 
@@ -762,4 +762,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
