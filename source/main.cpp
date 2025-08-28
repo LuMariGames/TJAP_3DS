@@ -172,7 +172,7 @@ int main() {
 					(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
-					memtch_x = tp.px, memtch_y = tp.py;
+					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
 				}
 				else if ((key & KEY_TOUCH ||
@@ -180,7 +180,7 @@ int main() {
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
-					memtch_x = tp.px, memtch_y = tp.py;
+					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
 				}
 			}
@@ -331,7 +331,7 @@ int main() {
 					(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
-					memtch_x = tp.px, memtch_y = tp.py;
+					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
 				}
 				else if ((key & KEY_TOUCH ||
@@ -339,7 +339,7 @@ int main() {
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
-					memtch_x = tp.px, memtch_y = tp.py;
+					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
 				}
 			}
@@ -395,7 +395,7 @@ int main() {
 						(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
 						isDon = true;
 						tch_cnt = 6;
-						memtch_x = tp.px, memtch_y = tp.py;
+						memtch_x = touch_x, memtch_y = touch_y;
 						++touch_cnt;
 					}
 					else if ((key & KEY_TOUCH ||
@@ -403,7 +403,7 @@ int main() {
 						touch_cnt < 2) {
 						isKatsu = true;
 						tch_cnt = 6;
-						memtch_x = tp.px, memtch_y = tp.py;
+						memtch_x = touch_x, memtch_y = touch_y;
 						++touch_cnt;
 					}
 				}
@@ -757,3 +757,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
