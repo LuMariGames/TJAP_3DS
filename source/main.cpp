@@ -161,17 +161,15 @@ int main() {
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
-					int dx = (int)(touch_x) - (int)(PreTouch_x);
-					int dy = (int)(touch_y) - (int)(PreTouch_y);
-					tp.px = (uint16_t)(touch_x + dx);
-					tp.py = (uint16_t)(touch_y + dy);
+					int dx = (int)(tp.px) - PreTouch_x;
+					int dy = (int)(tp.py) - PreTouch_y;
+					touch_x = (int)(tp.px) + dx;
+					touch_y = (int)(tp.py) + dy;
 				}
-				touch_x = tp.px, touch_y = tp.py;
 
 				if ((key & KEY_TOUCH || 
-						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
-					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
-					touch_cnt < 2) {
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
+					(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
 					memtch_x = tp.px, memtch_y = tp.py;
@@ -322,17 +320,15 @@ int main() {
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
-					int dx = (int)(touch_x) - (int)(PreTouch_x);
-					int dy = (int)(touch_y) - (int)(PreTouch_y);
-					tp.px = (uint16_t)(touch_x + dx);
-					tp.py = (uint16_t)(touch_y + dy);
+					int dx = (int)(tp.px) - PreTouch_x;
+					int dy = (int)(tp.py) - PreTouch_y;
+					touch_x = (uint16_t)((int)(tp.px) + dx);
+					touch_y = (uint16_t)((int)(tp.py) + dy);
 				}
-				touch_x = tp.px, touch_y = tp.py;
 
 				if ((key & KEY_TOUCH || 
-						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
-					(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 &&
-					touch_cnt < 2) {
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
+					(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
 					isDon = true;
 					tch_cnt = 6;
 					memtch_x = tp.px, memtch_y = tp.py;
@@ -388,16 +384,15 @@ int main() {
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
 					touch_x = tp.px, touch_y = tp.py;
 					if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
-						int dx = (int)(touch_x) - (int)(PreTouch_x);
-						int dy = (int)(touch_y) - (int)(PreTouch_y);
-						tp.px = (uint16_t)(touch_x + dx);
-						tp.py = (uint16_t)(touch_y + dy);
+						int dx = (int)(tp.px) - PreTouch_x;
+						int dy = (int)(tp.py) - PreTouch_y;
+						touch_x = (uint16_t)((int)(tp.px) + dx);
+						touch_y = (uint16_t)((int)(tp.py) + dy);
 					}
-					touch_x = tp.px, touch_y = tp.py;
 
 					if ((key & KEY_TOUCH || 
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
-						(tp.px - 160)*(tp.px - 160) + (tp.py - 135)*(tp.py - 135) <= 105 * 105 && touch_cnt < 2) {
+						(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
 						isDon = true;
 						tch_cnt = 6;
 						memtch_x = tp.px, memtch_y = tp.py;
@@ -762,6 +757,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
