@@ -159,10 +159,12 @@ int main() {
 			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
-				touch_x = tp.px, touch_y = tp.py;
-				int dx = ((int)tp.px - PreTouch_x), dy = ((int)tp.py - PreTouch_y);
-				touch_x += dx;
-				touch_y += dy;
+				if (key & KEY_TOUCH) {
+					touch_x = tp.px, touch_y = tp.py;
+					int dx = (touch_x - PreTouch_x), dy = (touch_x - PreTouch_y);
+					touch_x += dx;
+					touch_y += dy;
+				}
 
 				if ((key & KEY_TOUCH || 
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
@@ -757,6 +759,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
