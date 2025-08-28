@@ -160,11 +160,6 @@ int main() {
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
-				if (key & KEY_TOUCH) {
-					int dx = (touch_x - PreTouch_x), dy = (touch_y - PreTouch_y);
-					if (touch_x != dx) touch_x += dx;
-					if (touch_y != dy) touch_y += dy;
-				}
 
 				if ((key & KEY_TOUCH || 
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
@@ -175,7 +170,7 @@ int main() {
 					++touch_cnt;
 				}
 				else if ((key & KEY_TOUCH ||
-					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 ) &&
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
@@ -321,12 +316,6 @@ int main() {
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
-				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
-					int dx = (int)(tp.px) - PreTouch_x;
-					int dy = (int)(tp.py) - PreTouch_y;
-					touch_x = (int)(tp.px) + dx;
-					touch_y = (int)(tp.py) + dy;
-				}
 
 				if ((key & KEY_TOUCH || 
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
@@ -337,7 +326,7 @@ int main() {
 					++touch_cnt;
 				}
 				else if ((key & KEY_TOUCH ||
-					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0 ) &&
+					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					touch_cnt < 2) {
 					isKatsu = true;
 					tch_cnt = 6;
@@ -385,12 +374,6 @@ int main() {
 
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
 					touch_x = tp.px, touch_y = tp.py;
-					if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
-						int dx = (int)(tp.px) - PreTouch_x;
-						int dy = (int)(tp.py) - PreTouch_y;
-						touch_x = (int)(tp.px) + dx;
-						touch_y = (int)(tp.py) + dy;
-					}
 
 					if ((key & KEY_TOUCH || 
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
@@ -759,6 +742,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
