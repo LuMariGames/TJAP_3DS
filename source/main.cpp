@@ -105,7 +105,7 @@ int main() {
 
 	init_main();
 
-	touchPosition tp;	//下画面タッチした座標
+	touchPosition tp, tp2;	//下画面タッチした座標
 
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
@@ -159,6 +159,13 @@ int main() {
 			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
+				touch_x = tp.px, touch_y = tp.py;
+				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
+					int dx = (int)(touch_x) - (int)(PreTouch_x);
+					int dy = (int)(touch_y) - (int)(PreTouch_y);
+					tp.px = static_cast<uint16_t>(touch_x + dx);
+					tp.py = static_cast<uint16_t>(touch_y + dy);
+				}
 				touch_x = tp.px, touch_y = tp.py;
 
 				if ((key & KEY_TOUCH || 
@@ -314,6 +321,13 @@ int main() {
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
+				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
+					int dx = (int)(touch_x) - (int)(PreTouch_x);
+					int dy = (int)(touch_y) - (int)(PreTouch_y);
+					tp.px = static_cast<uint16_t>(touch_x + dx);
+					tp.py = static_cast<uint16_t>(touch_y + dy);
+				}
+				touch_x = tp.px, touch_y = tp.py;
 
 				if ((key & KEY_TOUCH || 
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
@@ -372,6 +386,13 @@ int main() {
 				if (tp.px != 0 && tp.py != 0) {
 
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
+					touch_x = tp.px, touch_y = tp.py;
+					if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
+						int dx = (int)(touch_x) - (int)(PreTouch_x);
+						int dy = (int)(touch_y) - (int)(PreTouch_y);
+						tp.px = static_cast<uint16_t>(touch_x + dx);
+						tp.py = static_cast<uint16_t>(touch_y + dy);
+					}
 					touch_x = tp.px, touch_y = tp.py;
 
 					if ((key & KEY_TOUCH || 
@@ -741,3 +762,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
