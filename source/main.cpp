@@ -105,7 +105,7 @@ int main() {
 
 	init_main();
 
-	touchPosition tp, tp2;	//下画面タッチした座標
+	touchPosition tp;	//下画面タッチした座標
 
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
@@ -762,5 +762,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
