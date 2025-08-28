@@ -160,6 +160,12 @@ int main() {
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
+				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
+					int dx = (touch_x - PreTouch_x);
+					int dy = (touch_y - PreTouch_y);
+					touch_x += dx;
+					touch_y += dy;
+				}
 
 				if ((key & KEY_TOUCH || 
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
@@ -191,7 +197,7 @@ int main() {
 				don_cnt = 30;
 			}
 
-			snprintf(get_buffer(), BUFFER_SIZE, "tp.px %.3d, tp.py %.3d", touch_x, touch_y);
+			snprintf(get_buffer(), BUFFER_SIZE, "tp.px %.3d, tp.py %.3d", memtch_x, memtch_y);
 			draw_select_text(0, 225, get_buffer());
 
 			//下画面
@@ -754,6 +760,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
