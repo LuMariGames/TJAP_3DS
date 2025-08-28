@@ -42,7 +42,8 @@ GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
 APP_VER					:= 16 #1024.16.1?
 APP_TITLE				:= TJAPlayer for 3DS
-APP_DESCRIPTION			:= TJAPlayer for 3DS - Music game of the TJA file.
+APP_DESCRIPTION			:=	TJAPlayer for 3DS \
+							Music game of the TJA file.
 APP_AUTHOR				:= Togetoge
 PRODUCT_CODE			:= CTR-HB-TJAP
 UNIQUE_ID				:= 0xB7655
@@ -210,14 +211,6 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(ROMFS_FONTFILES) $(T3XH
 	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
 	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_DESCRIPTION)" -p $(APP_AUTHOR) -i $(APP_ICON) -o $(BUILD)/icon.icn
 	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target t -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER)
-	@echo ㅤㅤㅤㅤ ＿＿ㅤ(⌒)
-	@echo ㅤㅤㅤ ／￣￣＼/／
-	@echo ㅤ(⌒)∥●ㅤ●∥  ┌────────────────┐
-	@echo ㅤ ＼ｿ∥(_人_)∥ ∠  build is finished da don. ｜
-	@echo ㅤㅤ／/＼ヽノ／I  └────────────────┘
-	@echo ㅤ (＿)ㅤ￣￣ ノ
-	@echo ㅤㅤㅤ＼＿＿／
-	@echo ㅤㅤㅤㅤ (＿)
 
 #---------------------------------------------------------------------------------
 3dsx: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
