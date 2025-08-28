@@ -163,8 +163,8 @@ int main() {
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
 					int dx = (touch_x - PreTouch_x);
 					int dy = (touch_y - PreTouch_y);
-					touch_x += dx;
-					touch_y += dy;
+					touch_x = PreTouch_x + dx;
+					touch_y = PreTouch_y + dy;
 				}
 
 				if ((key & KEY_TOUCH || 
@@ -760,6 +760,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
