@@ -42,7 +42,7 @@ GFXBUILD	:=	$(ROMFS)/gfx
 #---------------------------------------------------------------------------------
 APP_VER					:= 16 #1024.16.1?
 APP_TITLE				:= TJAPlayer for 3DS
-APP_DESCRIPTION			:= TJAPlayer for 3DS - Music game of the TJA file.
+APP_DESCRIPTION			:= Music game of the TJA file.
 APP_AUTHOR				:= Togetoge
 PRODUCT_CODE			:= CTR-HB-TJAP
 UNIQUE_ID				:= 0xB7655
