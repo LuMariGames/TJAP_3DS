@@ -322,8 +322,8 @@ int main() {
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
 					int dx = (int)(tp.px) - PreTouch_x;
 					int dy = (int)(tp.py) - PreTouch_y;
-					touch_x = (uint16_t)((int)(tp.px) + dx);
-					touch_y = (uint16_t)((int)(tp.py) + dy);
+					touch_x = (int)(tp.px) + dx;
+					touch_y = (int)(tp.py) + dy;
 				}
 
 				if ((key & KEY_TOUCH || 
@@ -386,8 +386,8 @@ int main() {
 					if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
 						int dx = (int)(tp.px) - PreTouch_x;
 						int dy = (int)(tp.py) - PreTouch_y;
-						touch_x = (uint16_t)((int)(tp.px) + dx);
-						touch_y = (uint16_t)((int)(tp.py) + dy);
+						touch_x = (int)(tp.px) + dx;
+						touch_y = (int)(tp.py) + dy;
 					}
 
 					if ((key & KEY_TOUCH || 
@@ -757,7 +757,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
-
