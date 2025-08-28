@@ -161,10 +161,10 @@ int main() {
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
 				touch_x = tp.px, touch_y = tp.py;
 				if ((PreTouch_x != 0 || PreTouch_y != 0) && (key & KEY_TOUCH)) {
-					int dx = (int)(tp.px) - PreTouch_x;
-					int dy = (int)(tp.py) - PreTouch_y;
-					touch_x = (int)(tp.px) + (dx * 2);
-					touch_y = (int)(tp.py) + (dy * 2);
+					int dx = ((int)(tp.px) - PreTouch_x);
+					int dy = ((int)(tp.py) - PreTouch_y);
+					touch_x = ((int)(tp.px) + dx * 2);
+					touch_y = ((int)(tp.py) + dy * 2);
 				}
 
 				if ((key & KEY_TOUCH || 
@@ -196,6 +196,9 @@ int main() {
 				katsu_cnt = 0;
 				don_cnt = 30;
 			}
+
+			snprintf(get_buffer(), BUFFER_SIZE, "tp.px %.3d, tp.py %.3d", touch_x, touch_y);
+			draw_select_text(0, 225, get_buffer());
 
 			//下画面
 			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
@@ -757,5 +760,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
