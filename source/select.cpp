@@ -41,6 +41,7 @@ void load_file_main(void *arg) {
 	newfont();
 	chdir(DEFAULT_DIR);
 	load_file_list(DEFAULT_DIR);
+	set_genres();
 	SongNumber = SongCount;
 	GenreNumber = GenreCount;
 	if (SongNumber == 0) {
