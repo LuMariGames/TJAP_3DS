@@ -99,14 +99,13 @@ inline void load_file_list(const char* path) {
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
-			sprintf(get_buffer(), "sdmc:%s/%s", path, GENRE_FILE);
-			if (exist_file(get_buffer()) && Genre[GenreCount - 1].path == "") {
+			sprintf(get_buffer(), "%s/%s", path, GENRE_FILE);
+			if (exist_file(get_buffer()) && (GenreCount > 0 && Genre[GenreCount - 1].path == "")) {
 
 				getcwd(Genre[GenreCount].path, 256);
 				load_genre_file(GenreCount);
 				++GenreCount;
 			}
-
 			db = opendir(filename);
 
 			struct stat st;
