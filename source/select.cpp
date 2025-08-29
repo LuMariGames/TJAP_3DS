@@ -50,6 +50,7 @@ void load_file_main(void *arg) {
 		SongNumber = SongCount;
 		GenreNumber = GenreCount;
 	}
+	sort_list();
 	loadend = 2;
 }
 
