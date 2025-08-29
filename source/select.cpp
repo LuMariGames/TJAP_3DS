@@ -95,7 +95,6 @@ inline void load_file_list(const char* path) {
 		while ((dp = readdir(dir)) != NULL) {
 
 			while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
-
 			chdir(path);
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
@@ -105,10 +104,14 @@ inline void load_file_list(const char* path) {
 			struct stat st;
 			stat(dp->d_name, &st);
 
+			while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
+			chdir(path);
 			if ((st.st_mode & S_IFMT) != S_IFDIR) {
 
 				if (db == NULL) {
 
+					while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
+					chdir(path);
 					if (strstr(dp->d_name, ".tja") != NULL) {
 
 						strlcpy(List[SongCount].tja, dp->d_name, strlen(dp->d_name) + 1);
@@ -118,7 +121,6 @@ inline void load_file_list(const char* path) {
 						loadend = 1;
 						++SongCount;
 					}
-
 					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
 
 						getcwd(Genre[GenreCount].path, 256);
@@ -128,8 +130,6 @@ inline void load_file_list(const char* path) {
 				}
 			}
 			else {
-				while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
-				chdir(path);
 				set_genres();
 				SongNumber = SongCount;
 				load_file_list(dp->d_name);
