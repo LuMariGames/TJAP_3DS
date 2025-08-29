@@ -94,7 +94,7 @@ inline void load_file_list(const char* path) {
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
-			while (scene_state == SCENE_MAINLOAD) svcSleepThread(16666667);
+			while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
 			chdir(path);
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
