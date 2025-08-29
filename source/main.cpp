@@ -717,7 +717,7 @@ inline int message_window(touchPosition tp, unsigned int key,int text) {
 	return result;
 }
 
-static int exist_file(const char* path) {
+int exist_file(const char* path) {
 
     FILE* fp = fopen(path, "r");
     if (fp == NULL) {
@@ -738,6 +738,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
