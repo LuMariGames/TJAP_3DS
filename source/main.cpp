@@ -31,7 +31,7 @@ bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
 static void load_sprites();
-static int time_count(double TIME), dancer_time_count(double TIME, int NUM), exist_file(const char* path);
+static int time_count(double TIME), dancer_time_count(double TIME, int NUM);
 
 void draw_debug(float x, float y, const char *text) {
 
@@ -738,5 +738,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
