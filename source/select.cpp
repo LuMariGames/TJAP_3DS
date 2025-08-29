@@ -99,7 +99,8 @@ inline void load_file_list(const char* path) {
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
-			if (exist_file(GENRE_FILE) && Genre[GenreCount - 1].path == "") {
+			sprintf(get_buffer(), "sdmc:%s/%s", path, GENRE_FILE);
+			if (exist_file(get_buffer()) && Genre[GenreCount - 1].path == "") {
 
 				getcwd(Genre[GenreCount].path, 256);
 				load_genre_file(GenreCount);
