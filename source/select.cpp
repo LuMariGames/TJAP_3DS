@@ -20,9 +20,8 @@ char buf_select[256];
 int SongNumber = 0;		//曲の総数
 int GenreNumber = 0;		//ジャンルの総数
 int ClosedSongNumber = 0;	//閉じたジャンル内の曲数
-int GenreCount = 0,SongCount = 0,cursor = 0,course_cursor = 0,course_count = 0,SelectedId = 0,SelectedGenreId = 0 ,course = COURSE_ONI;
-bool isSelectCourse = false,isCursorGenre = false,isGameStart = false,loadend = false;
-
+int GenreCount = 0,SongCount = 0,cursor = 0,course_cursor = 0,course_count = 0,SelectedId = 0,SelectedGenreId = 0,course = COURSE_ONI,loadend = 0;
+bool isSelectCourse = false,isCursorGenre = false,isGameStart = false;
 int cmp_list(const void* p, const void* q) {	//比較用
 
 	int pp = ((LIST_T*)p)->genre;
@@ -50,9 +49,8 @@ void load_file_main(void *arg) {
 		SongNumber = SongCount;
 		GenreNumber = GenreCount;
 	}
-	set_genres();
 	sort_list();
-	loadend = true;
+	loadend = 2;
 }
 
 void load_genre_file(int id) {
@@ -116,6 +114,8 @@ inline void load_file_list(const char* path) {
 						getcwd(List[SongCount].path, 256);
 						List[SongCount].genre = GENRE_MAX + 1;
 						load_tja_head_simple(&List[SongCount]);
+						set_genres();
+						loadend = 1;
 						++SongCount;
 					}
 
@@ -139,13 +139,7 @@ inline void load_file_list(const char* path) {
 
 static void set_genres() {
 
-	for (int i = 0; i < GenreNumber; ++i) {
-
-		for (int j = 0; j < SongNumber; ++j) {
-
-			if (strstr(List[j].path, Genre[i].path) != NULL) List[j].genre = i;
-		}
-	}
+	if (strstr(List[SongCount].path, Genre[GenreCount].path) != NULL) List[SongCount].genre = GenreCount;
 }
 
 void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
