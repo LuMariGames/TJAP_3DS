@@ -16,9 +16,9 @@
 #include "mp3.h"
 #include "vorbis.h"
 
-extern int course,courselife,TotalBadCount,combo;
+extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
-extern bool isGOGO,loadend;
+extern bool isGOGO;
 C2D_Sprite sprites[144];	//画像用
 static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
@@ -132,7 +132,6 @@ int main() {
 	while (aptMainLoop()) {
 
 		if (isExit) break;
-
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown();
@@ -191,9 +190,6 @@ int main() {
 				don_cnt = 30;
 			}
 
-			snprintf(get_buffer(), BUFFER_SIZE, "tp.px %.3d, tp.py %.3d", memtch_x, memtch_y);
-			draw_select_text(0, 225, get_buffer());
-
 			//下画面
 			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
 			else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
@@ -211,7 +207,7 @@ int main() {
 			if (isDon)   play_sound(SOUND_DON);		//ドン
 			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
-			if (loadend) {
+			if ((loadend == 2) || (loadend == 1 && key & KEY_SELECT)) {
 				if (check_dsp1()) scene_state = SCENE_SELECTSONG;
 				else { 
 					warning = WARNING_DSP1;
@@ -298,7 +294,6 @@ int main() {
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) scene_state = SCENE_LOADSCRE;
 			else {
-
 				warning = tmp;
 				scene_state = SCENE_WARNING;
 				select_ini();
@@ -742,16 +737,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
