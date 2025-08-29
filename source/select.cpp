@@ -100,14 +100,20 @@ inline void load_file_list(const char* path) {
 			strcat(filename, dp->d_name);
 
 			sprintf(get_buffer(), "%s/%s", path, GENRE_FILE);
-			if (exist_file(get_buffer()) && (GenreCount > 0 && Genre[GenreCount - 1].path == "")) {
+			if (exist_file(get_buffer()) && GenreCount == 0) {
 
 				getcwd(Genre[GenreCount].path, 256);
 				load_genre_file(GenreCount);
 				++GenreCount;
 			}
-			db = opendir(filename);
+			else if (exist_file(get_buffer()) && (strcmp(Genre[GenreCount - 1].path, get_buffer()) != 0)) {
 
+				getcwd(Genre[GenreCount].path, 256);
+				load_genre_file(GenreCount);
+				++GenreCount;
+			}
+
+			db = opendir(filename);
 			struct stat st;
 			stat(dp->d_name, &st);
 
