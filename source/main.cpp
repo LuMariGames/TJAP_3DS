@@ -154,6 +154,7 @@ int main() {
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
+			draw_select_text(0, 225, "SELECTボタンでスキップ ");
 
 			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
@@ -737,3 +738,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
