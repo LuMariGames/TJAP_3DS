@@ -77,7 +77,7 @@ void load_tja_head(int course,LIST_T Song) {
 	Current_Header.life = -1;
 	//Current_Header.demostart = 0;
 	//Current_Header.side = 3;
-	Current_Header.scoremode = 2;
+	Current_Header.scoremode = 3;
 	exam[0][0] = (char*)"";
 	exam[0][1] = (char*)"";
 	exam[0][2] = (char*)"";
