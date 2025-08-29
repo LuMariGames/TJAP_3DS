@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-extern int scene_state;
+extern volatile int scene_state;
 void load_file_list(const char* path);
 static void set_genres();
 
@@ -104,14 +104,10 @@ inline void load_file_list(const char* path) {
 			struct stat st;
 			stat(dp->d_name, &st);
 
-			while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
-			chdir(path);
 			if ((st.st_mode & S_IFMT) != S_IFDIR) {
 
 				if (db == NULL) {
 
-					while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
-					chdir(path);
 					if (strstr(dp->d_name, ".tja") != NULL) {
 
 						strlcpy(List[SongCount].tja, dp->d_name, strlen(dp->d_name) + 1);
