@@ -554,7 +554,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		break;
 	}
 	TmpBaseCeilingPoint = BaseCeilingPoint;
-
+	if (scoremode == 3) TmpBaseCeilingPoint = 1000000;
 
 	while (isEND == false && i < MEASURE_MAX && Measure[i].flag == true) {	//小節
 
@@ -603,7 +603,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			if (knd != 0) {
 
 				if (knd == NOTES_DON || knd == NOTES_KATSU || knd == NOTES_BIGDON || knd == NOTES_BIGKATSU) {
-					if (knd == NOTES_BIGDON || knd == NOTES_BIGKATSU) special = 2.0;
+					if ((knd == NOTES_BIGDON || knd == NOTES_BIGKATSU) && scoremode != 3) special = 2.0;
 					else special = 1.0;
 					++combo;
 					init_cnt += 1 * gogo * special;
@@ -629,8 +629,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_BALLOON) {		//風船
 
-					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
-					else TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
+					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -659,7 +658,6 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 120;
 								else TmpBaseCeilingPoint -= RollCnt * 100;
 							}
-							if (scoremode == 3) TmpBaseCeilingPoint -= RollCnt * 100;
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
@@ -670,7 +668,6 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
 								else TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
-							if (scoremode == 3) TmpBaseCeilingPoint -= RollCnt * 100;
 						}
 						roll_start_time = 0;
 						roll_end_time = 0;
