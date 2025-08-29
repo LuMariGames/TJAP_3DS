@@ -99,6 +99,13 @@ inline void load_file_list(const char* path) {
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
+			if (exist_file(filename) && Genre[GenreCount - 1].path == "") {
+
+				getcwd(Genre[GenreCount].path, 256);
+				load_genre_file(GenreCount);
+				++GenreCount;
+			}
+
 			db = opendir(filename);
 
 			struct stat st;
@@ -118,13 +125,6 @@ inline void load_file_list(const char* path) {
 						loadend = 1;
 						++SongCount;
 					}
-
-					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
-
-						getcwd(Genre[GenreCount].path, 256);
-						load_genre_file(GenreCount);
-						++GenreCount;
-					}
 				}
 			}
 			else {
@@ -139,8 +139,10 @@ inline void load_file_list(const char* path) {
 
 static void set_genres() {
 
-	for (int i = 0; i < GenreCount; ++i) {
-		if (strstr(List[SongCount].path, Genre[i].path) != NULL) List[SongCount].genre = i;
+	for (int i = 0; i < GenreNumber; ++i) {
+		for (int j = 0; j < SongNumber; ++j) {
+			if (strstr(List[j].path, Genre[i].path) != NULL) List[j].genre = i;
+		}
 	}
 }
 
