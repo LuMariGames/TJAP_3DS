@@ -99,7 +99,7 @@ inline void load_file_list(const char* path) {
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
-			if (exist_file(filename) && Genre[GenreCount - 1].path == "") {
+			if (exist_file(GENRE_FILE) && Genre[GenreCount - 1].path == "") {
 
 				getcwd(Genre[GenreCount].path, 256);
 				load_genre_file(GenreCount);
@@ -139,10 +139,8 @@ inline void load_file_list(const char* path) {
 
 static void set_genres() {
 
-	for (int i = 0; i < GenreNumber; ++i) {
-		for (int j = 0; j < SongNumber; ++j) {
-			if (strstr(List[j].path, Genre[i].path) != NULL) List[j].genre = i;
-		}
+	for (int i = 0; i < GenreCount; ++i) {
+		if (strstr(List[SongCount].path, Genre[i].path) != NULL) List[SongCount].genre = i;
 	}
 }
 
@@ -166,7 +164,7 @@ void disp_file_list() {
 
 	isSearch = ((strcmp(Option.SongTitle, "\0") != 0) ? true : false);
 	isSubT = ((strncmp("--", Option.SongTitle, 2) == 0) ? true : false);
-	for (int i = 0; i < SongNumber; ++i) {
+	for (int i = 0; i < SongCount; ++i) {
 		if (isSearch &&
 			((isSubT && strstr(List[i].subtitle, firstTwo + 2) == NULL) ||
 			(!isSubT && strstr(List[i].title, Option.SongTitle) == NULL))) {
@@ -179,12 +177,12 @@ void disp_file_list() {
 		if (cursor < -1 * (SNum - ClosedSongNumber - 1)) cursor = 0;
 	}
 	else {
-		if (cursor > 0) cursor = -1 * (SongNumber + GenreNumber - ClosedSongNumber - 1);
-		if (cursor < -1 * (SongNumber + GenreNumber - ClosedSongNumber - 1)) cursor = 0;
+		if (cursor > 0) cursor = -1 * (SongCount + GenreCount - ClosedSongNumber - 1);
+		if (cursor < -1 * (SongCount + GenreCount - ClosedSongNumber - 1)) cursor = 0;
 	}
 	ClosedSongNumber = 0;
 
-	for (int i = 0; i < SongNumber; ++i) {
+	for (int i = 0; i < SongCount; ++i) {
 
 		if (isSearch &&
 			((isSubT && strstr(List[i].subtitle, firstTwo + 2) == NULL) ||
