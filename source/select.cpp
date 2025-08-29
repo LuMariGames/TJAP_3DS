@@ -99,7 +99,7 @@ inline void load_file_list(const char* path) {
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
-			sprintf(get_buffer(), "%s/%s", path, GENRE_FILE);
+			sprintf(get_buffer(), "%s%s", path, GENRE_FILE);
 			if (exist_file(get_buffer()) && GenreCount == 0) {
 
 				getcwd(Genre[GenreCount].path, 256);
