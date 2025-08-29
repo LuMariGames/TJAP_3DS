@@ -95,10 +95,10 @@ void load_tja_head(int course,LIST_T Song) {
 	exam[3][2] = (char*)"";
 	exam[3][3] = (char*)"";
 
-	sprintf(get_buffer(), "%s%s", Song.path, Song.tja);
+	chdir(Song.path);
 	int cnt = -1;
 
-	if ((fp = fopen(get_buffer(), "r")) != NULL) {
+	if ((fp = fopen(Song.tja, "r")) != NULL) {
 
 		char* temp = NULL;
 		while (fgets(buf, 128, fp) != NULL) {
@@ -418,9 +418,9 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	char buf[128],*temp = NULL;
 	int course = COURSE_ONI,cnt = 0;
 
-	sprintf(get_buffer(), "%s%s", List->path, List->tja);
+	chdir(List->path);
 
-	if ((fp = fopen(get_buffer(), "r")) != NULL) {
+	if ((fp = fopen(List->tja, "r")) != NULL) {
 
 		while (fgets(buf, 128, fp) != NULL) {
 
@@ -544,8 +544,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
-	sprintf(get_buffer(), "%s%s", Song.path, Song.tja);
-	if ((fp = fopen(get_buffer(), "r")) != NULL) {
+	chdir(Song.path);
+	if ((fp = fopen(Song.tja, "r")) != NULL) {
 
 		tja_cnt = 0;
 		int MeasureCount = 0,CurrentCourse = -1;
