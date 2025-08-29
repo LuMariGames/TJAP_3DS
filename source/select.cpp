@@ -139,7 +139,9 @@ inline void load_file_list(const char* path) {
 
 static void set_genres() {
 
-	if (strstr(List[SongCount].path, Genre[GenreCount - 1].path) != NULL) List[SongCount].genre = GenreCount - 1;
+	for (int i = 0; i < GenreCount; ++i) {
+		if (strstr(List[SongCount].path, Genre[i].path) != NULL) List[SongCount].genre = i;
+	}
 }
 
 void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
