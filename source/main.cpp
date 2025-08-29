@@ -271,7 +271,7 @@ int main() {
 				cnt = -1;
 			}
 			isPause = false;
-			if (key & KEY_START) isExit = true;
+			if (loadend == 2 && key & KEY_START) isExit = true;
 			break;
 
 		case SCENE_MAINLOAD:	 //ロード中
@@ -738,4 +738,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
