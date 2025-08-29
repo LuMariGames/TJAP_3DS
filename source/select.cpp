@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+extern int scene_state;
 void load_file_list(const char* path);
 static void set_genres();
 
@@ -93,8 +94,8 @@ inline void load_file_list(const char* path) {
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
+			while (scene_state == SCENE_MAINLOAD) svcSleepThread(16666667);
 			chdir(path);
-
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
