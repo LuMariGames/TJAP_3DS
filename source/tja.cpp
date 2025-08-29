@@ -544,8 +544,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 
-	chdir(Song.path);
-	if ((fp = fopen(Song.tja, "r")) != NULL) {
+	sprintf(get_buffer(), "%s%s", Song.path, Song.tja);
+	if ((fp = fopen(get_buffer(), "r")) != NULL) {
 
 		tja_cnt = 0;
 		int MeasureCount = 0,CurrentCourse = -1;
