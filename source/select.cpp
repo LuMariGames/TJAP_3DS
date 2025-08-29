@@ -32,7 +32,7 @@ int cmp_list(const void* p, const void* q) {	//比較用
 
 void sort_list() {	//曲をジャンル順にソート
 
-	qsort(List, SongNumber, sizeof(LIST_T), cmp_list);
+	qsort(List, SongCount, sizeof(LIST_T), cmp_list);
 }
 
 void load_file_main(void *arg) {
@@ -139,7 +139,7 @@ inline void load_file_list(const char* path) {
 
 static void set_genres() {
 
-	if (strstr(List[SongCount].path, Genre[GenreCount].path) != NULL) List[SongCount].genre = GenreCount;
+	if (strstr(List[SongCount].path, Genre[GenreCount - 1].path) != NULL) List[SongCount].genre = GenreCount;
 }
 
 void draw_select_box(float x,float y,float w,float h,int color= 0x424242) {
