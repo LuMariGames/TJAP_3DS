@@ -293,16 +293,18 @@ int main() {
 			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000;
 
 			tmp = check_wave(SelectedSong);
-			if (tmp == -1) scene_state = SCENE_LOADSCRE;
+			if (tmp == -1) {
+				cnt = -150;
+				play_main_music(&isPlayMain, SelectedSong);
+				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+				notes_cnt = 0;
+				scene_state = SCENE_LOADSCRE;
+			}
 			else {
 				warning = tmp;
 				scene_state = SCENE_WARNING;
 				select_ini();
 			}
-			cnt = -150;
-			play_main_music(&isPlayMain, SelectedSong);
-			tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-			notes_cnt = 0;
 			break;
 
 		case SCENE_LOADSCRE:
@@ -738,3 +740,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
