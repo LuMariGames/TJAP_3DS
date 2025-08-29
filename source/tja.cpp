@@ -95,10 +95,10 @@ void load_tja_head(int course,LIST_T Song) {
 	exam[3][2] = (char*)"";
 	exam[3][3] = (char*)"";
 
-	chdir(Song.path);
+	sprintf(get_buffer(), "%s%s", Song.path, Song.tja);
 	int cnt = -1;
 
-	if ((fp = fopen(Song.tja, "r")) != NULL) {
+	if ((fp = fopen(get_buffer(), "r")) != NULL) {
 
 		char* temp = NULL;
 		while (fgets(buf, 128, fp) != NULL) {
@@ -418,9 +418,9 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	char buf[128],*temp = NULL;
 	int course = COURSE_ONI,cnt = 0;
 
-	chdir(List->path);
+	sprintf(get_buffer(), "%s%s", List->path, List->tja);
 
-	if ((fp = fopen(List->tja, "r")) != NULL) {
+	if ((fp = fopen(get_buffer(), "r")) != NULL) {
 
 		while (fgets(buf, 128, fp) != NULL) {
 
