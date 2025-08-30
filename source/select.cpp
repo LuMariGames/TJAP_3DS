@@ -109,7 +109,7 @@ inline void load_file_list(const char* path) {
 					if (strstr(dp->d_name, ".tja") != NULL) {
 
 						strlcpy(List[SongCount].tja, dp->d_name, strlen(dp->d_name) + 1);
-						getcwd(List[SongCount].path, 256);
+						strlcpy(List[SongCount].path, path, strlen(path) + 1);
 						List[SongCount].genre = GENRE_MAX + 1;
 						load_tja_head_simple(&List[SongCount]);
 						loadend = 1;
