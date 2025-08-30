@@ -90,39 +90,43 @@ inline void load_file_list(const char* path) {
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
-			if (strcmp(dp->d_name, ".") == 0 || strcmp(dp->d_name, "..") == 0) {
-            	continue;
-			}
 			while (get_scene() >= SCENE_MAINLOAD) usleep(20000);
-			snprintf(filename, sizeof(filename), "%s/%s", path, dp->d_name);
+			strlcpy(filename, path, strlen(path));
+			strcat(filename, "/");
+			strcat(filename, dp->d_name);
 
+			DIR* db = opendir(filename);
 			struct stat st;
 			stat(filename, &st);
 
-			if (S_ISDIR(st.st_mode)) {
+			if ((st.st_mode & S_IFMT) != S_IFDIR) {
+
+				if (db == NULL) {
+
+					if (strstr(dp->d_name, ".tja") != NULL) {
+
+						strlcpy(List[SongCount].tja, dp->d_name, sizeof(List[0].tja));
+						strlcpy(List[SongCount].path, path, sizeof(List[0].path));
+						List[SongCount].genre = GENRE_MAX + 1;
+						load_tja_head_simple(&List[SongCount]);
+						loadend = 1;
+						++SongCount;
+					}
+					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
+
+						strlcpy(Genre[GenreCount].path, path, sizeof(Genre[0].path));
+						load_genre_file(GenreCount);
+						++GenreCount;
+					}
+				}
+			}
+			else {
 				set_genres();
 				SongNumber = SongCount;
 				loadend = 2;
 				load_file_list(filename);
 			}
-			else if (S_ISREG(st.st_mode)) {
-
-				if (strstr(dp->d_name, ".tja") != NULL) {
-
-					strlcpy(List[SongCount].tja, dp->d_name, sizeof(List[0].tja));
-					strlcpy(List[SongCount].path, path, sizeof(List[0].path));
-					List[SongCount].genre = GENRE_MAX + 1;
-					load_tja_head_simple(&List[SongCount]);
-					loadend = 1;
-					++SongCount;
-				}
-				if (strstr(dp->d_name, GENRE_FILE) != NULL) {
-
-					strlcpy(Genre[GenreCount].path, path, sizeof(Genre[0].path));
-					load_genre_file(GenreCount);
-					++GenreCount;
-				}
-			}
+			closedir(db);
 		}
 	}
 	closedir(dir);
