@@ -49,7 +49,7 @@ void load_file_main(void *arg) {
 		SongNumber = SongCount;
 		GenreNumber = GenreCount;
 	}
-	loadend = 2;
+	loadend = 3;
 }
 
 void load_genre_file(int id) {
@@ -126,6 +126,7 @@ inline void load_file_list(const char* path) {
 			else {
 				set_genres();
 				SongNumber = SongCount;
+				loadend = 2;
 				load_file_list(dp->d_name);
 				chdir("../");
 			}
