@@ -655,6 +655,9 @@ bool get_isPause() {
 bool get_isMusicStart() {
 	return isMusicStart;
 }
+int get_scene() {
+	return scene_state;
+}
 char *get_buffer() {
 	return buffer;
 }
@@ -740,4 +743,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
