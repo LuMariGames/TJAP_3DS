@@ -97,14 +97,14 @@ inline void load_file_list(const char* path) {
 			strcat(filename, dp->d_name);
 
 			struct stat st;
-			if (stat(filename, &st) != 0) continue;
+			stat(filename, &st);
 
 			if ((st.st_mode & S_IFMT) != S_IFDIR) {
 
 				DIR* db = opendir(filename);
 				if (db == NULL) {
 
-					if (strstr(filename, ".tja") != NULL) {
+					if (strstr(dp->d_name, ".tja") != NULL) {
 
 						strlcpy(List[SongCount].tja, dp->d_name, sizeof(List[SongCount].tja));
 						strlcpy(List[SongCount].path, path, sizeof(List[SongCount].path));
@@ -113,7 +113,7 @@ inline void load_file_list(const char* path) {
 						loadend = 1;
 						++SongCount;
 					}
-					if (strstr(filename, GENRE_FILE) != NULL) {
+					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
 
 						strlcpy(Genre[GenreCount].path, path, sizeof(Genre[GenreCount].path));
 						load_genre_file(GenreCount);
