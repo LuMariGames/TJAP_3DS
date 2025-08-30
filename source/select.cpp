@@ -93,7 +93,6 @@ inline void load_file_list(const char* path) {
 		while ((dp = readdir(dir)) != NULL) {
 
 			while (get_scene() >= SCENE_MAINLOAD) usleep(20000);
-			chdir(path);
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
@@ -108,8 +107,8 @@ inline void load_file_list(const char* path) {
 
 					if (strstr(dp->d_name, ".tja") != NULL) {
 
-						strlcpy(List[SongCount].tja, dp->d_name, strlen(dp->d_name) + 1);
-						getcwd(List[SongCount].path, 256);
+						strlcpy(List[SongCount].tja, dp->d_name, sizeof(List[SongCount].tja));
+						strlcpy(List[SongCount].path, path, sizeof(List[SongCount].path));
 						List[SongCount].genre = GENRE_MAX + 1;
 						load_tja_head_simple(&List[SongCount]);
 						loadend = 1;
@@ -117,7 +116,7 @@ inline void load_file_list(const char* path) {
 					}
 					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
 
-						getcwd(Genre[GenreCount].path, 256);
+						strlcpy(Genre[GenreCount].path, path, sizeof(Genre[GenreCount].path));
 						load_genre_file(GenreCount);
 						++GenreCount;
 					}
@@ -128,7 +127,6 @@ inline void load_file_list(const char* path) {
 				SongNumber = SongCount;
 				loadend = 2;
 				load_file_list(filename);
-				chdir("../");
 			}
 			closedir(db);
 		}
