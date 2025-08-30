@@ -27,7 +27,6 @@ int cmp_list(const void* p, const void* q) {	//比較用
 
 	int pp = ((LIST_T*)p)->genre;
 	int qq = ((LIST_T*)q)->genre;
-
 	return pp - qq;
 }
 
@@ -94,7 +93,7 @@ inline void load_file_list(const char* path) {
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
-			while (&scene_state == SCENE_MAINLOAD) svcSleepThread(20000000);
+			while (scene_state == SCENE_MAINLOAD) svcSleepThread(20000000);
 			chdir(path);
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
