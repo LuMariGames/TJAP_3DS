@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-extern volatile int scene_state;
+extern int scene_state;
 void load_file_list(const char* path);
 static void set_genres();
 
@@ -94,7 +94,7 @@ inline void load_file_list(const char* path) {
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
-			while (scene_state >= SCENE_MAINLOAD) svcSleepThread(20000000);
+			if (scene_state == SCENE_MAINLOAD) svcSleepThread(1000000000); //1000ms
 			chdir(path);
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
