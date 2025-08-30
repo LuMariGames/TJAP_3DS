@@ -103,7 +103,7 @@ inline void load_file_list(const char* path) {
 				DIR* db = opendir(filename);
 				if (db == NULL) {
 
-					if (strstr(dp->d_name, ".tja") != NULL) {
+					if (strstr(filename, ".tja") != NULL) {
 
 						strlcpy(List[SongCount].tja, filename, strlen(List[SongCount].tja));
 						getcwd(List[SongCount].path, 256);
@@ -112,7 +112,7 @@ inline void load_file_list(const char* path) {
 						loadend = 1;
 						++SongCount;
 					}
-					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
+					if (strstr(filename, GENRE_FILE) != NULL) {
 
 						getcwd(Genre[GenreCount].path, 256);
 						load_genre_file(GenreCount);
