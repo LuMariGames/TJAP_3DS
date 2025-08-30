@@ -154,7 +154,7 @@ int main() {
 			snprintf(get_buffer(), BUFFER_SIZE, "TJAPlayer for 3DS v%s", VERSION);
 			draw_select_text(120, 70, get_buffer());
 			draw_select_text(120, 100, "Now Loading...");
-			if (loadend == 1) draw_select_text(0, 225, "SELECT to Skip ");
+			if (loadend > 0) draw_select_text(0, 225, "SELECT to Skip ");
 
 			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
@@ -208,7 +208,7 @@ int main() {
 			if (isDon)   play_sound(SOUND_DON);		//ドン
 			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
-			if ((loadend == 2) || (loadend == 1 && key & KEY_SELECT)) {
+			if ((loadend == 3) || (loadend > 0 && key & KEY_SELECT)) {
 				if (check_dsp1()) scene_state = SCENE_SELECTSONG;
 				else { 
 					warning = WARNING_DSP1;
@@ -276,8 +276,10 @@ int main() {
 
 		case SCENE_MAINLOAD:	 //ロード中
 
+			
 			draw_select_text(0, 225, "Now Loading...");
 			C3D_FrameEnd(0);
+			while (loadend > 1) Sleep(1);
 			init_tja();
 			load_tja_head(course, SelectedSong);
 			//init_main_music();
@@ -743,5 +745,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
