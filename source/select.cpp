@@ -123,6 +123,8 @@ inline void load_file_list(const char* path) {
 				}
 			}
 			else {
+				set_genres();
+				SongNumber = SongCount;
 				loadend = 2;
 				load_file_list(filename);
 			}
