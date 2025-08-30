@@ -17,7 +17,7 @@
 #define VERSION "1.8.0"
 #define DECODE_COREID 1
 #define DECODE_MEM 524288
-#define DEFAULT_DIR "sdmc:/tjafiles/"
+#define DEFAULT_DIR "sdmc:/tjafiles"
 #define NOTDEF_DIR "romfs:/tjafiles/"
 #define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
 #define SKIN_SETTING_FILE "sdmc:/tjafiles/theme/config.json"
