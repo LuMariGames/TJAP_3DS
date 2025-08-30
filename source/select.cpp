@@ -119,6 +119,7 @@ inline void load_file_list(const char* path) {
 						++GenreCount;
 					}
 				}
+				closedir(db);
 			}
 			else {
 				set_genres();
@@ -126,7 +127,6 @@ inline void load_file_list(const char* path) {
 				loadend = 2;
 				load_file_list(filename);
 			}
-			closedir(db);
 		}
 	}
 	closedir(dir);
