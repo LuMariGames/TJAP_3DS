@@ -88,7 +88,6 @@ inline void load_file_list(const char* path) {
 
 	if ((dir = opendir(path)) != NULL) {
 
-		DIR* db;
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
@@ -97,12 +96,12 @@ inline void load_file_list(const char* path) {
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
-			db = opendir(filename);
 			struct stat st;
-			stat(dp->d_name, &st);
+			if (stat(filename, &st) != 0) continue;
 
 			if ((st.st_mode & S_IFMT) != S_IFDIR) {
 
+				DIR* db = opendir(filename);
 				if (db == NULL) {
 
 					if (strstr(dp->d_name, ".tja") != NULL) {
@@ -121,6 +120,7 @@ inline void load_file_list(const char* path) {
 						++GenreCount;
 					}
 				}
+				if (db) closedir(db);
 			}
 			else {
 				set_genres();
@@ -128,7 +128,6 @@ inline void load_file_list(const char* path) {
 				loadend = 2;
 				load_file_list(filename);
 			}
-			closedir(db);
 		}
 	}
 	closedir(dir);
