@@ -96,8 +96,10 @@ void load_tja_head(int course,LIST_T Song) {
 	exam[3][3] = (char*)"";
 
 	int cnt = -1;
+	char abs_path[512];
 
-	if ((fp = fopen(Song.tja, "r")) != NULL) {
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
+	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		char* temp = NULL;
 		while (fgets(buf, 128, fp) != NULL) {
@@ -416,8 +418,10 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	FILE *fp;
 	char buf[128],*temp = NULL;
 	int course = COURSE_ONI,cnt = 0;
+	char abs_path[512];
 
-	if ((fp = fopen(List->tja, "r")) != NULL) {
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", List->path, List->tja);
+	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		while (fgets(buf, 128, fp) != NULL) {
 
@@ -540,8 +544,10 @@ void load_tja_notes(int course, LIST_T Song) {
 	std::string ly = "", Beforely = "";
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
+	char abs_path[512];
 
-	if ((fp = fopen(Song.tja, "r")) != NULL) {
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
+	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		tja_cnt = 0;
 		int MeasureCount = 0,CurrentCourse = -1;
