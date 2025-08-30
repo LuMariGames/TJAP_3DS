@@ -91,7 +91,7 @@ inline void load_file_list(const char* path) {
 		while ((dp = readdir(dir)) != NULL) {
 
 			while (get_scene() >= SCENE_MAINLOAD) usleep(20000);
-			strlcpy(filename, path, strlen(path));
+			strlcpy(filename, path, sizeof(filename));
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
 
@@ -117,12 +117,12 @@ inline void load_file_list(const char* path) {
 						strlcpy(Genre[GenreCount].path, path, sizeof(Genre[0].path));
 						load_genre_file(GenreCount);
 						++GenreCount;
+						set_genres();
+						SongNumber = SongCount;
 					}
 				}
 			}
 			else {
-				set_genres();
-				SongNumber = SongCount;
 				loadend = 2;
 				load_file_list(filename);
 			}
