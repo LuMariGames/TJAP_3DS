@@ -271,15 +271,18 @@ int main() {
 				cnt = -1;
 			}
 			isPause = false;
-			if (loadend == 2 && key & KEY_START) isExit = true;
+			if (loadend == 3 && key & KEY_START) isExit = true;
 			break;
 
 		case SCENE_MAINLOAD:	 //ロード中
 
-			
-			draw_select_text(0, 225, "Now Loading...");
+			if (loadend < 2) {
+				draw_select_text(0, 195, "Charts List Loading...");
+				draw_select_text(0, 225, "Chart Loading...");
+			}
+			else draw_select_text(0, 225, "Chart Loading...");
 			C3D_FrameEnd(0);
-			while (loadend > 1) Sleep(1);
+			while (loadend < 2) Sleep(1);
 			init_tja();
 			load_tja_head(course, SelectedSong);
 			//init_main_music();
@@ -311,7 +314,7 @@ int main() {
 
 		case SCENE_LOADSCRE:
 
-			draw_select_text(0, 225, "Now Loading...");
+			draw_select_text(0, 225, "Loading completed.");
 			if (tp.px != 0 && tp.py != 0) {	//タッチ位置の取得
 
 				PreTouch_x = touch_x, PreTouch_y = touch_y;
@@ -745,6 +748,7 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
 
