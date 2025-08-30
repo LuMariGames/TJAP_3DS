@@ -90,10 +90,10 @@ inline void load_file_list(const char* path) {
 
 		DIR* db;
 		char filename[512];
-		chdir(path);
 		while ((dp = readdir(dir)) != NULL) {
 
 			while (get_scene() >= SCENE_MAINLOAD) usleep(20000);
+			chdir(path);
 			strlcpy(filename, path, strlen(path));
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
@@ -127,7 +127,7 @@ inline void load_file_list(const char* path) {
 				set_genres();
 				SongNumber = SongCount;
 				loadend = 2;
-				load_file_list(dp->d_name);
+				load_file_list(filename);
 				chdir("../");
 			}
 			closedir(db);
