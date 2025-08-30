@@ -96,25 +96,25 @@ inline void load_file_list(const char* path) {
 			strcat(filename, dp->d_name);
 
 			struct stat st;
-			if (stat(filename, &st) != 0) continue;
+			stat(filename, &st);
 
 			if ((st.st_mode & S_IFMT) != S_IFDIR) {
 
 				DIR* db = opendir(filename);
 				if (db == NULL) {
 
-					if (strstr(filename, ".tja") != NULL) {
+					if (strstr(dp->d_name, ".tja") != NULL) {
 
-						strlcpy(List[SongCount].tja, filename, strlen(List[SongCount].tja));
-						getcwd(List[SongCount].path, 256);
+						strlcpy(List[SongCount].tja, filename, sizeof(List[0].tja));
+						strlcpy(List[SongCount].path, path, sizeof(List[0].path));
 						List[SongCount].genre = GENRE_MAX + 1;
 						load_tja_head_simple(&List[SongCount]);
 						loadend = 1;
 						++SongCount;
 					}
-					if (strstr(filename, GENRE_FILE) != NULL) {
+					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
 
-						getcwd(Genre[GenreCount].path, 256);
+						strlcpy(Genre[GenreCount].path, path, sizeof(Genre[0].path));
 						load_genre_file(GenreCount);
 						++GenreCount;
 					}
