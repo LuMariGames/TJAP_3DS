@@ -38,13 +38,11 @@ void load_file_main(void *arg) {
 
 	load_combo();
 	newfont();
-	chdir(DEFAULT_DIR);
 	load_file_list(DEFAULT_DIR);
 	set_genres();
 	SongNumber = SongCount;
 	GenreNumber = GenreCount;
 	if (SongNumber == 0) {
-		chdir(NOTDEF_DIR);
 		load_file_list(NOTDEF_DIR);
 		SongNumber = SongCount;
 		GenreNumber = GenreCount;
@@ -57,9 +55,10 @@ void load_genre_file(int id) {
 	json_t* json;
 	json_error_t error_json;
 	char tmp[256];
+	char abs_path[512];
 
-	chdir(Genre[id].path);
-	json = json_load_file(GENRE_FILE, 0, &error_json);
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Genre[id].path, GENRE_FILE);
+	json = json_load_file(abs_path, 0, &error_json);
 
 	strlcpy(Genre[id].name, "Genre", 256);
 	Genre[id].genre_color = 0x111111;
@@ -97,7 +96,7 @@ inline void load_file_list(const char* path) {
 			strcat(filename, dp->d_name);
 
 			struct stat st;
-			stat(filename, &st);
+			if (stat(filename, &st) != 0) continue;
 
 			if ((st.st_mode & S_IFMT) != S_IFDIR) {
 
@@ -106,8 +105,8 @@ inline void load_file_list(const char* path) {
 
 					if (strstr(dp->d_name, ".tja") != NULL) {
 
-						strlcpy(List[SongCount].tja, dp->d_name, sizeof(List[SongCount].tja));
-						strlcpy(List[SongCount].path, path, sizeof(List[SongCount].path));
+						strlcpy(List[SongCount].tja, filename, strlen(List[SongCount].tja));
+						getcwd(List[SongCount].path, 256);
 						List[SongCount].genre = GENRE_MAX + 1;
 						load_tja_head_simple(&List[SongCount]);
 						loadend = 1;
@@ -115,12 +114,11 @@ inline void load_file_list(const char* path) {
 					}
 					if (strstr(dp->d_name, GENRE_FILE) != NULL) {
 
-						strlcpy(Genre[GenreCount].path, path, sizeof(Genre[GenreCount].path));
+						getcwd(Genre[GenreCount].path, 256);
 						load_genre_file(GenreCount);
 						++GenreCount;
 					}
 				}
-				if (db) closedir(db);
 			}
 			else {
 				set_genres();
@@ -128,6 +126,7 @@ inline void load_file_list(const char* path) {
 				loadend = 2;
 				load_file_list(filename);
 			}
+			closedir(db);
 		}
 	}
 	closedir(dir);
