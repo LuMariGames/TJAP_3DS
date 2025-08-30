@@ -246,8 +246,10 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
-	chdir(Song.path);
-	changeFile(Song.wave, &playbackInfo, p_isPlayMain);
+	char abs_path[512];
+
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.wave);
+	changeFile(abs_path, &playbackInfo, p_isPlayMain);
 }
 
 void pasue_main_music() {
@@ -270,8 +272,10 @@ void init_main_music() {
 
 int check_wave(LIST_T Song) { //音楽ファイルの確認
 
-	chdir(Song.path);
-	int result = getFileType(Song.wave);
+	char abs_path[512];
+
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.wave);
+	int result = getFileType(abs_path);
 
 	if (result == -1) return WARNING_WAVE_NO_EXIST;
 	else if (result != FILE_TYPE_VORBIS) {
