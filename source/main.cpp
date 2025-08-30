@@ -281,8 +281,8 @@ int main() {
 				draw_select_text(0, 225, "Chart Loading...");
 			}
 			else draw_select_text(0, 225, "Chart Loading...");
+			usleep(1000);
 			C3D_FrameEnd(0);
-			while (loadend < 2) usleep(1000);
 			init_tja();
 			load_tja_head(course, SelectedSong);
 			//init_main_music();
@@ -748,4 +748,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
