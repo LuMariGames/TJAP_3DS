@@ -91,14 +91,18 @@ inline void load_file_list(const char* path) {
 		while ((dp = readdir(dir)) != NULL) {
 
 			while (get_scene() >= SCENE_MAINLOAD) usleep(20000);
-			strlcpy(filename, path, sizeof(filename));
-			strcat(filename, "/");
-			strcat(filename, dp->d_name);
+			snprintf(filename, sizeof(filename), "%s/%s", path, dp->d_name);
 
 			struct stat st;
 			stat(filename, &st);
 
-			if ((st.st_mode & S_IFMT) != S_IFDIR) {
+			if (S_ISDIR(st.st_mode)) {
+				set_genres();
+				SongNumber = SongCount;
+				loadend = 2;
+				load_file_list(filename);
+			}
+			else if (S_ISREG(st.st_mode)) {
 
 				if (strstr(dp->d_name, ".tja") != NULL) {
 
@@ -115,12 +119,6 @@ inline void load_file_list(const char* path) {
 					load_genre_file(GenreCount);
 					++GenreCount;
 				}
-			}
-			else {
-				set_genres();
-				SongNumber = SongCount;
-				loadend = 2;
-				load_file_list(filename);
 			}
 		}
 	}
