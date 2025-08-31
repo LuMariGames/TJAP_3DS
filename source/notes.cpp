@@ -346,7 +346,8 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 	int NowMeasure = 0;
 
 	for (int i = 0, j = MaxMeasureCount; i < j; ++i) {
-		if (MaxJudgeTime < Measure[i].judge_time && Measure[i].judge_time <= CurrentTimeNotes) {
+		if (Measure[i].command == -1 &&
+			MaxJudgeTime < Measure[i].judge_time && Measure[i].judge_time <= CurrentTimeNotes) {
 			NowBPM = Measure[i].bpm;
 			MaxJudgeTime = Measure[i].judge_time;
 			NowMeasure = i;
