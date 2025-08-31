@@ -116,6 +116,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 				BarLine[BarLineId].x_ini = NOTES_JUDGE_RANGE * BarLine[BarLineId].scroll + NOTES_JUDGE_X;
 				BarLine[BarLineId].create_time = CurrentTimeNotes;
 				BarLine[BarLineId].isDisp = Measure[MeasureCount].isDispBarLine;
+				if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time) BarLine[BarLineId].flag = false;
 			}
 
 			int NotesCountMax;
