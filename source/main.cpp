@@ -115,7 +115,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,
+	int cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 
@@ -288,7 +288,7 @@ int main() {
 			init_notes(TJA_Header);
 			time_ini();
 			offset = TJA_Header.offset + Option.offset;
-			notes_cnt = -1, BeforeCombo = -1;
+			notes_cnt = -1, BeforeCombo = -1, measure = Option.measure;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
 			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000;
 
@@ -505,7 +505,7 @@ int main() {
 			}
 
 			//譜面が先
-			if (offset > 0 && (isNotesStart == false || !isMusicStart) && Option.measure <= 0) {
+			if (offset > 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
 
 				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
 				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
@@ -515,7 +515,7 @@ int main() {
 			}
 
 			//音楽が先
-			else if (offset <= 0 && (isNotesStart == false || !isMusicStart) && Option.measure <= 0) {
+			else if (offset <= 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
 
 				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
@@ -525,7 +525,7 @@ int main() {
 					isNotesStart = true;
 				}
 			}
-			else if (Option.measure > 0) {
+			else if (measure > 0) {
 
 				if (CurrentTimeMain >= (starttime() * -1.0) && !isPlayMain) {
 					isPlayMain = true;
@@ -743,3 +743,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
