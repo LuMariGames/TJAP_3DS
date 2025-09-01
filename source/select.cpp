@@ -90,7 +90,6 @@ inline void load_file_list(const char* path) {
 		char filename[512];
 		while ((dp = readdir(dir)) != NULL) {
 
-			while (get_scene() >= SCENE_MAINLOAD) usleep(20000);
 			strlcpy(filename, path, sizeof(filename));
 			strcat(filename, "/");
 			strcat(filename, dp->d_name);
