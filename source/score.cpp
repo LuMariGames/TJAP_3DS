@@ -554,7 +554,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		break;
 	}
 	TmpBaseCeilingPoint = BaseCeilingPoint;
-	if (scoremode == 3) TmpBaseCeilingPoint = 1000000;
+	if (scoremode == 3 && TJA_Header.course != 6) TmpBaseCeilingPoint = 1000000;
 
 	while (isEND == false && i < MEASURE_MAX && Measure[i].flag == true) {	//小節
 
@@ -689,7 +689,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = 1000;
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
-		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + 9.9999999) * 10;
+		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + 0.9999999) * 10;
 		diff = 0;
 	}
 
