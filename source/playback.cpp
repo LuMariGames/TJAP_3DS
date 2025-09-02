@@ -10,6 +10,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
+static int8 Decode_CoreID = 1;
 static volatile bool stop = true;
 extern float mix[12];
 
@@ -201,6 +202,7 @@ out:
 	linearFree(buffer[0]);
 	linearFree(buffer[1]);
 
+	APT_SetAppCpuTimeLimit(5);
 	threadExit(0);
 	return;
 
@@ -216,7 +218,15 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	static Thread thread = NULL;
 
 	if (ep_file != NULL && getFileType(ep_file) == FILE_TYPE_ERROR) return -1;
-	
+
+	if (getFileType(ep_file) == FILE_TYPE_VORBIS) {
+		Decode_CoreID = 1;
+		APT_SetAppCpuTimeLimit(50);
+	}
+	else if (getFileType(ep_file) == FILE_TYPE_MP3) {
+		Decode_CoreID = 0;
+		APT_SetAppCpuTimeLimit(5);
+	}
 	if (thread != NULL) {
 		stopPlayback();
 
@@ -232,7 +242,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->isPlay = p_isPlayMain;
 
 	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, DECODE_MEM, prio - 1, DECODE_COREID, false);
+	thread = threadCreate(playFile, playbackInfo, DECODE_MEM, prio - 1, Decode_CoreID, false);
 	return 0;
 }
 
