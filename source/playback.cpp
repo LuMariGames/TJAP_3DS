@@ -95,7 +95,7 @@ void playFile(void* infoIn){
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
 	int16_t*	buffer[2] = {NULL};
 	ndspWaveBuf	waveBuf[2];
-	bool		lastbuf = false, isNdspInit = false;
+	bool		lastbuf = false, isNdspInit = false, isMp3 = false;
 	int		ret = -1;
 	const char*	file = info->file;
 
@@ -109,6 +109,7 @@ void playFile(void* infoIn){
 			break;
 		case FILE_TYPE_MP3:
 			setMp3(&decoder);
+			isMp3 = true;
 			break;
 		default:
 			goto err;
@@ -138,20 +139,14 @@ void playFile(void* infoIn){
 	ndspChnWaveBufClear(CHANNEL);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_LINEAR);
 	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
-	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
+	if (!isMp3) ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
+	else if (isMp3) ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM8 : NDSP_FORMAT_MONO_PCM8);
 	ndspChnSetMix(CHANNEL, mix);
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	switch(getFileType(file))
-	{
-		case FILE_TYPE_VORBIS:
-			if (get_ismeasure()) setVorbisTime(starttime());
-			break;
-		case FILE_TYPE_MP3:
-			if (get_ismeasure()) seekMp3(starttime());
-			break;
-	}
+	if 		(!isMp3 && get_ismeasure()) setVorbisTime(starttime());
+	else if (isMp3 && get_ismeasure()) seekMp3(starttime());
 	
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
