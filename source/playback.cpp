@@ -139,8 +139,7 @@ void playFile(void* infoIn){
 	ndspChnWaveBufClear(CHANNEL);
 	ndspChnSetInterp(CHANNEL, NDSP_INTERP_LINEAR);
 	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
-	if (!isMp3) ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
-	else if (isMp3) ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM8 : NDSP_FORMAT_MONO_PCM8);
+	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
 	ndspChnSetMix(CHANNEL, mix);
 
 	memset(waveBuf, 0, sizeof(waveBuf));
