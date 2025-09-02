@@ -10,7 +10,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
-static int8 Decode_CoreID = 1;
+static int Decode_CoreID = 1;
 static volatile bool stop = true;
 extern float mix[12];
 
