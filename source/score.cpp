@@ -226,6 +226,10 @@ void update_score(int knd) {
 				CurrentScore += 5000;
 			}
 		}
+		else if (scoremode == 3) {	//ニジイロ配点
+			TotalScore += 100;
+			CurrentScore += 100;
+		}
 		++TotalRollCount;
 		break;
 
