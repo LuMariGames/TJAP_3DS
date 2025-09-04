@@ -16,7 +16,7 @@ Option:
   FreeProductCode         : true # Removes limitations on ProductCode
   MediaFootPadding        : false # If true CCI files are created with padding
   EnableCrypt             : false # Enables encryption for NCCH and CIA
-  EnableCompress          : false # Compresses where applicable (currently only exefs:/.code)
+  EnableCompress          : true # Compresses where applicable (currently only exefs:/.code)
   
 AccessControlInfo:
   CoreVersion                   : 2
@@ -74,14 +74,14 @@ AccessControlInfo:
   Priority                      : 16
   MaxCpu                        : 0xFF
   HandleTableSize               : 0x200
-  DisableDebug                  : false
+  DisableDebug                  : true
   EnableForceDebug              : false
   CanWriteSharedPage            : true
   CanUsePrivilegedPriority      : true
   CanUseNonAlphabetAndNumber    : true
   PermitMainFunctionArgument    : true
   CanShareDeviceMemory          : true
-  RunnableOnSleep               : true
+  RunnableOnSleep               : false
   SpecialMemoryArrange          : true
   
   # New3DS Exclusive Process Settings
