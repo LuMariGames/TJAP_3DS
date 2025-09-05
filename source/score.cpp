@@ -351,8 +351,8 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	courselife = Gauge.score;
-	double gauge = 1.0 * ((int)Gauge.score / 200) * 200 / Gauge.soul;
 	if (Gauge.score > Gauge.soul) Gauge.score = Gauge.soul;
+	double gauge = 1.0 * ((int)Gauge.score / 200) * 200 / Gauge.soul;
 	if (gauge > 1.0) gauge = 1.0;
 
 	//赤
