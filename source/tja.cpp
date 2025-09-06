@@ -1002,9 +1002,3 @@ double get_StartTime() {
 int get_edme() {
 	return edme;
 }
-void load_lyricfont(LIST_T Song) {
-
-	char abs_path[512];
-	snprintf(abs_path, sizeof(abs_path), "%s/font.bcfnt", Song.path);
-	newlyricfont(abs_path);
-}
