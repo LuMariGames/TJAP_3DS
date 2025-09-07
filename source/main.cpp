@@ -455,6 +455,13 @@ int main() {
 				C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
 			}
 
+			if ((key & KEY_SELECT || key & KEY_START) || !aptIsActive()) {
+				togglePlayback();
+				toggle_time(0);
+				toggle_time(1);
+				isPause = !isPause;
+			}
+
 			if (isPause) {
 				if (Option.measure > 0) {
 					snprintf(get_buffer(), BUFFER_SIZE, "%d / %d小節目", Option.measure, get_edme());
@@ -496,13 +503,6 @@ int main() {
 
 			if (isDon)   play_sound(SOUND_DON);		//ドン
 			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
-
-			if (key & KEY_SELECT || (key & KEY_START)) {
-				togglePlayback();
-				toggle_time(0);
-				toggle_time(1);
-				isPause = !isPause;
-			}
 
 			//譜面が先
 			if (offset > 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
@@ -744,3 +744,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
