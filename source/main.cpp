@@ -129,7 +129,7 @@ int main() {
 	load_sprites();
 	chartload = threadCreate(load_file_main, (void*)(""), 8192, 0x3f, -2, true);
 
-	while (true) {
+	while (aptMainLoop()) {
 
 		if (isExit) break;
 		hidScanInput();
@@ -139,15 +139,9 @@ int main() {
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
 
-		if (!aptIsActive()) {
-			togglePlayback();
-			toggle_time(0);
-			toggle_time(1);
-			isPause = !isPause;
-		}
-
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
-		aptMainLoop();
+		if (loadend < 3 || scene_state >= SCENE_LOADSCRE) aptSetHomeAllowed(false);
+		else aptSetHomeAllowed(false);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
 		//上画面
@@ -587,6 +581,7 @@ int main() {
 		}
 
 		//描画終了
+		aptCheckHomePressRejected();
 		C3D_FrameEnd(0);
 		if (!isPause) {
 			++cnt;
@@ -752,5 +747,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
