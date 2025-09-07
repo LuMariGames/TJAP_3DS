@@ -141,7 +141,7 @@ int main() {
 
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
 		if (loadend < 3 || scene_state >= SCENE_LOADSCRE) aptSetHomeAllowed(false);
-		else aptSetHomeAllowed(false);
+		else aptSetHomeAllowed(true);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
 		//上画面
@@ -747,3 +747,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
