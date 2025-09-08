@@ -159,7 +159,7 @@ void playFile(void* infoIn){
 
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
-	while(stop == false){
+	while(stop == false || aptShouldClose()){
 		svcSleepThread(100000);
 
 		if(lastbuf == true && waveBuf[0].status == NDSP_WBUF_DONE &&
