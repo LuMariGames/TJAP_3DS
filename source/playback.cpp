@@ -203,7 +203,6 @@ out:
 	linearFree(buffer[1]);
 
 	APT_SetAppCpuTimeLimit(5);
-	threadExit(0);
 	return;
 
 err:
