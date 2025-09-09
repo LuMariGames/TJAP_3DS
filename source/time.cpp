@@ -45,6 +45,7 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
+	Time[id] += 0.017857142;
 	cnt[id] = 0;
 }
 
