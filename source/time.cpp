@@ -26,10 +26,10 @@ double get_current_time(int id) {
 		clock_gettime(CLOCK_MONOTONIC, &tv);
 		if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
-			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
+			Time[id] += fabs(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]);
 		else if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
-			Time[id] += 0.1;
+			Time[id] += 0.125;
 		OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 		++cnt[id];
 	}
