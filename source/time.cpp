@@ -24,8 +24,10 @@ double get_current_time(int id) {
 	if (isStop[id] != 1) {
 
 		clock_gettime(CLOCK_MONOTONIC, &tv);
-		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
-		Time[id] = tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
+		if (cnt[id] != 0 &&
+			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
+			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
+		OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 		++cnt[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
