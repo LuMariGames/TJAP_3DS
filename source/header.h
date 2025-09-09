@@ -18,7 +18,7 @@
 #define DECODE_MEM 524288
 #define DEFAULT_DIR "sdmc:/tjafiles"
 #define NOTDEF_DIR "romfs:/tjafiles/"
-#define SETTING_FILE "sdmc:/TJAPlayerfor3ds_setting.json"
+#define SETTING_FILE "romfs:/TJAPlayerfor3ds_setting.json"
 #define SKIN_SETTING_FILE "sdmc:/tjafiles/theme/config.json"
 #define PATH_DSP1 "sdmc:/3ds/dspfirm.cdc"
 #define GENRE_FILE "genre.json"
