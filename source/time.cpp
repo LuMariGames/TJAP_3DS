@@ -45,6 +45,7 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
+	clock_gettime(CLOCK_MONOTONIC, &tv);
 	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 	cnt[id] = 0;
 }
