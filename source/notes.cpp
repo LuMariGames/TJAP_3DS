@@ -1169,7 +1169,7 @@ inline void draw_lyric_text(const char *text) {
 
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
-	C2D_TextParse(&NotesText, g_NotesText, text);
+	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
@@ -1212,15 +1212,15 @@ void draw_condition() {
 		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
 		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 154+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
 		tx += width;
-		draw_condition_text(50+tx, 154+20*j, exam[j][1], &width, &height);
+		draw_condition_text(50+tx, 148+20*j, exam[j][1], &width, &height);
 		tx += width;
 
 		if (strcmp(exam[j][0], "g") == 0) {
-			draw_condition_text(50+tx, 154+20*j, "%", &width, &height);
+			draw_condition_text(50+tx, 148+20*j, "%", &width, &height);
 			tx += width;
 		}
-		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 154+20*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
-		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 154+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
+		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
+		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
 	}
 }
 inline void init_notes_structure() {
