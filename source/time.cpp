@@ -40,8 +40,8 @@ double get_current_time(int id) {
 		//計式タイマー(不具合があったら旧式に戻す)
 		clock_gettime(CLOCK_MONOTONIC, &tv);
 		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
+		Time[id] = 0.0178571429 * cnt[id] + PreTime[id];
 		++cnt[id];
-		Time[id] = tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
