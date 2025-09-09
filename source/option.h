@@ -309,7 +309,7 @@ enum Text_knd {
 	TEXT_MEASURE,
 };
 
-enum Text_knd {
+enum Event_knd {
 	EVENTTEXT_1 = 0,
 	EVENTTEXT_2 = 2,
 	EVENTTEXT_3 = 4,
