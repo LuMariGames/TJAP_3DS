@@ -26,7 +26,7 @@ double get_current_time(int id) {
 		clock_gettime(CLOCK_MONOTONIC, &tv);
 		if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
-			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
+			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
 		else if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
 			Time[id] += 0.1;
@@ -45,7 +45,7 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
- 	PreTime[id] = Time[id] += 0.0178571429;
+	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 	cnt[id] = 0;
 }
 
