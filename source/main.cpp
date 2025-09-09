@@ -19,7 +19,7 @@
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
-C2D_Sprite sprites[144];	//画像用
+C2D_Sprite sprites[160];	//画像用
 static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
@@ -140,7 +140,7 @@ int main() {
 		get_option(&Option);
 
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
-		if (loadend < 3 || scene_state >= SCENE_LOADSCRE) aptSetHomeAllowed(false);
+		if (loadend < 3) aptSetHomeAllowed(false);
 		else aptSetHomeAllowed(true);
 		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
 
@@ -581,7 +581,6 @@ int main() {
 		}
 
 		//描画終了
-		aptCheckHomePressRejected();
 		C3D_FrameEnd(0);
 		if (!isPause) {
 			++cnt;
@@ -747,4 +746,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
