@@ -21,18 +21,18 @@ double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME
 
 double get_current_time(int id) {
 
+	clock_gettime(CLOCK_MONOTONIC, &tv);
 	if (isStop[id] != 1) {
 
-		clock_gettime(CLOCK_MONOTONIC, &tv);
 		if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
-			Time[id] += fabs(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]);
+			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
 		else if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
-			Time[id] += 0.125;
-		OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
+			Time[id] += 1.0/12.0;
 		++cnt[id];
 	}
+	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
 	//draw_debug(0, id*10, get_buffer());
 	return Time[id] * mspeed();
@@ -45,8 +45,6 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
-	clock_gettime(CLOCK_MONOTONIC, &tv);
-	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 	cnt[id] = 0;
 }
 
