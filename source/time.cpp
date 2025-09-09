@@ -27,6 +27,9 @@ double get_current_time(int id) {
 		if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
 			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id] + PreTime[id];
+		else if (cnt[id] != 0 &&
+			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
+			Time[id] += 0.0178571429;
 		OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
 		++cnt[id];
 	}
