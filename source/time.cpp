@@ -38,9 +38,8 @@ double get_current_time(int id) {
 		Time[id] = osGetTime() * 0.001 - OffTime[id] + PreTime[id];*/
 
 		//計式タイマー(不具合があったら旧式に戻す)
-		clock_gettime(CLOCK_MONOTONIC, &tv);
-		if (cnt[id] == 0) OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
-		Time[id] = (1.001/60.0 * cnt[id]) + PreTime[id];
+		if (cnt[id] == 0) clock_getres(CLOCK_PROCESS_CPUTIME_ID, &ts);
+		Time[id] += tv.tv_nsec * 0.000000001 * cnt[id] + PreTime[id];
 		++cnt[id];
 	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
