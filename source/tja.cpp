@@ -6,7 +6,6 @@
 #include "select.h"
 #include "option.h"
 #include <stdio.h>
-#include <iconv.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, redCdn[4], gaugelife;
@@ -46,8 +45,8 @@ bool isShiftJIS(const char* str) {
 }
 
 std::string convert_encoding(const char* input) {
-	iconv_t cd = iconv_open("UTF-8", "SHIFT-JIS");
-	if (cd == (iconv_t)-1) {
+	_iconv_t cd = lconv_open("UTF-8", "SHIFT-JIS");
+	if (cd == (_iconv_t)-1) {
 		perror("iconv_open");
 		return "";
 	}
@@ -60,13 +59,13 @@ std::string convert_encoding(const char* input) {
 	char* outbuf = output.data();
 	char* outbuf_start = outbuf;
 
-	if (iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft) == (size_t)-1) {
+	if (lconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft) == (size_t)-1) {
 		perror("iconv");
-		iconv_close(cd);
+		lconv_close(cd);
 		return "";
 	}
 
-	iconv_close(cd);
+	lconv_close(cd);
 	return std::string(outbuf_start, output.size() - outbytesleft);
 }
 
