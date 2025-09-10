@@ -751,7 +751,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
-			Notes[i].knd < NOTES_ROLL) {
+			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
 			if (Notes[i].isThrough == false && 
 				(Notes[i].knd > NOTES_REST && Notes[i].knd < NOTES_ROLL)) {
