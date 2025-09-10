@@ -19,6 +19,56 @@ MEASURE_T Measure[MEASURE_MAX];
 void get_command_value(char* buf, COMMAND_T *Command), sort_measure_insertion(MEASURE_T t[], int array_size);
 double calc_first_measure_time();
 
+bool isShiftJIS(const char* str) {
+    size_t len = strlen(str);
+    for (size_t i = 0; i < len; ++i) {
+        unsigned char c = static_cast<unsigned char>(str[i]);
+        // Shift-JISの1バイト目の範囲チェック
+        if ((c >= 0x81 && c <= 0x9F) || (c >= 0xE0 && c <= 0xEF)) {
+            // Shift-JISの2バイト目の範囲チェック
+            if (i + 1 < len) {
+                unsigned char next = static_cast<unsigned char>(str[i + 1]);
+                if ((next >= 0x40 && next <= 0x7E) || (next >= 0x80 && next <= 0xFC)) {
+                    i++; // 2バイト文字なのでインデックスを進める
+                } else {
+                    return false;
+                }
+            } else {
+                return false; // 文字列の途中で終了している
+            }
+        } else if (c < 0x20 || c > 0x7E) {
+            // 制御文字やASCII範囲外は不正
+            return false;
+        }
+    }
+    return true;
+}
+
+char* convert_encoding(const char* input) {
+    iconv_t cd = iconv_open("UTF-8", "SHIFT-JIS");
+    if (cd == (iconv_t)-1) {
+        perror("iconv_open");
+        return "";
+    }
+
+    size_t inbytesleft = std::strlen(input);
+    size_t outbytesleft = inbytesleft * 4; // UTF-8は最大4バイト/文字
+    std::vector<char> output(outbytesleft);
+    
+    char* inbuf = const_cast<char*>(input); // iconvはchar**を要求するため
+    char* outbuf = output.data();
+    char* outbuf_start = outbuf;
+
+    if (iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft) == (size_t)-1) {
+        perror("iconv");
+        iconv_close(cd);
+        return "";
+    }
+
+    iconv_close(cd);
+    return std::string(outbuf_start, output.size() - outbytesleft);
+}
+
 void init_measure_structure() {
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
@@ -429,20 +479,32 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(List->title, buf + 6, strlen(buf) - 7);
+					if (isShiftJIS(buf + 6)) {
+						std::string tmp = convert_encoding(buf + 6);
+						strlcpy(List->title, tmp, tmp.length());
+					}
+					else strlcpy(List->title, buf + 6, strlen(buf) - 7);
 				}
 				continue;
 			}
 			if (strstr(buf, "SUBTITLE:") == buf) {
 				if (buf[9] != '\n' && buf[9] != '\r') {
-					strlcpy(List->subtitle, buf + 9, strlen(buf) - 10);
+					if (isShiftJIS(buf + 9)) {
+						std::string tmp = convert_encoding(buf + 9);
+						strlcpy(List->subtitle, tmp, tmp.length());
+					}
+					else strlcpy(List->subtitle, buf + 9, strlen(buf) - 10);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "WAVE:") == buf) {
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(List->wave, buf + 5, strlen(buf) - 6);
+					if (isShiftJIS(buf + 5)) {
+						std::string tmp = convert_encoding(buf + 5);
+						strlcpy(List->wave, tmp, tmp.length());
+					}
+					else strlcpy(List->wave, buf + 5, strlen(buf) - 6);
 				}
 				continue;
 			}
