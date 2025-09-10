@@ -115,7 +115,7 @@ int main() {
 	OPTION_T Option;
 	SKIN_T Skin;
 
-	int ComboCnt = 0, cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,
+	int ComboCnt = 0, cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 
@@ -134,7 +134,7 @@ int main() {
 		if (isExit) break;
 		hidScanInput();
 		hidTouchRead(&tp);
-		unsigned int key = hidKeysDown();
+		unsigned int key = hidKeysDown(), keyhold = hidKeysHeld();
 
 		bool isDon = false, isKatsu = false;
 		get_option(&Option);
@@ -493,9 +493,12 @@ int main() {
 					isPause = !isPause;
 					play_sound(SOUND_DON);
 				}
+				if (keyhold & KEY_DLEFT) --khdcnt;
+				else if (keyhold & KEY_DRIGHT) ++khdcnt;
+				else khdcnt = 0;
 				if (key & KEY_DUP) toggle_auto();
-				if ((key & KEY_DLEFT) && (Option.measure < get_edme())) min_measure();
-				if (key & KEY_DRIGHT) plus_measure();
+				if (key & KEY_DLEFT && khdcnt < -60) min_measure();
+				if ((key & KEY_DRIGHT && khdcnt > 60) && (Option.measure < get_edme())) plus_measure();
 			}
 
 			if (cnt == 0) {
