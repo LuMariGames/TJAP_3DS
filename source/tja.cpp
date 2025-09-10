@@ -44,29 +44,29 @@ bool isShiftJIS(const char* str) {
     return true;
 }
 
-char* convert_encoding(const char* input) {
-    iconv_t cd = iconv_open("UTF-8", "SHIFT-JIS");
-    if (cd == (iconv_t)-1) {
-        perror("iconv_open");
-        return "";
-    }
+std::string convert_encoding(const char* input) {
+	_iconv_t cd = iconv_open("UTF-8", "SHIFT-JIS");
+	if (cd == (iconv_t)-1) {
+		perror("iconv_open");
+		return "";
+	}
 
-    size_t inbytesleft = std::strlen(input);
-    size_t outbytesleft = inbytesleft * 4; // UTF-8は最大4バイト/文字
-    std::vector<char> output(outbytesleft);
-    
-    char* inbuf = const_cast<char*>(input); // iconvはchar**を要求するため
-    char* outbuf = output.data();
-    char* outbuf_start = outbuf;
+	size_t inbytesleft = strlen(input);
+	size_t outbytesleft = inbytesleft * 4; // UTF-8は最大4バイト/文字
+	std::vector<char> output(outbytesleft);
+	
+	char* inbuf = const_cast<char*>(input); // iconvはchar**を要求するため
+	char* outbuf = output.data();
+	char* outbuf_start = outbuf;
 
-    if (iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft) == (size_t)-1) {
-        perror("iconv");
-        iconv_close(cd);
-        return "";
-    }
+	if (iconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft) == (size_t)-1) {
+		perror("iconv");
+		iconv_close(cd);
+		return "";
+	}
 
-    iconv_close(cd);
-    return std::string(outbuf_start, output.size() - outbytesleft);
+	iconv_close(cd);
+	return std::string(outbuf_start, output.size() - outbytesleft);
 }
 
 void init_measure_structure() {
@@ -481,7 +481,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					if (isShiftJIS(buf + 6)) {
 						std::string tmp = convert_encoding(buf + 6);
-						strlcpy(List->title, tmp, tmp.length());
+						strlcpy(List->title, tmp.data(), tmp.length());
 					}
 					else strlcpy(List->title, buf + 6, strlen(buf) - 7);
 				}
@@ -491,7 +491,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 				if (buf[9] != '\n' && buf[9] != '\r') {
 					if (isShiftJIS(buf + 9)) {
 						std::string tmp = convert_encoding(buf + 9);
-						strlcpy(List->subtitle, tmp, tmp.length());
+						strlcpy(List->subtitle, tmp.data(), tmp.length());
 					}
 					else strlcpy(List->subtitle, buf + 9, strlen(buf) - 10);
 				}
@@ -502,7 +502,7 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 				if (buf[5] != '\n' && buf[5] != '\r') {
 					if (isShiftJIS(buf + 5)) {
 						std::string tmp = convert_encoding(buf + 5);
-						strlcpy(List->wave, tmp, tmp.length());
+						strlcpy(List->wave, tmp.data(), tmp.length());
 					}
 					else strlcpy(List->wave, buf + 5, strlen(buf) - 6);
 				}
