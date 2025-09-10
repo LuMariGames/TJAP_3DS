@@ -19,56 +19,6 @@ MEASURE_T Measure[MEASURE_MAX];
 void get_command_value(char* buf, COMMAND_T *Command), sort_measure_insertion(MEASURE_T t[], int array_size);
 double calc_first_measure_time();
 
-bool isShiftJIS(const char* str) {
-    size_t len = strlen(str);
-    for (size_t i = 0; i < len; ++i) {
-        unsigned char c = static_cast<unsigned char>(str[i]);
-        // Shift-JISの1バイト目の範囲チェック
-        if ((c >= 0x81 && c <= 0x9F) || (c >= 0xE0 && c <= 0xEF)) {
-            // Shift-JISの2バイト目の範囲チェック
-            if (i + 1 < len) {
-                unsigned char next = static_cast<unsigned char>(str[i + 1]);
-                if ((next >= 0x40 && next <= 0x7E) || (next >= 0x80 && next <= 0xFC)) {
-                    i++; // 2バイト文字なのでインデックスを進める
-                } else {
-                    return false;
-                }
-            } else {
-                return false; // 文字列の途中で終了している
-            }
-        } else if (c < 0x20 || c > 0x7E) {
-            // 制御文字やASCII範囲外は不正
-            return false;
-        }
-    }
-    return true;
-}
-
-std::string convert_encoding(const char* input) {
-	_iconv_t cd = lconv_open("UTF-8", "SHIFT-JIS");
-	if (cd == (_iconv_t)-1) {
-		perror("iconv_open");
-		return "";
-	}
-
-	size_t inbytesleft = strlen(input);
-	size_t outbytesleft = inbytesleft * 4; // UTF-8は最大4バイト/文字
-	std::vector<char> output(outbytesleft);
-	
-	char* inbuf = const_cast<char*>(input); // iconvはchar**を要求するため
-	char* outbuf = output.data();
-	char* outbuf_start = outbuf;
-
-	if (lconv(cd, &inbuf, &inbytesleft, &outbuf, &outbytesleft) == (size_t)-1) {
-		perror("iconv");
-		lconv_close(cd);
-		return "";
-	}
-
-	lconv_close(cd);
-	return std::string(outbuf_start, output.size() - outbytesleft);
-}
-
 void init_measure_structure() {
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
@@ -156,7 +106,6 @@ void load_tja_head(int course,LIST_T Song) {
 
 			++cnt;
 			temp = (char *)malloc((strlen(buf) + 1));
-
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
 			if (isCourseMatch && Option.player == 1 && strstr(buf, "#START P1") == buf) {
@@ -459,7 +408,6 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 	snprintf(List->title, sizeof(List->title), "No Title");
 	snprintf(List->wave, sizeof(List->wave), "audio.ogg");
-
 	for (int i = 0; i < 5; ++i) {
 		List->level[i] = 0;
 		List->course[i] = false;
@@ -479,32 +427,20 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					if (isShiftJIS(buf + 6)) {
-						std::string tmp = convert_encoding(buf + 6);
-						strlcpy(List->title, tmp.data(), tmp.length());
-					}
-					else strlcpy(List->title, buf + 6, strlen(buf) - 7);
+					strlcpy(List->title, buf + 6, strlen(buf) - 7);
 				}
 				continue;
 			}
 			if (strstr(buf, "SUBTITLE:") == buf) {
 				if (buf[9] != '\n' && buf[9] != '\r') {
-					if (isShiftJIS(buf + 9)) {
-						std::string tmp = convert_encoding(buf + 9);
-						strlcpy(List->subtitle, tmp.data(), tmp.length());
-					}
-					else strlcpy(List->subtitle, buf + 9, strlen(buf) - 10);
+					strlcpy(List->subtitle, buf + 9, strlen(buf) - 10);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "WAVE:") == buf) {
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					if (isShiftJIS(buf + 5)) {
-						std::string tmp = convert_encoding(buf + 5);
-						strlcpy(List->wave, tmp.data(), tmp.length());
-					}
-					else strlcpy(List->wave, buf + 5, strlen(buf) - 6);
+					strlcpy(List->wave, buf + 5, strlen(buf) - 6);
 				}
 				continue;
 			}
@@ -538,7 +474,6 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 			++cnt;
 		}
 	}
-
 	free(temp);
 	fclose(fp);
 }
@@ -861,7 +796,6 @@ void load_tja_notes(int course, LIST_T Song) {
 		}
 
 		MeasureMaxNumber = tja_cnt;
-
 		for (int i = 0; i < MeasureMaxNumber; ++i) {	//次の小節の判定時に発動する命令の調整
 
 			switch (Measure[i].command) {
@@ -877,7 +811,6 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		//基本天井点を計算
 		calc_base_score(Measure, tja_notes);
-
 		fclose(fp);
 		MainFirstMeasureTime = calc_first_measure_time();
 		sort_measure_insertion(Measure, MEASURE_MAX);
@@ -900,7 +833,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 
 	OPTION_T Option;
 	get_option(&Option);
-
 	bool isComment = false;
 	int comment, space, length;
 
@@ -908,10 +840,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 
 		length = strlen(buf);
 		comment = 0;
-
 		char* command = (char *)malloc((strlen(buf) + 1));
 		char* value = (char *)malloc((strlen(buf) + 1));
-
 		Command->notes = buf;
 
 		if (strstr(buf, "//") != NULL) {	//コメント処理
@@ -920,11 +850,9 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			strlcpy(command, buf + 1, comment);
 			isComment = true;
 		}
-
 		if (strstr(buf, " ") != NULL) {		//値処理
 
 			space = strstr(buf, " ") - buf;
-
 			if (space < comment && isComment) {	//値ありコメントあり
 
 				strlcpy(command, buf + 1, space);
@@ -947,8 +875,6 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 
 			strlcpy(value, "0", 1);
 		}
-
-
 		Command->command_s = command;
 		Command->value_s = value;
 		Command->val[0] = 0;
@@ -1039,11 +965,9 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 	}
 	else Command->knd = -1;
 }
-
 double get_FirstMeasureTime() {
 	return MainFirstMeasureTime;
 }
-
 int get_MeasureId_From_OriginalId(int id) {
 
 	for (int i = 0; i < MEASURE_MAX; ++i) {
