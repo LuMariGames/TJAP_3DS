@@ -497,8 +497,8 @@ int main() {
 				else if (keyhold & KEY_DRIGHT) ++khdcnt;
 				else khdcnt = 0;
 				if (key & KEY_DUP) toggle_auto();
-				if (key & KEY_DLEFT && khdcnt < -60) min_measure();
-				if ((key & KEY_DRIGHT && khdcnt > 60) && (Option.measure < get_edme())) plus_measure();
+				if (key & KEY_DLEFT || khdcnt < -60) min_measure();
+				if ((key & KEY_DRIGHT || khdcnt > 60) && (Option.measure < get_edme())) plus_measure();
 			}
 
 			if (cnt == 0) {
@@ -749,3 +749,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
