@@ -72,7 +72,7 @@ AccessControlInfo:
   IdealProcessor                : 0
   AffinityMask                  : 1
   Priority                      : 16
-  MaxCpu                        : 0
+  MaxCpu                        : 0xFF
   HandleTableSize               : 0x200
   DisableDebug                  : true
   EnableForceDebug              : false
@@ -86,7 +86,7 @@ AccessControlInfo:
   
   # New3DS Exclusive Process Settings
   SystemModeExt                 : Legacy # Legacy(Default)/124MB/178MB  Legacy:Use Old3DS SystemMode
-  CpuSpeed                      : 804MHz # 268MHz(Default)/804MHz
+  CpuSpeed                      : 268MHz # 268MHz(Default)/804MHz
   EnableL2Cache                 : true # false(default)/true
   CanAccessCore2                : true
 
