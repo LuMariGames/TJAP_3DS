@@ -1301,7 +1301,7 @@ int sign(double A) {	//正か負かの判別
 	return (A > 0) - (A < 0);
 }
 void newfont() {
-	font[0] = C2D_FontLoad("romfs:/gfx/main.bcfnt");
+	font = C2D_FontLoad("romfs:/gfx/main.bcfnt");
 	Notes.reserve(2048);
 	Notes.resize(64);
 }
