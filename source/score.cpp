@@ -255,26 +255,6 @@ void update_score(int knd) {
 	else CurrentPrecision = 0;
 }
 
-/*void debug_score() {
-
-	snprintf(buf_score, sizeof(buf_score), "Scoremode:%d   Init:%d   Diff:%d", TJA_Header.scoremode, init, diff);
-	draw_debug(0, 10, buf_score);
-	snprintf(buf_score, sizeof(buf_score), "%s %s", TJA_Header.title, TJA_Header.subtitle);
-	draw_debug(0, 30, buf_score);
-	snprintf(buf_score, sizeof(buf_score), "Course:%d    Level:%d    %s", TJA_Header.course, TJA_Header.level, TJA_Header.wave);
-	draw_debug(0, 40, buf_score);
-	snprintf(buf_score, sizeof(buf_score), "Score:%d    %dCombo    diff:%d", TotalScore, combo, ScoreDiff);
-	draw_debug(0, 150, buf_score);
-	snprintf(buf_score, sizeof(buf_score), "Current   Score:%d    Roll:%d    Precision:%.1f", CurrentScore, CurrentTotalRollCount, CurrentPrecision);
-	draw_debug(0, 160, buf_score);
-	snprintf(buf_score, sizeof(buf_score), "良:%.3f 可:%.3f 不可:%.3f ゲージ%.3f", Gauge.perfect, Gauge.nice, Gauge.bad, Gauge.score);
-	draw_debug(0, 170, buf_score);
-	if (isGOGO == true) {
-		snprintf(buf_score, sizeof(buf_score), "GOGOTIME");
-		draw_debug(0, 190, buf_score);
-	}
-}*/
-
 void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 
