@@ -293,7 +293,7 @@ int main() {
 			offset = TJA_Header.offset + Option.offset;
 			notes_cnt = -1, BeforeCombo = -1, measure = Option.measure;
 			isNotesStart = false, isMusicStart = false, isPlayMain = false;
-			FirstMeasureTime = INT_MAX, CurrentTimeMain = -1000;
+			FirstMeasureTime = INT_MAX, CurrentTimeMain = -2147483640;
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) {
@@ -750,5 +750,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
