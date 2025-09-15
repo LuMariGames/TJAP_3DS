@@ -507,7 +507,7 @@ int round_down(int arg) {
 
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
-	int NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,RCnt = 0,
+	int NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,
 	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollCnt = 0,RollKnd = 0;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,roll_start_time = 0,roll_end_time = 0;
@@ -521,29 +521,25 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	switch (TJA_Header.course) {	//基本天井点を設定
 	case 0:	//かんたん
 		BaseCeilingPoint = 280000 + level * 20000;
-		if (scoremode == 3) TmpBaseCeilingPoint = 1000000;
 		break;
 	case 1:	//ふつう
 		BaseCeilingPoint = 350000 + level * 50000;
-		if (scoremode == 3) TmpBaseCeilingPoint = 1000000;
 		break;
 	case 2:	//むずかしい
 		BaseCeilingPoint = 500000 + level * 50000;
-		if (scoremode == 3) TmpBaseCeilingPoint = 1000000;
 		break;
 	case 3:	//おに
 	case 4:
 	case 5:	//太鼓タワー
 		if (level == 10) BaseCeilingPoint = 1200000;
 		else BaseCeilingPoint = 650000 + level * 50000;
-		if (scoremode == 3) TmpBaseCeilingPoint = 1000000;
 		break;
 	case 6:	//段位道場
 		BaseCeilingPoint = 3000000;
-		if (scoremode == 3) TmpBaseCeilingPoint = 3000000;
 		break;
 	}
 	TmpBaseCeilingPoint = BaseCeilingPoint;
+	if (scoremode == 3 && TJA_Header.course != 6) TmpBaseCeilingPoint = 1000000;
 
 	while (isEND == false && i < MEASURE_MAX && Measure[i].flag == true) {	//小節
 
@@ -619,7 +615,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				else if (knd == NOTES_BALLOON) {		//風船
 
 					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
-					RCnt += TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt];
+					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -651,7 +647,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 							}
 							if (scoremode == 3) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * level);
-								RCnt += RollCnt;
+								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
@@ -667,7 +663,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 							}
 							if (scoremode == 3) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * level);
-								RCnt += RollCnt;
+								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						roll_start_time = 0;
