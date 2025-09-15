@@ -689,10 +689,19 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		init = 1000;
 		diff = 1000;
 	}
-	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
+	else if (TJA_Header.scoreinit == -1 && TJA_Header.course != 6 && scoremode == 3) {
 		int scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < BaseCeilingPoint) {
-			scoreNiji += 1;
+		while (scoretmp < 1000000) {
+			scoreNiji += 10;
+			scoretmp = (combo * scoreNiji) + (RCnt * 100);
+		}
+		init = scoreNiji;
+		diff = 0;
+	}
+	else if (TJA_Header.scoreinit == -1 && TJA_Header.course == 6 && scoremode == 3) {
+		int scoreNiji = 0,scoretmp = 0;
+		while (scoretmp < 3000000) {
+			scoreNiji += 10;
 			scoretmp = (combo * scoreNiji) + (RCnt * 100);
 		}
 		init = scoreNiji;
