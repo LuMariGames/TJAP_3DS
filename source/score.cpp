@@ -686,7 +686,12 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = 1000;
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
-		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1) * 10;
+		int scoreNiji = 0,scoretmp = 0;
+		while (scoretmp < TmpBaseCeilingPoint) {
+			scoreNiji += 1;
+			scoretmp = combo * scoreNiji;
+		}
+		init = scoreNiji - 10;
 		diff = 0;
 	}
 
