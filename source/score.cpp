@@ -693,7 +693,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		int scoreNiji = 0,scoretmp = 0;
 		while (scoretmp < 1000000) {
 			scoreNiji += 10;
-			scoretmp = (combo * scoreNiji) + (RCnt * 100);
+			scoretmp = (combo * scoreNiji) - (RCnt * 100);
 		}
 		init = scoreNiji;
 		diff = 0;
@@ -702,7 +702,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		int scoreNiji = 0,scoretmp = 0;
 		while (scoretmp < 3000000) {
 			scoreNiji += 10;
-			scoretmp = (combo * scoreNiji) + (RCnt * 100);
+			scoretmp = (combo * scoreNiji) - (RCnt * 100);
 		}
 		init = scoreNiji;
 		diff = 0;
