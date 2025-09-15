@@ -521,25 +521,28 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	switch (TJA_Header.course) {	//基本天井点を設定
 	case 0:	//かんたん
 		BaseCeilingPoint = 280000 + level * 20000;
+		if (scoremode == 3) BaseCeilingPoint = 1000000;
 		break;
 	case 1:	//ふつう
 		BaseCeilingPoint = 350000 + level * 50000;
+		if (scoremode == 3) BaseCeilingPoint = 1000000;
 		break;
 	case 2:	//むずかしい
 		BaseCeilingPoint = 500000 + level * 50000;
+		if (scoremode == 3) BaseCeilingPoint = 1000000;
 		break;
 	case 3:	//おに
 	case 4:
 	case 5:	//太鼓タワー
 		if (level == 10) BaseCeilingPoint = 1200000;
 		else BaseCeilingPoint = 650000 + level * 50000;
+		if (scoremode == 3) BaseCeilingPoint = 1000000;
 		break;
 	case 6:	//段位道場
 		BaseCeilingPoint = 3000000;
 		break;
 	}
 	TmpBaseCeilingPoint = BaseCeilingPoint;
-	if (scoremode == 3 && TJA_Header.course != 6) TmpBaseCeilingPoint = 1000000;
 
 	while (isEND == false && i < MEASURE_MAX && Measure[i].flag == true) {	//小節
 
@@ -686,7 +689,13 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = 1000;
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
-		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + 0.99999999) * 10;
+		int scoreNiji = 0,scoretmp = 0;
+		while (scoretmp < TmpBaseCeilingPoint) {
+			scoreNiji += 10;
+			scoretmp = combo * scoreNiji;
+		}
+		scoreNiji -= 10;
+		init = scoreNiji;
 		diff = 0;
 	}
 
