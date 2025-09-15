@@ -691,7 +691,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
 		int scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < 1000000) {
+		while (scoretmp < BaseCeilingPoint) {
 			scoreNiji += 1;
 			scoretmp = (combo * scoreNiji) + (RCnt * 100);
 		}
