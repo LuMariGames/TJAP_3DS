@@ -686,7 +686,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = 1000;
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
-		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + ((BalloonCnt == 0) ? 0.99999999 : 0) * 10);
+		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + ((BalloonCnt == 0) ? 0.99999999 : 0)) * 10;
 		diff = 0;
 	}
 
