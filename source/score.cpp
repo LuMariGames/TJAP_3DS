@@ -689,22 +689,8 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		init = 1000;
 		diff = 1000;
 	}
-	else if (TJA_Header.scoreinit == -1 && TJA_Header.course != 6 && scoremode == 3) {
-		int scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < 1000000) {
-			scoreNiji += 10;
-			scoretmp = (combo * scoreNiji) - (RCnt * 100);
-		}
-		init = scoreNiji;
-		diff = 0;
-	}
-	else if (TJA_Header.scoreinit == -1 && TJA_Header.course == 6 && scoremode == 3) {
-		int scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < 3000000) {
-			scoreNiji += 10;
-			scoretmp = (combo * scoreNiji) - (RCnt * 100);
-		}
-		init = scoreNiji;
+	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
+		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + 0.99999999) * 10;
 		diff = 0;
 	}
 
