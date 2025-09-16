@@ -1,4 +1,4 @@
-﻿#include "header.h"
+#include "header.h"
 #include "notes.h"
 #include "tja.h"
 #include "main.h"
@@ -507,7 +507,7 @@ int round_down(int arg) {
 
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
-	static int NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,
+	int NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,
 	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollCnt = 0,RollKnd = 0;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,roll_start_time = 0,roll_end_time = 0;
@@ -689,13 +689,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = 1000;
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
-		static int scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < TmpBaseCeilingPoint) {
-			scoreNiji += 10;
-			scoretmp = combo * scoreNiji;
-		}
-		scoreNiji -= 10;
-		init = scoreNiji;
+		init = (int)((double)TmpBaseCeilingPoint / (double)combo * 0.1 + 0.99999999) * 10;
 		diff = 0;
 	}
 
