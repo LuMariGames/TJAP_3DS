@@ -507,7 +507,7 @@ int round_down(int arg) {
 
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
-	int64_t NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,
+	static int NotesCount = 0,i = 0,combo = 0,DiffTmp = 0,BalloonCnt = 0,
 	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollCnt = 0,RollKnd = 0;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,roll_start_time = 0,roll_end_time = 0;
@@ -640,12 +640,12 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 360;
+								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 360;
 								else TmpBaseCeilingPoint -= RollCnt * 300;
 							}
 							if (scoremode == 2) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 120;
+								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 120;
 								else TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 							if (scoremode == 3) {
@@ -656,12 +656,12 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 430 * gogo;
+								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 430 * gogo;
 								else TmpBaseCeilingPoint -= RollCnt * 360 * gogo;
 							}
 							if (scoremode == 2) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo == true) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
+								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
 								else TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
 							if (scoremode == 3) {
@@ -689,7 +689,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = 1000;
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
-		int64_t scoreNiji = 0,scoretmp = 0;
+		static int scoreNiji = 0,scoretmp = 0;
 		while (scoretmp < TmpBaseCeilingPoint) {
 			scoreNiji += 10;
 			scoretmp = combo * scoreNiji;
