@@ -58,7 +58,7 @@ RSF_PATH				:= resource/app.rsf
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -O0 -mword-relocations -finline-functions -fomit-frame-pointer \
+CFLAGS	:=	-g -Wall -O2 -mword-relocations -finline-functions -fomit-frame-pointer \
 			-ffunction-sections -ffast-math \
 			$(ARCH)
 
