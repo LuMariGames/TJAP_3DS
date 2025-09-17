@@ -8,9 +8,10 @@
 extern int gaugelife, redCdn[4];
 extern char *exam[4][4];
 bool isGOGO;
-int combo, init, diff, DiffMul, scoremode, HitScore, ScoreDiff, BaseCeilingPoint, courselife, TotalPerfectCount, TotalNiceCount, TotalBadCount,
-CurrentScore, TotalScore, CurrentTotalRollCount, CurrentRollCount, TotalRollCount, TotalCount,
-CurrentPerfectCount, CurrentNiceCount, CurrentBadCount, CurrentBalloonCount, CurrentDaiNotes, MaxComboCount;
+int combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,TotalPerfectCount,TotalNiceCount,TotalBadCount,
+CurrentScore,TotalScore,CurrentTotalRollCount,CurrentRollCount,TotalRollCount,TotalCount,
+CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,CurrentBalloonCount,CurrentDaiNotes,MaxComboCount;
+volatile double BaseCeilingPoint;
 double tmp, Precision, CurrentPrecision;
 TJA_HEADER_T TJA_Header;
 char buf_score[160];
@@ -510,8 +511,9 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,
 	NotesCountMax = 0,RollCnt = 0,RollKnd = 0;
 	bool isEND = false;
-	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,combo = 0,
-	TmpBaseCeilingPoint = 0,roll_start_time = 0,roll_end_time = 0;
+	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
+	roll_start_time = 0,roll_end_time = 0;
+	volatile double combo = 0,TmpBaseCeilingPoint = 0;
 	COMMAND_T Command;
 
 	int PerfectNotesCount = 0;	//魂ゲージの伸び計算用
