@@ -513,7 +513,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
-	volatile double RollCnt = 0;
+	volatile double RollCnt = 0,RCnt = 0;
 	COMMAND_T Command;
 
 	int PerfectNotesCount = 0;	//魂ゲージの伸び計算用
@@ -670,6 +670,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						}
 						roll_start_time = 0;
 						roll_end_time = 0;
+						RCnt -= RollCnt;
 						RollCnt = 0;
 					}
 				}
@@ -677,7 +678,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		}
 		++i;
 	}
-
+	if (TmpBaseCeilingPoint > BaseCeilingPoint) TmpBaseCeilingPoint = BaseCeilingPoint - RCnt;
 
 	if ((TJA_Header.scoreinit == -1 || TJA_Header.scorediff == -1) && (scoremode == 1 || scoremode == 2)) {	//新配点と旧配点
 		diff = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / (init_cnt * 4 + diff_cnt);
