@@ -508,12 +508,12 @@ int round_down(int arg) {
 
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
-	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,
-	NotesCountMax = 0,RollCnt = 0,RollKnd = 0;
+	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,combo = 0,
+	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
-	volatile double combo = 0,TmpBaseCeilingPoint = 0;
+	volatile double RollCnt = 0;
 	COMMAND_T Command;
 
 	int PerfectNotesCount = 0;	//魂ゲージの伸び計算用
@@ -621,7 +621,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				else if (knd == NOTES_BALLOON) {		//風船
 
 					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
-					if (scoremode == 3) BaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
+					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -642,34 +642,30 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 360;
-								else TmpBaseCeilingPoint -= RollCnt * 300;
+								RollCnt = (roll_end_time - roll_start_time) * 15.0;
+								TmpBaseCeilingPoint -= (int)(RollCnt * 300 * gogo);
 							}
 							if (scoremode == 2) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 120;
-								else TmpBaseCeilingPoint -= RollCnt * 100;
+								RollCnt = (roll_end_time - roll_start_time) * 15.0;
+								TmpBaseCeilingPoint -= (int)(RollCnt * 100 * gogo);
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * level);
-								BaseCeilingPoint -= RollCnt * 100;
+								RollCnt = (roll_end_time - roll_start_time) * level;
+								TmpBaseCeilingPoint -= (int)(RollCnt * 100);
 							}
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 430 * gogo;
-								else TmpBaseCeilingPoint -= RollCnt * 360 * gogo;
+								RollCnt = (roll_end_time - roll_start_time) * 15.0;
+								TmpBaseCeilingPoint -= (int)(RollCnt * 360 * gogo);
 							}
 							if (scoremode == 2) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
-								if (gogo > 1.1) TmpBaseCeilingPoint -= RollCnt * 240 * gogo;
-								else TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
+								RollCnt = (roll_end_time - roll_start_time) * 15.0;
+								TmpBaseCeilingPoint -= (int)(RollCnt * 200 * gogo);
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * level);
-								BaseCeilingPoint -= RollCnt * 100;
+								RollCnt = (roll_end_time - roll_start_time) * level;
+								TmpBaseCeilingPoint -= (int)(RollCnt * 100);
 							}
 						}
 						roll_start_time = 0;
@@ -693,10 +689,11 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
 		double scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < BaseCeilingPoint) {
+		while (scoretmp < TmpBaseCeilingPoint) {
 			scoreNiji += 10;
 			scoretmp = combo * scoreNiji;
 		}
+		scoreNiji -= 10;
 		init = scoreNiji;
 		diff = 0;
 	}
