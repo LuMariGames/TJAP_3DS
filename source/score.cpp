@@ -621,7 +621,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				else if (knd == NOTES_BALLOON) {		//風船
 
 					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
-					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
+					if (scoremode == 3) BaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -653,7 +653,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 							}
 							if (scoremode == 3) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * level);
-								TmpBaseCeilingPoint -= RollCnt * 100;
+								BaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
@@ -669,7 +669,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 							}
 							if (scoremode == 3) {
 								RollCnt = (int)((roll_end_time - roll_start_time) * level);
-								TmpBaseCeilingPoint -= RollCnt * 100;
+								BaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						roll_start_time = 0;
@@ -693,7 +693,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
 		double scoreNiji = 0,scoretmp = 0;
-		while (scoretmp < TmpBaseCeilingPoint) {
+		while (scoretmp < BaseCeilingPoint) {
 			scoreNiji += 10;
 			scoretmp = combo * scoreNiji;
 		}
