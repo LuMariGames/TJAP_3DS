@@ -509,7 +509,7 @@ int round_down(int arg) {
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
 	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,combo = 0,
-	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0,RollCnt = 0,RCnt = 0;
+	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0,RollCnt = 0;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
@@ -556,9 +556,9 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			continue;
 		}
 
-		if (NotesCount == 0 && notes[i][0] == '#') {
+		if (NotesCount == 0 && notes[Measure[i].notes][0] == '#') {
 
-			get_command_value(notes[i], &Command);
+			get_command_value(notes[Measure[i].notes], &Command);
 
 			switch (Command.knd) {
 			case COMMAND_GOGOSTART:
@@ -579,7 +579,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			continue;
 		}
 		if (scoremode == 3) gogo = 1.0;
-		while (notes[i][NotesCount] != ',' && notes[i][NotesCount] != '\n' && notes[i][NotesCount] != '/') {
+		while (notes[Measure[i].notes][NotesCount] != ',' && notes[Measure[i].notes][NotesCount] != '\n' && notes[Measure[i].notes][NotesCount] != '/') {
 
 			++NotesCount;
 		}
@@ -621,17 +621,16 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100 + 100);
-					RCnt += TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt];
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
 
-					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
+					roll_start_time = Measure[i].judge_time + (240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax);
 					RollKnd = NOTES_ROLL;
 				}
 				else if (knd == NOTES_BIGROLL) {		//大連打
 
-					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
+					roll_start_time = Measure[i].judge_time + (240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax);
 					RollKnd = NOTES_BIGROLL;
 				}
 				else if (knd == NOTES_ROLLEND) {
@@ -639,7 +638,6 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 					if (roll_start_time != 0) {
 
 						roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
-
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
 								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 15.0);
@@ -670,7 +668,6 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						}
 						roll_start_time = 0;
 						roll_end_time = 0;
-						RCnt -= RollCnt;
 						RollCnt = 0;
 					}
 				}
@@ -678,7 +675,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		}
 		++i;
 	}
-	if (TmpBaseCeilingPoint > BaseCeilingPoint) TmpBaseCeilingPoint = BaseCeilingPoint - RCnt;
+	if (TmpBaseCeilingPoint > BaseCeilingPoint || TmpBaseCeilingPoint < 0) TmpBaseCeilingPoint = BaseCeilingPoint;
 
 	if ((TJA_Header.scoreinit == -1 || TJA_Header.scorediff == -1) && (scoremode == 1 || scoremode == 2)) {	//新配点と旧配点
 		diff = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / (init_cnt * 4 + diff_cnt);
