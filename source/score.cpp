@@ -509,11 +509,10 @@ int round_down(int arg) {
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
 	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,combo = 0,
-	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0;
+	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0,RollCnt = 0,RCnt = 0;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
-	volatile int RollCnt = 0,RCnt = 0;
 	COMMAND_T Command;
 
 	int PerfectNotesCount = 0;	//魂ゲージの伸び計算用
@@ -622,7 +621,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100 + 100);
-					RCnt -= TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt];
+					RCnt += TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt];
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -691,7 +690,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			scoreNiji += 10;
 			scoretmp = combo * scoreNiji;
 		}
-		init = scoreNiji;
+		init = RCnt;
 		diff = 0;
 	}
 	else if (scoremode == 0) {
