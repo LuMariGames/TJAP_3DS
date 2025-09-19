@@ -513,7 +513,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
-	volatile double RollCnt = 0,RCnt = 0;
+	volatile int RollCnt = 0,RCnt = 0;
 	COMMAND_T Command;
 
 	int PerfectNotesCount = 0;	//魂ゲージの伸び計算用
@@ -642,30 +642,30 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
-								RollCnt = (roll_end_time - roll_start_time) * 15.0;
-								TmpBaseCeilingPoint -= (int)(RollCnt * 300 * gogo);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								TmpBaseCeilingPoint -= RollCnt * 300 * gogo;
 							}
 							if (scoremode == 2) {
-								RollCnt = (roll_end_time - roll_start_time) * 15.0;
-								TmpBaseCeilingPoint -= (int)(RollCnt * 100 * gogo);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								TmpBaseCeilingPoint -= RollCnt * 100 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (roll_end_time - roll_start_time) * level;
-								TmpBaseCeilingPoint -= (int)(RollCnt * 100);
+								RollCnt = (int)((roll_end_time - roll_start_time) * level);
+								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
-								RollCnt = (roll_end_time - roll_start_time) * 15.0;
-								TmpBaseCeilingPoint -= (int)(RollCnt * 360 * gogo);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								TmpBaseCeilingPoint -= RollCnt * 360 * gogo;
 							}
 							if (scoremode == 2) {
-								RollCnt = (roll_end_time - roll_start_time) * 15.0;
-								TmpBaseCeilingPoint -= (int)(RollCnt * 200 * gogo);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (roll_end_time - roll_start_time) * level;
-								TmpBaseCeilingPoint -= (int)(RollCnt * 100);
+								RollCnt = (int)((roll_end_time - roll_start_time) * level);
+								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						roll_start_time = 0;
