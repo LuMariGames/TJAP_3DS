@@ -588,7 +588,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 		for (int j = 0; j < NotesCount; ++j) {	//ノーツ
 
-			int knd = ctoi(notes[i][j]);
+			int knd = ctoi(notes[Measure[i].notes][j]);
 
 			if (knd != 0) {
 
