@@ -642,29 +642,29 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 300 * gogo;
 							}
 							if (scoremode == 2) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 100 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * level);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * level);
 								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 360 * gogo;
 							}
 							if (scoremode == 2) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)((roll_end_time - roll_start_time) * level);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * level);
 								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
