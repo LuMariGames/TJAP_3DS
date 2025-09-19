@@ -622,6 +622,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 					if (scoremode != 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 300 + 5000) * gogo;
 					if (scoremode == 3) TmpBaseCeilingPoint -= (TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt] * 100);
+					RCnt += TJA_Header.balloon[((Measure[i].branch == -1) ? 0 : Measure[i].branch - 11)][BalloonCnt];
 					++BalloonCnt;
 				}
 				else if (knd == NOTES_ROLL) {			//連打
@@ -684,19 +685,18 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 		diff = (TmpBaseCeilingPoint - (int)(combo / 100) * 10000) / (init_cnt * 4 + diff_cnt);
 		init = diff * 4;
 	}
-	else if (scoremode == 0) {
-		init = 1000;
-		diff = 1000;
-	}
 	else if (TJA_Header.scoreinit == -1 && scoremode == 3) {
 		double scoreNiji = 0,scoretmp = 0;
 		while (scoretmp < TmpBaseCeilingPoint) {
 			scoreNiji += 10;
 			scoretmp = combo * scoreNiji;
 		}
-		scoreNiji -= 10;
 		init = scoreNiji;
 		diff = 0;
+	}
+	else if (scoremode == 0) {
+		init = 1000;
+		diff = 1000;
 	}
 
 	Gauge.perfect = 10000.0 / PerfectNotesCount;
