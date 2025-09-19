@@ -687,7 +687,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			scoreNiji += 10;
 			scoretmp = combo * scoreNiji;
 		}
-		init = RCnt;
+		init = scoreNiji;
 		diff = 0;
 	}
 	else if (scoremode == 0) {
