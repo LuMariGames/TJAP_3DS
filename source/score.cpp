@@ -508,8 +508,8 @@ int round_down(int arg) {
 
 void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOTES_MEASURE_MAX]) {	//初項と公差を計算　魂ゲージの伸びも
 
-	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,combo = 0,
-	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0,RollCnt = 0;
+	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,combo = 0,NCnt = 0,
+	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0,RollCnt = 0,MCnt = -1;
 	bool isEND = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
@@ -625,17 +625,17 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_ROLL) {			//連打
 
-					roll_start_time = Measure[i].judge_time + (240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax);
+					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * (NCnt + j / NotesCountMax);
 					RollKnd = NOTES_ROLL;
 				}
 				else if (knd == NOTES_BIGROLL) {		//大連打
 
-					roll_start_time = Measure[i].judge_time + (240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax);
+					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * (NCnt + j / NotesCountMax);
 					RollKnd = NOTES_BIGROLL;
 				}
 				else if (knd == NOTES_ROLLEND) {
 
-					roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * i / NotesCountMax;
+					roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * (NCnt + j / NotesCountMax);
 					if (roll_start_time < roll_end_time) {
 
 						if (RollKnd == NOTES_ROLL) {
@@ -673,6 +673,10 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 			}
 		}
+		if (Measure[i].firstmeasure != -1 && MCnt == Measure[i].firstmeasure) NCnt += NotesCount;
+		else if (Measure[i].firstmeasure != -1 && MCnt != Measure[i].firstmeasure) NCnt == NotesCount;
+		else NCnt = 0;
+		MCnt = Measure[i].firstmeasure;
 		++i;
 	}
 
