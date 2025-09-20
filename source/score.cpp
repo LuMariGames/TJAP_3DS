@@ -625,19 +625,19 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 				}
 				else if (knd == NOTES_ROLL) {			//連打
 
-					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * (NCnt + j / NotesCountMax);
+					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * ((NCnt + j) / NotesCountMax);
 					RollKnd = NOTES_ROLL;
 				}
 				else if (knd == NOTES_BIGROLL) {		//大連打
 
-					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * (NCnt + j / NotesCountMax);
+					roll_start_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * ((NCnt + j) / NotesCountMax);
 					RollKnd = NOTES_BIGROLL;
 				}
 				else if (knd == NOTES_ROLLEND) {
 
 					if (roll_start_time != 0) {
 
-						roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * (NCnt + j / NotesCountMax);
+						roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * ((NCnt + j) / NotesCountMax);
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
 								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 15.0);
