@@ -662,7 +662,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 								TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)ceil((roll_end_time - roll_start_time) * level);
+								RollCnt = (int)ceil((roll_end_time - roll_start_time) * 10.0);
 								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
