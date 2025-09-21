@@ -806,7 +806,7 @@ void load_tja_notes(int course, LIST_T Song) {
 			case COMMAND_GOGOEND:
 				int n = Measure[i].notes + 1, j = 0;
 				while (n <= MeasureMaxNumber && tja_notes[n][0] == '#') ++n;
-				while (n != Measure[j].notes) ++j;
+				while (n < MeasureMaxNumber && n != Measure[j].notes) ++j;
 				Measure[i].judge_time = Measure[j].judge_time;
 				break;
 			}
