@@ -114,7 +114,7 @@ void load_tja_head(int course,LIST_T Song) {
 			else if (isCourseMatch && Option.player == 2 && Current_Header.style == 2 && strstr(buf, "#START P2") == buf) {
 				break;
 			}
-			else if (isCourseMatch && Option.player == 0 && strstr(buf, "#START") == buf) {
+			else if (isCourseMatch && Current_Header.style == 1 && strstr(buf, "#START") == buf) {
 				break;
 			}
 
