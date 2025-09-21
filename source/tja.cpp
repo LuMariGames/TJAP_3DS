@@ -108,13 +108,13 @@ void load_tja_head(int course,LIST_T Song) {
 			temp = (char *)malloc((strlen(buf) + 1));
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
-			if (isCourseMatch && Option.player == 1 && strstr(buf, "#START P1") == buf) {
+			if (isCourseMatch && Option.player == 1 && Current_Header.style == 2 && strstr(buf, "#START P1") == buf) {
 				break;
 			}
-			else if (isCourseMatch && Option.player == 2 && strstr(buf, "#START P2") == buf) {
+			else if (isCourseMatch && Option.player == 2 && Current_Header.style == 2 && strstr(buf, "#START P2") == buf) {
 				break;
 			}
-			else if (isCourseMatch && Option.player == 0 && strstr(buf, "#START") == buf) {
+			else if (isCourseMatch && Option.player == 0 && Current_Header.style == 1 &&strstr(buf, "#START") == buf) {
 				break;
 			}
 
@@ -152,7 +152,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "LEVEL:") == buf) {
+			if (strstr(buf, "LEVEL:") == buf) { //モード毎に難易度を決めるタグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
 				strlcpy(temp, buf + 6, strlen(buf) - 7);
 				Current_Header.level = atoi(temp);
@@ -160,7 +160,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "BPM:") == buf) {
+			if (strstr(buf, "BPM:") == buf) { //最初のBPMを決めるタグ
 				if (buf[4] != '\n' && buf[4] != '\r') {
 					strlcpy(temp, buf + 4, strlen(buf) - 5);
 					Current_Header.bpm = atof(temp);
@@ -168,7 +168,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "WAVE:") == buf) {
+			if (strstr(buf, "WAVE:") == buf) { //音源のファイル名を記述するタグ、このタグが無いと基本的に動かない
 				if (buf[5] != '\n' && buf[5] != '\r') {
 					strlcpy(temp, buf + 5, strlen(buf) - 6);
 					Current_Header.wave = temp;
@@ -176,7 +176,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "OFFSET:") == buf) {
+			if (strstr(buf, "OFFSET:") == buf) { //楽曲と譜面のタイミングを決めるタグ
 				if (buf[7] != '\n' && buf[7] != '\r') {
 					strlcpy(temp, buf + 7, strlen(buf) - 8);
 					Current_Header.offset = atof(temp);
@@ -184,7 +184,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "BALLOON:") == buf) {
+			if (strstr(buf, "BALLOON:") == buf) {  //分岐しなかった際に使われる風船の打数
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
 					char *tp = strtok(temp, ",");
@@ -198,7 +198,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "BALLOONNOM:") == buf) {
+			if (strstr(buf, "BALLOONNOM:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
 					char *tp = strtok(temp, ",");
@@ -212,7 +212,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "BALLOONEXP:") == buf) {
+			if (strstr(buf, "BALLOONEXP:") == buf) { //「玄人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
 					char *tp = strtok(temp, ",");
@@ -226,7 +226,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "BALLOONMAS:") == buf) {
+			if (strstr(buf, "BALLOONMAS:") == buf) { //「達人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
 					char *tp = strtok(temp, ",");
@@ -240,7 +240,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "SONGVOL:") == buf) {
+			if (strstr(buf, "SONGVOL:") == buf) { //楽曲の音量を調節するタグ
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
 					Current_Header.songvol = atoi(temp) * 0.8;
@@ -248,24 +248,24 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "SEVOL:") == buf) {
+			/*if (strstr(buf, "SEVOL:") == buf) { //SEの音量調整は今後実装する予定
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					Current_Header.sevol = atoi(temp) * 0.8;
 				}
 				continue;
-			}
+			}*/
 
-			if (strstr(buf, "SCOREINIT:") == buf) {
-				if (buf[10] != '\n' && buf[10] != '\r') {
+			if (strstr(buf, "SCOREINIT:") == buf) { //スコアの加算に使うタグ、　最初に加算する点数を決める。
+				if (buf[10] != '\n' && buf[10] != '\r') { //このタグが無い場合は自動で計算される
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scoreinit = atoi(temp);
 				}
 				continue;
 			}
 
-			if (strstr(buf, "SCOREDIFF:") == buf) {
-				if (buf[10] != '\n' && buf[10] != '\r') {
+			if (strstr(buf, "SCOREDIFF:") == buf) { //スコアの加算に使うタグ、　最初に加算する点数に加える値を決める。
+				if (buf[10] != '\n' && buf[10] != '\r') { //このタグが無い場合も自動で計算されるが、一部例外的に計算しない場合がある
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scorediff = atoi(temp);
 				}
@@ -273,7 +273,7 @@ void load_tja_head(int course,LIST_T Song) {
 			}
 
 
-			if (strstr(buf, "COURSE:") == buf) {
+			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
 					strlcpy(temp, buf + 7, strlen(buf) - 8);
 					if (strlen(temp) == 1) Current_Header.course = atoi(temp);		//数字表記
@@ -293,7 +293,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "EXAM1:") == buf) {
+			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *a = strtok(temp, ",");
@@ -308,7 +308,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "EXAM2:") == buf) {
+			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *b = strtok(temp, ",");
@@ -323,7 +323,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "EXAM3:") == buf) {
+			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *c = strtok(temp, ",");
@@ -338,7 +338,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "EXAM4:") == buf) {
+			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					char *c = strtok(temp, ",");
@@ -353,15 +353,17 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "STYLE:") == buf) {
+			if (strstr(buf, "STYLE:") == buf) { //双打譜面であるかの分岐タグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					Current_Header.style = atoi(temp);
+					if (strlen(temp) == 1) Current_Header.style = atoi(temp);		//数字表記
+					else if (strcmp(temp, "Single") == 0 || strcmp(temp, "single") == 0) Current_Header.style = 1;	//文字表記
+					else if (strcmp(temp, "Double") == 0 || strcmp(temp, "double") == 0) Current_Header.style = 2;
 				}
 				continue;
 			}
 
-			if (strstr(buf, "LIFE:") == buf) {
+			if (strstr(buf, "LIFE:") == buf) { //「太鼓タワー」のみ使えるタグ、体力ゲージの役割を成している
 				if (buf[5] != '\n' && buf[5] != '\r') {
 					strlcpy(temp, buf + 5, strlen(buf) - 6);
 					Current_Header.life = atoi(temp);
@@ -370,7 +372,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			/*if (strstr(buf, "DEMOSTART:") == buf) {
+			/*if (strstr(buf, "DEMOSTART:") == buf) { //選曲画面に使うタグ、今は使わない
 				if (buf[10] != '\n' && buf[10] != '\r') {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.demostart = atof(temp);
@@ -378,7 +380,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "SIDE:") == buf) {
+			if (strstr(buf, "SIDE:") == buf) { //PCソフト「太鼓さん次郎」系統の専用タグ、ここでは使わない
 				if (buf[5] != '\n' && buf[5] != '\r') {
 					strlcpy(temp, buf + 5, strlen(buf) - 6);
 					Current_Header.side = atoi(temp);
@@ -386,7 +388,7 @@ void load_tja_head(int course,LIST_T Song) {
 				continue;
 			}*/
 
-			if (strstr(buf, "SCOREMODE:") == buf) {
+			if (strstr(buf, "SCOREMODE:") == buf) { //スコアの計算方法を変えるタグ、デフォルトではアーケード版に似た配点方法
 				if (buf[10] != '\n' && buf[10] != '\r') {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scoremode = atoi(temp);
