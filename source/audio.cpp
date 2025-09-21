@@ -305,7 +305,7 @@ int play_sound(int id) {
 	ndspChnInitParams(sound[id].audiochannel);
 	ndspChnSetMix(sound[id].audiochannel, sound[id].mix);
 	ndspChnSetInterp(sound[id].audiochannel, sound[id].interp);
-	ndspChnSetRate(sound[id].audiochannel, ((Option.player != 2) ? sound[id].rate : sound[id].rate * 0.9);
+	ndspChnSetRate(sound[id].audiochannel, ((Option.player != 2) ? sound[id].rate : sound[id].rate * 0.9));
 	ndspChnSetFormat(sound[id].audiochannel, NDSP_CHANNELS(sound[id].channels) | NDSP_ENCODING(sound[id].encoding));
 	ndspChnWaveBufAdd(sound[id].audiochannel, &waveBuf[id]);
 
