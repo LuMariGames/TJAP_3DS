@@ -656,6 +656,7 @@ inline static void load_sprites() {
 	C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BOMB].image.tex, GPU_LINEAR, GPU_LINEAR);
 }
 
 bool get_isPause() {
@@ -752,5 +753,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
