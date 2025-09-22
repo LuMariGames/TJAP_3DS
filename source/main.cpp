@@ -615,15 +615,15 @@ inline static void load_sprites() {
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
 
-	C2D_SpriteFromSheet(&sprites[SPRITES_NUMER - 2], otherspsh, 0);
-	C2D_SpriteSetCenter(&sprites[SPRITES_NUMER - 2], 0.5f, 0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITES_NUMER - 1], otherspsh, 1);
-	C2D_SpriteSetCenter(&sprites[SPRITES_NUMER - 1], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH], otherspsh, 0);
+	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BOMB], otherspsh, 1);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BOMB], 0.5f, 0.5f);
 
 	if (dance) {
 		for (int i = 0, j = dancnt; i < j; ++i) {
-			C2D_SpriteFromSheet(&sprites[SPRITES_NUMER + i], dancerspsh, i);
-			C2D_SpriteSetCenter(&sprites[SPRITES_NUMER + i], 0.5f, 0.5f);
+			C2D_SpriteFromSheet(&sprites[SPRITE_DANCER_0 + i], dancerspsh, i);
+			C2D_SpriteSetCenter(&sprites[SPRITE_DANCER_0 + i], 0.5f, 0.5f);
 		}
 	}
 
@@ -753,3 +753,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
