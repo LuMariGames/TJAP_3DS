@@ -615,7 +615,9 @@ inline static void load_sprites() {
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
 
-	C2D_SpriteFromSheet(&sprites[SPRITES_NUMER - 1], otherspsh, 0);
+	C2D_SpriteFromSheet(&sprites[SPRITES_NUMER - 2], otherspsh, 0);
+	C2D_SpriteSetCenter(&sprites[SPRITES_NUMER - 2], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITES_NUMER - 1], otherspsh, 1);
 	C2D_SpriteSetCenter(&sprites[SPRITES_NUMER - 1], 0.5f, 0.5f);
 
 	if (dance) {
@@ -654,6 +656,7 @@ inline static void load_sprites() {
 	C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BOMB].image.tex, GPU_LINEAR, GPU_LINEAR);
 }
 
 bool get_isPause() {
