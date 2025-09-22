@@ -38,7 +38,7 @@
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
 
-#define SPRITES_NUMER 93
+#define SPRITES_NUMER 91
 
 #define NOTES_MAX 512
 #define BARLINE_MAX 256
