@@ -38,7 +38,7 @@
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
 
-#define SPRITES_NUMER 92
+#define SPRITES_NUMER 93
 
 #define NOTES_MAX 512
 #define BARLINE_MAX 256
@@ -53,17 +53,18 @@
 enum NOTES_KND {
 
 	NOTES_REST = 0,		//休符
-	NOTES_DON,		//ドン
+	NOTES_DON,			//ドン
 	NOTES_KATSU,		//カツ
 	NOTES_BIGDON,		//ドン(大)
 	NOTES_BIGKATSU,		//カツ(大)
-	NOTES_ROLL,		//連打開始
+	NOTES_ROLL,			//連打開始
 	NOTES_BIGROLL,		//連打(大)開始
 	NOTES_BALLOON,		//風船開始
 	NOTES_ROLLEND,		//連打終了
 	NOTES_POTATO,		//お芋音符開始
 	NOTES_BIGROLLEND,	//大連打終了
 	NOTES_BALLOONEND,	//風船終了
+	NOTES_BOMB,			//爆弾音符
 };
 
 enum SPRITE_NOTES_KND {	//スプライト用
@@ -151,7 +152,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_HARD,
 	SPRITE_EMBLEM_ONI,
 	SPRITE_EMBLEM_EDIT,
-	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
+	SPRITE_EMBLEM_TOWER,	//太鼓タワーの画像
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
@@ -160,6 +161,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである1
 	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである2
 	SPRITE_TOUCH,			//タッチ時の画像
+	SPRITE_BOMB,			//爆弾音符の画像
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
