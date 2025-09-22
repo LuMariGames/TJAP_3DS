@@ -563,7 +563,8 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 			if (Notes[i].flag) {
 
 				if (Notes[i].knd == NOTES_DON ||
-					Notes[i].knd == NOTES_BIGDON) {	//ドン
+					Notes[i].knd == NOTES_BIGDON ||
+					Notes[i].knd == NOTES_BOMB) {	//ドン
 
 					if (CurrentJudgeNotesLag[0] > fabs(Notes[i].judge_time - CurrentTimeNotes) ||
 						CurrentJudgeNotesLag[0] == -1) {
@@ -573,7 +574,8 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					}
 				}
 				else if (Notes[i].knd == NOTES_KATSU ||
-					Notes[i].knd == NOTES_BIGKATSU) {	//カツ
+					Notes[i].knd == NOTES_BIGKATSU ||
+					Notes[i].knd == NOTES_BOMB) {	//カツ
 
 					if (CurrentJudgeNotesLag[1] > fabs(Notes[i].judge_time - CurrentTimeNotes) ||
 						CurrentJudgeNotesLag[1] == -1) {
@@ -585,9 +587,11 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 			}
 		}
 
-		bool isBig;
-		if (Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGDON || Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGKATSU) isBig = true;
+		bool isBig,isBomb;
+		if (Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGDON || Notes[CurrentJudgeNotes[1]].knd == NOTES_BIGKATSU) isBig = true;
 		else isBig = false;
+		if (Notes[CurrentJudgeNotes[0]].knd == NOTES_BOMB || Notes[CurrentJudgeNotes[1]].knd == NOTES_BOMB) isBomb = true;
+		else isBomb = false;
 
 		if (isDon && CurrentJudgeNotes[0] != -1) {	//ドン
 
@@ -597,17 +601,22 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
 					update_score(SPECIAL_PERFECT);
 				}
+				else if (isBomb) {
+					update_score(BAD);
+				}
 				else {
 					make_judge(PERFECT, CurrentTimeNotes);
 					update_score(PERFECT);
 				}
 			}
 			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_nice) {	//可
-				make_judge(1, CurrentTimeNotes);
 				delete_notes(CurrentJudgeNotes[0]);
 				if (isBig) {
 					make_judge(SPECIAL_NICE, CurrentTimeNotes);
 					update_score(SPECIAL_NICE);
+				}
+				else if (isBomb) {
+					update_score(BAD);
 				}
 				else {
 					make_judge(NICE, CurrentTimeNotes);
@@ -629,17 +638,22 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
 					update_score(SPECIAL_PERFECT);
 				}
+				else if (isBomb) {
+					update_score(BAD);
+				}
 				else {
 					make_judge(PERFECT, CurrentTimeNotes);
 					update_score(PERFECT);
 				}
 			}
 			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_nice) {	//可
-				make_judge(1, CurrentTimeNotes);
 				delete_notes(CurrentJudgeNotes[1]);
 				if (isBig) {
 					make_judge(SPECIAL_NICE, CurrentTimeNotes);
 					update_score(SPECIAL_NICE);
+				}
+				else if (isBomb) {
+					update_score(BAD);
 				}
 				else {
 					make_judge(NICE, CurrentTimeNotes);
@@ -743,6 +757,11 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 					Notes[i].isThrough = true;
 				}
 				break;
+			case NOTES_BOMB:
+				if (CurrentTimeNotes - Notes[i].judge_time > (Option.judge_range_bad) && !Notes[i].isThrough) {
+					Notes[i].isThrough = true;
+				}
+				break;
 			}
 		}
 	}
@@ -753,8 +772,7 @@ void notes_calc(bool isDon, bool isKatsu, double bpm, double CurrentTimeNotes, i
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
 			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
-			if (Notes[i].isThrough == false && 
-				(Notes[i].knd > NOTES_REST && Notes[i].knd < NOTES_ROLL)) {
+			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
 				if (!Option.isAuto) {
 					update_score(THROUGH);
@@ -910,6 +928,11 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, NULL);
 				break;
+			case NOTES_BOMB:
+				sprites[SPRITE_BOMB].params.pos.x = Notes[i].x;
+				sprites[SPRITE_BOMB].params.pos.y = notes_y;
+				C2D_DrawImage(sprites[SPRITE_BOMB].image, &sprites[SPRITE_BOMB].params, NULL);
+				break;
 			}
 		}
 	}
@@ -933,15 +956,16 @@ int get_branch_course() {
 int ctoi(char c) {
 
 	switch (c) {
-	case '1': return 1;
-	case '2': return 2;
-	case '3': return 3;
-	case '4': return 4;
-	case '5': return 5;
-	case '6': return 6;
-	case '7': return 7;
-	case '8': return 8;
-	case '9': return 7;
+	case '1': return NOTES_DON;
+	case '2': return NOTES_KATSU;
+	case '3': return NOTES_BIGDON;
+	case '4': return NOTES_BIGKATSU;
+	case '5': return NOTES_ROLL;
+	case '6': return NOTES_BIGROLL;
+	case '7': return NOTES_BALLOON;
+	case '8': return NOTES_ROLLEND;
+	case '9': return NOTES_BALLOON;
+	case 'C': return NOTES_BOMB;
 	default: return 0;
 	}
 }
