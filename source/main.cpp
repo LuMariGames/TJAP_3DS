@@ -610,7 +610,7 @@ inline static void load_sprites() {
 
 	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
 
-	for (int i = 0, j = SPRITES_NUMER - 1; i < j; ++i) {
+	for (int i = 0, j = SPRITES_NUMER; i < j; ++i) {
 		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
 		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
 	}
@@ -656,7 +656,6 @@ inline static void load_sprites() {
 	C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BOMB].image.tex, GPU_LINEAR, GPU_LINEAR);
 }
 
 bool get_isPause() {
@@ -753,4 +752,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
