@@ -588,9 +588,9 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 		}
 
 		bool isBig,isBomb;
-		if (Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGDON || Notes[CurrentJudgeNotes[1]].knd == NOTES_BIGKATSU) isBig = true;
+		if ((isDon && Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGDON) || (isKatsu && Notes[CurrentJudgeNotes[1]].knd == NOTES_BIGKATSU)) isBig = true;
 		else isBig = false;
-		if (Notes[CurrentJudgeNotes[0]].knd == NOTES_BOMB || Notes[CurrentJudgeNotes[1]].knd == NOTES_BOMB) isBomb = true;
+		if ((isDon && Notes[CurrentJudgeNotes[0]].knd == NOTES_BOMB) || (isKatsu && Notes[CurrentJudgeNotes[1]].knd == NOTES_BOMB)) isBomb = true;
 		else isBomb = false;
 
 		if (isDon && CurrentJudgeNotes[0] != -1) {	//ドン
