@@ -573,7 +573,7 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 						CurrentJudgeNotesLag[0] = fabs(Notes[i].judge_time - CurrentTimeNotes);
 					}
 				}
-				else if (Notes[i].knd == NOTES_KATSU ||
+				if (Notes[i].knd == NOTES_KATSU ||
 					Notes[i].knd == NOTES_BIGKATSU ||
 					Notes[i].knd == NOTES_BOMB) {	//カツ
 
