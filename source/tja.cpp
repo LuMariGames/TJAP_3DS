@@ -51,7 +51,7 @@ void init_tja() {
 	isBranch = false;
 }
 
-void load_tja_head(int course,LIST_T Song) {
+bool load_tja_head(int course,LIST_T Song) {
 
 	FILE *fp;
 	char buf[128];
@@ -108,13 +108,13 @@ void load_tja_head(int course,LIST_T Song) {
 			temp = (char *)malloc((strlen(buf) + 1));
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
-			if (isCourseMatch && Option.player == 1 && Current_Header.style == 2 && strstr(buf, "#START P1") == buf) {
+			if (isCourseMatch && Current_Header.style == 1 && strstr(buf, "#START") == buf) {
+				break;
+			}
+			else if (isCourseMatch && Option.player == 1 && Current_Header.style == 2 && strstr(buf, "#START P1") == buf) {
 				break;
 			}
 			else if (isCourseMatch && Option.player == 2 && Current_Header.style == 2 && strstr(buf, "#START P2") == buf) {
-				break;
-			}
-			else if (isCourseMatch && Option.player == 0 && strstr(buf, "#START") == buf) {
 				break;
 			}
 
@@ -399,10 +399,12 @@ void load_tja_head(int course,LIST_T Song) {
 		}
 		fclose(fp);
 		free(temp);
+		return true;
 	}
 	else {
-		//tjaファイルが開けなかった時
+		return false;	//tjaファイルが開けなかった時
 	}
+	return false;
 }
 
 void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
