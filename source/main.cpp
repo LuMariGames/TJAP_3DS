@@ -239,7 +239,6 @@ int main() {
 			case WARNING_WAVE_NOT_OGG:
 				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NOT_OGG);
 				break;
-			}
 			case WARNING_TJA_NOT_EXIST:
 				tmp = message_window(tp, key, TEXT_WARNING_TJA_NOT_EXIST);
 				break;
@@ -300,11 +299,6 @@ int main() {
 				isNotesStart = false, isMusicStart = false, isPlayMain = false;
 				FirstMeasureTime = INT_MAX, CurrentTimeMain = -2147483640;
 			}
-			else {
-				warning = WARNING_TJA_NOT_EXIST;
-				scene_state = SCENE_WARNING;
-				select_ini();
-			}
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) {
@@ -316,6 +310,11 @@ int main() {
 			}
 			else {
 				warning = tmp;
+				scene_state = SCENE_WARNING;
+				select_ini();
+			}
+			if (!istjaloaded) {
+				warning = WARNING_TJA_NOT_EXIST;
 				scene_state = SCENE_WARNING;
 				select_ini();
 			}
