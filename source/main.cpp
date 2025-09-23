@@ -240,6 +240,10 @@ int main() {
 				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NOT_OGG);
 				break;
 			}
+			case WARNING_TJA_NOT_EXIST:
+				tmp = message_window(tp, key, TEXT_WARNING_TJA_NOT_EXIST);
+				break;
+			}
 			if (tmp == 1 || key & KEY_A) {
 				scene_state = SCENE_SELECTSONG;
 				warning = -1;
@@ -282,18 +286,25 @@ int main() {
 			draw_select_text(0, 225, "Chart Loading...");
 			C3D_FrameEnd(0);
 			init_tja();
-			load_tja_head(course, SelectedSong);
+			bool istjaloaded = load_tja_head(course, SelectedSong);
 			//init_main_music();
-			get_tja_header(&TJA_Header);
-			init_score();
-			if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
-			else load_tja_notes(course, SelectedSong);
-			init_notes(TJA_Header);
-			time_ini();
-			offset = TJA_Header.offset + Option.offset;
-			notes_cnt = -1, BeforeCombo = -1, measure = Option.measure;
-			isNotesStart = false, isMusicStart = false, isPlayMain = false;
-			FirstMeasureTime = INT_MAX, CurrentTimeMain = -2147483640;
+			if (istjaloaded) {
+				get_tja_header(&TJA_Header);
+				init_score();
+				if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
+				else load_tja_notes(course, SelectedSong);
+				init_notes(TJA_Header);
+				time_ini();
+				offset = TJA_Header.offset + Option.offset;
+				notes_cnt = -1, BeforeCombo = -1, measure = Option.measure;
+				isNotesStart = false, isMusicStart = false, isPlayMain = false;
+				FirstMeasureTime = INT_MAX, CurrentTimeMain = -2147483640;
+			}
+			else {
+				warning = WARNING_TJA_NOT_EXIST;
+				scene_state = SCENE_WARNING;
+				select_ini();
+			}
 
 			tmp = check_wave(SelectedSong);
 			if (tmp == -1) {
@@ -753,6 +764,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
