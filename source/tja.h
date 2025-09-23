@@ -34,10 +34,10 @@ typedef struct {
 
 } MEASURE_T;
 
-void load_tja_head(int course, LIST_T Song), load_tja_notes(int course, LIST_T Song),
+void init_tja(), load_tja_notes(int course, LIST_T Song),
 tja_to_notes(bool isDnon, bool isKatsu, int count, C2D_Sprite sprites[SPRITES_NUMER]),
 load_tja_head_simple(LIST_T *List), get_tja_header(TJA_HEADER_T *TJA_Header),
-init_tja(), get_command_value(char* buf, COMMAND_T *Command);
+get_command_value(char* buf, COMMAND_T *Command);
 double get_FirstMeasureTime(),get_StartTime();
 int get_MeasureId_From_OriginalId(int id), get_edme();
-bool get_isBranch();
+bool load_tja_head(int course, LIST_T Song), get_isBranch();
