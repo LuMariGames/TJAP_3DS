@@ -250,7 +250,8 @@ enum TIME_KND {
 
 enum WARNING_KND {
 
-	WARNING_DSP1 = 0,		//DSP1未起動
+	WARNING_DSP1 = 0,			//DSP1未起動
 	WARNING_WAVE_NO_EXIST,		//音楽ファイルが存在しない
-	WARNING_WAVE_NOT_OGG,		//音楽ファイルがOGGファイルじゃない
+	WARNING_WAVE_NOT_OGG,		//音楽ファイルがOGG(またはMP3)ファイルじゃない
+	WARNING_TJA_NOT_EXIST,		//TJAファイルが存在しない
 };
