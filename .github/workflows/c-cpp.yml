@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    container: devkitpro/devkitarm
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: make
+      run: make all
+    - name: Upload binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: Build
+        path: |
+          TJAP_3DS.3dsx
+          TJAP_3DS.cia
