@@ -499,6 +499,18 @@ void white_tja(LIST_T Song) {
 
 			strcat(tja_text, tja_notes[i]);
 		}
+		char* src = tja_text;
+		char* dst = tja_text;
+
+		while (*src) {
+			if (src[0] == '\r' && src[1] == '\n') {
+				*dst++ = '\n';
+				src += 2;
+			} else {
+				*dst++ = *src++;
+			}
+		}
+		*dst = '\0';
 		while (tja_cnt < MEASURE_MAX) {
 
 			tja_notes[tja_cnt][0] = '\0';
