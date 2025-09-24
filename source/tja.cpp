@@ -488,7 +488,7 @@ void white_tja(LIST_T Song) {
 	char abs_path[512], tja_text[16384];
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
-	if ((fp = fopen(abs_path, "r+")) != NULL) {
+	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		tja_cnt = 0;
 		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
@@ -504,6 +504,8 @@ void white_tja(LIST_T Song) {
 			tja_notes[tja_cnt][0] = '\0';
  			++tja_cnt;
 		}
+		fclose(fp);
+		fp = fopen(abs_path, "w");
 		SwkbdState swkbd;
 		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
 		swkbdSetInitialText(&swkbd, tja_text);
