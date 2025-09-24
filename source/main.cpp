@@ -137,7 +137,7 @@ int main() {
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown(), keyhold = hidKeysHeld();
 
-		bool isDon = false,isKatsu = false,istjaloaded = false;
+		bool isDon = false,isKatsu = false,istjaloaded = false,EDITMODE = true;
 		get_option(&Option);
 
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
@@ -283,40 +283,43 @@ int main() {
 		case SCENE_MAINLOAD:	 //ロード中
 
 			draw_select_text(0, 225, "Chart Loading...");
-			C3D_FrameEnd(0);
-			init_tja();
-			istjaloaded = load_tja_head(course, SelectedSong);
-			//init_main_music();
-			if (istjaloaded) {
-				get_tja_header(&TJA_Header);
-				init_score();
-				if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
-				else load_tja_notes(course, SelectedSong);
-				init_notes(TJA_Header);
-				time_ini();
-				offset = TJA_Header.offset + Option.offset;
-				notes_cnt = -1, BeforeCombo = -1, measure = Option.measure;
-				isNotesStart = false, isMusicStart = false, isPlayMain = false;
-				FirstMeasureTime = INT_MAX, CurrentTimeMain = -2147483640;
-			}
-
-			tmp = check_wave(SelectedSong);
-			if (tmp == -1) {
-				cnt = -150;
-				play_main_music(&isPlayMain, SelectedSong);
-				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				notes_cnt = 0;
-				scene_state = SCENE_LOADSCRE;
-			}
+			if (EDITMODE) white_tja(SelectedSong);
 			else {
-				warning = tmp;
-				scene_state = SCENE_WARNING;
-				select_ini();
-			}
-			if (!istjaloaded) {
-				warning = WARNING_TJA_NOT_EXIST;
-				scene_state = SCENE_WARNING;
-				select_ini();
+				C3D_FrameEnd(0);
+				init_tja();
+				istjaloaded = load_tja_head(course, SelectedSong);
+				//init_main_music();
+				if (istjaloaded) {
+					get_tja_header(&TJA_Header);
+					init_score();
+					if (!SelectedSong.course_exist[course]) load_tja_notes(-1, SelectedSong);
+					else load_tja_notes(course, SelectedSong);
+					init_notes(TJA_Header);
+					time_ini();
+					offset = TJA_Header.offset + Option.offset;
+					notes_cnt = -1, BeforeCombo = -1, measure = Option.measure;
+					isNotesStart = false, isMusicStart = false, isPlayMain = false;
+					FirstMeasureTime = INT_MAX, CurrentTimeMain = -2147483640;
+				}
+
+				tmp = check_wave(SelectedSong);
+				if (tmp == -1) {
+					cnt = -150;
+					play_main_music(&isPlayMain, SelectedSong);
+					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+					notes_cnt = 0;
+					scene_state = SCENE_LOADSCRE;
+				}
+				else {
+					warning = tmp;
+					scene_state = SCENE_WARNING;
+					select_ini();
+				}
+				if (!istjaloaded) {
+					warning = WARNING_TJA_NOT_EXIST;
+					scene_state = SCENE_WARNING;
+					select_ini();
+				}
 			}
 			break;
 
@@ -763,3 +766,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
