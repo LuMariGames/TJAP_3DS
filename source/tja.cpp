@@ -493,13 +493,13 @@ void white_tja(LIST_T Song) {
 	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		tja_cnt = 0;
+		for (int i = 0; i < MEASURE_MAX; ++i) {
+
+			memset(tja_notes[i], 0, sizeof(tja_notes[i]));
+		}
 		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
 
 			++tja_cnt;
-		}
-		for (int i = tja_cnt; i < MEASURE_MAX; ++i) {
-
-			memset(tja_notes[i], 0, sizeof(tja_notes[i]));
 		}
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
