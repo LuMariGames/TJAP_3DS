@@ -519,7 +519,7 @@ void white_tja(LIST_T Song) {
 		fclose(fp);
 		fp = fopen(abs_path, "w");
 		SwkbdState swkbd;
-		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 2, -1);
+		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
 		swkbdSetInitialText(&swkbd, tja_text);
 		swkbdSetFeatures(&swkbd, SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
 		swkbdInputText(&swkbd, tja_text, sizeof(tja_text));
