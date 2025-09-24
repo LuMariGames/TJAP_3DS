@@ -485,7 +485,8 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 void white_tja(LIST_T Song) {
 
 	FILE *fp;
-	char abs_path[512], tja_text[16384] = "\0";
+	char abs_path[512], tja_text[16384];
+	memset(tja_text, 0, sizeof(tja_text));
 	int text_byte = 0;
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
