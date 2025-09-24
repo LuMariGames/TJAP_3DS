@@ -482,6 +482,31 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 	fclose(fp);
 }
 
+void white_tja(LIST_T Song) {
+
+	FILE *fp;
+	char abs_path[512],tja_text[4194304] = "";
+
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
+	if ((fp = fopen(abs_path, "r+")) != NULL) {
+
+		tja_cnt = 0;
+		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) ++tja_cnt;
+		for (int i = 0, j = tja_cnt; i < j; ++i) strcat(tja_text, tja_notes[i]);
+		while (tja_cnt < MEASURE_MAX) {
+			tja_notes[tja_cnt][0] = '\0';
+			++tja_cnt;
+		}
+		SwkbdState swkbd;
+		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 2, -1);
+		swkbdSetFeatures(&swkbd, SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
+		swkbdSetInitialText(&swkbd, tja_text);
+		swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "閉じる", false);
+		swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "保存", true);
+		swkbdInputText(&swkbd, tja_text, (MEASURE_MAX * NOTES_MEASURE_MAX));
+		fprintf(fp, "%s", tja_text);
+	}
+}
 void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソート
 
 	for (int i = 1; i < array_size; ++i) {
