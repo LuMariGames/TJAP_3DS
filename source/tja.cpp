@@ -495,6 +495,10 @@ void white_tja(LIST_T Song) {
 
 			++tja_cnt;
 		}
+		for (int i = tja_cnt; i < MEASURE_MAX; ++i) {
+
+			tja_notes[i] = "\0";
+		}
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
 			strcat(tja_text, tja_notes[i]);
@@ -511,11 +515,6 @@ void white_tja(LIST_T Song) {
 			}
 		}
 		*dst = '\0';
-		while (tja_cnt < MEASURE_MAX) {
-
-			tja_notes[tja_cnt][0] = '\0';
- 			++tja_cnt;
-		}
 		fclose(fp);
 		fp = fopen(abs_path, "w");
 		SwkbdState swkbd;
