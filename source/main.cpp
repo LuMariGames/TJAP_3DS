@@ -137,7 +137,7 @@ int main() {
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown(), keyhold = hidKeysHeld();
 
-		bool isDon = false,isKatsu = false,istjaloaded = false,EDITMODE = true;
+		bool isDon = false,isKatsu = false,istjaloaded = false;
 		get_option(&Option);
 
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
@@ -284,7 +284,7 @@ int main() {
 
 			draw_select_text(0, 225, "Chart Loading...");
 			C3D_FrameEnd(0);
-			if (EDITMODE) {
+			if (Option.edit) {
 				white_tja(SelectedSong);
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
