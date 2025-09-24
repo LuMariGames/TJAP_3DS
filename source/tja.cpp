@@ -505,7 +505,7 @@ void white_tja(LIST_T Song) {
 			strcat(tja_text, tja_notes[i]);
 			text_byte += strlen(tja_notes[i]);
 		}
-		tja_text[text_byte + 1] = '\0';
+		tja_text[text_byte + 1] = 0;
 		char* src = tja_text;
 		char* dst = tja_text;
 
@@ -517,7 +517,7 @@ void white_tja(LIST_T Song) {
 				*dst++ = *src++;
 			}
 		}
-		*dst = '\0';
+		*dst = 0;
 		fclose(fp);
 		fp = fopen(abs_path, "w");
 		SwkbdState swkbd;
