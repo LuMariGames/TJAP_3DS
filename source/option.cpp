@@ -780,6 +780,7 @@ void get_option(OPTION_T *TMP) {
 	TMP->exse = Option.exse;
 	TMP->player = Option.player;
 	TMP->measure = Option.measure;
+	TMP->edit = Option.edit;
 	strcpy(TMP->SongTitle, Option.SongTitle);
 	black = Option.blacktext;
 	if (Option.Voice == 0) comboVoice = INT_MAX;
