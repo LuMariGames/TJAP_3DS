@@ -533,7 +533,6 @@ void white_tja(LIST_T Song) {
 				fputc(*dst++, fp);
 			}
 		}
-		fflush(fp);
 		fclose(fp);
 	}
 }
