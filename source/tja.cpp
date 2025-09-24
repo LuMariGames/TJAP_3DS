@@ -486,6 +486,7 @@ void white_tja(LIST_T Song) {
 
 	FILE *fp;
 	char abs_path[512], tja_text[16384] = "\0";
+	int text_byte = 0;
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
 	if ((fp = fopen(abs_path, "r")) != NULL) {
@@ -502,7 +503,9 @@ void white_tja(LIST_T Song) {
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
 			strcat(tja_text, tja_notes[i]);
+			text_byte += strlen(tja_notes[i]);
 		}
+		tja_text[text_byte + 1] = '\0';
 		char* src = tja_text;
 		char* dst = tja_text;
 
