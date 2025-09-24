@@ -511,6 +511,7 @@ void white_tja(LIST_T Song) {
 		swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
 		swkbdInputText(&swkbd, tja_text, sizeof(tja_text));
 		fprintf(fp, "%s", tja_text);
+		fflush(fp);
 		fclose(fp);
 	}
 }
