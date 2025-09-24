@@ -491,27 +491,14 @@ void white_tja(LIST_T Song) {
 	if ((fp = fopen(abs_path, "r+")) != NULL) {
 
 		tja_cnt = 0;
-		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
-
-			++tja_cnt;
-		}
-		for (int i = 0, j = tja_cnt; i < j; ++i) {
-
-			strcat(tja_text, tja_notes[i]);
-		}
-		while (tja_cnt < MEASURE_MAX) {
-
-			tja_notes[tja_cnt][0] = '\0';
- 			++tja_cnt;
-		}
 		SwkbdState swkbd;
-		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 2, -1);
+		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
 		swkbdSetInitialText(&swkbd, tja_text);
-		swkbdSetFeatures(&swkbd, SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
+		swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
 		swkbdInputText(&swkbd, tja_text, sizeof(tja_text));
 		fprintf(fp, "%s", tja_text);
+		fclose(fp);
 	}
-	fclose(fp);
 }
 void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソート
 
