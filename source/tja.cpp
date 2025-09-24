@@ -492,11 +492,14 @@ void white_tja(LIST_T Song) {
 
 		tja_cnt = 0;
 		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) ++tja_cnt;
-		for (int i = 0, j = tja_cnt; i < j; ++i) strcat(tja_text, tja_notes[i]);
+		while (tja_cnt < MEASURE_MAX) {
+			tja_notes[tja_cnt][0] = '\0';
+			++tja_cnt;
+		}
 		SwkbdState swkbd;
 		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 2, -1);
 		swkbdSetFeatures(&swkbd, SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
-		swkbdSetInitialText(&swkbd, tja_text);
+		swkbdSetInitialText(&swkbd, tja_notes[0]);
 		swkbdSetButton(&swkbd, SWKBD_BUTTON_LEFT, "閉じる", false);
 		swkbdSetButton(&swkbd, SWKBD_BUTTON_RIGHT, "保存", true);
 		swkbdInputText(&swkbd, tja_text, sizeof(tja_text));
