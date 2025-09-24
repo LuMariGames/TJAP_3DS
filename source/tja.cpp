@@ -488,9 +488,24 @@ void white_tja(LIST_T Song) {
 	char abs_path[512], tja_text[4194304] = "\0";
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
-	if ((fp = fopen(abs_path, "r+")) != NULL) {
+	if ((fp = fopen(abs_path, "r")) != NULL) {
 
+		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
+
+			++tja_cnt;
+		}
+		fclose(fp);
+		for (int i = 0, j = tja_cnt; i < j; ++i) {
+
+			strcat(tja_text, tja_notes[i]);
+		}
+		while (tja_cnt < MEASURE_MAX) {
+
+			tja_notes[tja_cnt][0] = '\0';
+ 			++tja_cnt;
+		}
 		tja_cnt = 0;
+		fp = fopen(abs_path, "w");
 		SwkbdState swkbd;
 		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
 		swkbdSetInitialText(&swkbd, tja_text);
