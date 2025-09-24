@@ -495,7 +495,6 @@ void white_tja(LIST_T Song) {
 
 			++tja_cnt;
 		}
-		fclose(fp);
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
 			strcat(tja_text, tja_notes[i]);
@@ -511,7 +510,6 @@ void white_tja(LIST_T Song) {
 		swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
 		swkbdInputText(&swkbd, tja_text, sizeof(tja_text));
 		fprintf(fp, "%s", tja_text);
-		fflush(fp);
 		fclose(fp);
 	}
 }
