@@ -283,13 +283,13 @@ int main() {
 		case SCENE_MAINLOAD:	 //ロード中
 
 			draw_select_text(0, 225, "Chart Loading...");
+			C3D_FrameEnd(0);
 			if (EDITMODE) {
 				white_tja(SelectedSong);
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
 			else {
-				C3D_FrameEnd(0);
 				init_tja();
 				istjaloaded = load_tja_head(course, SelectedSong);
 				//init_main_music();
@@ -770,5 +770,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
