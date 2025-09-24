@@ -485,32 +485,19 @@ void load_tja_head_simple(LIST_T *List) {		//選曲用のヘッダ取得
 void white_tja(LIST_T Song) {
 
 	FILE *fp;
-	char abs_path[512], tja_text[4194304] = "\0";
+	char abs_path[512], tja_text[2097152] = "\0";
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
 	if ((fp = fopen(abs_path, "r")) != NULL) {
 
-		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
-
-			++tja_cnt;
-		}
-		fclose(fp);
-		for (int i = 0, j = tja_cnt; i < j; ++i) {
-
-			strcat(tja_text, tja_notes[i]);
-		}
-		while (tja_cnt < MEASURE_MAX) {
-
-			tja_notes[tja_cnt][0] = '\0';
- 			++tja_cnt;
-		}
 		tja_cnt = 0;
+		fclose(fp);
 		fp = fopen(abs_path, "w");
 		SwkbdState swkbd;
 		swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
 		swkbdSetInitialText(&swkbd, tja_text);
 		swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
-		swkbdInputText(&swkbd, tja_text, sizeof(tja_text));
+		swkbdInputText(&swkbd, tja_text, 2097152);
 		fprintf(fp, "%s", tja_text);
 		fclose(fp);
 	}
