@@ -547,6 +547,17 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		}
 		XCnt = 0, ++YCnt;
 
+		//編集モード
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_EDITOR_MODE], true, &width, &height);
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.edit == false, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.edit = false;
+		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.edit == true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.edit = true;
+		XCnt = 0, ++YCnt;
+
 		//楽曲検索
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
@@ -610,6 +621,7 @@ void init_option() {
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
 	Option.offset = 0.0;
 	Option.fixroll = false;
+	Option.edit = false;
 	Option.special = 0;
 	Option.player = 0;
 	Option.musicspeed = 1.0;
