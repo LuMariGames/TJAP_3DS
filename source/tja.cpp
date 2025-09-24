@@ -499,7 +499,7 @@ void white_tja(LIST_T Song) {
 		}
 		for (int i = tja_cnt; i < MEASURE_MAX; ++i) {
 
-			tja_notes[i][0] = '\0';
+			memset(tja_notes[i], 0, sizeof(tja_notes[i]));
 		}
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
