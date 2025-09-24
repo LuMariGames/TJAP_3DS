@@ -8,23 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+
+    runs-on: ubuntu-22.04
+    container: devkitpro/devkitarm
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Install devkitARM toolchain
-      run: |
-        sudo apt update
-        sudo apt install -y curl gnupg
-        echo "deb https://apt.devkitpro.org stable main" | sudo tee /etc/apt/sources.list.d/devkitpro.list
-        curl https://apt.devkitpro.org/devkitpro-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/devkitpro-archive-keyring.gpg
-        sudo apt update
-        sudo apt install -y devkitarm
-
     - name: make
-      run: make all
-
+      run: make
     - name: Upload binary
       uses: actions/upload-artifact@v4
       with:
