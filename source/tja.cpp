@@ -399,7 +399,7 @@ bool load_tja_head(int course,LIST_T Song) {
 		}
 		fclose(fp);
 		free(temp);
-		return true;
+		return isCourseMatch;
 	}
 	else {
 		return false;	//tjaファイルが開けなかった時
