@@ -111,8 +111,8 @@ int main() {
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP, GFX_LEFT);
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM, GFX_LEFT);
 
-	gfxSetDoubleBuffering(top, false);
-	gfxSetDoubleBuffering(bottom, false);
+	gfxSetDoubleBuffering(GFX_TOP, false);
+	gfxSetDoubleBuffering(GFX_BOTTOM, false);
 	TJA_HEADER_T TJA_Header;
 	LIST_T SelectedSong;
 	OPTION_T Option;
@@ -772,4 +772,5 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
