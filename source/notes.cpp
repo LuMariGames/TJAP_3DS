@@ -121,8 +121,7 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 
 			int NotesCountMax;
 
-			if (Measure[MeasureCount].firstmeasure != -1 && get_MeasureId_From_OriginalId(Measure[MeasureCount].firstmeasure) != -1
-				) {
+			if (Measure[MeasureCount].firstmeasure != -1 && get_MeasureId_From_OriginalId(Measure[MeasureCount].firstmeasure) != -1) {
 
 				NotesCountMax = Measure[get_MeasureId_From_OriginalId(Measure[MeasureCount].firstmeasure)].max_notes;
 			}
@@ -485,8 +484,8 @@ inline void notes_judge(double CurrentTimeNotes, bool isDon, bool isKatsu, int c
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
-		if (balloon[branch][BalloonCount[branch]] != 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
-		else  BalloonNotes[JudgeBalloonState].need_hit = 5;
+		if (balloon[branch][BalloonCount[branch]] > 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
+		else BalloonNotes[JudgeBalloonState].need_hit = 5;
 		if (branch == 0) ++BalloonCount[0];
 		else {
 			++BalloonCount[1];
