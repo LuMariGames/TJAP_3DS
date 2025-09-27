@@ -55,7 +55,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 	FILE *fp;
 	char buf[128];
-	bool isCourseMatch = true;
+	bool isCourseMatch = true,isSTART = false;
 	OPTION_T Option;
 	get_option(&Option);
 	memset(mix, 0, sizeof(mix));
@@ -109,12 +109,15 @@ bool load_tja_head(int course,LIST_T Song) {
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
 			if (isCourseMatch && strstr(buf, "#START") == buf) {
+				isSTART = true;
 				break;
 			}
 			else if (isCourseMatch && Option.player == 1 && Current_Header.style == 2 && strstr(buf, "#START P1") == buf) {
+				isSTART = true;
 				break;
 			}
 			else if (isCourseMatch && Option.player == 2 && Current_Header.style == 2 && strstr(buf, "#START P2") == buf) {
+				isSTART = true;
 				break;
 			}
 
@@ -399,7 +402,7 @@ bool load_tja_head(int course,LIST_T Song) {
 		}
 		fclose(fp);
 		free(temp);
-		return isCourseMatch;
+		return isSTART;
 	}
 	else {
 		return false;	//tjaファイルが開けなかった時
