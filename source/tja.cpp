@@ -54,7 +54,7 @@ void init_tja() {
 bool load_tja_head(int course,LIST_T Song) {
 
 	FILE *fp;
-	char buf[128];
+	char buf[513];
 	bool isCourseMatch = true,isSTART = false;
 	OPTION_T Option;
 	get_option(&Option);
@@ -102,7 +102,7 @@ bool load_tja_head(int course,LIST_T Song) {
 	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		char* temp = NULL;
-		while (fgets(buf, 128, fp) != NULL) {
+		while (fgets(buf, 512, fp) != NULL) {
 
 			++cnt;
 			temp = (char *)malloc((strlen(buf) + 1));
