@@ -128,7 +128,7 @@ bool load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 			if (cnt == 0) {
-				if (strstr(buf, "TITLE:") == buf[3] && strstr(buf, "SUBTITLE:") == 0) {
+				if (strstr(buf, "TITLE:") == 3 && strstr(buf, "SUBTITLE:") == 0) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
 						temp.insert(0, strlen(buf) - 10, buf[9]);
 						Current_Header.title = temp;
@@ -331,17 +331,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[0][0] = tmp.c_str();
+						exam[0][0] = tmp.data();
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[0][cnt] = tmp.c_str();
+						exam[0][cnt] = tmp.data();
 						if (cnt == 1) redCdn[0] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[0][cnt] = tmp.c_str();
+					exam[0][cnt] = tmp.data();
 				}
 				continue;
 			}
@@ -353,17 +353,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[1][0] = tmp.c_str();
+						exam[1][0] = tmp.data();
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[1][cnt] = tmp.c_str();
+						exam[1][cnt] = tmp.data();
 						if (cnt == 1) redCdn[1] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[1][cnt] = tmp.c_str();
+					exam[1][cnt] = tmp.data();
 				}
 				continue;
 			}
@@ -375,17 +375,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[2][0] = tmp.c_str();
+						exam[2][0] = tmp.data();
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[2][cnt] = tmp.c_str();
+						exam[2][cnt] = tmp.data();
 						if (cnt == 1) redCdn[2] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[2][cnt] = tmp.c_str();
+					exam[2][cnt] = tmp.data();
 				}
 				continue;
 			}
@@ -397,17 +397,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[3][0] = tmp.c_str();
+						exam[3][0] = tmp.data();
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[3][cnt] = tmp.c_str();
+						exam[3][cnt] = tmp.data();
 						if (cnt == 1) redCdn[3] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[3][cnt] = tmp.c_str();
+					exam[3][cnt] = tmp.data();
 				}
 				continue;
 			}
