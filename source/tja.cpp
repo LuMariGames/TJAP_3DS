@@ -128,7 +128,7 @@ bool load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 			if (cnt == 0) {
-				if (strstr(buf, "TITLE:") == 3 && strstr(buf, "SUBTITLE:") == 0) {
+				if (strstr(buf, "TITLE:") == *buf[3] && strstr(buf, "SUBTITLE:") == *buf[0]) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
 						temp.insert(0, strlen(buf) - 10, buf[9]);
 						Current_Header.title = temp;
@@ -142,7 +142,6 @@ bool load_tja_head(int course,LIST_T Song) {
 
 					temp.insert(0, strlen(buf) - 10, buf[9]);
 
-					std::string::size_type pos;
 					if (temp.find("--") == 0) Current_Header.subtitle_state = 1;
 					else if (temp.find("++") == 0) Current_Header.subtitle_state = 2;
 					else Current_Header.subtitle_state = 0;
