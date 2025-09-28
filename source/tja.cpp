@@ -128,7 +128,7 @@ bool load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 			if (cnt == 0) {
-				if (strstr(buf, "TITLE:") == buf[3 && strstr(buf, "SUBTITLE:") == 0) {
+				if (strstr(buf, "TITLE:") == buf[3] && strstr(buf, "SUBTITLE:") == 0) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
 						temp.insert(0, strlen(buf) - 10, buf[9]);
 						Current_Header.title = temp;
@@ -190,9 +190,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					temp.insert(0, strlen(buf) - 9, buf[8]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[0][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[0][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						Current_Header.balloon[0][cnt] = stoi(temp.substr(start, end - start));
 						++cnt;
 					}
@@ -205,9 +205,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[1][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[1][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						Current_Header.balloon[1][cnt] = stoi(temp.substr(start, end - start));
 						++cnt;
 					}
@@ -220,9 +220,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[2][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[2][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						Current_Header.balloon[2][cnt] = stoi(temp.substr(start, end - start));
 						++cnt;
 					}
@@ -235,9 +235,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[3][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[3][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						Current_Header.balloon[3][cnt] = stoi(temp.substr(start, end - start));
 						++cnt;
 					}
@@ -303,9 +303,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) exam[0][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) exam[0][0] = temp.substr(start, end - start);
 					cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						exam[0][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[0] = atoi(temp.substr(start, end - start));
 						++cnt;
@@ -319,9 +319,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) exam[1][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) exam[1][0] = temp.substr(start, end - start);
 					cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						exam[1][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[1] = atoi(temp.substr(start, end - start));
 						++cnt;
@@ -335,9 +335,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) exam[2][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) exam[2][0] = temp.substr(start, end - start);
 					cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						exam[2][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[2] = atoi(temp.substr(start, end - start));
 						++cnt;
@@ -351,9 +351,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
 					size_t start = 0, end;
-					if (end = temp.find(',', start)) != std::string::npos) exam[3][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) exam[3][0] = temp.substr(start, end - start);
 					cnt = 1;
-					while (end = temp.find(',', start)) != std::string::npos) {
+					while ((end = temp.find(',', start)) != std::string::npos) {
 						exam[3][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[3] = atoi(temp.substr(start, end - start));
 						++cnt;
@@ -366,7 +366,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "STYLE:") == buf) { //双打譜面であるかの分岐タグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
-					if (temp.length == 1) Current_Header.style = atoi(temp);		//数字表記
+					if (temp.length() == 1) Current_Header.style = stoi(temp);		//数字表記
 					else if (temp == "Single" || temp == "single") Current_Header.style = 1;	//文字表記
 					else if (temp == "Double" || temp == "double") Current_Header.style = 2;
 				}
