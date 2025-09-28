@@ -128,7 +128,7 @@ bool load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 			if (cnt == 0) {
-				if (strstr(buf, "TITLE:") == *buf[3] && strstr(buf, "SUBTITLE:") == *buf[0]) {
+				if (strstr(buf, "TITLE:") == &buf[3] && strstr(buf, "SUBTITLE:") == &buf[0]) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
 						temp.insert(0, strlen(buf) - 10, buf[9]);
 						Current_Header.title = temp;
