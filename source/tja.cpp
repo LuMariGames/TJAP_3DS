@@ -193,16 +193,16 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[0][0] = stoi(tmp.c_str());
+						Current_Header.balloon[0][0] = stoi(tmp);
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[0][cnt] = stoi(tmp.c_str());
+						Current_Header.balloon[0][cnt] = stoi(tmp);
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					Current_Header.balloon[0][cnt] = stoi(tmp.c_str());
+					Current_Header.balloon[0][cnt] = stoi(tmp);
 				}
 				continue;
 			}
@@ -213,16 +213,16 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[1][0] = stoi(tmp.c_str());
+						Current_Header.balloon[1][0] = stoi(tmp);
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[1][cnt] = stoi(tmp.c_str());
+						Current_Header.balloon[1][cnt] = stoi(tmp);
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					Current_Header.balloon[1][cnt] = stoi(tmp.c_str());
+					Current_Header.balloon[1][cnt] = stoi(tmp);
 				}
 				continue;
 			}
@@ -233,16 +233,16 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[2][0] = stoi(tmp.c_str());
+						Current_Header.balloon[2][0] = stoi(tmp);
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[2][cnt] = stoi(tmp.c_str());
+						Current_Header.balloon[2][cnt] = stoi(tmp);
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					Current_Header.balloon[2][cnt] = stoi(tmp.c_str));
+					Current_Header.balloon[2][cnt] = stoi(tmp);
 				}
 				continue;
 			}
@@ -253,16 +253,16 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[3][0] = stoi(tmp.c_str());
+						Current_Header.balloon[3][0] = stoi(tmp);
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[3][cnt] = stoi(tmp.c_str());
+						Current_Header.balloon[3][cnt] = stoi(tmp);
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					Current_Header.balloon[3][cnt] = stoi(tmp.c_str));
+					Current_Header.balloon[3][cnt] = stoi(tmp);
 				}
 				continue;
 			}
