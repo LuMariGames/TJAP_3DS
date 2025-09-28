@@ -355,12 +355,12 @@ int main() {
 				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 			}
 			button_game(&isDon, &isKatsu, Option, key);
-			if (isKatsu) {
+			if (isKatsu > 0) {
 				katsu_cnt = 30;
 				don_cnt = 0;
 				play_sound(SOUND_KATSU);		//カツ
 			}
-			else if (isDon) {
+			else if (isDon > 0) {
 				katsu_cnt = 0;
 				don_cnt = 30;
 				play_sound(SOUND_DON);		//ドン
@@ -413,12 +413,12 @@ int main() {
 					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 				}
 				button_game(&isDon, &isKatsu, Option, key);
-				if (isKatsu) {
+				if (isKatsu > 0) {
 					katsu_cnt = 30;
 					don_cnt = 0;
 					play_sound(SOUND_KATSU);		//カツ
 				}
-				else if (isDon) {
+				else if (isDon > 0) {
 					katsu_cnt = 0;
 					don_cnt = 30;
 					play_sound(SOUND_DON);		//ドン
@@ -768,3 +768,4 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
