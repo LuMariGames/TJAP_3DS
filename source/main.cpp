@@ -70,7 +70,7 @@ void exit_main() {
 	romfsExit();
 }
 
-inline void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int key) {
+inline void button_game(int *isDon,int *isKatsu,OPTION_T Option, unsigned int key) {
 
 	int numKeys = 20;
 
@@ -83,8 +83,8 @@ inline void button_game(bool *isDon,bool *isKatsu,OPTION_T Option, unsigned int 
 
 	for (int i = 0; i < numKeys;++i) {
 		if (key & keys[i]) {
-			if (Optionkeys[i] == KEY_DON) *isDon = true;
-			else if (Optionkeys[i] == KEY_KATSU) *isKatsu = true;
+			if (Optionkeys[i] == KEY_DON) ++(*isDon);
+			else if (Optionkeys[i] == KEY_KATSU) ++(*isKatsu);
 		}
 	}
 }
@@ -136,8 +136,8 @@ int main() {
 		hidScanInput();
 		hidTouchRead(&tp);
 		unsigned int key = hidKeysDown(), keyhold = hidKeysHeld();
-
-		bool isDon = false,isKatsu = false,istjaloaded = false;
+		int isDon = 0,isKatsu = 0;
+		bool istjaloaded = false;
 		get_option(&Option);
 
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
@@ -167,7 +167,7 @@ int main() {
 				if ((key & KEY_TOUCH || 
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
-					isDon = true;
+					++isDon;
 					tch_cnt = 6;
 					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
@@ -175,7 +175,7 @@ int main() {
 				else if ((key & KEY_TOUCH ||
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					touch_cnt < 2) {
-					isKatsu = true;
+					++isKatsu;
 					tch_cnt = 6;
 					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
@@ -185,13 +185,15 @@ int main() {
 				touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 			}
 			button_game(&isDon, &isKatsu, Option, key);
-			if (isKatsu) {
+			if (isKatsu > 0) {
 				katsu_cnt = 30;
 				don_cnt = 0;
+				play_sound(SOUND_KATSU);		//カツ
 			}
-			else if (isDon) {
+			else if (isDon > 0) {
 				katsu_cnt = 0;
 				don_cnt = 30;
+				play_sound(SOUND_DON);		//ドン
 			}
 
 			//下画面
@@ -207,9 +209,6 @@ int main() {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
 				C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
 			}
-
-			if (isDon)   play_sound(SOUND_DON);		//ドン
-			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
 			if ((loadend == 3) || (loadend > 0 && key & KEY_SELECT)) {
 				if (check_dsp1()) scene_state = SCENE_SELECTSONG;
@@ -338,7 +337,7 @@ int main() {
 				if ((key & KEY_TOUCH || 
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
-					isDon = true;
+					++isDon;
 					tch_cnt = 6;
 					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
@@ -346,7 +345,7 @@ int main() {
 				else if ((key & KEY_TOUCH ||
 					pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 					touch_cnt < 2) {
-					isKatsu = true;
+					++isKatsu;
 					tch_cnt = 6;
 					memtch_x = touch_x, memtch_y = touch_y;
 					++touch_cnt;
@@ -359,10 +358,12 @@ int main() {
 			if (isKatsu) {
 				katsu_cnt = 30;
 				don_cnt = 0;
+				play_sound(SOUND_KATSU);		//カツ
 			}
 			else if (isDon) {
 				katsu_cnt = 0;
 				don_cnt = 30;
+				play_sound(SOUND_DON);		//ドン
 			}
 
 			//下画面
@@ -378,8 +379,6 @@ int main() {
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
 				C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
 			}
-			if (isDon)   play_sound(SOUND_DON);		//ドン
-			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
 			if (cnt == -60) scene_state = SCENE_MAINGAME;
 			break;
@@ -396,7 +395,7 @@ int main() {
 					if ((key & KEY_TOUCH || 
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 						(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
-						isDon = true;
+						++isDon;
 						tch_cnt = 6;
 						memtch_x = touch_x, memtch_y = touch_y;
 						++touch_cnt;
@@ -404,7 +403,7 @@ int main() {
 					else if ((key & KEY_TOUCH ||
 						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
 						touch_cnt < 2) {
-						isKatsu = true;
+						++isKatsu;
 						tch_cnt = 6;
 						memtch_x = touch_x, memtch_y = touch_y;
 						++touch_cnt;
@@ -417,10 +416,12 @@ int main() {
 				if (isKatsu) {
 					katsu_cnt = 30;
 					don_cnt = 0;
+					play_sound(SOUND_KATSU);		//カツ
 				}
 				else if (isDon) {
 					katsu_cnt = 0;
 					don_cnt = 30;
+					play_sound(SOUND_DON);		//ドン
 				}
 			}
 
@@ -523,9 +524,6 @@ int main() {
 				FirstMeasureTime = get_FirstMeasureTime();
 			}
 			if (cnt >= 0) CurrentTimeMain = get_current_time(TIME_MAINGAME);
-
-			if (isDon)   play_sound(SOUND_DON);		//ドン
-			if (isKatsu) play_sound(SOUND_KATSU);		//カツ
 
 			//譜面が先
 			if (offset > 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
@@ -770,6 +768,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
