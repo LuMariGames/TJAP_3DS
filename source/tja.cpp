@@ -122,7 +122,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					Current_Header.title = temp;
 				}
 				continue;
@@ -130,7 +130,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (cnt == 0) {
 				if (strstr(buf, "TITLE:") == buf + 3 && strstr(buf, "SUBTITLE:") == 0) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
-						strlcpy(temp, buf + 9, strlen(buf) - 10);
+						temp(buf + 9, strlen(buf) - 10);
 						Current_Header.title = temp;
 					}
 					continue;
@@ -140,14 +140,14 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SUBTITLE:") == buf) {
 				if (buf[9] != '\n' && buf[9] != '\r') {
 
-					strlcpy(temp, buf + 9, strlen(buf) - 10);
+					temp(buf + 9, strlen(buf) - 10);
 
 					if (strstr(temp, "--") == temp) Current_Header.subtitle_state = 1;
 					else if (strstr(temp, "++") == temp) Current_Header.subtitle_state = 2;
 					else Current_Header.subtitle_state = 0;
 
 					if (Current_Header.subtitle_state != 0) {
-						strlcpy(temp, buf + 9 + 2, strlen(buf) - 10 - 2);
+						temp(buf + 9 + 2, strlen(buf) - 10 - 2);
 					}
 					Current_Header.subtitle = temp;
 				}
@@ -156,7 +156,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "LEVEL:") == buf) { //モード毎に難易度を決めるタグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
-				strlcpy(temp, buf + 6, strlen(buf) - 7);
+				temp(buf + 6, strlen(buf) - 7);
 				Current_Header.level = stoi(temp);
 			}
 				continue;
@@ -164,7 +164,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "BPM:") == buf) { //最初のBPMを決めるタグ
 				if (buf[4] != '\n' && buf[4] != '\r') {
-					strlcpy(temp, buf + 4, strlen(buf) - 5);
+					temp(buf + 4, strlen(buf) - 5);
 					Current_Header.bpm = stof(temp);
 				}
 				continue;
@@ -172,7 +172,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "WAVE:") == buf) { //音源のファイル名を記述するタグ、このタグが無いと基本的に動かない
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
+					temp(buf + 5, strlen(buf) - 6);
 					Current_Header.wave = temp;
 				}
 				continue;
@@ -180,7 +180,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "OFFSET:") == buf) { //楽曲と譜面のタイミングを決めるタグ
 				if (buf[7] != '\n' && buf[7] != '\r') {
-					strlcpy(temp, buf + 7, strlen(buf) - 8);
+					temp(buf + 7, strlen(buf) - 8);
 					Current_Header.offset = stof(temp);
 				}
 				continue;
@@ -188,7 +188,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "BALLOON:") == buf) {  //分岐しなかった際に使われる風船の打数
 				if (buf[8] != '\n' && buf[8] != '\r') {
-					strlcpy(temp, buf + 8, strlen(buf) - 9);
+					temp(buf + 8, strlen(buf) - 9);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) Current_Header.balloon[0][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
@@ -203,7 +203,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "BALLOONNOR:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
-					strlcpy(temp, buf + 11, strlen(buf) - 12);
+					temp(buf + 11, strlen(buf) - 12);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) Current_Header.balloon[1][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
@@ -218,7 +218,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "BALLOONEXP:") == buf) { //「玄人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
-					strlcpy(temp, buf + 11, strlen(buf) - 12);
+					temp(buf + 11, strlen(buf) - 12);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) Current_Header.balloon[2][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
@@ -233,7 +233,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "BALLOONMAS:") == buf) { //「達人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
-					strlcpy(temp, buf + 11, strlen(buf) - 12);
+					temp(buf + 11, strlen(buf) - 12);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) Current_Header.balloon[3][0] = stoi(temp.substr(start, end - start));
 					int cnt = 1;
@@ -248,7 +248,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "SONGVOL:") == buf) { //楽曲の音量を調節するタグ
 				if (buf[8] != '\n' && buf[8] != '\r') {
-					strlcpy(temp, buf + 8, strlen(buf) - 9);
+					temp(buf + 8, strlen(buf) - 9);
 					Current_Header.songvol = stoi(temp) * 0.8;
 				}
 				continue;
@@ -256,7 +256,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			/*if (strstr(buf, "SEVOL:") == buf) { //SEの音量調整は今後実装する予定
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					Current_Header.sevol = stoi(temp) * 0.8;
 				}
 				continue;
@@ -264,7 +264,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "SCOREINIT:") == buf) { //スコアの加算に使うタグ、　最初に加算する点数を決める。
 				if (buf[10] != '\n' && buf[10] != '\r') { //このタグが無い場合は自動で計算される
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
+					temp(buf + 10, strlen(buf) - 11);
 					Current_Header.scoreinit = stoi(temp);
 				}
 				continue;
@@ -272,7 +272,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "SCOREDIFF:") == buf) { //スコアの加算に使うタグ、　最初に加算する点数に加える値を決める。
 				if (buf[10] != '\n' && buf[10] != '\r') { //このタグが無い場合も自動で計算されるが、一部例外的に計算しない場合がある
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
+					temp(buf + 10, strlen(buf) - 11);
 					Current_Header.scorediff = stoi(temp);
 				}
 				continue;
@@ -281,7 +281,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
-					strlcpy(temp, buf + 7, strlen(buf) - 8);
+					temp(buf + 7, strlen(buf) - 8);
 					if (temp.length == 1) Current_Header.course = stoi(temp);		//数字表記
 					else if (temp == "Easy"   || temp == "easy") 	course = COURSE_EASY;	//文字表記
 					else if (temp == "Normal" || temp == "normal") 	course = COURSE_NORMAL;
@@ -301,7 +301,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) exam[0][0] = temp.substr(start, end - start);
 					cnt = 1;
@@ -317,7 +317,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) exam[1][0] = temp.substr(start, end - start);
 					cnt = 1;
@@ -333,7 +333,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) exam[2][0] = temp.substr(start, end - start);
 					cnt = 1;
@@ -349,7 +349,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					size_t start = 0, end;
 					if (end = str.find(',', start)) != std::string::npos) exam[3][0] = temp.substr(start, end - start);
 					cnt = 1;
@@ -365,7 +365,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "STYLE:") == buf) { //双打譜面であるかの分岐タグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp(buf + 6, strlen(buf) - 7);
 					if (temp.length == 1) Current_Header.style = atoi(temp);		//数字表記
 					else if (temp == "Single" || temp == "single") Current_Header.style = 1;	//文字表記
 					else if (temp == "Double" || temp == "double") Current_Header.style = 2;
@@ -375,7 +375,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "LIFE:") == buf) { //「太鼓タワー」のみ使えるタグ、体力ゲージの役割を成している
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
+					temp(buf + 5, strlen(buf) - 6);
 					Current_Header.life = stoi(temp);
 					gaugelife = Current_Header.life;
 				}
@@ -384,7 +384,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			/*if (strstr(buf, "DEMOSTART:") == buf) { //選曲画面に使うタグ、今は使わない
 				if (buf[10] != '\n' && buf[10] != '\r') {
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
+					temp(buf + 10, strlen(buf) - 11);
 					Current_Header.demostart = stof(temp);
 				}
 				continue;
@@ -392,7 +392,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "SIDE:") == buf) { //PCソフト「太鼓さん次郎」系統の専用タグ、ここでは使わない
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
+					temp(buf + 5, strlen(buf) - 6);
 					Current_Header.side = stoi(temp);
 				}
 				continue;
@@ -400,7 +400,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "SCOREMODE:") == buf) { //スコアの計算方法を変えるタグ、デフォルトではアーケード版に似た配点方法
 				if (buf[10] != '\n' && buf[10] != '\r') {
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
+					temp(buf + 10, strlen(buf) - 11);
 					Current_Header.scoremode = stoi(temp);
 				}
 				continue;
