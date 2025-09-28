@@ -142,8 +142,9 @@ bool load_tja_head(int course,LIST_T Song) {
 
 					temp.insert(0, strlen(buf) - 10, buf[9]);
 
-					if (strstr(temp, "--") == temp) Current_Header.subtitle_state = 1;
-					else if (strstr(temp, "++") == temp) Current_Header.subtitle_state = 2;
+					std::string::size_type pos;
+					if (temp.find("--") == 0) Current_Header.subtitle_state = 1;
+					else if (temp.find("++") == 0) Current_Header.subtitle_state = 2;
 					else Current_Header.subtitle_state = 0;
 
 					if (Current_Header.subtitle_state != 0) {
@@ -306,7 +307,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
 					temp.insert(0, strlen(buf) - 8, buf[7]);
-					if (temp.length == 1) Current_Header.course = stoi(temp);		//数字表記
+					if (temp.length() == 1) Current_Header.course = stoi(temp);		//数字表記
 					else if (temp == "Easy"   || temp == "easy") 	course = COURSE_EASY;	//文字表記
 					else if (temp == "Normal" || temp == "normal") 	course = COURSE_NORMAL;
 					else if (temp == "Hard"   || temp == "hard") 	course = COURSE_HARD;
@@ -330,16 +331,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[0][0] = temp.substr(start, end - start);
+						exam[0][0] = tmp.c_str();
+					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[0][cnt] = temp.substr(start, end - start);
-						if (cnt == 1) redCdn[0] = atoi(temp.substr(start, end - start));
+						exam[0][cnt] = tmp.c_str();
+						if (cnt == 1) redCdn[0] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[0][cnt] = temp.substr(start, end - start);
+					exam[0][cnt] = tmp.c_str();
 				}
 				continue;
 			}
@@ -351,16 +353,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[1][0] = temp.substr(start, end - start);
+						exam[1][0] = tmp.c_str();
+					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[1][cnt] = temp.substr(start, end - start);
-						if (cnt == 1) redCdn[1] = atoi(temp.substr(start, end - start));
+						exam[1][cnt] = tmp.c_str();
+						if (cnt == 1) redCdn[1] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[1][cnt] = temp.substr(start, end - start);
+					exam[1][cnt] = tmp.c_str();
 				}
 				continue;
 			}
@@ -372,16 +375,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[2][0] = temp.substr(start, end - start);
+						exam[2][0] = tmp.c_str();
+					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[2][cnt] = temp.substr(start, end - start);
-						if (cnt == 1) redCdn[2] = atoi(temp.substr(start, end - start));
+						exam[2][cnt] = tmp.c_str();
+						if (cnt == 1) redCdn[2] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[2][cnt] = temp.substr(start, end - start);
+					exam[2][cnt] = tmp.c_str();
 				}
 				continue;
 			}
@@ -393,16 +397,17 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[3][0] = temp.substr(start, end - start);
+						exam[3][0] = tmp.c_str();
+					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[3][cnt] = temp.substr(start, end - start);
-						if (cnt == 1) redCdn[3] = atoi(temp.substr(start, end - start));
+						exam[3][cnt] = tmp.c_str();
+						if (cnt == 1) redCdn[3] = atoi(tmp.c_str());
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[3][cnt] = temp.substr(start, end - start);
+					exam[3][cnt] = tmp.c_str();
 				}
 				continue;
 			}
