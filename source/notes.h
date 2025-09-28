@@ -39,7 +39,7 @@ typedef struct {
 }BRANCH_T;
 
 void notes_main(
-	bool isDon, bool isKatsu,
+	int isDon, int isKatsu,
 	char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],
 	MEASURE_T Measure[MEASURE_MAX],
 	int cnt, C2D_Sprite sprites[SPRITES_NUMER]
