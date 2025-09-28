@@ -189,14 +189,20 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOON:") == buf) {  //分岐しなかった際に使われる風船の打数
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					temp.insert(0, strlen(buf) - 9, buf[8]);
+					std::string tmp = "";
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[0][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[0][0] = stoi(tmp.c_str());
+					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						Current_Header.balloon[0][cnt] = stoi(temp.substr(start, end - start));
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[0][cnt] = stoi(tmp.c_str());
 						++cnt;
 					}
-					Current_Header.balloon[0][cnt] = stoi(temp.substr(start));
+					tmp = temp.substr(start);
+					Current_Header.balloon[0][cnt] = stoi(tmp.c_str());
 				}
 				continue;
 			}
@@ -205,13 +211,18 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[1][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[1][0] = stoi(tmp.c_str());
+					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						Current_Header.balloon[1][cnt] = stoi(temp.substr(start, end - start));
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[1][cnt] = stoi(tmp.c_str());
 						++cnt;
 					}
-					Current_Header.balloon[1][cnt] = stoi(temp.substr(start));
+					tmp = temp.substr(start);
+					Current_Header.balloon[1][cnt] = stoi(tmp.c_str());
 				}
 				continue;
 			}
@@ -220,13 +231,18 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[2][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[2][0] = stoi(tmp.c_str());
+					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						Current_Header.balloon[2][cnt] = stoi(temp.substr(start, end - start));
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[2][cnt] = stoi(tmp.c_str());
 						++cnt;
 					}
-					Current_Header.balloon[2][cnt] = stoi(temp.substr(start));
+					tmp = temp.substr(start);
+					Current_Header.balloon[2][cnt] = stoi(tmp.c_str));
 				}
 				continue;
 			}
@@ -235,13 +251,18 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) Current_Header.balloon[3][0] = stoi(temp.substr(start, end - start));
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[3][0] = stoi(tmp.c_str());
+					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						Current_Header.balloon[3][cnt] = stoi(temp.substr(start, end - start));
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[3][cnt] = stoi(tmp.c_str());
 						++cnt;
 					}
-					Current_Header.balloon[3][cnt] = stoi(temp.substr(start));
+					tmp = temp.substr(start);
+					Current_Header.balloon[3][cnt] = stoi(tmp.c_str));
 				}
 				continue;
 			}
