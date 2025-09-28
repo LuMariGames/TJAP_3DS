@@ -210,6 +210,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONNOR:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
+					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
@@ -230,6 +231,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONEXP:") == buf) { //「玄人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
+					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
@@ -250,6 +252,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONMAS:") == buf) { //「達人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, strlen(buf) - 12, buf[11]);
+					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
@@ -323,14 +326,19 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) exam[0][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[0][0] = temp.substr(start, end - start);
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
 						exam[0][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[0] = atoi(temp.substr(start, end - start));
 						++cnt;
 					}
+					tmp = temp.substr(start);
 					exam[0][cnt] = temp.substr(start, end - start);
 				}
 				continue;
@@ -339,14 +347,19 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) exam[1][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[1][0] = temp.substr(start, end - start);
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
 						exam[1][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[1] = atoi(temp.substr(start, end - start));
 						++cnt;
 					}
+					tmp = temp.substr(start);
 					exam[1][cnt] = temp.substr(start, end - start);
 				}
 				continue;
@@ -355,14 +368,19 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) exam[2][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[2][0] = temp.substr(start, end - start);
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
 						exam[2][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[2] = atoi(temp.substr(start, end - start));
 						++cnt;
 					}
+					tmp = temp.substr(start);
 					exam[2][cnt] = temp.substr(start, end - start);
 				}
 				continue;
@@ -371,14 +389,19 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
 					size_t start = 0, end;
-					if ((end = temp.find(',', start)) != std::string::npos) exam[3][0] = temp.substr(start, end - start);
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[3][0] = temp.substr(start, end - start);
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
 						exam[3][cnt] = temp.substr(start, end - start);
 						if (cnt == 1) redCdn[3] = atoi(temp.substr(start, end - start));
 						++cnt;
 					}
+					tmp = temp.substr(start);
 					exam[3][cnt] = temp.substr(start, end - start);
 				}
 				continue;
