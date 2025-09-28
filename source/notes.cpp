@@ -80,6 +80,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Command.notes = tja_notes[Measure[MeasureCount].notes];
 
 					switch (Command.knd) {
+					case COMMAND_END:
+						isNotesLoad = false;
+						break;
 					case COMMAND_BRANCHSTART:
 
 						if (!isLevelHold) {
@@ -134,8 +137,8 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
-					if (MeasureCount < MinMeasureCount && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
-					if (MeasureCount < MinMeasureCount && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) {
+					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
+					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) {
 						++BalloonCount[1];
 						++BalloonCount[2];
 						++BalloonCount[3];
@@ -329,9 +332,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					break;
 				case COMMAND_LEVELHOLD:
 					isLevelHold = true;
-					break;
-				case COMMAND_END:
-					isNotesLoad = false;
 					break;
 				default:
 					break;
