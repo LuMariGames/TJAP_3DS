@@ -80,9 +80,6 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					Command.notes = tja_notes[Measure[MeasureCount].notes];
 
 					switch (Command.knd) {
-					case COMMAND_END:
-						isNotesLoad = false;
-						break;
 					case COMMAND_BRANCHSTART:
 
 						if (!isLevelHold) {
@@ -332,6 +329,9 @@ void notes_main(bool isDon, bool isKatsu, char tja_notes[MEASURE_MAX][NOTES_MEAS
 					break;
 				case COMMAND_LEVELHOLD:
 					isLevelHold = true;
+					break;
+				case COMMAND_END:
+					isNotesLoad = false;
 					break;
 				default:
 					break;
