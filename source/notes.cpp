@@ -1214,8 +1214,8 @@ void draw_title() {
 	get_tja_header(&Header);
 	float width = 0, height = 0;
 
-	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) draw_notes_text(TOP_WIDTH, 20, Header.subtitle.data(), &width, &height);
-	draw_notes_text(TOP_WIDTH - 5, 5, Header.title.data(), &width, &height);
+	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) draw_notes_text(TOP_WIDTH, 20, Header.subtitle, &width, &height);
+	draw_notes_text(TOP_WIDTH - 5, 5, Header.title, &width, &height);
 }
 
 void draw_condition() {
