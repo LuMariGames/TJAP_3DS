@@ -297,7 +297,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
-					temp.insert(0, &buf[7], strlen(buf) - 8);
+					temp.insert(0, &buf[7], strlen(buf) - 9);
 					if (temp.length() == 1) Current_Header.course = stoi(temp);		//数字表記
 					else if (temp == "Easy"   || temp == "easy") 	course = COURSE_EASY;	//文字表記
 					else if (temp == "Normal" || temp == "normal") 	course = COURSE_NORMAL;
