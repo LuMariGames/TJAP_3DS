@@ -129,7 +129,6 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					Current_Header.title = temp;
 				}
-				free(temp);
 				continue;
 			}
 			if (cnt == 0) {
@@ -138,7 +137,6 @@ bool load_tja_head(int course,LIST_T Song) {
 						strlcpy(temp, buf + 9, strlen(buf) - 10);
 						Current_Header.title = temp;
 					}
-					free(temp);
 					continue;
 				}
 			}
@@ -157,7 +155,6 @@ bool load_tja_head(int course,LIST_T Song) {
 					}
 					Current_Header.subtitle = temp;
 				}
-				free(temp);
 				continue;
 			}
 
@@ -326,7 +323,6 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
-				free(temp);
 				continue;
 			}
 
@@ -342,7 +338,6 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
-				free(temp);
 				continue;
 			}
 
@@ -358,7 +353,6 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
-				free(temp);
 				continue;
 			}
 
@@ -374,7 +368,6 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
-				free(temp);
 				continue;
 			}
 
