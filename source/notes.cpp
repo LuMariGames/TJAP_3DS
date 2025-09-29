@@ -1215,7 +1215,7 @@ void draw_condition() {
 
 	OPTION_T Option;
 	get_option(&Option);
-	extern std::string *exam[4][4];
+	extern std::string exam[4][4];
 	float width = 0, height = 0, tx = 0;
 
 	for (int j = 0; j < 4; ++j) {
