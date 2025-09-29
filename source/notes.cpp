@@ -736,9 +736,6 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
 				}
-				if (BalloonNotes[Notes[i].roll_id].end_id != 1 && Notes[BalloonNotes[Notes[i].roll_id].end_id].judge_time <= CurrentTimeNotes) {
-					delete_notes(BalloonNotes[Notes[i].roll_id].end_id);
-				}
 				break;
 
 			case NOTES_BALLOONEND:
@@ -746,6 +743,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 					BalloonNotes[Notes[i].roll_id].end_id = i;
 				}
 				if (Notes[i].judge_time <= CurrentTimeNotes) {
+					delete_notes(BalloonNotes[Notes[i].roll_id].start_id);
 					delete_notes(i);
 				}
 				break;
