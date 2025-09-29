@@ -307,8 +307,9 @@ int main() {
 
 				tmp = check_wave(SelectedSong);
 				if (!istjaloaded) {
-					scene_state = SCENE_SELECTSONG;
-					cnt = -1;
+					warning = WARNING_TJA_NOT_EXIST;
+					scene_state = SCENE_WARNING;
+					select_ini();
 				}
 				else if (tmp == -1) {
 					cnt = -150;
@@ -767,5 +768,6 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
+
 
 
