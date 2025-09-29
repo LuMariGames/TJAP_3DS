@@ -5,7 +5,8 @@
 #include "score.h"
 #include "result.h"
 
-extern int gaugelife;
+extern int gaugelife,redCdn[4];
+extern std::string exam[4][4];
 bool isGOGO;
 int combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,TotalPerfectCount,TotalNiceCount,TotalBadCount,
 CurrentScore,TotalScore,CurrentTotalRollCount,CurrentRollCount,TotalRollCount,TotalCount,
@@ -478,8 +479,6 @@ void send_gogotime(bool arg) {
 
 int dan_condition() {
 	int isBadCondition = 0; //ここで何回条件に反しているかをリセットする
-	extern std::string exam[4][4];
-	extern int redCdn[4];
 	std::string types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.score / Gauge.soul * 100.0)};
     
