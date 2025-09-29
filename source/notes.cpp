@@ -743,7 +743,6 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 					BalloonNotes[Notes[i].roll_id].end_id = i;
 				}
 				if (Notes[i].judge_time <= CurrentTimeNotes) {
-					delete_notes(BalloonNotes[Notes[i].roll_id].start_id);
 					delete_notes(i);
 				}
 				break;
