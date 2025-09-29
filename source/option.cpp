@@ -778,6 +778,7 @@ void get_option(OPTION_T *TMP) {
 	TMP->blacktext = Option.blacktext;
 	TMP->special = Option.special;
 	TMP->exse = Option.exse;
+	if (Option.player >= 0 && Option.player < 3) Option.player = 0;
 	TMP->player = Option.player;
 	TMP->measure = Option.measure;
 	TMP->edit = Option.edit;
