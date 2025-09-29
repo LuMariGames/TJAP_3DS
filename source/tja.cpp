@@ -453,7 +453,9 @@ bool load_tja_head(int course,LIST_T Song) {
 				}
 				continue;
 			}
+			temp = "";
 		}
+		temp = "";
 		fclose(fp);
 		return isSTART;
 	}
