@@ -682,7 +682,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		if (JudgeBalloonState != -1 && isDon > 0) {	//風船
 
 			BalloonNotes[JudgeBalloonState].current_hit += isDon;
-
 			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
 				update_score(BALLOON_BREAK);	//破裂
@@ -736,6 +735,9 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
+				}
+				if (BalloonNotes[Notes[i].roll_id].end_id != 1 && Notes[BalloonNotes[Notes[i].roll_id].end_id].judge_time <= CurrentTimeNotes) {
+					delete_notes(BalloonNotes[Notes[i].roll_id].end_id);
 				}
 				break;
 
