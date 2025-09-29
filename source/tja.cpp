@@ -110,14 +110,17 @@ bool load_tja_head(int course,LIST_T Song) {
 			mix[1] = Current_Header.songvol / 100.0;
 			if (isCourseMatch && Option.player == 0 && strstr(buf, "#START") == buf) {
 				isSTART = true;
+				free(temp);
 				break;
 			}
 			else if (isCourseMatch && Option.player == 1 && Current_Header.style == 2 && strstr(buf, "#START P1") == buf) {
 				isSTART = true;
+				free(temp);
 				break;
 			}
 			else if (isCourseMatch && Option.player == 2 && Current_Header.style == 2 && strstr(buf, "#START P2") == buf) {
 				isSTART = true;
+				free(temp);
 				break;
 			}
 
@@ -126,6 +129,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
 					Current_Header.title = temp;
 				}
+				free(temp);
 				continue;
 			}
 			if (cnt == 0) {
@@ -134,6 +138,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						strlcpy(temp, buf + 9, strlen(buf) - 10);
 						Current_Header.title = temp;
 					}
+					free(temp);
 					continue;
 				}
 			}
@@ -152,14 +157,16 @@ bool load_tja_head(int course,LIST_T Song) {
 					}
 					Current_Header.subtitle = temp;
 				}
+				free(temp);
 				continue;
 			}
 
 			if (strstr(buf, "LEVEL:") == buf) { //モード毎に難易度を決めるタグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
-				strlcpy(temp, buf + 6, strlen(buf) - 7);
-				Current_Header.level = atoi(temp);
-			}
+					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					Current_Header.level = atoi(temp);
+				}
+				free(temp);
 				continue;
 			}
 
@@ -168,6 +175,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 4, strlen(buf) - 5);
 					Current_Header.bpm = atof(temp);
 				}
+				free(temp);
 				continue;
 			}
 
@@ -176,6 +184,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 5, strlen(buf) - 6);
 					Current_Header.wave = temp;
 				}
+				free(temp);
 				continue;
 			}
 
@@ -184,6 +193,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 7, strlen(buf) - 8);
 					Current_Header.offset = atof(temp);
 				}
+				free(temp);
 				continue;
 			}
 
@@ -198,6 +208,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -212,6 +223,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -226,6 +238,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -240,6 +253,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -248,6 +262,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
 					Current_Header.songvol = atoi(temp) * 0.8;
 				}
+				free(temp);
 				continue;
 			}
 
@@ -264,6 +279,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scoreinit = atoi(temp);
 				}
+				free(temp);
 				continue;
 			}
 
@@ -272,6 +288,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scorediff = atoi(temp);
 				}
+				free(temp);
 				continue;
 			}
 
@@ -293,6 +310,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					}
 					else isCourseMatch = false;
 				}
+				free(temp);
 				continue;
 			}
 
@@ -308,6 +326,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -323,6 +342,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -338,6 +358,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -353,6 +374,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						++cnt;
 					}
 				}
+				free(temp);
 				continue;
 			}
 
@@ -363,6 +385,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					else if (strcmp(temp, "Single") == 0 || strcmp(temp, "single") == 0) Current_Header.style = 1;	//文字表記
 					else if (strcmp(temp, "Double") == 0 || strcmp(temp, "double") == 0) Current_Header.style = 2;
 				}
+				free(temp);
 				continue;
 			}
 
@@ -372,6 +395,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					Current_Header.life = atoi(temp);
 					gaugelife = Current_Header.life;
 				}
+				free(temp);
 				continue;
 			}
 
@@ -396,12 +420,12 @@ bool load_tja_head(int course,LIST_T Song) {
 					strlcpy(temp, buf + 10, strlen(buf) - 11);
 					Current_Header.scoremode = atoi(temp);
 				}
+				free(temp);
 				continue;
 			}
 			free(temp);
 		}
 		fclose(fp);
-		free(temp);
 		return isSTART;
 	}
 	else {
