@@ -101,7 +101,7 @@ bool load_tja_head(int course,LIST_T Song) {
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
 	if ((fp = fopen(abs_path, "r")) != NULL) {
 
-		std::string temp = "";
+		std::string temp;
 		while (fgets(buf, 512, fp) != NULL) {
 
 			++cnt;
