@@ -1229,7 +1229,7 @@ void draw_condition() {
 		else if (exam[j][0] == "h") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
 		else if (exam[j][0] == "g") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
 		tx += width;
-		draw_condition_text(50+tx, 148+20*j, exam[j][1], &width, &height);
+		draw_condition_text(50+tx, 148+20*j, exam[j][1].data(), &width, &height);
 		tx += width;
 
 		if (exam[j][0] == "g") {
