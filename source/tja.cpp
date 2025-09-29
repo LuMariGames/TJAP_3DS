@@ -7,7 +7,8 @@
 #include "option.h"
 #include <stdio.h>
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX];
+std::string exam[4][4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, redCdn[4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
@@ -78,22 +79,22 @@ bool load_tja_head(int course,LIST_T Song) {
 	//Current_Header.demostart = 0;
 	//Current_Header.side = 3;
 	Current_Header.scoremode = 3;
-	exam[0][0] = (char*)"";
-	exam[0][1] = (char*)"";
-	exam[0][2] = (char*)"";
-	exam[0][3] = (char*)"";
-	exam[1][0] = (char*)"";
-	exam[1][1] = (char*)"";
-	exam[1][2] = (char*)"";
-	exam[1][3] = (char*)"";
-	exam[2][0] = (char*)"";
-	exam[2][1] = (char*)"";
-	exam[2][2] = (char*)"";
-	exam[2][3] = (char*)"";
-	exam[3][0] = (char*)"";
-	exam[3][1] = (char*)"";
-	exam[3][2] = (char*)"";
-	exam[3][3] = (char*)"";
+	exam[0][0] = "";
+	exam[0][1] = "";
+	exam[0][2] = "";
+	exam[0][3] = "";
+	exam[1][0] = "";
+	exam[1][1] = "";
+	exam[1][2] = "";
+	exam[1][3] = "";
+	exam[2][0] = "";
+	exam[2][1] = "";
+	exam[2][2] = "";
+	exam[2][3] = "";
+	exam[3][0] = "";
+	exam[3][1] = "";
+	exam[3][2] = "";
+	exam[3][3] = "";
 
 	int cnt = -1;
 	char abs_path[512];
@@ -108,7 +109,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			std::string().swap(temp);
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
-			if (isCourseMatch && Current_Header.style == 1 && strstr(buf, "#START") == buf) {
+			if (isCourseMatch && Option.player == 0 && strstr(buf, "#START") == buf) {
 				isSTART = true;
 				break;
 			}
@@ -321,21 +322,21 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[0][0] = tmp.data();
+						exam[0][0] = tmp;
 						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[0][cnt] = tmp.data();
-						if (cnt == 1) redCdn[0] = atoi(tmp.c_str());
+						exam[0][cnt] = tmp;
+						if (cnt == 1) redCdn[0] = stoi(tmp);
 						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[0][cnt] = tmp.data();
+					exam[0][cnt] = tmp;
 				}
 				continue;
 			}
@@ -347,21 +348,21 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[1][0] = tmp.data();
+						exam[1][0] = tmp;
 						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[1][cnt] = tmp.data();
-						if (cnt == 1) redCdn[1] = atoi(tmp.c_str());
+						exam[1][cnt] = tmp;
+						if (cnt == 1) redCdn[1] = stoi(tmp);
 						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[1][cnt] = tmp.data();
+					exam[1][cnt] = tmp;
 				}
 				continue;
 			}
@@ -373,21 +374,21 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[2][0] = tmp.data();
+						exam[2][0] = tmp;
 						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[2][cnt] = tmp.data();
-						if (cnt == 1) redCdn[2] = atoi(tmp.c_str());
+						exam[2][cnt] = tmp;
+						if (cnt == 1) redCdn[2] = stoi(tmp);
 						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[2][cnt] = tmp.data();
+					exam[2][cnt] = tmp;
 				}
 				continue;
 			}
@@ -399,21 +400,21 @@ bool load_tja_head(int course,LIST_T Song) {
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[3][0] = tmp.data();
+						exam[3][0] = tmp;
 						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
-						exam[3][cnt] = tmp.data();
-						if (cnt == 1) redCdn[3] = atoi(tmp.c_str());
+						exam[3][cnt] = tmp;
+						if (cnt == 1) redCdn[3] = stoi(tmp);
 						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
 					tmp = temp.substr(start);
-					exam[3][cnt] = tmp.data();
+					exam[3][cnt] = tmp;
 				}
 				continue;
 			}
@@ -678,10 +679,8 @@ void load_tja_notes(int course, LIST_T Song) {
 		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
 		PreJudge = FirstMeasureTime;
 
-		while (
-			(fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) &&
-			isEnd == false
-			) {
+		while ((fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) &&
+			isEnd == false) {
 
 			if (strstr(tja_notes[tja_cnt], "COURSE:") == tja_notes[tja_cnt]) {
 
@@ -713,7 +712,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				isStart = true;
 				continue;
 			}
-			else if (isStart == false && isCourseMatch && Current_Header.style == 1 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			else if (isStart == false && isCourseMatch && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
