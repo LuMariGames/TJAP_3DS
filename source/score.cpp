@@ -478,9 +478,9 @@ void send_gogotime(bool arg) {
 
 int dan_condition() {
 	int isBadCondition = 0; //ここで何回条件に反しているかをリセットする
-	extern std::string *exam[4][4];
+	extern std::string exam[4][4];
 	extern int redCdn[4];
-	const std::string types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
+	std::string types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.score / Gauge.soul * 100.0)};
     
 	for (int i = 0; i < 7; ++i) {
