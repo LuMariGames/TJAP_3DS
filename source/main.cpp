@@ -238,6 +238,7 @@ int main() {
 			case WARNING_WAVE_NOT_OGG:
 				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NOT_OGG);
 				break;
+
 			case WARNING_TJA_NOT_EXIST:
 				tmp = message_window(tp, key, TEXT_WARNING_TJA_NOT_EXIST);
 				break;
@@ -306,7 +307,12 @@ int main() {
 				}
 
 				tmp = check_wave(SelectedSong);
-				if (tmp == -1) {
+				if (!istjaloaded) {
+					warning = WARNING_TJA_NOT_EXIST;
+					scene_state = SCENE_WARNING;
+					select_ini();
+				}
+				else if (tmp == -1) {
 					cnt = -150;
 					play_main_music(&isPlayMain, SelectedSong);
 					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
@@ -315,11 +321,6 @@ int main() {
 				}
 				else {
 					warning = tmp;
-					scene_state = SCENE_WARNING;
-					select_ini();
-				}
-				if (!istjaloaded) {
-					warning = WARNING_TJA_NOT_EXIST;
 					scene_state = SCENE_WARNING;
 					select_ini();
 				}
@@ -768,4 +769,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
