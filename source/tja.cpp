@@ -123,7 +123,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					temp.insert(0, &buf[6], strlen(buf) - 7);
+					temp.insert(0, &buf[6], strlen(buf) - 8);
 					Current_Header.title = temp;
 				}
 				continue;
@@ -131,7 +131,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (cnt == 0) {
 				if (strstr(buf, "TITLE:") == &buf[3] && strstr(buf, "SUBTITLE:") == &buf[0]) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
-						temp.insert(0, &buf[9], strlen(buf) - 10);
+						temp.insert(0, &buf[9], strlen(buf) - 11);
 						Current_Header.title = temp;
 					}
 					continue;
@@ -141,14 +141,15 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SUBTITLE:") == buf) {
 				if (buf[9] != '\n' && buf[9] != '\r') {
 
-					temp.insert(0, &buf[9], strlen(buf) - 10);
+					temp.insert(0, &buf[9], strlen(buf) - 11);
 
 					if (temp.find("--") == 0) Current_Header.subtitle_state = 1;
 					else if (temp.find("++") == 0) Current_Header.subtitle_state = 2;
 					else Current_Header.subtitle_state = 0;
 
 					if (Current_Header.subtitle_state != 0) {
-						temp.insert(0, &buf[11], strlen(buf) - 12);
+						std::string().swap(temp);
+						temp.insert(0, &buf[11], strlen(buf) - 13);
 					}
 					Current_Header.subtitle = temp;
 				}
@@ -173,7 +174,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "WAVE:") == buf) { //音源のファイル名を記述するタグ、このタグが無いと基本的に動かない
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					temp.insert(0, &buf[5], strlen(buf) - 6);
+					temp.insert(0, &buf[5], strlen(buf) - 7);
 					Current_Header.wave = temp;
 				}
 				continue;
@@ -316,7 +317,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					temp.insert(0, &buf[6], strlen(buf) - 7);
+					temp.insert(0, &buf[6], strlen(buf) - 8);
 					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
@@ -340,7 +341,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					temp.insert(0, &buf[6], strlen(buf) - 7);
+					temp.insert(0, &buf[6], strlen(buf) - 8);
 					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
@@ -364,7 +365,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					temp.insert(0, &buf[6], strlen(buf) - 7);
+					temp.insert(0, &buf[6], strlen(buf) - 8);
 					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
@@ -388,7 +389,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					temp.insert(0, &buf[6], strlen(buf) - 7);
+					temp.insert(0, &buf[6], strlen(buf) - 8);
 					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
@@ -412,7 +413,7 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "STYLE:") == buf) { //双打譜面であるかの分岐タグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					temp.insert(0, &buf[6], strlen(buf) - 7);
+					temp.insert(0, &buf[6], strlen(buf) - 8);
 					if (temp.length() == 1) Current_Header.style = stoi(temp);		//数字表記
 					else if (temp == "Single" || temp == "single") Current_Header.style = 1;	//文字表記
 					else if (temp == "Double" || temp == "double") Current_Header.style = 2;
