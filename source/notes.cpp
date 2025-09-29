@@ -886,31 +886,31 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
-					sprites[SPRITE_BALLOON_1].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BALLOON_1].params.pos.x = NOTES_JUDGE_X;
 					sprites[SPRITE_BALLOON_1].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_1].image, &sprites[SPRITE_BALLOON_1].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4f) {
 
-					sprites[SPRITE_BALLOON_2].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BALLOON_2].params.pos.x = NOTES_JUDGE_X;
 					sprites[SPRITE_BALLOON_2].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_2].image, &sprites[SPRITE_BALLOON_2].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6f) {
 
-					sprites[SPRITE_BALLOON_3].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BALLOON_3].params.pos.x = NOTES_JUDGE_X;
 					sprites[SPRITE_BALLOON_3].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_3].image, &sprites[SPRITE_BALLOON_3].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8f) {
 
-					sprites[SPRITE_BALLOON_4].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BALLOON_4].params.pos.x = NOTES_JUDGE_X;
 					sprites[SPRITE_BALLOON_4].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_4].image, &sprites[SPRITE_BALLOON_4].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
-					sprites[SPRITE_BALLOON_5].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BALLOON_5].params.pos.x = NOTES_JUDGE_X;
 					sprites[SPRITE_BALLOON_5].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_5].image, &sprites[SPRITE_BALLOON_5].params, NULL);
 				}
