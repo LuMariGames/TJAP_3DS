@@ -190,20 +190,18 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOON:") == buf) {  //分岐しなかった際に使われる風船の打数
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					temp.insert(0, &buf[8], strlen(buf) - 9);
-					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[0][0] = stoi(tmp);
+						Current_Header.balloon[0][0] = stoi(temp.substr(start, end - start));
+						start = end;
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[0][cnt] = stoi(tmp);
+						Current_Header.balloon[0][cnt] = stoi(temp.substr(start, end - start));
+						start = end;
 						++cnt;
 					}
-					tmp = temp.substr(start);
-					Current_Header.balloon[0][cnt] = stoi(tmp);
+					Current_Header.balloon[0][cnt] = stoi(temp.substr(start));
 				}
 				continue;
 			}
@@ -211,20 +209,18 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONNOR:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, &buf[11], strlen(buf) - 12);
-					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[1][0] = stoi(tmp);
+						Current_Header.balloon[1][0] = stoi(temp.substr(start, end - start));
+						start = end;
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[1][cnt] = stoi(tmp);
+						Current_Header.balloon[1][cnt] = stoi(temp.substr(start, end - start));
+						start = end;
 						++cnt;
 					}
-					tmp = temp.substr(start);
-					Current_Header.balloon[1][cnt] = stoi(tmp);
+					Current_Header.balloon[1][cnt] = stoi(temp.substr(start, end - start));
 				}
 				continue;
 			}
@@ -232,20 +228,18 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONEXP:") == buf) { //「玄人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, &buf[11], strlen(buf) - 12);
-					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[2][0] = stoi(tmp);
+						Current_Header.balloon[2][0] = stoi(temp.substr(start, end - start));
+						start = end;
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[2][cnt] = stoi(tmp);
+						Current_Header.balloon[2][cnt] = stoi(temp.substr(start, end - start));
+						start = end;
 						++cnt;
 					}
-					tmp = temp.substr(start);
-					Current_Header.balloon[2][cnt] = stoi(tmp);
+					Current_Header.balloon[2][cnt] = stoi(temp.substr(start, end - start));
 				}
 				continue;
 			}
@@ -253,20 +247,16 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONMAS:") == buf) { //「達人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					temp.insert(0, &buf[11], strlen(buf) - 12);
-					std::string tmp = "";
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[3][0] = stoi(tmp);
+						Current_Header.balloon[3][0] = stoi(temp.substr(start, end - start));
 					}
 					int cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
-						tmp = temp.substr(start, end - start);
-						Current_Header.balloon[3][cnt] = stoi(tmp);
+						Current_Header.balloon[3][cnt] = stoi(temp.substr(start, end - start));
 						++cnt;
 					}
-					tmp = temp.substr(start);
-					Current_Header.balloon[3][cnt] = stoi(tmp);
+					Current_Header.balloon[3][cnt] = stoi(temp.substr(start, end - start));
 				}
 				continue;
 			}
@@ -332,12 +322,14 @@ bool load_tja_head(int course,LIST_T Song) {
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[0][0] = tmp.data();
+						start = end;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[0][cnt] = tmp.data();
 						if (cnt == 1) redCdn[0] = atoi(tmp.c_str());
+						start = end;
 						++cnt;
 					}
 					tmp = temp.substr(start);
@@ -354,12 +346,14 @@ bool load_tja_head(int course,LIST_T Song) {
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[1][0] = tmp.data();
+						start = end;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[1][cnt] = tmp.data();
 						if (cnt == 1) redCdn[1] = atoi(tmp.c_str());
+						start = end;
 						++cnt;
 					}
 					tmp = temp.substr(start);
@@ -376,12 +370,14 @@ bool load_tja_head(int course,LIST_T Song) {
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[2][0] = tmp.data();
+						start = end;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[2][cnt] = tmp.data();
 						if (cnt == 1) redCdn[2] = atoi(tmp.c_str());
+						start = end;
 						++cnt;
 					}
 					tmp = temp.substr(start);
@@ -398,12 +394,14 @@ bool load_tja_head(int course,LIST_T Song) {
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[3][0] = tmp.data();
+						start = end;
 					}
 					cnt = 1;
 					while ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[3][cnt] = tmp.data();
 						if (cnt == 1) redCdn[3] = atoi(tmp.c_str());
+						start = end;
 						++cnt;
 					}
 					tmp = temp.substr(start);
