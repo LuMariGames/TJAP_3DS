@@ -60,12 +60,12 @@ bool load_tja_head(int course,LIST_T Song) {
 	get_option(&Option);
 	memset(mix, 0, sizeof(mix));
 
-	Current_Header.title = (char*)"No title";
-	Current_Header.subtitle = (char*)"";
+	Current_Header.title = "No title";
+	Current_Header.subtitle = "";
 	Current_Header.subtitle_state = -1;
 	Current_Header.level = 0;
 	Current_Header.bpm = 60.0;
-	Current_Header.wave = (char*)"audio.ogg";
+	Current_Header.wave = "audio.ogg";
 	Current_Header.offset = 0;
 	Current_Header.balloon[0][0] = 5;
 	Current_Header.songvol = 80;
@@ -101,11 +101,10 @@ bool load_tja_head(int course,LIST_T Song) {
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
 	if ((fp = fopen(abs_path, "r")) != NULL) {
 
-		char* temp = NULL;
+		std::string temp = "";
 		while (fgets(buf, 512, fp) != NULL) {
 
 			++cnt;
-			temp = (char *)malloc((strlen(buf) + 1));
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
 			if (isCourseMatch && strstr(buf, "#START") == buf) {
@@ -123,15 +122,15 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "TITLE:") == buf) {
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					temp.insert(0, strlen(buf) - 7, buf[6]);
 					Current_Header.title = temp;
 				}
 				continue;
 			}
 			if (cnt == 0) {
-				if (strstr(buf, "TITLE:") == buf + 3 && strstr(buf, "SUBTITLE:") == 0) {
+				if (strstr(buf, "TITLE:") == &buf[3] && strstr(buf, "SUBTITLE:") == &buf[0]) {
 					if (buf[9] != '\n' && buf[9] != '\r') {
-						strlcpy(temp, buf + 9, strlen(buf) - 10);
+						temp.insert(0, strlen(buf) - 10, buf[9]);
 						Current_Header.title = temp;
 					}
 					continue;
@@ -141,14 +140,14 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "SUBTITLE:") == buf) {
 				if (buf[9] != '\n' && buf[9] != '\r') {
 
-					strlcpy(temp, buf + 9, strlen(buf) - 10);
+					temp.insert(0, strlen(buf) - 10, buf[9]);
 
-					if (strstr(temp, "--") == temp) Current_Header.subtitle_state = 1;
-					else if (strstr(temp, "++") == temp) Current_Header.subtitle_state = 2;
+					if (temp.find("--") == 0) Current_Header.subtitle_state = 1;
+					else if (temp.find("++") == 0) Current_Header.subtitle_state = 2;
 					else Current_Header.subtitle_state = 0;
 
 					if (Current_Header.subtitle_state != 0) {
-						strlcpy(temp, buf + 9 + 2, strlen(buf) - 10 - 2);
+						temp.insert(0, strlen(buf) - 12, buf[11]);
 					}
 					Current_Header.subtitle = temp;
 				}
@@ -157,23 +156,23 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "LEVEL:") == buf) { //モード毎に難易度を決めるタグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
-				strlcpy(temp, buf + 6, strlen(buf) - 7);
-				Current_Header.level = atoi(temp);
+				temp.insert(0, strlen(buf) - 7, buf[6]);
+				Current_Header.level = stoi(temp);
 			}
 				continue;
 			}
 
 			if (strstr(buf, "BPM:") == buf) { //最初のBPMを決めるタグ
 				if (buf[4] != '\n' && buf[4] != '\r') {
-					strlcpy(temp, buf + 4, strlen(buf) - 5);
-					Current_Header.bpm = atof(temp);
+					temp.insert(0, strlen(buf) - 5, buf[4]);
+					Current_Header.bpm = stof(temp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "WAVE:") == buf) { //音源のファイル名を記述するタグ、このタグが無いと基本的に動かない
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
+					temp.insert(0, strlen(buf) - 6, buf[5]);
 					Current_Header.wave = temp;
 				}
 				continue;
@@ -181,96 +180,124 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "OFFSET:") == buf) { //楽曲と譜面のタイミングを決めるタグ
 				if (buf[7] != '\n' && buf[7] != '\r') {
-					strlcpy(temp, buf + 7, strlen(buf) - 8);
-					Current_Header.offset = atof(temp);
+					temp.insert(0, strlen(buf) - 8, buf[7]);
+					Current_Header.offset = stof(temp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "BALLOON:") == buf) {  //分岐しなかった際に使われる風船の打数
 				if (buf[8] != '\n' && buf[8] != '\r') {
-					strlcpy(temp, buf + 8, strlen(buf) - 9);
-					char *tp = strtok(temp, ",");
-					Current_Header.balloon[0][0] = atoi(tp);
+					temp.insert(0, strlen(buf) - 9, buf[8]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[0][0] = stoi(tmp);
+					}
 					int cnt = 1;
-					while ((tp = strtok(NULL, ","))) {
-						Current_Header.balloon[0][cnt] = atoi(tp);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[0][cnt] = stoi(tmp);
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					Current_Header.balloon[0][cnt] = stoi(tmp);
 				}
 				continue;
 			}
 
-			if (strstr(buf, "BALLOONNOM:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
+			if (strstr(buf, "BALLOONNOR:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
-					strlcpy(temp, buf + 11, strlen(buf) - 12);
-					char *tp = strtok(temp, ",");
-					Current_Header.balloon[1][0] = atoi(tp);
+					temp.insert(0, strlen(buf) - 12, buf[11]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[1][0] = stoi(tmp);
+					}
 					int cnt = 1;
-					while ((tp = strtok(NULL, ","))) {
-						Current_Header.balloon[1][cnt] = atoi(tp);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[1][cnt] = stoi(tmp);
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					Current_Header.balloon[1][cnt] = stoi(tmp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "BALLOONEXP:") == buf) { //「玄人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
-					strlcpy(temp, buf + 11, strlen(buf) - 12);
-					char *tp = strtok(temp, ",");
-					Current_Header.balloon[2][0] = atoi(tp);
+					temp.insert(0, strlen(buf) - 12, buf[11]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[2][0] = stoi(tmp);
+					}
 					int cnt = 1;
-					while ((tp = strtok(NULL, ","))) {
-						Current_Header.balloon[2][cnt] = atoi(tp);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[2][cnt] = stoi(tmp);
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					Current_Header.balloon[2][cnt] = stoi(tmp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "BALLOONMAS:") == buf) { //「達人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
-					strlcpy(temp, buf + 11, strlen(buf) - 12);
-					char *tp = strtok(temp, ",");
-					Current_Header.balloon[3][0] = atoi(tp);
+					temp.insert(0, strlen(buf) - 12, buf[11]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[3][0] = stoi(tmp);
+					}
 					int cnt = 1;
-					while ((tp = strtok(NULL, ","))) {
-						Current_Header.balloon[3][cnt] = atoi(tp);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						Current_Header.balloon[3][cnt] = stoi(tmp);
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					Current_Header.balloon[3][cnt] = stoi(tmp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "SONGVOL:") == buf) { //楽曲の音量を調節するタグ
 				if (buf[8] != '\n' && buf[8] != '\r') {
-					strlcpy(temp, buf + 8, strlen(buf) - 9);
-					Current_Header.songvol = atoi(temp) * 0.8;
+					temp.insert(0, strlen(buf) - 9, buf[8]);
+					Current_Header.songvol = stoi(temp) * 0.8;
 				}
 				continue;
 			}
 
 			/*if (strstr(buf, "SEVOL:") == buf) { //SEの音量調整は今後実装する予定
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					Current_Header.sevol = atoi(temp) * 0.8;
+					temp.insert(0, strlen(buf) - 7, buf[6]);
+					Current_Header.sevol = stoi(temp) * 0.8;
 				}
 				continue;
 			}*/
 
 			if (strstr(buf, "SCOREINIT:") == buf) { //スコアの加算に使うタグ、　最初に加算する点数を決める。
 				if (buf[10] != '\n' && buf[10] != '\r') { //このタグが無い場合は自動で計算される
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
-					Current_Header.scoreinit = atoi(temp);
+					temp.insert(0, strlen(buf) - 11, buf[10]);
+					Current_Header.scoreinit = stoi(temp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "SCOREDIFF:") == buf) { //スコアの加算に使うタグ、　最初に加算する点数に加える値を決める。
 				if (buf[10] != '\n' && buf[10] != '\r') { //このタグが無い場合も自動で計算されるが、一部例外的に計算しない場合がある
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
-					Current_Header.scorediff = atoi(temp);
+					temp.insert(0, strlen(buf) - 11, buf[10]);
+					Current_Header.scorediff = stoi(temp);
 				}
 				continue;
 			}
@@ -278,15 +305,15 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
-					strlcpy(temp, buf + 7, strlen(buf) - 8);
-					if (strlen(temp) == 1) Current_Header.course = atoi(temp);		//数字表記
-					else if (strcmp(temp, "Easy") == 0 || strcmp(temp, "easy") == 0)   course = COURSE_EASY;	//文字表記
-					else if (strcmp(temp, "Normal") == 0 || strcmp(temp, "normal") == 0) course = COURSE_NORMAL;
-					else if (strcmp(temp, "Hard") == 0 || strcmp(temp, "hard") == 0)   course = COURSE_HARD;
-					else if (strcmp(temp, "Oni") == 0 || strcmp(temp, "oni") == 0)    course = COURSE_ONI;
-					else if (strcmp(temp, "Edit") == 0 || strcmp(temp, "edit") == 0)   course = COURSE_EDIT;
-					else if (strcmp(temp, "Tower") == 0 || strcmp(temp, "tower") == 0)   course = COURSE_TOWER;
-					else if (strcmp(temp, "Dan") == 0 || strcmp(temp, "dan") == 0)   course = COURSE_DAN;
+					temp.insert(0, strlen(buf) - 8, buf[7]);
+					if (temp.length() == 1) Current_Header.course = stoi(temp);		//数字表記
+					else if (temp == "Easy"   || temp == "easy") 	course = COURSE_EASY;	//文字表記
+					else if (temp == "Normal" || temp == "normal") 	course = COURSE_NORMAL;
+					else if (temp == "Hard"   || temp == "hard") 	course = COURSE_HARD;
+					else if (temp == "Oni"    || temp == "oni") 	course = COURSE_ONI;
+					else if (temp == "Edit"   || temp == "edit") 	course = COURSE_EDIT;
+					else if (temp == "Tower"  || temp == "tower") 	course = COURSE_TOWER;
+					else if (temp == "Dan"    || temp == "dan") 	course = COURSE_DAN;
 
 					if (Current_Header.course == course) {
 						isCourseMatch = true;
@@ -298,78 +325,106 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *a = strtok(temp, ",");
-					exam[0][0] = a;
+					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[0][0] = tmp.data();
+					}
 					cnt = 1;
-					while ((a = strtok(NULL, ","))) {
-						exam[0][cnt] = a;
-						if (cnt == 1) redCdn[0] = atoi(a);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[0][cnt] = tmp.data();
+						if (cnt == 1) redCdn[0] = atoi(tmp.c_str());
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					exam[0][cnt] = tmp.data();
 				}
 				continue;
 			}
 
 			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *b = strtok(temp, ",");
-					exam[1][0] = b;
+					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[1][0] = tmp.data();
+					}
 					cnt = 1;
-					while ((b = strtok(NULL, ","))) {
-						exam[1][cnt] = b;
-						if (cnt == 1) redCdn[1] = atoi(b);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[1][cnt] = tmp.data();
+						if (cnt == 1) redCdn[1] = atoi(tmp.c_str());
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					exam[1][cnt] = tmp.data();
 				}
 				continue;
 			}
 
 			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *c = strtok(temp, ",");
-					exam[2][0] = c;
+					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[2][0] = tmp.data();
+					}
 					cnt = 1;
-					while ((c = strtok(NULL, ","))) {
-						exam[2][cnt] = c;
-						if (cnt == 1) redCdn[2] = atoi(c);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[2][cnt] = tmp.data();
+						if (cnt == 1) redCdn[2] = atoi(tmp.c_str());
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					exam[2][cnt] = tmp.data();
 				}
 				continue;
 			}
 
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *c = strtok(temp, ",");
-					exam[3][0] = c;
+					temp.insert(0, strlen(buf) - 7, buf[6]);
+					std::string tmp = "";
+					size_t start = 0, end;
+					if ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[3][0] = tmp.data();
+					}
 					cnt = 1;
-					while ((c = strtok(NULL, ","))) {
-						exam[3][cnt] = c;
-						if (cnt == 1) redCdn[3] = atoi(c);
+					while ((end = temp.find(',', start)) != std::string::npos) {
+						tmp = temp.substr(start, end - start);
+						exam[3][cnt] = tmp.data();
+						if (cnt == 1) redCdn[3] = atoi(tmp.c_str());
 						++cnt;
 					}
+					tmp = temp.substr(start);
+					exam[3][cnt] = tmp.data();
 				}
 				continue;
 			}
 
 			if (strstr(buf, "STYLE:") == buf) { //双打譜面であるかの分岐タグ
 				if (buf[6] != '\n' && buf[6] != '\r') {
-					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					if (strlen(temp) == 1) Current_Header.style = atoi(temp);		//数字表記
-					else if (strcmp(temp, "Single") == 0 || strcmp(temp, "single") == 0) Current_Header.style = 1;	//文字表記
-					else if (strcmp(temp, "Double") == 0 || strcmp(temp, "double") == 0) Current_Header.style = 2;
+					temp.insert(0, strlen(buf) - 7, buf[6]);
+					if (temp.length() == 1) Current_Header.style = stoi(temp);		//数字表記
+					else if (temp == "Single" || temp == "single") Current_Header.style = 1;	//文字表記
+					else if (temp == "Double" || temp == "double") Current_Header.style = 2;
 				}
 				continue;
 			}
 
 			if (strstr(buf, "LIFE:") == buf) { //「太鼓タワー」のみ使えるタグ、体力ゲージの役割を成している
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
-					Current_Header.life = atoi(temp);
+					temp.insert(0, strlen(buf) - 6, buf[5]);
+					Current_Header.life = stoi(temp);
 					gaugelife = Current_Header.life;
 				}
 				continue;
@@ -377,31 +432,29 @@ bool load_tja_head(int course,LIST_T Song) {
 
 			/*if (strstr(buf, "DEMOSTART:") == buf) { //選曲画面に使うタグ、今は使わない
 				if (buf[10] != '\n' && buf[10] != '\r') {
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
-					Current_Header.demostart = atof(temp);
+					temp.insert(0, strlen(buf) - 11, buf[10]);
+					Current_Header.demostart = stof(temp);
 				}
 				continue;
 			}
 
 			if (strstr(buf, "SIDE:") == buf) { //PCソフト「太鼓さん次郎」系統の専用タグ、ここでは使わない
 				if (buf[5] != '\n' && buf[5] != '\r') {
-					strlcpy(temp, buf + 5, strlen(buf) - 6);
-					Current_Header.side = atoi(temp);
+					temp.insert(0, strlen(buf) - 6, buf[5]);
+					Current_Header.side = stoi(temp);
 				}
 				continue;
 			}*/
 
 			if (strstr(buf, "SCOREMODE:") == buf) { //スコアの計算方法を変えるタグ、デフォルトではアーケード版に似た配点方法
 				if (buf[10] != '\n' && buf[10] != '\r') {
-					strlcpy(temp, buf + 10, strlen(buf) - 11);
-					Current_Header.scoremode = atoi(temp);
+					temp.insert(0, strlen(buf) - 11, buf[10]);
+					Current_Header.scoremode = stoi(temp);
 				}
 				continue;
 			}
-			free(temp);
 		}
 		fclose(fp);
-		free(temp);
 		return isSTART;
 	}
 	else {
