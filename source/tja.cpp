@@ -108,7 +108,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			std::string().swap(temp);
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
-			if (isCourseMatch && strstr(buf, "#START") == buf) {
+			if (isCourseMatch && Current_Header.style == 1 && strstr(buf, "#START") == buf) {
 				isSTART = true;
 				break;
 			}
@@ -706,7 +706,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				isStart = true;
 				continue;
 			}
-			else if (isStart == false && isCourseMatch && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			else if (isStart == false && isCourseMatch && Current_Header.style == 1 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
