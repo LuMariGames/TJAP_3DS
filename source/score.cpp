@@ -5,8 +5,8 @@
 #include "score.h"
 #include "result.h"
 
-extern int gaugelife,redCdn[4];
-extern std::string exam[4][4];
+extern int gaugelife, redCdn[4];
+extern char *exam[4][4];
 bool isGOGO;
 int combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,TotalPerfectCount,TotalNiceCount,TotalBadCount,
 CurrentScore,TotalScore,CurrentTotalRollCount,CurrentRollCount,TotalRollCount,TotalCount,
@@ -479,22 +479,22 @@ void send_gogotime(bool arg) {
 
 int dan_condition() {
 	int isBadCondition = 0; //ここで何回条件に反しているかをリセットする
-	std::string types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
+	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
 	int counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (int)(Gauge.score / Gauge.soul * 100.0)};
     
 	for (int i = 0; i < 7; ++i) {
-		if ((exam[0][0] == types[i] && exam[0][3] == "l" && counts[i] >= redCdn[0]) ||
-		(exam[1][0] == types[i] && exam[1][3] == "l" && counts[i] >= redCdn[1]) ||
-		(exam[2][0] == types[i] && exam[2][3] == "l" && counts[i] >= redCdn[2]) ||
-		(exam[3][0] == types[i] && exam[3][3] == "l" && counts[i] >= redCdn[3])) ++isBadCondition;
+		if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "l") == 0 && counts[i] >= redCdn[0]) ||
+		(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "l") == 0 && counts[i] >= redCdn[1]) ||
+		(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "l") == 0 && counts[i] >= redCdn[2]) ||
+		(strcmp(exam[3][0], types[i]) == 0 && strcmp(exam[3][3], "l") == 0 && counts[i] >= redCdn[3])) ++isBadCondition;
 	}
 
 	if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
 		for (int i = 0; i < 7; ++i) {
-			if ((exam[0][0] == types[i] && exam[0][3] == "m" && counts[i] < redCdn[0]) ||
-			(exam[1][0] == types[i] && exam[1][3] == "m" && counts[i] < redCdn[1]) ||
-			(exam[2][0] == types[i] && exam[2][3] == "m" && counts[i] < redCdn[2]) ||
-			(exam[3][0] == types[i] && exam[3][3] == "m" && counts[i] < redCdn[3])) ++isBadCondition;
+			if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "m") == 0 && counts[i] < redCdn[0]) ||
+			(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "m") == 0 && counts[i] < redCdn[1]) ||
+			(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "m") == 0 && counts[i] < redCdn[2]) ||
+			(strcmp(exam[3][0], types[i]) == 0 && strcmp(exam[3][3], "m") == 0 && counts[i] < redCdn[3])) ++isBadCondition;
 		}
 	}
 	return isBadCondition;
@@ -808,10 +808,10 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			Gauge.soul = 7500;
 		}
 		Gauge.norma = Gauge.soul;
-		if (exam[0][0] == "g" && exam[0][3] == "m") Gauge.norma = Gauge.soul * (redCdn[0] / 100.00);
-		else if (exam[1][0] == "g" && exam[1][3] == "m") Gauge.norma = Gauge.soul * (redCdn[1] / 100.00);
-		else if (exam[2][0] == "g" && exam[2][3] == "m") Gauge.norma = Gauge.soul * (redCdn[2] / 100.00);
-		else if (exam[3][0] == "g" && exam[3][3] == "m") Gauge.norma = Gauge.soul * (redCdn[3] / 100.00);
+		if (strcmp(exam[0][0], "g") == 0 && strcmp(exam[0][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[0] / 100.00);
+		else if (strcmp(exam[1][0], "g") == 0 && strcmp(exam[1][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[1] / 100.00);
+		else if (strcmp(exam[2][0], "g") == 0 && strcmp(exam[2][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[2] / 100.00);
+		else if (strcmp(exam[3][0], "g") == 0 && strcmp(exam[3][3], "m") == 0 ) Gauge.norma = Gauge.soul * (redCdn[3] / 100.00);
 		break;
 	}
 	//init_score_after();

@@ -682,6 +682,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		if (JudgeBalloonState != -1 && isDon > 0) {	//風船
 
 			BalloonNotes[JudgeBalloonState].current_hit += isDon;
+
 			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
 				update_score(BALLOON_BREAK);	//破裂
@@ -756,7 +757,6 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 					Notes[i].isThrough = true;
 				}
 				break;
-
 			case NOTES_BOMB:
 				if (CurrentTimeNotes - Notes[i].judge_time > (Option.judge_range_bad) && !Notes[i].isThrough) {
 					Notes[i].isThrough = true;
@@ -886,31 +886,31 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
-					sprites[SPRITE_BALLOON_1].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_1].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_1].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_1].image, &sprites[SPRITE_BALLOON_1].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4f) {
 
-					sprites[SPRITE_BALLOON_2].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_2].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_2].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_2].image, &sprites[SPRITE_BALLOON_2].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6f) {
 
-					sprites[SPRITE_BALLOON_3].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_3].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_3].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_3].image, &sprites[SPRITE_BALLOON_3].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8f) {
 
-					sprites[SPRITE_BALLOON_4].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_4].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_4].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_4].image, &sprites[SPRITE_BALLOON_4].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
-					sprites[SPRITE_BALLOON_5].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_5].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON_5].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_5].image, &sprites[SPRITE_BALLOON_5].params, NULL);
 				}
@@ -1118,16 +1118,20 @@ int make_balloon_end(int NotesId) {
 
 void delete_notes(int i) {
 
-	if (i >= 0 && Notes[i].roll_id != -1 &&
+	if (i >= 0 &&
+		Notes[i].roll_id != -1 &&
 		(Notes[i].knd == NOTES_ROLLEND || Notes[i].knd == NOTES_BIGROLLEND) &&
-		RollNotes[Notes[i].roll_id].flag == true) {	//連打削除
+		RollNotes[Notes[i].roll_id].flag == true
+		) {	//連打削除
 
 		delete_notes(RollNotes[Notes[i].roll_id].start_id);
 		delete_roll(Notes[i].roll_id);
 		update_score(ROLL_END);
+
 	}
 
-	if (i >= 0 && Notes[i].roll_id != -1 &&
+	if (i >= 0 &&
+		Notes[i].roll_id != -1 &&
 		BalloonNotes[Notes[i].roll_id].flag) {					//風船削除
 
 		if (Notes[i].knd == NOTES_BALLOONEND) {
@@ -1139,7 +1143,11 @@ void delete_notes(int i) {
 		else if (Notes[i].knd == NOTES_BALLOON) {
 
 			BalloonNotes[Notes[i].roll_id].start_id = -1;
-			if (BalloonNotes[Notes[i].roll_id].end_id == -1) delete_balloon(Notes[i].roll_id);
+
+			if (BalloonNotes[Notes[i].roll_id].end_id == -1) {
+
+				delete_balloon(Notes[i].roll_id);
+			}
 		}
 	}
 
@@ -1206,37 +1214,37 @@ void draw_title() {
 	get_tja_header(&Header);
 	float width = 0, height = 0;
 
-	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) draw_notes_text(TOP_WIDTH, 20, Header.subtitle.data(), &width, &height);
-	draw_notes_text(TOP_WIDTH - 5, 5, Header.title.data(), &width, &height);
+	if (Header.subtitle_state != -1 && Header.subtitle_state != 1) draw_notes_text(TOP_WIDTH, 20, Header.subtitle, &width, &height);
+	draw_notes_text(TOP_WIDTH - 5, 5, Header.title, &width, &height);
 }
 
 void draw_condition() {
 
 	OPTION_T Option;
 	get_option(&Option);
-	extern std::string exam[4][4];
+	extern char *exam[4][4];
 	float width = 0, height = 0, tx = 0;
 
 	for (int j = 0; j < 4; ++j) {
 
 		tx = 0;
-		if (exam[j][0] == "jb") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
-		else if (exam[j][0] == "jg") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
-		else if (exam[j][0] == "jp") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
-		else if (exam[j][0] == "s") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_SCORE], &width, &height);
-		else if (exam[j][0] == "r") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_ROLL], &width, &height);
-		else if (exam[j][0] == "h") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
-		else if (exam[j][0] == "g") draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
+		if (strcmp(exam[j][0], "jb") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
+		else if (strcmp(exam[j][0], "jg") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
+		else if (strcmp(exam[j][0], "jp") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
+		else if (strcmp(exam[j][0], "s") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_SCORE], &width, &height);
+		else if (strcmp(exam[j][0], "r") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_ROLL], &width, &height);
+		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
+		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
 		tx += width;
-		draw_condition_text(50+tx, 148+20*j, exam[j][1].data(), &width, &height);
+		draw_condition_text(50+tx, 148+20*j, exam[j][1], &width, &height);
 		tx += width;
 
-		if (exam[j][0] == "g") {
+		if (strcmp(exam[j][0], "g") == 0) {
 			draw_condition_text(50+tx, 148+20*j, "%", &width, &height);
 			tx += width;
 		}
-		if (exam[j][3] == "m") draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
-		else if (exam[j][3] == "l") draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
+		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
+		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
 	}
 }
 inline void init_notes_structure() {
