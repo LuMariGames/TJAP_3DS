@@ -105,6 +105,7 @@ bool load_tja_head(int course,LIST_T Song) {
 		while (fgets(buf, 512, fp) != NULL) {
 
 			++cnt;
+			std::string().swap(temp);
 			mix[0] = Current_Header.songvol / 100.0;
 			mix[1] = Current_Header.songvol / 100.0;
 			if (isCourseMatch && strstr(buf, "#START") == buf) {
@@ -453,7 +454,6 @@ bool load_tja_head(int course,LIST_T Song) {
 				}
 				continue;
 			}
-			std::string().swap(temp);
 		}
 		std::string().swap(temp);
 		fclose(fp);
