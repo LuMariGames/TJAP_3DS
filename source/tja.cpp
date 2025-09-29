@@ -294,7 +294,6 @@ bool load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-
 			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
 					temp.insert(0, &buf[7], strlen(buf) - 8);
@@ -318,11 +317,12 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, &buf[6], strlen(buf) - 8);
-					std::string tmp = "";
+					std::string tmp;
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[0][0] = tmp.data();
+						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
@@ -330,6 +330,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						tmp = temp.substr(start, end - start);
 						exam[0][cnt] = tmp.data();
 						if (cnt == 1) redCdn[0] = atoi(tmp.c_str());
+						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
@@ -342,11 +343,12 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, &buf[6], strlen(buf) - 8);
-					std::string tmp = "";
+					std::string tmp;
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[1][0] = tmp.data();
+						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
@@ -354,6 +356,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						tmp = temp.substr(start, end - start);
 						exam[1][cnt] = tmp.data();
 						if (cnt == 1) redCdn[1] = atoi(tmp.c_str());
+						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
@@ -366,11 +369,12 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, &buf[6], strlen(buf) - 8);
-					std::string tmp = "";
+					std::string tmp;
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[2][0] = tmp.data();
+						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
@@ -378,6 +382,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						tmp = temp.substr(start, end - start);
 						exam[2][cnt] = tmp.data();
 						if (cnt == 1) redCdn[2] = atoi(tmp.c_str());
+						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
@@ -390,11 +395,12 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					temp.insert(0, &buf[6], strlen(buf) - 8);
-					std::string tmp = "";
+					std::string tmp;
 					size_t start = 0, end;
 					if ((end = temp.find(',', start)) != std::string::npos) {
 						tmp = temp.substr(start, end - start);
 						exam[3][0] = tmp.data();
+						std::string().swap(tmp);
 						start = end + 1;
 					}
 					cnt = 1;
@@ -402,6 +408,7 @@ bool load_tja_head(int course,LIST_T Song) {
 						tmp = temp.substr(start, end - start);
 						exam[3][cnt] = tmp.data();
 						if (cnt == 1) redCdn[3] = atoi(tmp.c_str());
+						std::string().swap(tmp);
 						start = end + 1;
 						++cnt;
 					}
