@@ -1009,7 +1009,8 @@ inline void init_roll__notes() {
 inline int find_roll_id() {
 
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
-		if (!RollNotes[i].flag) return i;
+		if (!RollNotes[i].flag &&
+			RollNotes[i].start_x == -1) return i;
 	}
 	return -1;
 }
@@ -1079,7 +1080,8 @@ inline void init_balloon_notes() {
 inline int find_balloon_id() {
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
-		if (!BalloonNotes[i].flag) return i;
+		if (!BalloonNotes[i].flag &&
+			BalloonNotes[i].start_id == -1) return i;
 	}
 	return -1;
 }
