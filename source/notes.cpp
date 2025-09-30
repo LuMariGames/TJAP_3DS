@@ -697,7 +697,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		else delete_notes(BalloonNotes[JudgeBalloonState].start_id);
 
 		play_sound(SOUND_BALLOONBREAK);
-		update_balloon_count(0);
 	}
 	else if (JBS != -1 && BalloonNotes[JBS].end_id != -1 &&
 		Notes[BalloonNotes[JBS].end_id].judge_time <= CurrentTimeNotes) delete_notes(BalloonNotes[JBS].end_id);
@@ -1132,18 +1131,12 @@ void delete_notes(int i) {
 		if (Notes[i].knd == NOTES_BALLOONEND) {
 
 			if (BalloonNotes[Notes[i].roll_id].start_id != -1) delete_notes(BalloonNotes[Notes[i].roll_id].start_id);
-			else {
-				delete_balloon(Notes[i].roll_id);
-				update_balloon_count(0);
-			}
 		}
 		else if (Notes[i].knd == NOTES_BALLOON) {
 
 			BalloonNotes[Notes[i].roll_id].start_id = -1;
-			if (BalloonNotes[Notes[i].roll_id].end_id == -1) {
-				delete_balloon(Notes[i].roll_id);
-				update_balloon_count(0);
-			}
+			delete_balloon(Notes[i].roll_id);
+			update_balloon_count(0);
 		}
 	}
 
