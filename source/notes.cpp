@@ -481,10 +481,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			JudgeBalloonState = i;
 			break;
 		}
-		if (BalloonNotes[i].flag && BalloonNotes[i].end_id != -1 && Notes[BalloonNotes[i].end_id].judge_time <= CurrentTimeNotes) {
-			delete_notes(BalloonNotes[i].end_id);
-			update_balloon_count(0);
-		}
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
@@ -497,6 +493,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			++BalloonCount[3];
 		}
 	}
+	JBS = JudgeBalloonState;
 
 	if (Option.isAuto) {	//オート
 
@@ -703,7 +700,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		play_sound(SOUND_BALLOONBREAK);
 		update_balloon_count(0);
 	}
-	JBS = JudgeBalloonState;
 }
 
 void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]) {
@@ -745,6 +741,9 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 			case NOTES_BALLOONEND:
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].end_id = i;
+				}
+				if (Notes[i].judge_time <= CurrentTimeNotes) {
+					delete_notes(i);
 				}
 				break;
 
