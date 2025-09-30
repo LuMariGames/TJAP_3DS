@@ -481,6 +481,8 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			JudgeBalloonState = i;
 			break;
 		}
+		else if (BalloonNotes[i].flag && Notes[BalloonNotes[i].end_id].judge_time <= CurrentTimeNotes)
+			delete_notes(BalloonNotes[i].end_id);
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
@@ -698,8 +700,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		play_sound(SOUND_BALLOONBREAK);
 	}
-	else if (JBS != -1 && BalloonNotes[JBS].end_id != -1 &&
-		Notes[BalloonNotes[JBS].end_id].judge_time <= CurrentTimeNotes) delete_notes(BalloonNotes[JBS].end_id);
 	JBS = JudgeBalloonState;
 }
 
