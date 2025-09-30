@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
 
-	char *title,*subtitle,*wave;
+	std::string title,subtitle,wave;
 	int level,balloon[4][256],songvol,sevol,scoreinit,scorediff,
 		course,style,life,scoremode,subtitle_state; //total,side;
 	double bpm,offset; //demostart;

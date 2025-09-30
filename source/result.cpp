@@ -15,8 +15,8 @@ void draw_result() {
 	
 	float size = 0.7,width,height;
 
-	draw_result_text(50, 10,0.6, Tja.title);
-	draw_result_text(50, 30,0.48,Tja.subtitle);
+	draw_result_text(50, 10,0.6, Tja.title.data());
+	draw_result_text(50, 30,0.48,Tja.subtitle.data());
 
 	int iniX=100,iniY = 100, x2 = 300,YSense = 20, count = 0;
 	draw_result_text(iniX, iniY + YSense * count, size, Text[get_lang()][TEXT_SCORE]);
