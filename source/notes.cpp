@@ -770,7 +770,7 @@ void notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASUR
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
-			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL && Notes[i].knd != NOTES_BALLOON) {
+			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
 			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
