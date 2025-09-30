@@ -493,7 +493,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			++BalloonCount[3];
 		}
 	}
-	JBS = JudgeBalloonState;
 
 	if (Option.isAuto) {	//オート
 
@@ -700,6 +699,9 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		play_sound(SOUND_BALLOONBREAK);
 		update_balloon_count(0);
 	}
+	else if (JBS != -1 && BalloonNotes[JBS].end_id != -1 &&
+		Notes[BalloonNotes[JBS].end_id].judge_time <= CurrentTimeNotes) delete_notes(BalloonNotes[JBS].end_id);
+	JBS = JudgeBalloonState;
 }
 
 void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]) {
@@ -741,9 +743,6 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 			case NOTES_BALLOONEND:
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].end_id = i;
-				}
-				if (Notes[i].judge_time <= CurrentTimeNotes) {
-					delete_notes(i);
 				}
 				break;
 
@@ -1133,13 +1132,18 @@ void delete_notes(int i) {
 		if (Notes[i].knd == NOTES_BALLOONEND) {
 
 			if (BalloonNotes[Notes[i].roll_id].start_id != -1) delete_notes(BalloonNotes[Notes[i].roll_id].start_id);
-			delete_balloon(Notes[i].roll_id);
-			update_balloon_count(0);
+			else {
+				delete_balloon(Notes[i].roll_id);
+				update_balloon_count(0);
+			}
 		}
 		else if (Notes[i].knd == NOTES_BALLOON) {
 
 			BalloonNotes[Notes[i].roll_id].start_id = -1;
-			if (BalloonNotes[Notes[i].roll_id].end_id == -1) delete_balloon(Notes[i].roll_id);
+			if (BalloonNotes[Notes[i].roll_id].end_id == -1) {
+				delete_balloon(Notes[i].roll_id);
+				update_balloon_count(0);
+			}
 		}
 	}
 
