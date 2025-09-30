@@ -478,9 +478,10 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	int JudgeBalloonState = -1;
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].flag &&
-			Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes &&
-			(BalloonNotes[i].end_id == -1 || (BalloonNotes[i].end_id != -1 && Notes[BalloonNotes[i].end_id].judge_time > CurrentTimeNotes))) JudgeBalloonState = i;
+		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
+			JudgeBalloonState = i;
+			break;
+		}
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
@@ -772,7 +773,7 @@ void notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASUR
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
 			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
-			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL && Notes[i].knd != NOTES_BALLOON) {
+			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
 				if (!Option.isAuto) {
 					update_score(THROUGH);
