@@ -20,7 +20,7 @@ int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
 notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
-notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
+notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASURE_T Measure[MEASURE_MAX]);
 
 std::vector<NOTES_T> Notes;
 COMMAND_T Command;
@@ -295,7 +295,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 		}
 	}
 
-	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites, Measure);
+	if (!get_isPause()) notes_calc(isDon, isKatsu, CurrentTimeNotes, cnt, Measure);
 	if (!Option.isStelth) notes_draw(sprites);
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
@@ -702,7 +702,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	}
 }
 
-void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]) {
+void notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASURE_T Measure[MEASURE_MAX]) {
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -873,8 +873,8 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
-					break;
 				}
+				break;
 
 			case NOTES_BALLOON:
 
