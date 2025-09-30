@@ -137,6 +137,10 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
+					PreNotesKnd = knd;
+					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
+						continue;
+					}
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) {
 						++BalloonCount[1];
@@ -145,9 +149,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					}
 
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time) continue;
-					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
-						continue;
-					}
 
 					if (Option.random > 0) {		//ランダム(きまぐれ,でたらめ)
 						if (rand() % 100 < Option.random * 100) {
@@ -477,10 +478,9 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	int JudgeBalloonState = -1;
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
-			JudgeBalloonState = i;
-			break;
-		}
+		if (BalloonNotes[i].flag &&
+			Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes &&
+			(BalloonNotes[i].end_id == -1 || (BalloonNotes[i].end_id != -1 && Notes[BalloonNotes[i].end_id].judge_time > CurrentTimeNotes))) JudgeBalloonState = i;
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
@@ -770,7 +770,7 @@ void notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASUR
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
-			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
+			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL && Notes[i].knd != NOTES_BALLOON) {
 
 			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
@@ -1103,6 +1103,7 @@ int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
 		if (BalloonNotes[i].flag &&
+			BalloonNotes[i].start_id != -1 &&
 			BalloonNotes[i].end_id == -1) return i;
 	}
 	return -1;
