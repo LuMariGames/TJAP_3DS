@@ -481,8 +481,10 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			JudgeBalloonState = i;
 			break;
 		}
-		else if (BalloonNotes[i].flag && Notes[BalloonNotes[i].end_id].judge_time <= CurrentTimeNotes)
+		else if (BalloonNotes[i].flag && Notes[BalloonNotes[i].end_id].judge_time <= CurrentTimeNotes) {
 			delete_notes(BalloonNotes[i].end_id);
+			update_balloon_count(0);
+		}
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
