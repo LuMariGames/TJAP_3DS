@@ -1081,7 +1081,7 @@ inline int find_balloon_id() {
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 		if (!BalloonNotes[i].flag &&
-			BalloonNotes[i].start_id == -1) return i;
+			BalloonNotes[i].id == -1) return i;
 	}
 	return -1;
 }
@@ -1105,7 +1105,7 @@ int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
 		if (BalloonNotes[i].flag &&
-			BalloonNotes[i].start_id != -1 &&
+			BalloonNotes[i].id != -1 &&
 			BalloonNotes[i].end_id == -1) return i;
 	}
 	return -1;
