@@ -1,3 +1,6 @@
+> [!NOTE]
+> 私生活に影響を及ぼしているので暫く休みます。更新は多分もうしません。
+
 # TJAP_3DS(日本語)  
 TJAP_3DSは、[togetg](https://github.com/togetg)氏制作の[TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS)のフォークです。  
 とっくん や 固定スクロール 等の新オプションとスキンの変更、  
