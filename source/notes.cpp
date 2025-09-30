@@ -137,10 +137,10 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
-					PreNotesKnd = knd;
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
 						continue;
 					}
+					PreNotesKnd = knd;
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) {
 						++BalloonCount[1];
@@ -732,7 +732,7 @@ void notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASUR
 				break;
 
 			case NOTES_BALLOON:
-				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
+				if (Notes[i].judge_time <= CurrentTimeNotes) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
 				}
@@ -772,7 +772,7 @@ void notes_calc(int isDon, int isKatsu, double CurrentTimeNotes, int cnt, MEASUR
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
 			Notes[i].knd != NOTES_ROLL && Notes[i].knd != NOTES_BIGROLL) {
 
-			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
+			if (Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL && Notes[i].knd != NOTES_BALLOON) {
 
 				if (!Option.isAuto) {
 					update_score(THROUGH);
