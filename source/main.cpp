@@ -238,6 +238,7 @@ int main() {
 			case WARNING_WAVE_NOT_OGG:
 				tmp = message_window(tp, key, TEXT_WARNING_WAVE_NOT_OGG);
 				break;
+
 			case WARNING_TJA_NOT_EXIST:
 				tmp = message_window(tp, key, TEXT_WARNING_TJA_NOT_EXIST);
 				break;
@@ -768,6 +769,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
-
-
