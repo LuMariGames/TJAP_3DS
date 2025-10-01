@@ -679,16 +679,18 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			}
 		}
 
-		if (JudgeBalloonState != -1 && isDon > 0) {	//風船
+		int dc = 0;
+		while (JudgeBalloonState != -1 && dc < isDon) {	//風船
 
-			BalloonNotes[JudgeBalloonState].current_hit += isDon;
-
+			++BalloonNotes[JudgeBalloonState].current_hit;
 			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
 				update_score(BALLOON_BREAK);	//破裂
 				make_balloon_break();
+				break;
 			}
 			else update_score(BALLOON);
+			++dc;
 		}
 	}
 
