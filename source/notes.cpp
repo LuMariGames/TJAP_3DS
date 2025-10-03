@@ -132,6 +132,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 			notes_sort();	//ソート
 			bid = find_notes_id();
+			double tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			for (int i = 0; i < NotesCount; ++i) {
 
 				id = find_notes_id();
@@ -183,17 +184,18 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
+					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
 						Notes[bid].text_id = 3;
-						if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (NotesCountMax / Measure[MeasureCount].measure / nc) <= 16 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) == bnc) && Notes[((i == 0) ? -1 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
-						else if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 1;
+						if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[((i == 0) ? -1 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+						else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
 						break;
 					case NOTES_KATSU:
 						Notes[bid].text_id = 5;
-						if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 4;
+						if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
 						break;
 					case NOTES_BIGDON:
 						Notes[bid].text_id = 6;
@@ -218,7 +220,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Notes[bid].text_id = 0;
 						break;
 					}
-					bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+					bnc = tmpnc;
 
 					PreNotesKnd = knd;
 
@@ -312,16 +314,17 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				}
 				else ++nc;
 			}
+			tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			switch (Notes[bid].knd) {
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (NotesCountMax / Measure[MeasureCount].measure / nc) <= 16 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
-				else if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 1;
+				if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+				else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
 				break;
 			case NOTES_KATSU:
 				Notes[bid].text_id = 5;
-				if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 4;
+				if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
 				break;
 			case NOTES_BIGDON:
 				Notes[bid].text_id = 6;
