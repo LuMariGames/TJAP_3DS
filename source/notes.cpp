@@ -188,7 +188,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_DON:
 					case NOTES_BOMB:
 						Notes[bid].text_id = 3;
-						if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (NotesCountMax / Measure[MeasureCount].measure / nc) <= 16 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+						if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (NotesCountMax / Measure[MeasureCount].measure / nc) <= 16 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) == bnc) && Notes[((i == 0) ? -1 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
 						else if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 1;
 						break;
 					case NOTES_KATSU:
@@ -340,7 +340,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 11;
 				break;
 			}
-			bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+			bnc = 0;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
