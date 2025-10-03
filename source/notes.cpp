@@ -189,12 +189,12 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
-						if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) != bnc) || Notes[bid - 1].text_id != 1) Notes[bid].text_id = 1;
-						else if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 8 && ((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= 16 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) != bnc) && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
+						if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) == bnc) || Notes[bid - 1].text_id != 1) Notes[bid].text_id = 1;
+						else if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 8 && ((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= 16 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) == bnc) && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
 						else Notes[bid].text_id = 3;
 						break;
 					case NOTES_KATSU:
-						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) != bnc) Notes[bid].text_id = 4;
+						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) == bnc) Notes[bid].text_id = 4;
 						else Notes[bid].text_id = 5;
 						break;
 					case NOTES_BIGDON:
