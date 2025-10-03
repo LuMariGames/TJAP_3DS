@@ -901,19 +901,19 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
-							if (n > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
+							if (n > 1) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
-							if (n > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
+							if (n > 1) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
@@ -931,19 +931,19 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
-							if (n > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
+							if (n > 1) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
-							if (n > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
+							if (n > 1) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
