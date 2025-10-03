@@ -216,7 +216,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Notes[bid].text_id = 11;
 						break;
 					}
-					bnc = tmpnc;
+					bnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax * nc;
 
 					PreNotesKnd = knd;
 
@@ -342,7 +342,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 11;
 				break;
 			}
-			bnc = tmpnc;
+			bnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax * nc;
 			nc = id - bid - 1;
 			++MeasureCount;
 			notes_sort();	//ソート
