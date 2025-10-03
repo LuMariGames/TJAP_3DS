@@ -184,18 +184,18 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
-					tmpnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax / nc;
+					tmpnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax * nc;
 
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
 						Notes[bid].text_id = 3;
-						if ((tmpnc >= 8 && tmpnc <= 16 && tmpnc == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
-						else if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
+						if ((tmpnc >= 48 && tmpnc <= 96 && tmpnc == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+						else if ((tmpnc <= 96 && tmpnc == bnc) || tmpnc >= 64) Notes[bid].text_id = 1;
 						break;
 					case NOTES_KATSU:
 						Notes[bid].text_id = 5;
-						if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
+						if ((tmpnc <= 48 && tmpnc == bnc) || tmpnc <= 64) Notes[bid].text_id = 4;
 						break;
 					case NOTES_BIGDON:
 						Notes[bid].text_id = 6;
@@ -315,12 +315,12 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if ((tmpnc >= 8 && tmpnc <= 16 && tmpnc == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
-				else if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
+				if ((tmpnc >= 48 && tmpnc <= 96 && tmpnc == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+				else if ((tmpnc <= 96 && tmpnc == bnc) || tmpnc >= 64) Notes[bid].text_id = 1;
 				break;
 			case NOTES_KATSU:
 				Notes[bid].text_id = 5;
-				if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
+				if ((tmpnc <= 48 && tmpnc == bnc) || tmpnc <= 64) Notes[bid].text_id = 4;
 				break;
 			case NOTES_BIGDON:
 				Notes[bid].text_id = 6;
