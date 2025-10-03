@@ -9,7 +9,8 @@
 #include "option.h"
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
+int balloon[4][256],BalloonCount[4],TotalFailedCount,
+NowMeCount,dcd,JBS = -1,nc = 1,bid = -1,id = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -130,7 +131,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			}
 
 			notes_sort();	//ソート
-			for (int i = 0, nc = 1, bid = -1, id = -1; i < NotesCount; ++i) {
+			for (int i = 0; i < NotesCount; ++i) {
 
 				bid = id;
 				id = find_notes_id();
@@ -835,7 +836,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		if (Notes[i].flag) {
 
-			draw_lyric_text(Text[get_lang()][TEXT_DON], Notes[i].x, 132, 0.4);
+			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
@@ -1306,10 +1307,8 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_roll__notes();
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
-	Command.knd = 0;
-	Command.val[0] = 0;
-	Command.val[1] = 0;
-	Command.val[2] = 0;
+	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
+	nc = 1, bid = -1, id = -1;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
 	NowBPM = bpm;
