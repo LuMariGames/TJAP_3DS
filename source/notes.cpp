@@ -835,6 +835,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		if (Notes[i].flag) {
 
+			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
@@ -974,7 +975,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				C2D_DrawImage(sprites[SPRITE_BOMB].image, &sprites[SPRITE_BOMB].params, NULL);
 				break;
 			}
-			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 		}
 	}
 
