@@ -184,7 +184,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
-					tmpnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax * nc;
 
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
@@ -307,6 +306,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					}
 					++NotesNumber;
 					if (i != 0) bid = id;
+					tmpnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax * nc;
 					nc = 1;
 				}
 				else ++nc;
