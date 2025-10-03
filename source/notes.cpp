@@ -184,7 +184,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
-					Notes[id].text_id = 0;
 
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
@@ -1210,6 +1209,7 @@ void delete_notes(int i) {
 		Notes[i].scroll = 0;
 		Notes[i].roll_id = -1;
 		Notes[i].isThrough = false;
+		Notes[i].text_id = 0;
 	}
 }
 bool get_notes_finish() {
