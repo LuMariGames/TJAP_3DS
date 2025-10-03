@@ -19,7 +19,7 @@ C2D_Font font;
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
+notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text, float x, float y, float size),
 notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
 std::vector<NOTES_T> Notes;
@@ -129,14 +129,17 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				NotesCountMax = NotesCount;
 			}
 
-			for (int i = 0; i < NotesCount; ++i) {
+			notes_sort();	//ソート
+			for (int i = 0, nc = 1, bid = -1, id = -1; i < NotesCount; ++i) {
 
-				int id = find_notes_id();
-
+				bid = id;
+				id = find_notes_id();
 				if (id != -1 && ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
-
+					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
+						continue;
+					}
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) {
 						++BalloonCount[1];
@@ -145,9 +148,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					}
 
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time) continue;
-					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
-						continue;
-					}
 
 					if (Option.random > 0) {		//ランダム(きまぐれ,でたらめ)
 						if (rand() % 100 < Option.random * 100) {
@@ -182,6 +182,39 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
+					Notes[id].text_id = 0;
+
+					switch (Notes[bid].knd) {
+					case NOTES_DON:
+					case NOTES_BOMB:
+						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) < 6) Notes[bid].text_id = 3;
+						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 || Notes[bid - 1].text_id != 1) Notes[bid].text_id = 1;
+						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 12 && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
+						break;
+					case NOTES_KATSU:
+						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) < 6) Notes[bid].text_id = 5;
+						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6) Notes[bid].text_id = 4;
+						break;
+					case NOTES_BIGDON:
+						Notes[bid].text_id = 6;
+						break;
+					case NOTES_BIGKATSU:
+						Notes[bid].text_id = 7;
+						break;
+					case NOTES_ROLL:
+						Notes[bid].text_id = 8;
+						break;
+					case NOTES_BIGROLL:
+						Notes[bid].text_id = 9;
+						break;
+					case NOTES_BALLOON:
+						Notes[bid].text_id = 12;
+						break;
+					case NOTES_ROLLEND:
+					case NOTES_BIGROLLEND:
+						Notes[bid].text_id = 11;
+						break;
+					}
 
 					PreNotesKnd = knd;
 
@@ -270,10 +303,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
+					nc = 1;
 				}
+				else ++nc;
 			}
 			++MeasureCount;
-			notes_sort();	//ソート
 		}
 	}
 
@@ -353,7 +387,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 		}
 	}
 
-	draw_lyric_text(Measure[NowMeasure].lyric.data());
+	draw_lyric_text(Measure[NowMeasure].lyric.data(), 200, 222, 0.6);
 	if (course == COURSE_DAN) dcd = dan_condition();
 	if (TotalFailedCount != dcd) {
 		play_sound(SOUND_FAILED);
@@ -835,6 +869,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
+							draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
@@ -842,6 +877,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
+							draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
@@ -863,6 +899,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
+							draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
@@ -870,6 +907,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
+							draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
@@ -936,6 +974,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				C2D_DrawImage(sprites[SPRITE_BOMB].image, &sprites[SPRITE_BOMB].params, NULL);
 				break;
 			}
+			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 		}
 	}
 
@@ -1191,13 +1230,12 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
-inline void draw_lyric_text(const char *text) {
+inline void draw_lyric_text(const char *text, float x, float y, float size) {
 
-	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
