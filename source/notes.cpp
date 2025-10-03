@@ -188,7 +188,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_DON:
 					case NOTES_BOMB:
 						Notes[bid].text_id = 3;
-						if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (Measure[MeasureCount].measure * NotesCountMax / nc) <= 16 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+						if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (Measure[MeasureCount].measure * NotesCountMax / nc) <= 16 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
 						else if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) || (Measure[MeasureCount].measure * NotesCountMax / nc) >= 12) Notes[bid].text_id = 1;
 						break;
 					case NOTES_KATSU:
@@ -313,7 +313,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (Measure[MeasureCount].measure * NotesCountMax / nc) <= 16 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+				if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (Measure[MeasureCount].measure * NotesCountMax / nc) <= 16 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
 				else if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) || (Measure[MeasureCount].measure * NotesCountMax / nc) >= 12) Notes[bid].text_id = 1;
 				break;
 			case NOTES_KATSU:
