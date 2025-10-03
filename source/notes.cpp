@@ -131,7 +131,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			}
 
 			notes_sort();	//ソート
-			bid = 0;
+			bid = find_notes_id();
 			for (int i = 0; i < NotesCount; ++i) {
 
 				id = find_notes_id();
@@ -188,7 +188,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_DON:
 					case NOTES_BOMB:
 						Notes[bid].text_id = 3;
-						if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 8 && ((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= 16 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= bnc) && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
+						if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 8 && ((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= 16 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) == bnc) && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
 						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= bnc) Notes[bid].text_id = 1;
 						break;
 					case NOTES_KATSU:
