@@ -132,6 +132,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 			notes_sort();	//ソート
 			bid = find_notes_id();
+			int tmpnc = Measure[MeasureCount].measure * 768.0 / NotesCountMax / nc;
 			for (int i = 0; i < NotesCount; ++i) {
 
 				id = find_notes_id();
@@ -188,12 +189,12 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_DON:
 					case NOTES_BOMB:
 						Notes[bid].text_id = 3;
-						if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (Measure[MeasureCount].measure * NotesCountMax / nc) <= 16 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
-						else if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) || (Measure[MeasureCount].measure * NotesCountMax / nc) >= 12) Notes[bid].text_id = 1;
+						if ((tmpnc >= 8 && tmpnc <= 16 && tmpnc == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+						else if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
 						break;
 					case NOTES_KATSU:
 						Notes[bid].text_id = 5;
-						if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) || (Measure[MeasureCount].measure * NotesCountMax / nc) >= 12) Notes[bid].text_id = 4;
+						if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
 						break;
 					case NOTES_BIGDON:
 						Notes[bid].text_id = 6;
@@ -313,12 +314,12 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (Measure[MeasureCount].measure * NotesCountMax / nc) <= 16 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
-				else if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) || (Measure[MeasureCount].measure * NotesCountMax / nc) >= 12) Notes[bid].text_id = 1;
+				if ((tmpnc >= 8 && tmpnc <= 16 && tmpnc == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+				else if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
 				break;
 			case NOTES_KATSU:
 				Notes[bid].text_id = 5;
-				if (((Measure[MeasureCount].measure * NotesCountMax / nc) >= 8 && (int)(Measure[MeasureCount].measure * NotesCountMax / nc) == bnc) || (Measure[MeasureCount].measure * NotesCountMax / nc) >= 12) Notes[bid].text_id = 4;
+				if ((tmpnc >= 8 && tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
 				break;
 			case NOTES_BIGDON:
 				Notes[bid].text_id = 6;
@@ -1272,7 +1273,7 @@ inline void draw_lyric_text(const char *text, float x, float y, float size) {
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
