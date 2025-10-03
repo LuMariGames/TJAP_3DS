@@ -135,6 +135,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 				bid = id;
 				id = find_notes_id();
+				if (id == -1) bid = id;
 				if (id != -1 && ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
