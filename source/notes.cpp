@@ -10,7 +10,7 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,nc = 512,bid = -1,id = -1;
+NowMeCount,dcd,JBS = -1,bnc = 512,nc = 512,bid = -1,id = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -189,13 +189,13 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
-						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) < 6) Notes[bid].text_id = 3;
-						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 || Notes[bid - 1].text_id != 1) Notes[bid].text_id = 1;
-						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 12 && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
+						if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) != bnc) || Notes[bid - 1].text_id != 1) Notes[bid].text_id = 1;
+						else if ((((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 8 && ((double)nc / Measure[MeasureCount].measure * NotesCountMax) <= 16 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) != bnc) && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
+						else Notes[bid].text_id = 3;
 						break;
 					case NOTES_KATSU:
-						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) < 6) Notes[bid].text_id = 5;
-						else if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6) Notes[bid].text_id = 4;
+						if (((double)nc / Measure[MeasureCount].measure * NotesCountMax) >= 6 && (int)((double)nc / Measure[MeasureCount].measure * NotesCountMax) != bnc) Notes[bid].text_id = 4;
+						else Notes[bid].text_id = 5;
 						break;
 					case NOTES_BIGDON:
 						Notes[bid].text_id = 6;
@@ -217,6 +217,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Notes[bid].text_id = 11;
 						break;
 					}
+					bnc = (double)nc / Measure[MeasureCount].measure * NotesCountMax;
 
 					PreNotesKnd = knd;
 
@@ -1310,7 +1311,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
 	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	nc = 512, bid = -1, id = -1;
+	bnc = 512, nc = 512, bid = -1, id = -1;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
 	NowBPM = bpm;
