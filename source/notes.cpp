@@ -315,7 +315,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if ((tmpnc >= 48 && tmpnc <= 96 && tmpnc == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
+				if ((tmpnc >= 48 && tmpnc <= 96 && tmpnc == bnc) && Notes[bid - 1].text_id == 1 && Notes[id].knd != NOTES_KATSU) Notes[bid].text_id = 2;
 				else if ((tmpnc <= 96 && tmpnc == bnc) || tmpnc >= 64) Notes[bid].text_id = 1;
 				break;
 			case NOTES_KATSU:
