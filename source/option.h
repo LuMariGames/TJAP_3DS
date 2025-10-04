@@ -73,7 +73,7 @@ const char Text[3][72][128] = {
 		"連打(大)",
 		"ー",
 		"っ!!",
-		"ふうせん",
+		"　　ふうせん",
 	},
 	{
 		"ON",
@@ -147,7 +147,7 @@ const char Text[3][72][128] = {
 		"DRUM ROLL!",
 		"",
 		"",
-		"Balloon",
+		"　　Balloon",
 	},
 	{
 		"Sí",
@@ -221,7 +221,7 @@ const char Text[3][72][128] = {
 		"DRUM ROLL!",
 		"",
 		"",
-		"Balloon",
+		"　　Balloon",
 	}
 };
 
