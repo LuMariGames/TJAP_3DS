@@ -176,7 +176,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						}
 						bnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
 						bid = id;
-						nc = 1;
 					}
 					id = find_notes_id();
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -312,6 +311,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
+					nc = 1;
 				}
 				else {
 					++nc;
