@@ -347,7 +347,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				break;
 			}
 			bnc = 1;
-			nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
