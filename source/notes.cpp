@@ -143,11 +143,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_BOMB:
 						Notes[id].text_id = 3;
 						if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[bid].text_id == 1) Notes[id].text_id = 2;
-						else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 1;
+						else if ((tmpnc >= 8 && (int)tmpnc >= bnc) || tmpnc >= 12) Notes[id].text_id = 1;
 						break;
 					case NOTES_KATSU:
 						Notes[id].text_id = 5;
-						if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 4;
+						if ((tmpnc >= 8 && (int)tmpnc >= bnc) || tmpnc >= 12) Notes[id].text_id = 4;
 						if (Notes[bid].text_id == 2) Notes[bid].text_id = 1;
 						break;
 					case NOTES_BIGDON:
@@ -321,11 +321,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_BOMB:
 				Notes[id].text_id = 3;
 				if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[bid].text_id == 1) Notes[id].text_id = 2;
-				else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 1;
+				else if ((tmpnc >= 8 && (int)tmpnc >= bnc) || tmpnc >= 12) Notes[id].text_id = 1;
 				break;
 			case NOTES_KATSU:
 				Notes[id].text_id = 5;
-				if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 4;
+				if ((tmpnc >= 8 && (int)tmpnc >= bnc) || tmpnc >= 12) Notes[id].text_id = 4;
 				if (Notes[bid].text_id == 2) Notes[bid].text_id = 1;
 				break;
 			case NOTES_BIGDON:
