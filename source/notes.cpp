@@ -173,6 +173,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						}
 						bnc = nc;
 						nc = 0;
+						bid = id;
 					}
 					id = find_notes_id();
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -307,10 +308,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						RollState = 0;
 						break;
 					}
-					bid = id;
 					++NotesNumber;
 				}
-				nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
+				if (i != 0) nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
 			}
 			switch (Notes[id].knd) {
 			case NOTES_DON:
@@ -347,6 +347,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				break;
 			}
 			bnc = 1;
+			nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
