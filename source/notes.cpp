@@ -131,12 +131,48 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			}
 
 			notes_sort();	//ソート
-			bid = find_notes_id();
+			bid = 0;
 			double tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			for (int i = 0; i < NotesCount; ++i) {
 
 				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
+					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+					switch (Notes[id].knd) {
+					case NOTES_DON:
+					case NOTES_BOMB:
+						Notes[id].text_id = 3;
+						if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[bid].text_id == 1) Notes[id].text_id = 2;
+						else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 1;
+						break;
+					case NOTES_KATSU:
+						Notes[id].text_id = 5;
+						if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 4;
+						if (Notes[bid].text_id == 2) Notes[bid].text_id = 1;
+						break;
+					case NOTES_BIGDON:
+						Notes[id].text_id = 6;
+						break;
+					case NOTES_BIGKATSU:
+						Notes[id].text_id = 7;
+						break;
+					case NOTES_ROLL:
+						Notes[id].text_id = 8;
+						break;
+					case NOTES_BIGROLL:
+						Notes[id].text_id = 9;
+						break;
+					case NOTES_BALLOON:
+						Notes[id].text_id = 12;
+						break;
+					case NOTES_ROLLEND:
+					case NOTES_BIGROLLEND:
+						Notes[id].text_id = 11;
+						break;
+					case NOTES_BALLOONEND:
+						Notes[id].text_id = 0;
+						break;
+					}
 					id = find_notes_id();
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
@@ -271,42 +307,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
-					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
-					switch (Notes[bid].knd) {
-					case NOTES_DON:
-					case NOTES_BOMB:
-						Notes[bid].text_id = 3;
-						if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[((i == 0) ? 0 : bid - 1)].text_id == 1) Notes[bid].text_id = 2;
-						else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
-						break;
-					case NOTES_KATSU:
-						Notes[bid].text_id = 5;
-						if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
-						if (Notes[((i == 0) ? 0 : bid - 1)].text_id == 2) Notes[((i == 0) ? 0 : bid - 1)].text_id = 1;
-						break;
-					case NOTES_BIGDON:
-						Notes[bid].text_id = 6;
-						break;
-					case NOTES_BIGKATSU:
-						Notes[bid].text_id = 7;
-						break;
-					case NOTES_ROLL:
-						Notes[bid].text_id = 8;
-						break;
-					case NOTES_BIGROLL:
-						Notes[bid].text_id = 9;
-						break;
-					case NOTES_BALLOON:
-						Notes[bid].text_id = 12;
-						break;
-					case NOTES_ROLLEND:
-					case NOTES_BIGROLLEND:
-						Notes[bid].text_id = 11;
-						break;
-					case NOTES_BALLOONEND:
-						Notes[bid].text_id = 0;
-						break;
-					}
 					bnc = tmpnc;
 					if (i != 0) bid = id;
 					nc = 1;
@@ -315,43 +315,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					++nc;
 				}
 			}
-			tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
-			switch (Notes[bid].knd) {
-			case NOTES_DON:
-			case NOTES_BOMB:
-				Notes[bid].text_id = 3;
-				if ((tmpnc >= 8 && tmpnc <= 16 && (int)tmpnc == bnc) && Notes[bid - 1].text_id == 1) Notes[bid].text_id = 2;
-				else if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 1;
-				break;
-			case NOTES_KATSU:
-				Notes[bid].text_id = 5;
-				if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[bid].text_id = 4;
-				if (Notes[bid - 1].text_id == 2) Notes[bid - 1].text_id = 1;
-				break;
-			case NOTES_BIGDON:
-				Notes[bid].text_id = 6;
-				break;
-			case NOTES_BIGKATSU:
-				Notes[bid].text_id = 7;
-				break;
-			case NOTES_ROLL:
-				Notes[bid].text_id = 8;
-				break;
-			case NOTES_BIGROLL:
-				Notes[bid].text_id = 9;
-				break;
-			case NOTES_BALLOON:
-				Notes[bid].text_id = 12;
-				break;
-			case NOTES_ROLLEND:
-			case NOTES_BIGROLLEND:
-				Notes[bid].text_id = 11;
-				break;
-			case NOTES_BALLOONEND:
-				Notes[bid].text_id = 0;
-				break;
-			}
-			bnc = tmpnc;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
