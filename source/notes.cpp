@@ -10,7 +10,7 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,bnc = 0,nc = 1,bid = 0,id = -1;
+NowMeCount,dcd,JBS = -1,bnc = 0,nc = 1,bid = -1,id = 0;
 double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -131,7 +131,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			}
 
 			notes_sort();	//ソート
-			bid = 0;
+			bid = 0, id = find_notes_id();
 			double tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			for (int i = 0; i < NotesCount; ++i) {
 
@@ -1354,7 +1354,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
 	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	bnc = 0, nc = 1, bid = 0, id = -1;
+	bnc = 0, nc = 1, bid = -1, id = 0;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
 	NowBPM = bpm;
