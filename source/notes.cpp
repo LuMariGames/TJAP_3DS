@@ -174,7 +174,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							break;
 						}
 						bnc = nc;
-						nc = 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
+						nc = 0;
 						bid = id;
 					}
 					id = find_notes_id();
