@@ -131,7 +131,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			}
 
 			notes_sort();	//ソート
-			bid = 0;
+			bid = find_notes_id();
 			double tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			for (int i = 0; i < NotesCount; ++i) {
 
