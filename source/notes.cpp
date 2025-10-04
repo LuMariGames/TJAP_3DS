@@ -147,7 +147,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						case NOTES_KATSU:
 							Notes[id].text_id = 5;
 							if ((nc <= 0.125 && nc <= bnc) || nc <= 0.0625) Notes[id].text_id = 4;
-							if (Notes[bid].text_id == 2) Notes[bid].text_id = 1;
 							break;
 						case NOTES_BIGDON:
 							Notes[id].text_id = 6;
@@ -174,7 +173,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						}
 						bnc = nc;
 						nc = 0;
-						bid = id;
 					}
 					id = find_notes_id();
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -309,6 +307,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						RollState = 0;
 						break;
 					}
+					bid = id;
 					++NotesNumber;
 				}
 				nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
@@ -323,7 +322,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_KATSU:
 				Notes[id].text_id = 5;
 				if ((nc <= 0.125 && nc <= bnc) || nc <= 0.0625) Notes[id].text_id = 4;
-				if (Notes[bid].text_id == 2) Notes[bid].text_id = 1;
 				break;
 			case NOTES_BIGDON:
 				Notes[id].text_id = 6;
@@ -348,7 +346,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[id].text_id = 0;
 				break;
 			}
-			bnc = 2147483647;
+			bnc = 1;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
