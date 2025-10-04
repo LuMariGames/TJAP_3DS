@@ -137,7 +137,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
-					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+					tmpnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
 					switch (Notes[id].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
@@ -173,6 +173,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Notes[id].text_id = 0;
 						break;
 					}
+					bnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
 					id = find_notes_id();
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
@@ -307,15 +308,14 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
-					bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
-					if (i != 0) bid = id;
+					bid = id;
 					nc = 1;
 				}
 				else {
 					++nc;
 				}
 			}
-			tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+			tmpnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
 			switch (Notes[id].knd) {
 			case NOTES_DON:
 			case NOTES_BOMB:
@@ -351,7 +351,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[id].text_id = 0;
 				break;
 			}
-			bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+			bnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
