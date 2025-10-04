@@ -11,7 +11,7 @@
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
 NowMeCount,dcd,JBS = -1,bid = -1,id = 0;
-double bnc = 1,nc = 0,bpm,offset;
+double bnc = 2147483647,nc = 0,bpm,offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
@@ -134,7 +134,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			bid = 0, id = -1;
 			for (int i = 0; i < NotesCount; ++i) {
 
-				if (i != 0) nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
+				if (NotesNumber != 0) nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
 				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
 					if (id != -1) {
@@ -346,8 +346,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[id].text_id = 0;
 				break;
 			}
-			bnc = 1;
-			nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
+			bnc = nc;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
@@ -1350,7 +1349,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
 	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	bnc = 1, nc = 0, bid = -1, id = 0;
+	bnc = 2147483647, nc = 0, bid = -1, id = 0;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
 	NowBPM = bpm;
