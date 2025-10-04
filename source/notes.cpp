@@ -174,7 +174,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							Notes[id].text_id = 0;
 							break;
 						}
+						bnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
 						bid = id;
+						nc = 1;
 					}
 					id = find_notes_id();
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -310,8 +312,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
-					bnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
-					nc = 1;
 				}
 				else {
 					++nc;
@@ -353,8 +353,8 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[id].text_id = 0;
 				break;
 			}
-			nc = bid - id + 1;
 			bnc = (NotesCountMax / Measure[MeasureCount].measure) / nc;
+			nc = 1;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
