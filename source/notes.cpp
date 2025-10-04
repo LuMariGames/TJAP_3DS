@@ -271,13 +271,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
-					if (i != 0) bid = id;
-					bnc = tmpnc;
-					nc = 1;
-				}
-				else {
-					++nc;
-					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 					switch (Notes[id].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
@@ -288,7 +281,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_KATSU:
 						Notes[id].text_id = 5;
 						if ((tmpnc >= 8 && (int)tmpnc == bnc) || tmpnc >= 12) Notes[id].text_id = 4;
-						if (Notes[bid].text_id == 2) Notes[id].text_id = 1;
+						if (Notes[bid].text_id == 2) Notes[bid].text_id = 1;
 						break;
 					case NOTES_BIGDON:
 						Notes[id].text_id = 6;
@@ -313,6 +306,13 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Notes[id].text_id = 0;
 						break;
 					}
+					if (i != 0) bid = id;
+					bnc = tmpnc;
+					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+					nc = 1;
+				}
+				else {
+					++nc;
 				}
 			}
 			++MeasureCount;
