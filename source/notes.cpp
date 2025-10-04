@@ -11,7 +11,7 @@
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
 NowMeCount,dcd,JBS = -1,bid = -1,id = 0;
-double bnc = 1,nc = 1,bpm,offset;
+double bnc = 1,nc = 0,bpm,offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
@@ -1351,7 +1351,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
 	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	bnc = 1, nc = 1, bid = -1, id = 0;
+	bnc = 1, nc = 0, bid = -1, id = 0;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
 	NowBPM = bpm;
