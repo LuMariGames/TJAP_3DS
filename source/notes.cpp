@@ -271,7 +271,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					bnc = tmpnc;
-					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 					switch (Notes[id].knd) {
 					case NOTES_DON:
 					case NOTES_BOMB:
@@ -308,6 +307,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
+					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 					if (i != 0) bid = id;
 					nc = 1;
 				}
