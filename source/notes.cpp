@@ -134,7 +134,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			bid = 0, id = -1;
 			for (int i = 0; i < NotesCount; ++i) {
 
-				nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
 				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
 					if (id != -1) {
@@ -312,6 +311,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					}
 					++NotesNumber;
 				}
+				nc += 1.0 / (NotesCountMax / Measure[MeasureCount].measure);
 			}
 			switch (Notes[id].knd) {
 			case NOTES_DON:
