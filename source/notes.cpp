@@ -353,7 +353,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[id].text_id = 0;
 				break;
 			}
-			bnc = (768 / NotesCountMax) * Measure[MeasureCount].measure * nc;
+			bnc = 768;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
