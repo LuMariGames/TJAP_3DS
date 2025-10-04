@@ -348,7 +348,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[id].text_id = 0;
 				break;
 			}
-			bnc = nc;
+			bnc = 2147483647;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
