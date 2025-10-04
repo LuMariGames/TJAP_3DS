@@ -271,7 +271,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 					}
 					++NotesNumber;
-					bnc = tmpnc;
 					tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 					switch (Notes[bid].knd) {
 					case NOTES_DON:
@@ -308,6 +307,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Notes[bid].text_id = 0;
 						break;
 					}
+					bnc = tmpnc;
 					if (i != 0) bid = id;
 					nc = 1;
 				}
@@ -315,7 +315,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					++nc;
 				}
 			}
-			bnc = tmpnc;
 			tmpnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			switch (Notes[bid].knd) {
 			case NOTES_DON:
@@ -352,7 +351,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 0;
 				break;
 			}
-			nc = bid - id + 1;
+			bnc = tmpnc;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
