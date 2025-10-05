@@ -623,6 +623,9 @@ void load_tja_notes(int course, LIST_T Song) {
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 	char abs_path[512];
+	for (int i = 0; i < MEASURE_MAX; ++i) {
+		memset(tja_notes[i], 0, sizeof(tja_notes[i]));
+	}
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
 	if ((fp = fopen(abs_path, "r")) != NULL) {
