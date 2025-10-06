@@ -131,7 +131,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			}
 
 			notes_sort();	//ソート
-			bid = find_notes_id();
+			if (NotesCount != 0) bid = find_notes_id();
 			for (int i = 0; i < NotesCount; ++i) {
 
 				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
@@ -343,7 +343,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 11;
 				break;
 			}
-			if (NotesCount != 0) bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+			bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
