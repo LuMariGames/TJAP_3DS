@@ -189,11 +189,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						case NOTES_DON:
 						case NOTES_BOMB:
 							Notes[bid].text_id = 3;
-							if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 1;
+							if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 1;
 							break;
 						case NOTES_KATSU:
 							Notes[bid].text_id = 5;
-							if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 4;
+							if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 4;
 							break;
 						case NOTES_BIGDON:
 							Notes[bid].text_id = 6;
@@ -218,7 +218,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							Notes[bid].text_id = 0;
 							break;
 						}
-						bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+						bnc = NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll;
 					}
 
 					PreNotesKnd = knd;
@@ -318,11 +318,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 1;
+				if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 1;
 				break;
 			case NOTES_KATSU:
 				Notes[bid].text_id = 5;
-				if (((NotesCountMax / Measure[MeasureCount].measure / nc) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc) >= 12) Notes[bid].text_id = 4;
+				if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 4;
 				break;
 			case NOTES_BIGDON:
 				Notes[bid].text_id = 6;
@@ -344,7 +344,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 11;
 				break;
 			}
-			bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+			bnc = NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll;
 			if (NotesCount != NotesCountMax) ++nc;
 			++MeasureCount;
 			notes_sort();	//ソート
