@@ -313,7 +313,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				}
 				else ++nc;
 			}
-			++nc;
+			--nc;
 			switch (Notes[bid].knd) {
 			case NOTES_DON:
 			case NOTES_BOMB:
