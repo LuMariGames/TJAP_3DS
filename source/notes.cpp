@@ -344,8 +344,8 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 11;
 				break;
 			}
-			if (NotesCount != 0) ++nc;
 			bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+			if (NotesCount != 0) ++nc;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
