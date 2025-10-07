@@ -313,6 +313,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				}
 				else nc += Measure[MeasureCount].measure / NotesCountMax;
 			}
+			if (NotesCount != NotesCountMax) nc -= Measure[MeasureCount].measure / NotesCountMax;
 			switch (Notes[bid].knd) {
 			case NOTES_DON:
 			case NOTES_BOMB:
@@ -347,6 +348,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				break;
 			}
 			bnc = nc;
+			if (NotesCount != NotesCountMax) nc += Measure[MeasureCount].measure / NotesCountMax;
 			if (NotesCount == 0) nc += Measure[MeasureCount].measure;
 			++MeasureCount;
 			notes_sort();	//ソート
