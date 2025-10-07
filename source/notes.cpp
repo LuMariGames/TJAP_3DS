@@ -319,35 +319,43 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
 				if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
+				bnc = nc;
 				break;
 			case NOTES_KATSU:
 				Notes[bid].text_id = 5;
 				if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
+				bnc = nc;
 				break;
 			case NOTES_BIGDON:
 				Notes[bid].text_id = 6;
+				bnc = nc;
 				break;
 			case NOTES_BIGKATSU:
 				Notes[bid].text_id = 7;
+				bnc = nc;
 				break;
 			case NOTES_ROLL:
 				Notes[bid].text_id = 8;
+				bnc = nc;
 				break;
 			case NOTES_BIGROLL:
 				Notes[bid].text_id = 9;
+				bnc = nc;
 				break;
 			case NOTES_BALLOON:
 				Notes[bid].text_id = 12;
+				bnc = nc;
 				break;
 			case NOTES_ROLLEND:
 			case NOTES_BIGROLLEND:
 				Notes[bid].text_id = 11;
+				bnc = nc;
 				break;
 			case NOTES_BALLOONEND:
 				Notes[bid].text_id = 0;
+				bnc = nc;
 				break;
 			}
-			bnc = nc;
 			if (NotesCount != NotesCountMax) nc += Measure[MeasureCount].measure / NotesCountMax;
 			if (NotesCount == 0) nc += Measure[MeasureCount].measure;
 			++MeasureCount;
