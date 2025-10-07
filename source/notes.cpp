@@ -10,8 +10,8 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,bnc = 1,nc = 512,bid = 0,id = -1;
-double bpm, offset;
+NowMeCount,dcd,JBS = -1,bid = 0,id = -1;
+double bnc = 512,nc = 0,bpm,offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
@@ -44,7 +44,10 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes = Measure[stme].create_time;
 	if (cnt >= 0) CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
-	if (cnt == 0) Branch.course = Measure[stme].branch;
+	if (cnt == 0) {
+		Branch.course = Measure[stme].branch;
+		nc = Measure[MeasureCount].measure / NotesCountMax;
+	}
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
 	//draw_debug(0, 185, get_buffer());
 
@@ -189,11 +192,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						case NOTES_DON:
 						case NOTES_BOMB:
 							Notes[bid].text_id = 3;
-							if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 1;
+							if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
 							break;
 						case NOTES_KATSU:
 							Notes[bid].text_id = 5;
-							if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 4;
+							if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
 							break;
 						case NOTES_BIGDON:
 							Notes[bid].text_id = 6;
@@ -218,7 +221,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							Notes[bid].text_id = 0;
 							break;
 						}
-						bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+						bnc = nc;
 					}
 
 					PreNotesKnd = knd;
@@ -309,30 +312,30 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					}
 					++NotesNumber;
 					bid = id;
-					nc = 1;
+					nc = Measure[MeasureCount].measure / NotesCountMax;
 				}
-				else ++nc;
+				else nc += Measure[MeasureCount].measure / NotesCountMax;
 			}
-			if (NotesCount != NotesCountMax) --nc;
+			if (NotesCount != NotesCountMax) nc -= Measure[MeasureCount].measure / NotesCountMax;
 			switch (Notes[bid].knd) {
 			case NOTES_DON:
 			case NOTES_BOMB:
 				Notes[bid].text_id = 3;
-				if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 1;
-				bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+				if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
+				bnc = nc;
 				break;
 			case NOTES_KATSU:
 				Notes[bid].text_id = 5;
-				if (((NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 8 && (int)(NotesCountMax / Measure[MeasureCount].measure / nc) >= bnc) || (NotesCountMax / Measure[MeasureCount].measure / nc / Notes[bid].scroll) >= 12) Notes[bid].text_id = 4;
-				bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+				if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
+				bnc = nc;
 				break;
 			case NOTES_BIGDON:
 				Notes[bid].text_id = 6;
-				bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+				bnc = nc;
 				break;
 			case NOTES_BIGKATSU:
 				Notes[bid].text_id = 7;
-				bnc = NotesCountMax / Measure[MeasureCount].measure / nc;
+				bnc = nc;
 				break;
 			case NOTES_ROLL:
 				Notes[bid].text_id = 8;
@@ -351,7 +354,8 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				Notes[bid].text_id = 0;
 				break;
 			}
-			if (NotesCount != NotesCountMax) ++nc;
+			if (NotesCount != NotesCountMax) nc += Measure[MeasureCount].measure / NotesCountMax;
+			if (NotesCount == 0) nc += Measure[MeasureCount].measure;
 			++MeasureCount;
 			notes_sort();	//ソート
 		}
@@ -1360,7 +1364,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
 	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	bnc = 1, nc = 512, bid = 0, id = -1;
+	bnc = 512, nc = 0, bid = 0, id = -1;
 	bpm = TJA_Header.bpm;
 	offset = TJA_Header.offset + Option.offset;
 	NowBPM = bpm;
