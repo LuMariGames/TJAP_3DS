@@ -324,9 +324,11 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						case 'H':
 							Notes[bid].text_id = 5;
 							break;
+						case 'A':
 						case 'I':
 							Notes[bid].text_id = 6;
 							break;
+						case 'B':
 						case 'J':
 							Notes[bid].text_id = 7;
 							break;
@@ -1105,9 +1107,11 @@ int ctoi(char c) {
 	case 'H':
 		return NOTES_KATSU;
 	case '3':
+	case 'A':
 	case 'I':
 		return NOTES_BIGDON;
 	case '4':
+	case 'B':
 	case 'J':
 		return NOTES_BIGKATSU;
 	case '5':
