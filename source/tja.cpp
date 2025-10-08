@@ -564,13 +564,13 @@ void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソ
 	for (int i = 1; i < array_size; ++i) {
 
 		MEASURE_T temp = t[i];
-		if (t[i - 1].judge_time > temp.judge_time) {
+		if (t[i - 1].create_time > temp.create_time) {
 
 			int j = i;
 			do {
 				t[j] = t[j - 1];
 				--j;
-			} while (j > 0 && t[j - 1].judge_time > temp.judge_time);
+			} while (j > 0 && t[j - 1].create_time > temp.create_time);
 			t[j] = temp;
 		}
 	}
