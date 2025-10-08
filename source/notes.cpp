@@ -10,7 +10,7 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,bid = 0,id = -1;
+NowMeCount,dcd,JBS = -1,bid = 0,id = -1,TJAVER = 1;
 double bnc = 512,nc = 0,bpm,offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -184,43 +184,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
 
-					if (bid != id) {
-						switch (Notes[bid].knd) {
-						case NOTES_DON:
-						case NOTES_BOMB:
-							Notes[bid].text_id = 3;
-							if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
-							break;
-						case NOTES_KATSU:
-							Notes[bid].text_id = 5;
-							if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
-							break;
-						case NOTES_BIGDON:
-							Notes[bid].text_id = 6;
-							break;
-						case NOTES_BIGKATSU:
-							Notes[bid].text_id = 7;
-							break;
-						case NOTES_ROLL:
-							Notes[bid].text_id = 8;
-							break;
-						case NOTES_BIGROLL:
-							Notes[bid].text_id = 9;
-							break;
-						case NOTES_BALLOON:
-							Notes[bid].text_id = 12;
-							break;
-						case NOTES_ROLLEND:
-						case NOTES_BIGROLLEND:
-							Notes[bid].text_id = 11;
-							break;
-						case NOTES_BALLOONEND:
-							Notes[bid].text_id = 0;
-							break;
-						}
-						bnc = nc;
-					}
-
 					PreNotesKnd = knd;
 
 					int roll_id = -1;
@@ -307,6 +270,81 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						RollState = 0;
 						break;
 					}
+					if (TJAVER < 2 && bid != id) {
+						switch (Notes[bid].knd) {
+						case NOTES_DON:
+						case NOTES_BOMB:
+							Notes[bid].text_id = 3;
+							if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
+							break;
+						case NOTES_KATSU:
+							Notes[bid].text_id = 5;
+							if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
+							break;
+						case NOTES_BIGDON:
+							Notes[bid].text_id = 6;
+							break;
+						case NOTES_BIGKATSU:
+							Notes[bid].text_id = 7;
+							break;
+						case NOTES_ROLL:
+							Notes[bid].text_id = 8;
+							break;
+						case NOTES_BIGROLL:
+							Notes[bid].text_id = 9;
+							break;
+						case NOTES_BALLOON:
+							Notes[bid].text_id = 12;
+							break;
+						case NOTES_ROLLEND:
+						case NOTES_BIGROLLEND:
+							Notes[bid].text_id = 11;
+							break;
+						case NOTES_BALLOONEND:
+							Notes[bid].text_id = 0;
+							break;
+						}
+						bnc = nc;
+					}
+					else if (TJAVER >= 2) {
+						switch (tja_notes[Measure[MeasureCount].notes][i]) {
+						case 'C':
+						case 'D':
+							Notes[bid].text_id = 1;
+							break;
+						case 'E':
+							Notes[bid].text_id = 2;
+							break;
+						case 'F':
+							Notes[bid].text_id = 3;
+							break;
+						case 'G':
+							Notes[bid].text_id = 4;
+							break;
+						case 'H':
+							Notes[bid].text_id = 5;
+							break;
+						case 'I':
+							Notes[bid].text_id = 6;
+							break;
+						case 'J':
+							Notes[bid].text_id = 7;
+							break;
+						case 'K':
+							Notes[bid].text_id = 8;
+							break;
+						case 'L':
+							Notes[bid].text_id = 9;
+							break;
+						case 'M':
+							Notes[bid].text_id = 12;
+							break;
+						case 'N':
+							if (knd == NOTES_BALLOONEND) Notes[bid].text_id = 0;
+							else Notes[bid].text_id = 11;
+							break;
+						}
+					}
 					++NotesNumber;
 					bid = id;
 					nc = Measure[MeasureCount].measure / NotesCountMax;
@@ -314,47 +352,49 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				else nc += Measure[MeasureCount].measure / NotesCountMax;
 			}
 			if (NotesCount != NotesCountMax) nc -= Measure[MeasureCount].measure / NotesCountMax;
-			switch (Notes[bid].knd) {
-			case NOTES_DON:
-			case NOTES_BOMB:
-				Notes[bid].text_id = 3;
-				if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
-				bnc = nc;
-				break;
-			case NOTES_KATSU:
-				Notes[bid].text_id = 5;
-				if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
-				bnc = nc;
-				break;
-			case NOTES_BIGDON:
-				Notes[bid].text_id = 6;
-				bnc = nc;
-				break;
-			case NOTES_BIGKATSU:
-				Notes[bid].text_id = 7;
-				bnc = nc;
-				break;
-			case NOTES_ROLL:
-				Notes[bid].text_id = 8;
-				bnc = nc;
-				break;
-			case NOTES_BIGROLL:
-				Notes[bid].text_id = 9;
-				bnc = nc;
-				break;
-			case NOTES_BALLOON:
-				Notes[bid].text_id = 12;
-				bnc = nc;
-				break;
-			case NOTES_ROLLEND:
-			case NOTES_BIGROLLEND:
-				Notes[bid].text_id = 11;
-				bnc = nc;
-				break;
-			case NOTES_BALLOONEND:
-				Notes[bid].text_id = 0;
-				bnc = nc;
-				break;
+			if (TJAVER < 2) {
+				switch (Notes[bid].knd) {
+				case NOTES_DON:
+				case NOTES_BOMB:
+					Notes[bid].text_id = 3;
+					if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 1;
+					bnc = nc;
+					break;
+				case NOTES_KATSU:
+					Notes[bid].text_id = 5;
+					if ((nc <= 0.125 && nc <= bnc) || nc <= (1.0/12.0)) Notes[bid].text_id = 4;
+					bnc = nc;
+					break;
+				case NOTES_BIGDON:
+					Notes[bid].text_id = 6;
+					bnc = nc;
+					break;
+				case NOTES_BIGKATSU:
+					Notes[bid].text_id = 7;
+					bnc = nc;
+					break;
+				case NOTES_ROLL:
+					Notes[bid].text_id = 8;
+					bnc = nc;
+					break;
+				case NOTES_BIGROLL:
+					Notes[bid].text_id = 9;
+					bnc = nc;
+					break;
+				case NOTES_BALLOON:
+					Notes[bid].text_id = 12;
+					bnc = nc;
+					break;
+				case NOTES_ROLLEND:
+				case NOTES_BIGROLLEND:
+					Notes[bid].text_id = 11;
+					bnc = nc;
+					break;
+				case NOTES_BALLOONEND:
+					Notes[bid].text_id = 0;
+					bnc = nc;
+					break;
+				}
 			}
 			if (NotesCount != NotesCountMax) nc += Measure[MeasureCount].measure / NotesCountMax;
 			if (NotesCount == 0) nc += Measure[MeasureCount].measure;
@@ -1055,15 +1095,34 @@ int get_branch_course() {
 int ctoi(char c) {
 
 	switch (c) {
-	case '1': return NOTES_DON;
-	case '2': return NOTES_KATSU;
-	case '3': return NOTES_BIGDON;
-	case '4': return NOTES_BIGKATSU;
-	case '5': return NOTES_ROLL;
-	case '6': return NOTES_BIGROLL;
-	case '7': return NOTES_BALLOON;
-	case '8': return NOTES_ROLLEND;
-	case '9': return NOTES_BALLOON;
+	case '1':
+	case 'D':
+	case 'E':
+	case 'F':
+		return NOTES_DON;
+	case '2':
+	case 'G':
+	case 'H':
+		return NOTES_KATSU;
+	case '3':
+	case 'I':
+		return NOTES_BIGDON;
+	case '4':
+	case 'J':
+		return NOTES_BIGKATSU;
+	case '5':
+	case 'K':
+		return NOTES_ROLL;
+	case '6':
+	case 'L':
+		return NOTES_BIGROLL;
+	case '7':
+	case '9':
+	case 'M':
+		return NOTES_BALLOON;
+	case '8':
+	case 'N':
+		return NOTES_ROLLEND;
 	case 'C': return NOTES_BOMB;
 	default: return 0;
 	}
@@ -1366,46 +1425,26 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
 	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	bnc = 512, nc = 0, bid = 0, id = -1;
-	bpm = TJA_Header.bpm;
-	offset = TJA_Header.offset + Option.offset;
-	NowBPM = bpm;
+	bnc = 512, nc = 0, bid = 0, id = -1, TJAVER = TJA_Header.ver;
+	bpm = TJA_Header.bpm, offset = TJA_Header.offset + Option.offset, NowBPM = bpm;
 	for (int i = 0, j = (int)(sizeof(balloon[0]) / sizeof(balloon[0][0])); i < j; ++i) {
 		balloon[0][i] = TJA_Header.balloon[0][i];
 		balloon[1][i] = TJA_Header.balloon[1][i];
 		balloon[2][i] = TJA_Header.balloon[2][i];
 		balloon[3][i] = TJA_Header.balloon[3][i];
 	}
-	NotesNumber = 0;
-	NotesCount = 0;
-	NowMeCount = 0;
-	RollState = 0;
-	MeasureCount = 0;
+	NotesNumber = 0, NotesCount = 0, NowMeCount = 0, RollState = 0, MeasureCount = 0;
 	MinMeasureCount = ((Option.measure > 0) ? stme : -1);
-	MaxMeasureCount = 0;
-	isNotesLoad = true;
-	isJudgeDisp = false;
-	JudgeMakeTime = 0;
-	JudgeDispknd = -1;
-	JudgeY = 70;
-	JudgeRollState = -1;
+	MaxMeasureCount = 0, isNotesLoad = true, isJudgeDisp = false;
+	JudgeMakeTime = 0, JudgeDispknd = -1, JudgeY = 70, JudgeRollState = -1;
 	//isAuto = true;	//要変更
-	BalloonCount[0] = 0;
-	BalloonCount[1] = 0;
-	BalloonCount[2] = 0;
-	BalloonCount[3] = 0;
+	BalloonCount[0] = 0, BalloonCount[1] = 0, BalloonCount[2] = 0, BalloonCount[3] = 0;
 	BalloonBreakCount = 0;
 	isBalloonBreakDisp = false;
 	isGOGOTime = false;
-	Branch.knd = 0;
-	Branch.x = 0;
-	Branch.y = 0;
-	Branch.course = -1;
-	Branch.next = false;
-	Branch.wait = false;
+	Branch.knd = 0,Branch.x = 0,Branch.y = 0,Branch.course = -1,Branch.next = false,Branch.wait = false;
 	isLevelHold = false;
-	PreNotesKnd = 0;
-	TotalFailedCount = 0;
+	PreNotesKnd = 0, TotalFailedCount = 0;
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		BarLine[i].flag = false;
 		BarLine[i].scroll = 0;
