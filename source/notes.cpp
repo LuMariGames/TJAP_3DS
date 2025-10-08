@@ -306,52 +306,52 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						}
 						bnc = nc;
 					}
-					else if (TJAVER >= 2) {
-						switch (tja_notes[Measure[MeasureCount].notes][i-1]) {
-						case 'C':
-						case 'D':
-							Notes[bid].text_id = 1;
-							break;
-						case 'E':
-							Notes[bid].text_id = 2;
-							break;
-						case 'F':
-							Notes[bid].text_id = 3;
-							break;
-						case 'G':
-							Notes[bid].text_id = 4;
-							break;
-						case 'H':
-							Notes[bid].text_id = 5;
-							break;
-						case 'A':
-						case 'I':
-							Notes[bid].text_id = 6;
-							break;
-						case 'B':
-						case 'J':
-							Notes[bid].text_id = 7;
-							break;
-						case 'K':
-							Notes[bid].text_id = 8;
-							break;
-						case 'L':
-							Notes[bid].text_id = 9;
-							break;
-						case 'M':
-							Notes[bid].text_id = 12;
-							break;
-						case 'N':
-							if (knd == NOTES_BALLOONEND) Notes[bid].text_id = 0;
-							else Notes[bid].text_id = 11;
-							break;
-						}
-					}
 					++NotesNumber;
 					bid = id;
 					nc = Measure[MeasureCount].measure / NotesCountMax;
 				}
 				else nc += Measure[MeasureCount].measure / NotesCountMax;
+				if (TJAVER >= 2) {
+					switch (tja_notes[Measure[MeasureCount].notes][i]) {
+					case 'C':
+					case 'D':
+						Notes[bid].text_id = 1;
+						break;
+					case 'E':
+						Notes[bid].text_id = 2;
+						break;
+					case 'F':
+						Notes[bid].text_id = 3;
+						break;
+					case 'G':
+						Notes[bid].text_id = 4;
+						break;
+					case 'H':
+						Notes[bid].text_id = 5;
+						break;
+					case 'A':
+					case 'I':
+						Notes[bid].text_id = 6;
+						break;
+					case 'B':
+					case 'J':
+						Notes[bid].text_id = 7;
+						break;
+					case 'K':
+						Notes[bid].text_id = 8;
+						break;
+					case 'L':
+						Notes[bid].text_id = 9;
+						break;
+					case 'M':
+						Notes[bid].text_id = 12;
+						break;
+					case 'N':
+						if (knd == NOTES_BALLOONEND) Notes[bid].text_id = 0;
+						else Notes[bid].text_id = 11;
+						break;
+					}
+				}
 			}
 			if (NotesCount != NotesCountMax) nc -= Measure[MeasureCount].measure / NotesCountMax;
 			if (TJAVER < 2) {
