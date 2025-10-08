@@ -61,7 +61,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			Branch.next = false;
 		}
 
-		while (Measure[MeasureCount].create_time <= CurrentTimeNotes && !Branch.wait) {
+		while (!Branch.wait) {
 
 			NotesCount = 0;
 
