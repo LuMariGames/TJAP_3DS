@@ -885,7 +885,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
 
-		if (Notes[i].flag) {
+		if (Notes[i].flag && 0 < Notes[i].x < 420) {
 
 			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
@@ -921,23 +921,23 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
-							if (n > 1 && sprites[SPRITE_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
+							if (420 > sprites[SPRITE_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
+							if (n > 1 && 420 > sprites[SPRITE_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
+						if (420 > Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
-							if (n > 1 && sprites[SPRITE_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
+							if (0 < sprites[SPRITE_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
+							if (n > 1 && 0 < sprites[SPRITE_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
+						if (0 < Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 					}
 				}
 				break;
@@ -954,23 +954,23 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
-							if (n > 2 && sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
+							if (420 > sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
+							if (n > 2 && 420 > sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
+						if (420 > Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
-							if (n > 2 && sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
+							if (0 < sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
+							if (n > 2 && 0 < sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
+						if (0 < Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					}
 					break;
 				}
