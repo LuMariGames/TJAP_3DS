@@ -307,7 +307,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						bnc = nc;
 					}
 					else if (TJAVER >= 2) {
-						switch (tja_notes[Measure[MeasureCount].notes][i-1]) {
+						switch (tja_notes[Measure[MeasureCount].notes][i]) {
 						case 'C':
 						case 'D':
 							Notes[id].text_id = 1;
