@@ -342,7 +342,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							Notes[id].text_id = 12;
 							break;
 						case 'N':
-							if (knd == NOTES_BALLOONEND) Notes[id].text_id = 0;
+							if (Notes[id].knd == NOTES_BALLOONEND) Notes[id].text_id = 0;
 							else Notes[id].text_id = 11;
 							break;
 						}
