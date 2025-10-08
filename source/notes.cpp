@@ -132,7 +132,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 			notes_sort();	//ソート
 			bid = find_notes_id();
-			for (int i = 0; i < NotesCount; i++) {
+			for (int i = 0; i < NotesCount; ++i) {
 
 				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
 
@@ -307,7 +307,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						bnc = nc;
 					}
 					else if (TJAVER >= 2) {
-						switch (tja_notes[Measure[MeasureCount].notes][i]) {
+						switch (tja_notes[Measure[MeasureCount].notes][i-1]) {
 						case 'C':
 						case 'D':
 							Notes[bid].text_id = 1;
