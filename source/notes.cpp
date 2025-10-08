@@ -371,7 +371,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 			BarLine[i].x = BarLine[i].x_ini -
 				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) * (Measure[BarLine[i].measure].bpm / 240.0);
 
-			if (BarLine[i].isDisp && (BarLine[i].x < 400 && BarLine[i].scroll > 0) || (BarLine[i].x > 62 && BarLine[i].scroll < 0)) {
+			if (BarLine[i].isDisp && 62 < BarLine[i].x < 400) {
 				C2D_DrawRectSolid(BarLine[i].x, 86, 0, 1, 46, C2D_Color32f(1, 1, 1, 1));
 
 				//snprintf(buf_notes, sizeof(buf_notes), "%d", Measure[BarLine[i].measure].branch);
@@ -885,7 +885,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
 
-		if (Notes[i].flag && 0 < Notes[i].x < 420) {
+		if (Notes[i].flag && 20 < Notes[i].x < 420) {
 
 			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
