@@ -310,27 +310,34 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						switch (tja_notes[Measure[MeasureCount].notes][i]) {
 						case 'C':
 						case 'D':
-							Notes[id].text_id = 1;
+							if (Notes[id].knd == NOTES_DON || Notes[id].knd == NOTES_BOMB) Notes[id].text_id = 1;
+							else Notes[id].text_id = 4;
 							break;
 						case 'E':
-							Notes[id].text_id = 2;
+							if (Notes[id].knd == NOTES_DON) Notes[id].text_id = 2;
+							else Notes[id].text_id = 4;
 							break;
 						case 'F':
-							Notes[id].text_id = 3;
+							if (Notes[id].knd == NOTES_DON) Notes[id].text_id = 3;
+							else Notes[id].text_id = 5;
 							break;
 						case 'G':
-							Notes[id].text_id = 4;
+							if (Notes[id].knd == NOTES_KATSU) Notes[id].text_id = 4;
+							else Notes[id].text_id = 1;
 							break;
 						case 'H':
-							Notes[id].text_id = 5;
+							if (Notes[id].knd == NOTES_KATSU) Notes[id].text_id = 5;
+							else Notes[id].text_id = 3;
 							break;
 						case 'A':
 						case 'I':
-							Notes[id].text_id = 6;
+							if (Notes[id].knd == NOTES_BIGDON) Notes[id].text_id = 6;
+							else Notes[id].text_id = 7;
 							break;
 						case 'B':
 						case 'J':
-							Notes[id].text_id = 7;
+							if (Notes[id].knd == NOTES_BIGKATSU) Notes[id].text_id = 7;
+							else Notes[id].text_id = 6;
 							break;
 						case 'K':
 							Notes[id].text_id = 8;
