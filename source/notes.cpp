@@ -10,7 +10,7 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,bid = 0,id = -1,TJAVER = 1,TextCnt = 0;
+NowMeCount,dcd,JBS = -1,bid = 0,id = -1,TJAVER = 1;
 double bnc = 512,nc = 0,bpm,offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -40,7 +40,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 	OPTION_T Option;
 	get_option(&Option);
-	TextCnt = 0;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes = Measure[stme].create_time;
@@ -935,32 +934,28 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
 
-		if (Notes[i].flag && TextCnt < 264) {
+		if (Notes[i].flag) {
 
 			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
-				sprites[SPRITE_DON].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, NULL);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_KATSU].params.pos.y = notes_y;
-				sprites[SPRITE_KATSU].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, NULL);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
-				sprites[SPRITE_BIG_DON].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, NULL);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
-				sprites[SPRITE_BIG_KATSU].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, NULL);
 				break;
 			case NOTES_ROLL:
@@ -975,26 +970,22 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							sprites[SPRITE_ROLL_INT].params.depth = 1.0f - ((double)i / (double)j);
 							if (sprites[SPRITE_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
 							if (n > 1 && sprites[SPRITE_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-						sprites[SPRITE_ROLL_START].params.depth = 1.0f - ((double)i / (double)j);
 						if (Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							sprites[SPRITE_ROLL_INT].params.depth = 1.0f - ((double)i / (double)j);
 							if (sprites[SPRITE_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
 							if (n > 1 && sprites[SPRITE_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-						sprites[SPRITE_ROLL_START].params.depth = 1.0f - ((double)i / (double)j);
 						if (Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 					}
 				}
@@ -1012,26 +1003,22 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							sprites[SPRITE_BIG_ROLL_INT].params.depth = 1.0f - ((double)i / (double)j);
 							if (sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
 							if (n > 2 && sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-						sprites[SPRITE_BIG_ROLL_START].params.depth = 1.0f - ((double)i / (double)j);
 						if (Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							sprites[SPRITE_BIG_ROLL_INT].params.depth = 1.0f - ((double)i / (double)j);
 							if (sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
 							if (n > 2 && sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
 						}
 						sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 						sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-						sprites[SPRITE_BIG_ROLL_START].params.depth = 1.0f - ((double)i / (double)j);
 						if (Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					}
 					break;
@@ -1043,7 +1030,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					sprites[SPRITE_BALLOON].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y = notes_y;
-					sprites[SPRITE_BALLOON].params.depth = 1.0f - ((double)i / (double)j);
 					C2D_DrawImage(sprites[SPRITE_BALLOON].image, &sprites[SPRITE_BALLOON].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
@@ -1081,21 +1067,18 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
-				sprites[SPRITE_ROLL_END].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, NULL);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y = notes_y;
-				sprites[SPRITE_BIG_ROLL_END].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
 				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, NULL);
 				break;
 			case NOTES_BOMB:
 				sprites[SPRITE_BOMB].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BOMB].params.pos.y = notes_y;
-				sprites[SPRITE_BOMB].params.depth = 1.0f - ((double)i / (double)j);
 				C2D_DrawImage(sprites[SPRITE_BOMB].image, &sprites[SPRITE_BOMB].params, NULL);
 				break;
 			}
@@ -1164,7 +1147,7 @@ int notes_cmp(const void *p, const void *q) {	//比較用
 	//if (((NOTES_T*)p)->flag == false) pp = INT_MAX;
 	//if (((NOTES_T*)p)->flag == false) qq = INT_MAX;
 
-	return pp - qq;
+	return qq - pp;
 }
 
 void notes_sort() {	//ノーツを出現順にソート
@@ -1344,9 +1327,9 @@ void delete_notes(int i) {
 		Notes[i].notes_max = 0;
 		Notes[i].x_ini = 0;
 		Notes[i].x = 0;
-		Notes[i].create_time = INT_MAX;
-		Notes[i].judge_time = INT_MAX;
-		Notes[i].pop_time = INT_MAX;
+		Notes[i].create_time = 0;
+		Notes[i].judge_time = 0;
+		Notes[i].pop_time = 0;
 		Notes[i].bpm = 0;
 		Notes[i].scroll = 0;
 		Notes[i].roll_id = -1;
@@ -1382,7 +1365,6 @@ inline void draw_lyric_text(const char *text, float x, float y, float size) {
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
-	++TextCnt;
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
@@ -1473,7 +1455,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	isGOGOTime = false;
 	Branch.knd = 0,Branch.x = 0,Branch.y = 0,Branch.course = -1,Branch.next = false,Branch.wait = false;
 	isLevelHold = false;
-	PreNotesKnd = 0, TotalFailedCount = 0, dcd = 0, TextCnt = 0;
+	PreNotesKnd = 0, TotalFailedCount = 0;
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		BarLine[i].flag = false;
 		BarLine[i].scroll = 0;
@@ -1482,6 +1464,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].create_time = 0;
 		BarLine[i].isDisp = false;
 	}
+	dcd = 0;
 	Notes.clear();
 	Notes.resize(64);
 }

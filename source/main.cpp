@@ -635,13 +635,13 @@ inline static void load_sprites() {
 	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH], 0.5f, 0.5f);
 	C2D_SpriteFromSheet(&sprites[SPRITE_BOMB], otherspsh, 1);
 	C2D_SpriteSetCenter(&sprites[SPRITE_BOMB], 0.5f, 0.5f);
+
 	if (dance) {
 		for (int i = 0, j = dancnt; i < j; ++i) {
 			C2D_SpriteFromSheet(&sprites[SPRITE_DANCER_0 + i], dancerspsh, i);
 			C2D_SpriteSetCenter(&sprites[SPRITE_DANCER_0 + i], 0.5f, 0.5f);
 		}
 	}
-	for (int i = 0, j = SPRITES_NUMER + dancnt + 2; i < j; ++i) C2D_SpriteSetDepth(&sprites[i], 1.0f);
 
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
@@ -653,34 +653,14 @@ inline static void load_sprites() {
 	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
-	C2D_SpriteSetDepth(&sprites[SPRITE_EFFECT_GOGO], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
-	C2D_SpriteSetDepth(&sprites[SPRITE_TOP], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
-	C2D_SpriteSetDepth(&sprites[SPRITE_TOP_2], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH * 0.5, 200);
-	C2D_SpriteSetDepth(&sprites[SPRITE_TOP_3], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH * 0.5, BOTTOM_HEIGHT * 0.5);
-	C2D_SpriteSetDepth(&sprites[SPRITE_BOTTOM], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], dn_x, dn_y);
-	C2D_SpriteSetDepth(&sprites[SPRITE_DONCHAN_0], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
-	C2D_SpriteSetDepth(&sprites[SPRITE_DONCHAN_1], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
-	C2D_SpriteSetDepth(&sprites[SPRITE_DONCHAN_2], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
-	C2D_SpriteSetDepth(&sprites[SPRITE_DONCHAN_3], 0.0f);
-	C2D_SpriteSetPos(&sprites[SPRITE_CHART_NORMAL], 350, 110);
-	C2D_SpriteSetDepth(&sprites[SPRITE_CHART_NORMAL], 0.0f);
-	C2D_SpriteSetPos(&sprites[SPRITE_LANE_EXPERT], 233, 109);
-	C2D_SpriteSetDepth(&sprites[SPRITE_LANE_EXPERT], 0.0f);
-	C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 350, 110);
-	C2D_SpriteSetDepth(&sprites[SPRITE_CHART_EXPERT], 0.0f);
-	C2D_SpriteSetPos(&sprites[SPRITE_LANE_MASTER], 233, 109);
-	C2D_SpriteSetDepth(&sprites[SPRITE_LANE_MASTER], 0.0f);
-	C2D_SpriteSetPos(&sprites[SPRITE_CHART_MASTER], 350, 110);
-	C2D_SpriteSetDepth(&sprites[SPRITE_CHART_MASTER], 0.0f);
-	C2D_SpriteSetDepth(&sprites[SPRITE_JUDGE_CIRCLE], 0.0f);
 	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 
 	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
