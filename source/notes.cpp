@@ -10,7 +10,7 @@
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,bid = 0,id = -1,TJAVER = 1;
+NowMeCount,dcd,JBS = -1,bid = 0,id = -1,TJAVER = 1,TextCnt = 0;
 double bnc = 512,nc = 0,bpm,offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
@@ -40,6 +40,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 	OPTION_T Option;
 	get_option(&Option);
+	TextCnt = 0;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes = Measure[stme].create_time;
@@ -1355,14 +1356,19 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
+	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
 inline void draw_lyric_text(const char *text, float x, float y, float size) {
 
-	C2D_TextBufClear(g_NotesText);
-	C2D_TextParse(&NotesText, g_NotesText, text);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
+	if (TextCnt < 300) {
+		C2D_TextBufClear(g_NotesText);
+		C2D_TextParse(&NotesText, g_NotesText, text);
+		C2D_TextOptimize(&NotesText);
+		C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
+		++TextCnt;
+	}
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
@@ -1370,6 +1376,7 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 	float size = 0.55;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
+	C2D_TextOptimize(&NotesText);
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
@@ -1452,7 +1459,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	isGOGOTime = false;
 	Branch.knd = 0,Branch.x = 0,Branch.y = 0,Branch.course = -1,Branch.next = false,Branch.wait = false;
 	isLevelHold = false;
-	PreNotesKnd = 0, TotalFailedCount = 0;
+	PreNotesKnd = 0, TotalFailedCount = 0, dcd = 0, TextCnt = 0;
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		BarLine[i].flag = false;
 		BarLine[i].scroll = 0;
@@ -1461,7 +1468,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 		BarLine[i].create_time = 0;
 		BarLine[i].isDisp = false;
 	}
-	dcd = 0;
 	Notes.clear();
 	Notes.resize(64);
 }
