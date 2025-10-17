@@ -825,31 +825,31 @@ void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 	switch (TJA_Header.course) {
 	case COURSE_EASY:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(1, 51.0 / 255.0, 0, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_EASY].image, &sprites[SPRITE_EMBLEM_EASY].params, NULL);
 		break;
 	case COURSE_NORMAL:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 204.0 / 255.0, 34.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(136.0 / 255.0, 204.0 / 255.0, 34.0 / 255.0, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_NORMAL].image, &sprites[SPRITE_EMBLEM_NORMAL].params, NULL);
 		break;
 	case COURSE_HARD:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(51.0 / 255.0, 170.0 / 255.0, 187.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(51.0 / 255.0, 170.0 / 255.0, 187.0 / 255.0, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_HARD].image, &sprites[SPRITE_EMBLEM_HARD].params, NULL);
 		break;
 	case COURSE_ONI:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(1, 34.0 / 255.0, 204.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(1, 34.0 / 255.0, 204.0 / 255.0, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_ONI].image, &sprites[SPRITE_EMBLEM_ONI].params, NULL);
 		break;
 	case COURSE_EDIT:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 34.0 / 255.0, 1, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(136.0 / 255.0, 34.0 / 255.0, 1, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_EDIT].image, &sprites[SPRITE_EMBLEM_EDIT].params, NULL);
 		break;
 	case COURSE_TOWER:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(136.0 / 255.0, 86.0 / 255.0, 12.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(136.0 / 255.0, 86.0 / 255.0, 12.0 / 255.0, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_TOWER].image, &sprites[SPRITE_EMBLEM_TOWER].params, NULL);
 		break;
 	case COURSE_DAN:
-		C2D_DrawRectSolid(0, 86, 0, 62, 58, C2D_Color32f(14.0 / 255.0, 88.0 / 255.0, 129.0 / 255.0, 1));
+		C2D_DrawRectSolid(0, 86, 1, 62, 58, C2D_Color32f(14.0 / 255.0, 88.0 / 255.0, 129.0 / 255.0, 1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_DAN].image, &sprites[SPRITE_EMBLEM_DAN].params, NULL);
 		break;
 	}
