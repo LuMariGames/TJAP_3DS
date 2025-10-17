@@ -1355,7 +1355,6 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
-	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
@@ -1363,7 +1362,6 @@ inline void draw_lyric_text(const char *text, float x, float y, float size) {
 
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
-	C2D_TextOptimize(&NotesText);
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
 
@@ -1372,7 +1370,6 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 	float size = 0.55;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
-	C2D_TextOptimize(&NotesText);
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
 	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
