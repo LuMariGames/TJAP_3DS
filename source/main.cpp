@@ -673,6 +673,17 @@ inline static void load_sprites() {
 	C2D_SpriteSetDepth(&sprites[SPRITE_DONCHAN_2], 0.0f);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
 	C2D_SpriteSetDepth(&sprites[SPRITE_DONCHAN_3], 0.0f);
+	C2D_SpriteSetPos(&sprites[SPRITE_CHART_NORMAL], 350, 110);
+	C2D_SpriteSetDepth(&sprites[SPRITE_CHART_NORMAL], 0.0f);
+	C2D_SpriteSetPos(&sprites[SPRITE_LANE_EXPERT], 233, 109);
+	C2D_SpriteSetDepth(&sprites[SPRITE_LANE_EXPERT], 0.0f);
+	C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 350, 110);
+	C2D_SpriteSetDepth(&sprites[SPRITE_CHART_EXPERT], 0.0f);
+	C2D_SpriteSetPos(&sprites[SPRITE_LANE_MASTER], 233, 109);
+	C2D_SpriteSetDepth(&sprites[SPRITE_LANE_MASTER], 0.0f);
+	C2D_SpriteSetPos(&sprites[SPRITE_CHART_MASTER], 350, 110);
+	C2D_SpriteSetDepth(&sprites[SPRITE_CHART_MASTER], 0.0f);
+	C2D_SpriteSetDepth(&sprites[SPRITE_JUDGE_CIRCLE], 0.0f);
 	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 
 	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
@@ -781,4 +792,3 @@ inline int dancer_time_count(double TIME, int NUM) noexcept {
 double starttime() {
 	return get_StartTime();
 }
-
