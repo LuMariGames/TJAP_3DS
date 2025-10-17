@@ -650,10 +650,7 @@ inline static void load_sprites() {
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
-	for (int i = 0; i < 4; ++i) {
-		C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
-		C2D_SpriteSetDepth(&sprites[SPRITE_EFFECT_PERFECT + i], 0.0f);
-	}
+	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
 
 	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
 	C2D_SpriteSetDepth(&sprites[SPRITE_EFFECT_GOGO], 0.0f);
