@@ -846,7 +846,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = 511; i < j; ++i) {	//計算
+	for (int i = 0, j = (((int)Notes.size() < 512) (Notes.size() - 1) ? 511); i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -904,7 +904,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 		}
 	}
 
-	for (int i = 0, j = 511; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = (((int)Notes.size() < 512) (Notes.size() - 1) ? 511); i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -933,7 +933,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = 512; i < j; ++i) {	//描画
+	for (int i = 0, j = (((int)Notes.size() < 512) Notes.size() ? 512); i < j; ++i) {	//描画
 
 		if (Notes[i].flag) {
 
