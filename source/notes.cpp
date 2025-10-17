@@ -846,7 +846,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 	OPTION_T Option;
 	get_option(&Option);
 
-	for (int i = 0, j = (((int)Notes.size() < 512) (Notes.size() - 1) ? 511); i < j; ++i) {	//計算
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//計算
 
 		if (Notes[i].flag) {
 
@@ -904,7 +904,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 		}
 	}
 
-	for (int i = 0, j = (((int)Notes.size() < 512) (Notes.size() - 1) ? 511); i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
+	for (int i = 0, j = Notes.size() - 1; i < j; ++i) {	//連打のバグ回避のためノーツの削除は一番最後
 
 		if (Notes[i].flag &&
 			((Notes[i].x <= 20 && Notes[i].scroll > 0) || (Notes[i].x >= 420 && Notes[i].scroll < 0)) &&
@@ -933,9 +933,9 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 	int notes_y = 109;
 
-	for (int i = 0, j = (((int)Notes.size() < 512) Notes.size() ? 512); i < j; ++i) {	//描画
+	for (int i = 0, j = Notes.size(); i < j; ++i) {	//描画
 
-		if (Notes[i].flag) {
+		if (Notes[i].flag && TextCnt < 264) {
 
 			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
@@ -1378,13 +1378,11 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 
 inline void draw_lyric_text(const char *text, float x, float y, float size) {
 
-	if (TextCnt < 264) {
-		C2D_TextBufClear(g_NotesText);
-		C2D_TextParse(&NotesText, g_NotesText, text);
-		C2D_TextOptimize(&NotesText);
-		C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
-		++TextCnt;
-	}
+	C2D_TextBufClear(g_NotesText);
+	C2D_TextParse(&NotesText, g_NotesText, text);
+	C2D_TextOptimize(&NotesText);
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
+	++TextCnt;
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
