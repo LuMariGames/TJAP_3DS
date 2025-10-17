@@ -1164,7 +1164,7 @@ int notes_cmp(const void *p, const void *q) {	//比較用
 	//if (((NOTES_T*)p)->flag == false) pp = INT_MAX;
 	//if (((NOTES_T*)p)->flag == false) qq = INT_MAX;
 
-	return pp - qq;
+	return qq - pp;
 }
 
 void notes_sort() {	//ノーツを出現順にソート
