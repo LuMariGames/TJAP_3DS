@@ -395,21 +395,16 @@ void draw_lane(C2D_Sprite sprites[SPRITES_NUMER], int kcnt, int dcnt) {
 		switch (branch) {
 		case COMMAND_N:
 		default:
-			C2D_SpriteSetPos(&sprites[SPRITE_CHART_NORMAL], 350, 110);
 			C2D_DrawImage(sprites[SPRITE_CHART_NORMAL].image, &sprites[SPRITE_CHART_NORMAL].params, NULL);
 			break;
 
 		case COMMAND_E:
-			C2D_SpriteSetPos(&sprites[SPRITE_LANE_EXPERT], 233, 109);
 			C2D_DrawImage(sprites[SPRITE_LANE_EXPERT].image, &sprites[SPRITE_LANE_EXPERT].params, NULL);
-			C2D_SpriteSetPos(&sprites[SPRITE_CHART_EXPERT], 350, 110);
 			C2D_DrawImage(sprites[SPRITE_CHART_EXPERT].image, &sprites[SPRITE_CHART_EXPERT].params, NULL);
 			break;
 
 		case COMMAND_M:
-			C2D_SpriteSetPos(&sprites[SPRITE_LANE_MASTER], 233, 109);
 			C2D_DrawImage(sprites[SPRITE_LANE_MASTER].image, &sprites[SPRITE_LANE_MASTER].params, NULL);
-			C2D_SpriteSetPos(&sprites[SPRITE_CHART_MASTER], 350, 110);
 			C2D_DrawImage(sprites[SPRITE_CHART_MASTER].image, &sprites[SPRITE_CHART_MASTER].params, NULL);
 			break;
 		}
