@@ -9,9 +9,8 @@
 #include "option.h"
 #define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
-int balloon[4][256],BalloonCount[4],TotalFailedCount,
-NowMeCount,dcd,JBS = -1,id = -1,TJAVER = 1;
-double bpm,offset;
+int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
+double bpm, offset;
 float NowBPM = 120.0f;
 extern int isBranch, comboVoice, course, stme;
 extern double black;
@@ -20,7 +19,7 @@ C2D_Font font;
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text, float x, float y, float size),
+notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
 notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER], MEASURE_T Measure[MEASURE_MAX]);
 
 std::vector<NOTES_T> Notes;
@@ -130,16 +129,14 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				NotesCountMax = NotesCount;
 			}
 
-			notes_sort();	//ソート
 			for (int i = 0; i < NotesCount; ++i) {
 
-				if (ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
+				int id = find_notes_id();
 
-					id = find_notes_id();
+				if (id != -1 && ctoi(tja_notes[Measure[MeasureCount].notes][i]) != 0 && Measure[MeasureCount].branch == Branch.course) {
+
 					int knd = ctoi(tja_notes[Measure[MeasureCount].notes][i]);
-					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
-						continue;
-					}
+
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch == -1) ++BalloonCount[0];
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time && knd == NOTES_BALLOON && Measure[MeasureCount].branch != -1) {
 						++BalloonCount[1];
@@ -148,6 +145,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					}
 
 					if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time) continue;
+					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
+						continue;
+					}
 
 					if (Option.random > 0) {		//ランダム(きまぐれ,でたらめ)
 						if (rand() % 100 < Option.random * 100) {
@@ -269,54 +269,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						RollState = 0;
 						break;
 					}
-					if (TJAVER >= 2) {
-						switch (tja_notes[Measure[MeasureCount].notes][i]) {
-						case 'C':
-						case 'D':
-							if (Notes[id].knd == NOTES_DON || Notes[id].knd == NOTES_BOMB) Notes[id].text_id = 1;
-							else Notes[id].text_id = 4;
-							break;
-						case 'E':
-							if (Notes[id].knd == NOTES_DON) Notes[id].text_id = 2;
-							else Notes[id].text_id = 4;
-							break;
-						case 'F':
-							if (Notes[id].knd == NOTES_DON) Notes[id].text_id = 3;
-							else Notes[id].text_id = 5;
-							break;
-						case 'G':
-							if (Notes[id].knd == NOTES_KATSU) Notes[id].text_id = 4;
-							else Notes[id].text_id = 1;
-							break;
-						case 'H':
-							if (Notes[id].knd == NOTES_KATSU) Notes[id].text_id = 5;
-							else Notes[id].text_id = 3;
-							break;
-						case 'A':
-						case 'I':
-							if (Notes[id].knd == NOTES_BIGDON) Notes[id].text_id = 6;
-							else Notes[id].text_id = 7;
-							break;
-						case 'B':
-						case 'J':
-							if (Notes[id].knd == NOTES_BIGKATSU) Notes[id].text_id = 7;
-							else Notes[id].text_id = 6;
-							break;
-						case 'K':
-							Notes[id].text_id = 8;
-							break;
-						case 'L':
-							Notes[id].text_id = 9;
-							break;
-						case 'M':
-							Notes[id].text_id = 12;
-							break;
-						case 'N':
-							if (Notes[id].knd == NOTES_BALLOONEND) Notes[id].text_id = 0;
-							else Notes[id].text_id = 11;
-							break;
-						}
-					}
 					++NotesNumber;
 				}
 			}
@@ -401,7 +353,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 		}
 	}
 
-	draw_lyric_text(Measure[NowMeasure].lyric.data(), 200, 222, 0.6);
+	draw_lyric_text(Measure[NowMeasure].lyric.data());
 	if (course == COURSE_DAN) dcd = dan_condition();
 	if (TotalFailedCount != dcd) {
 		play_sound(SOUND_FAILED);
@@ -849,7 +801,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 		if (Notes[i].flag) {
 
-			draw_lyric_text(Text[get_lang()][TEXT_NONE + Notes[i].text_id], Notes[i].x, 132, 0.4);
 			switch (Notes[i].knd) {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
@@ -880,27 +831,22 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
-							if (n > 1 && TJAVER >= 2 && sprites[SPRITE_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
+							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
 						}
-						sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
-						sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
-							if (n > 1 && TJAVER >= 2 && sprites[SPRITE_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_ROLL_INT].params.pos.x, 132, 0.4);
+							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, NULL);
 						}
-						sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
-						sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 					}
+					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
+					sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, NULL);
 				}
 				break;
 
@@ -913,27 +859,22 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					else end_x = RollNotes[Notes[i].roll_id].end_x;
 
 					if (Notes[i].scroll > 0) {
-						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; n++) {
+						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
-							if (n > 2 && TJAVER >= 2 && sprites[SPRITE_BIG_ROLL_INT].params.pos.x > 0) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
+							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
 						}
-						sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
-						sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x > 0) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					}
 					else if (Notes[i].scroll < 0) {
-						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; n++) {
+						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							if (sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
-							if (n > 2 && TJAVER >= 2 && sprites[SPRITE_BIG_ROLL_INT].params.pos.x < 420) draw_lyric_text(Text[get_lang()][TEXT_ROLLINT], sprites[SPRITE_BIG_ROLL_INT].params.pos.x, 132, 0.4);
+							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, NULL);
 						}
-						sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
-						sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-						if (Notes[i].x < 420) C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					}
+					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
+					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, NULL);
 					break;
 				}
 
@@ -1017,36 +958,15 @@ int get_branch_course() {
 int ctoi(char c) {
 
 	switch (c) {
-	case '1':
-	case 'D':
-	case 'E':
-	case 'F':
-		return NOTES_DON;
-	case '2':
-	case 'G':
-	case 'H':
-		return NOTES_KATSU;
-	case '3':
-	case 'A':
-	case 'I':
-		return NOTES_BIGDON;
-	case '4':
-	case 'B':
-	case 'J':
-		return NOTES_BIGKATSU;
-	case '5':
-	case 'K':
-		return NOTES_ROLL;
-	case '6':
-	case 'L':
-		return NOTES_BIGROLL;
-	case '7':
-	case '9':
-	case 'M':
-		return NOTES_BALLOON;
-	case '8':
-	case 'N':
-		return NOTES_ROLLEND;
+	case '1': return NOTES_DON;
+	case '2': return NOTES_KATSU;
+	case '3': return NOTES_BIGDON;
+	case '4': return NOTES_BIGKATSU;
+	case '5': return NOTES_ROLL;
+	case '6': return NOTES_BIGROLL;
+	case '7': return NOTES_BALLOON;
+	case '8': return NOTES_ROLLEND;
+	case '9': return NOTES_BALLOON;
 	case 'C': return NOTES_BOMB;
 	default: return 0;
 	}
@@ -1247,7 +1167,6 @@ void delete_notes(int i) {
 		Notes[i].scroll = 0;
 		Notes[i].roll_id = -1;
 		Notes[i].isThrough = false;
-		Notes[i].text_id = 0;
 	}
 }
 bool get_notes_finish() {
@@ -1272,12 +1191,13 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
-inline void draw_lyric_text(const char *text, float x, float y, float size) {
+inline void draw_lyric_text(const char *text) {
 
+	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, x, y, 0.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignCenter, 200, 222, 1.0f, size, size, C2D_Color32(0xFF, 0xFF, 0xFF, 0xFF));
 }
 
 void draw_condition_text(float x, float y, const char *text, float *width, float *height) {
@@ -1348,26 +1268,49 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	init_roll__notes();
 	init_balloon_notes();
 	Command.data[0] = 0; Command.data[1] = 0; Command.data[2] = 0;
-	Command.knd = 0; Command.val[0] = 0; Command.val[1] = 0; Command.val[2] = 0;
-	TJAVER = TJA_Header.ver, bpm = TJA_Header.bpm, offset = TJA_Header.offset + Option.offset, NowBPM = bpm;
+	Command.knd = 0;
+	Command.val[0] = 0;
+	Command.val[1] = 0;
+	Command.val[2] = 0;
+	bpm = TJA_Header.bpm;
+	offset = TJA_Header.offset + Option.offset;
+	NowBPM = bpm;
 	for (int i = 0, j = (int)(sizeof(balloon[0]) / sizeof(balloon[0][0])); i < j; ++i) {
 		balloon[0][i] = TJA_Header.balloon[0][i];
 		balloon[1][i] = TJA_Header.balloon[1][i];
 		balloon[2][i] = TJA_Header.balloon[2][i];
 		balloon[3][i] = TJA_Header.balloon[3][i];
 	}
-	NotesNumber = 0, NotesCount = 0, NowMeCount = 0, RollState = 0, MeasureCount = 0;
+	NotesNumber = 0;
+	NotesCount = 0;
+	NowMeCount = 0;
+	RollState = 0;
+	MeasureCount = 0;
 	MinMeasureCount = ((Option.measure > 0) ? stme : -1);
-	MaxMeasureCount = 0, isNotesLoad = true, isJudgeDisp = false;
-	JudgeMakeTime = 0, JudgeDispknd = -1, JudgeY = 70, JudgeRollState = -1;
+	MaxMeasureCount = 0;
+	isNotesLoad = true;
+	isJudgeDisp = false;
+	JudgeMakeTime = 0;
+	JudgeDispknd = -1;
+	JudgeY = 70;
+	JudgeRollState = -1;
 	//isAuto = true;	//要変更
-	BalloonCount[0] = 0, BalloonCount[1] = 0, BalloonCount[2] = 0, BalloonCount[3] = 0;
+	BalloonCount[0] = 0;
+	BalloonCount[1] = 0;
+	BalloonCount[2] = 0;
+	BalloonCount[3] = 0;
 	BalloonBreakCount = 0;
 	isBalloonBreakDisp = false;
 	isGOGOTime = false;
-	Branch.knd = 0,Branch.x = 0,Branch.y = 0,Branch.course = -1,Branch.next = false,Branch.wait = false;
+	Branch.knd = 0;
+	Branch.x = 0;
+	Branch.y = 0;
+	Branch.course = -1;
+	Branch.next = false;
+	Branch.wait = false;
 	isLevelHold = false;
-	PreNotesKnd = 0, TotalFailedCount = 0;
+	PreNotesKnd = 0;
+	TotalFailedCount = 0;
 	for (int i = 0, j = BARLINE_MAX - 1; i < j; ++i) {
 		BarLine[i].flag = false;
 		BarLine[i].scroll = 0;

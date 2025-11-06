@@ -1,6 +1,6 @@
 #pragma once
 
-const char Text[3][72][128] = {
+const char Text[3][64][128] = {
 	{
 		"ON",
 		"OFF",
@@ -61,19 +61,6 @@ const char Text[3][72][128] = {
 		"2P",
 		"楽曲検索",
 		"編集ﾓｰﾄﾞ",
-		"",
-		"ド",
-		"コ",
-		"ドン",
-		"カ",
-		"カッ",
-		"ドン(大)",
-		"カッ(大)",
-		"連打",
-		"連打(大)",
-		"ー",
-		"っ!!",
-		"　　ふうせん",
 	},
 	{
 		"ON",
@@ -135,19 +122,6 @@ const char Text[3][72][128] = {
 		"2P",
 		"Song search",
 		"Editor Mode",
-		"",
-		"Do",
-		"Do",
-		"Don",
-		"Ka",
-		"Ka",
-		"DON",
-		"KA",
-		"Drum Roll!",
-		"DRUM ROLL!",
-		"",
-		"",
-		"　　Balloon",
 	},
 	{
 		"Sí",
@@ -209,19 +183,6 @@ const char Text[3][72][128] = {
 		"2P",
 		"Búsqueda de canciones",
 		"Modo editor",
-		"",
-		"Do",
-		"Do",
-		"Don",
-		"Ka",
-		"Ka",
-		"DON",
-		"KA",
-		"Drum Roll!",
-		"DRUM ROLL!",
-		"",
-		"",
-		"　　Balloon",
 	}
 };
 
@@ -309,19 +270,6 @@ enum Text_knd {
 	TEXT_2P,
 	TEXT_SEARCH,
 	TEXT_EDITOR_MODE,
-	TEXT_NONE,
-	TEXT_DO,
-	TEXT_CO,
-	TEXT_DON,
-	TEXT_KA,
-	TEXT_KATSU,
-	TEXT_BIGDON,
-	TEXT_BIGKATSU,
-	TEXT_ROLL,
-	TEXT_BIGROLL,
-	TEXT_ROLLINT,
-	TEXT_ROLLEND,
-	TEXT_BALLOON,
 };
 
 int get_lang();

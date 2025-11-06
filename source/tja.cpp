@@ -76,7 +76,7 @@ bool load_tja_head(int course,LIST_T Song) {
 	Current_Header.style = 1;
 	Current_Header.life = -1;
 	//Current_Header.demostart = 0;
-	Current_Header.ver = 1;
+	//Current_Header.side = 3;
 	Current_Header.scoremode = 3;
 	exam[0][0] = (char*)"";
 	exam[0][1] = (char*)"";
@@ -398,16 +398,15 @@ bool load_tja_head(int course,LIST_T Song) {
 					Current_Header.demostart = atof(temp);
 				}
 				continue;
-			}*/
+			}
 
-			if (strstr(buf, "VERSION:") == buf) { //PCソフト「太鼓さん次郎」系統の専用タグ、ここでは使わない
-				if (buf[8] != '\n' && buf[8] != '\r') {
-					strlcpy(temp, buf + 8, strlen(buf) - 9);
-					Current_Header.ver = atoi(temp);
-					if (1 > Current_Header.ver || Current_Header.ver > 2) Current_Header.ver = 1;
+			if (strstr(buf, "SIDE:") == buf) { //PCソフト「太鼓さん次郎」系統の専用タグ、ここでは使わない
+				if (buf[5] != '\n' && buf[5] != '\r') {
+					strlcpy(temp, buf + 5, strlen(buf) - 6);
+					Current_Header.side = atoi(temp);
 				}
 				continue;
-			}
+			}*/
 
 			if (strstr(buf, "SCOREMODE:") == buf) { //スコアの計算方法を変えるタグ、デフォルトではアーケード版に似た配点方法
 				if (buf[10] != '\n' && buf[10] != '\r') {
@@ -624,9 +623,6 @@ void load_tja_notes(int course, LIST_T Song) {
 
 	if (course == -1) isCourseMatch = true;		//コース表記なし
 	char abs_path[512];
-	for (int i = 0; i < MEASURE_MAX; ++i) {
-		memset(tja_notes[i], 0, sizeof(tja_notes[i]));
-	}
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
 	if ((fp = fopen(abs_path, "r")) != NULL) {
