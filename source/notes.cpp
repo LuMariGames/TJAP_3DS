@@ -960,8 +960,12 @@ int ctoi(char c) {
 	switch (c) {
 	case '1': return NOTES_DON;
 	case '2': return NOTES_KATSU;
-	case '3': return NOTES_BIGDON;
-	case '4': return NOTES_BIGKATSU;
+	case '3':
+	case 'A':
+		return NOTES_BIGDON;
+	case '4':
+	case 'B':
+		return NOTES_BIGKATSU;
 	case '5': return NOTES_ROLL;
 	case '6': return NOTES_BIGROLL;
 	case '7': return NOTES_BALLOON;
