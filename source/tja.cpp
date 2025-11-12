@@ -209,7 +209,7 @@ bool load_tja_head(int course,LIST_T Song) {
 				continue;
 			}
 
-			if (strstr(buf, "BALLOONNOM:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
+			if (strstr(buf, "BALLOONNOR:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
 					char *tp = strtok(temp, ",");
