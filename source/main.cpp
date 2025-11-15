@@ -289,7 +289,7 @@ int main() {
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
-			else if (cnt == -1) {
+			else if (cnt == 0) {
 				draw_select_text(0, 225, "Chart Loading...");
 				C3D_FrameEnd(0);
 				init_tja();
