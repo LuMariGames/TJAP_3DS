@@ -11,8 +11,7 @@ bool isGOGO;
 int combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,TotalPerfectCount,TotalNiceCount,TotalBadCount,
 CurrentScore,TotalScore,CurrentTotalRollCount,CurrentRollCount,TotalRollCount,TotalCount,
 CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,CurrentBalloonCount,CurrentDaiNotes,MaxComboCount;
-volatile double BaseCeilingPoint;
-double tmp, Precision, CurrentPrecision;
+double BaseCeilingPoint, tmp, Precision, CurrentPrecision;
 TJA_HEADER_T TJA_Header;
 char buf_score[160];
 GAUGE_T Gauge;
@@ -640,29 +639,29 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 						roll_end_time = Measure[i].judge_time + 240.0 / Measure[i].bpm * Measure[i].measure * j / NotesCountMax;
 						if (RollKnd == NOTES_ROLL) {
 							if (scoremode == 1) {
-								RollCnt = (int)((roll_end_time - roll_start_time + 0.99999999) * 15.0);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 300 * gogo;
 							}
 							if (scoremode == 2) {
-								RollCnt = (int)((roll_end_time - roll_start_time + 0.99999999) * 15.0);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 100 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)((roll_end_time - roll_start_time + 0.99999999) * level);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
 						else if (RollKnd == NOTES_BIGROLL) {
 							if (scoremode == 1) {
-								RollCnt = (int)((roll_end_time - roll_start_time + 0.99999999) * 15.0);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 360 * gogo;
 							}
 							if (scoremode == 2) {
-								RollCnt = (int)((roll_end_time - roll_start_time + 0.99999999) * 15.0);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 200 * gogo;
 							}
 							if (scoremode == 3) {
-								RollCnt = (int)((roll_end_time - roll_start_time + 0.99999999) * level);
+								RollCnt = (int)((roll_end_time - roll_start_time) * 15.0);
 								TmpBaseCeilingPoint -= RollCnt * 100;
 							}
 						}
