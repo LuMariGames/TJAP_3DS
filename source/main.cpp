@@ -328,7 +328,7 @@ int main() {
 				}
 			}
 			else {
-				draw_select_text(0, 225, Text[get_lang()][TEXT_WARNING_CHART_NOT_EXIST]);
+				draw_select_text(0, 210, Text[get_lang()][TEXT_WARNING_CHART_NOT_EXIST]);
 				C3D_FrameEnd(0);
 				if (key & KEY_START) {
 					select_ini();
