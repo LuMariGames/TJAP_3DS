@@ -282,16 +282,14 @@ int main() {
 
 		case SCENE_MAINLOAD:	 //ロード中
 
+			draw_select_text(0, 225, "Chart Loading...");
+			C3D_FrameEnd(0);
 			if (Option.edit) {
-				draw_select_text(0, 225, "Chart Editing...");
-				C3D_FrameEnd(0);
 				white_tja(SelectedSong);
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
-			else if (cnt == 0) {
-				draw_select_text(0, 225, "Chart Loading...");
-				C3D_FrameEnd(0);
+			else {
 				init_tja();
 				istjaloaded = load_tja_head(course, SelectedSong);
 				//init_main_music();
@@ -325,14 +323,6 @@ int main() {
 					warning = tmp;
 					scene_state = SCENE_WARNING;
 					select_ini();
-				}
-			}
-			else {
-				draw_select_text(0, 210, Text[get_lang()][TEXT_WARNING_CHART_NOT_EXIST]);
-				C3D_FrameEnd(0);
-				if (key & KEY_START) {
-					select_ini();
-					scene_state = SCENE_SELECTSONG;
 				}
 			}
 			break;
