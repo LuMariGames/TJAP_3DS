@@ -40,7 +40,7 @@
 
 #define SPRITES_NUMER 91
 
-#define NOTES_MAX 512
+#define NOTES_MAX 3072
 #define BARLINE_MAX 256
 #define ROLL_MAX 256
 #define BALLOON_MAX 256
