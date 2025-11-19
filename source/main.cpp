@@ -590,6 +590,7 @@ int main() {
 
 		case SCENE_RESULT:
 
+			if (cnt <= 0) play_sound((get_isauto() ? 37 : 36));
 			stopPlayback();
 			draw_gauge_result(sprites);
 			draw_result();
