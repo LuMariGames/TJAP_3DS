@@ -54,7 +54,7 @@ void init_tja() {
 bool load_tja_head(int course,LIST_T Song) {
 
 	FILE *fp;
-	char buf[513];
+	char buf[512];
 	bool isCourseMatch = true,isSTART = false;
 	OPTION_T Option;
 	get_option(&Option);
@@ -197,10 +197,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOON:") == buf) {  //分岐しなかった際に使われる風船の打数
 				if (buf[8] != '\n' && buf[8] != '\r') {
 					strlcpy(temp, buf + 8, strlen(buf) - 9);
-					char *tp = strtok(temp, ',');
+					char *tp = strtok(temp, ",");
 					Current_Header.balloon[0][0] = atoi(tp);
 					int cnt = 1;
-					while ((tp = strtok(NULL, ','))) {
+					while ((tp = strtok(NULL, ","))) {
 						Current_Header.balloon[0][cnt] = atoi(tp);
 						++cnt;
 					}
@@ -212,10 +212,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONNOR:") == buf) { //「普通譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
-					char *tp = strtok(temp, ',');
+					char *tp = strtok(temp, ",");
 					Current_Header.balloon[1][0] = atoi(tp);
 					int cnt = 1;
-					while ((tp = strtok(NULL, ','))) {
+					while ((tp = strtok(NULL, ","))) {
 						Current_Header.balloon[1][cnt] = atoi(tp);
 						++cnt;
 					}
@@ -227,10 +227,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONEXP:") == buf) { //「玄人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
-					char *tp = strtok(temp, ',');
+					char *tp = strtok(temp, ",");
 					Current_Header.balloon[2][0] = atoi(tp);
 					int cnt = 1;
-					while ((tp = strtok(NULL, ','))) {
+					while ((tp = strtok(NULL, ","))) {
 						Current_Header.balloon[2][cnt] = atoi(tp);
 						++cnt;
 					}
@@ -242,10 +242,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "BALLOONMAS:") == buf) { //「達人譜面」に分岐した際に使われる風船の打数
 				if (buf[11] != '\n' && buf[11] != '\r') {
 					strlcpy(temp, buf + 11, strlen(buf) - 12);
-					char *tp = strtok(temp, ',');
+					char *tp = strtok(temp, ",");
 					Current_Header.balloon[3][0] = atoi(tp);
 					int cnt = 1;
-					while ((tp = strtok(NULL, ','))) {
+					while ((tp = strtok(NULL, ","))) {
 						Current_Header.balloon[3][cnt] = atoi(tp);
 						++cnt;
 					}
@@ -314,10 +314,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM1:") == buf) { //「段位道場」のみで使えるタグ、１つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *a = strtok(temp, ',');
+					char *a = strtok(temp, ",");
 					exam[0][0] = a;
 					cnt = 1;
-					while ((a = strtok(NULL, ','))) {
+					while ((a = strtok(NULL, ","))) {
 						exam[0][cnt] = a;
 						if (cnt == 1) redCdn[0] = atoi(a);
 						++cnt;
@@ -329,10 +329,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM2:") == buf) { //「段位道場」のみで使えるタグ、２つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *b = strtok(temp, ',');
+					char *b = strtok(temp, ",");
 					exam[1][0] = b;
 					cnt = 1;
-					while ((b = strtok(NULL, ','))) {
+					while ((b = strtok(NULL, ","))) {
 						exam[1][cnt] = b;
 						if (cnt == 1) redCdn[1] = atoi(b);
 						++cnt;
@@ -344,10 +344,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM3:") == buf) { //「段位道場」のみで使えるタグ、３つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *c = strtok(temp, ',');
+					char *c = strtok(temp, ",");
 					exam[2][0] = c;
 					cnt = 1;
-					while ((c = strtok(NULL, ','))) {
+					while ((c = strtok(NULL, ","))) {
 						exam[2][cnt] = c;
 						if (cnt == 1) redCdn[2] = atoi(c);
 						++cnt;
@@ -359,10 +359,10 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *c = strtok(temp, ',');
+					char *c = strtok(temp, ",");
 					exam[3][0] = c;
 					cnt = 1;
-					while ((c = strtok(NULL, ','))) {
+					while ((c = strtok(NULL, ","))) {
 						exam[3][cnt] = c;
 						if (cnt == 1) redCdn[3] = atoi(c);
 						++cnt;
