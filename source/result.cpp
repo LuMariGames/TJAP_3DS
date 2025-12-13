@@ -20,7 +20,7 @@ void draw_result() {
 	if (Tja.course != 6) draw_result_text(0,0,1,"\0",0xffffff);
 	else if (result.dcon < 0) draw_result_text(50,48,0.8,"合格",0xfad132);
 	else if (result.dcon == 0) draw_result_text(50,48,0.8,"合格",0xfd3104);
-	else (result.dcon > 0) draw_result_text(50,48,0.8,"不合格",0x02a6fd);
+	else draw_result_text(50,48,0.8,"不合格",0x02a6fd);
 
 	int iniX=100,iniY = 100, x2 = 300,YSense = 20, count = 0;
 	draw_result_text(iniX, iniY + YSense * count, size, Text[get_lang()][TEXT_SCORE]);
