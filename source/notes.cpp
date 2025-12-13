@@ -355,7 +355,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 	draw_lyric_text(Measure[NowMeasure].lyric.data());
 	if (course == COURSE_DAN) dcd = dan_condition();
-	if (TotalFailedCount != dcd) {
+	if (TotalFailedCount != dcd && 0 < dcd) {
 		play_sound(SOUND_FAILED);
 		TotalFailedCount = dcd;
 	}

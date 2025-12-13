@@ -421,12 +421,15 @@ void draw_select_text(float x, float y, const char* text,int color) {	//color省
 	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 1.0f, 0.5f, 0.5f, C2D_Color32f(r, g, b, 1.0f));
 }
 
-void draw_result_text(float x, float y, float size, const char* text) {
+void draw_result_text(float x, float y, float size, const char* text,int color) {
 
 	C2D_TextBufClear(g_SelectText);
 	C2D_TextParse(&SelectText, g_SelectText, text);
 	C2D_TextOptimize(&SelectText);
-	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 0.5f, size, size, C2D_Color32f(1.0f, 1.0f, 1.0f, 1.0f));
+	float r = ((color >> 16) & 0xFF)/255.0;
+	float g = ((color >> 8) & 0xFF)/255.0;
+	float b = ((color >> 0) & 0xFF)/255.0;
+	C2D_DrawText(&SelectText, C2D_WithColor, x, y, 0.5f, size, size, C2D_Color32f(r, g, b, 1.0f));
 }
 
 void calc_result_text(const char* text, float* width, float* height) {

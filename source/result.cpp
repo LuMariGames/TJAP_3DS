@@ -1,4 +1,4 @@
-﻿#include "header.h"
+#include "header.h"
 #include "result.h"
 #include "select.h"
 #include "option.h"
@@ -17,6 +17,9 @@ void draw_result() {
 
 	draw_result_text(50, 10,0.6, Tja.title);
 	draw_result_text(50, 30,0.48,Tja.subtitle);
+	if (dan_condition() < 0) draw_result_text(50,48,0.8,"合格",0xfad132);
+	else if (dan_condition() == 0) draw_result_text(50,48,0.8,"合格",0xfd3104);
+	else (dan_condition() > 0) draw_result_text(50,48,0.8,"不合格",0x02a6fd);
 
 	int iniX=100,iniY = 100, x2 = 300,YSense = 20, count = 0;
 	draw_result_text(iniX, iniY + YSense * count, size, Text[get_lang()][TEXT_SCORE]);

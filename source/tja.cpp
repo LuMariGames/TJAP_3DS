@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, redCdn[4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, Cdn[2][4], gaugelife;
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];
@@ -319,7 +319,8 @@ bool load_tja_head(int course,LIST_T Song) {
 					cnt = 1;
 					while ((a = strtok(NULL, ","))) {
 						exam[0][cnt] = a;
-						if (cnt == 1) redCdn[0] = atoi(a);
+						if (cnt == 1) Cdn[0][0] = atoi(a);
+						else if (cnt == 2) Cdn[1][0] = atoi(a);
 						++cnt;
 					}
 				}
@@ -334,7 +335,8 @@ bool load_tja_head(int course,LIST_T Song) {
 					cnt = 1;
 					while ((b = strtok(NULL, ","))) {
 						exam[1][cnt] = b;
-						if (cnt == 1) redCdn[1] = atoi(b);
+						if (cnt == 1) Cdn[0][1] = atoi(b);
+						else if (cnt == 2) Cdn[1][1] = atoi(a);
 						++cnt;
 					}
 				}
@@ -349,7 +351,8 @@ bool load_tja_head(int course,LIST_T Song) {
 					cnt = 1;
 					while ((c = strtok(NULL, ","))) {
 						exam[2][cnt] = c;
-						if (cnt == 1) redCdn[2] = atoi(c);
+						if (cnt == 1) Cdn[0][2] = atoi(c);
+						else if (cnt == 2) Cdn[1][2] = atoi(a);
 						++cnt;
 					}
 				}
@@ -364,7 +367,8 @@ bool load_tja_head(int course,LIST_T Song) {
 					cnt = 1;
 					while ((c = strtok(NULL, ","))) {
 						exam[3][cnt] = c;
-						if (cnt == 1) redCdn[3] = atoi(c);
+						if (cnt == 1) Cdn[0][3] = atoi(c);
+						else if (cnt == 2) Cdn[1][3] = atoi(a);
 						++cnt;
 					}
 				}
