@@ -881,4 +881,5 @@ void get_result(RESULT_T* Result) {
 	Result->roll = TotalRollCount;
 	Result->combo = MaxComboCount;
 	Result->score = CurrentScore;
+	Result->dcon = dan_condition();
 }

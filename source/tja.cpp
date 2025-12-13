@@ -293,7 +293,7 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "COURSE:") == buf) { //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if (buf[7] != '\n' && buf[7] != '\r') {
 					strlcpy(temp, buf + 7, strlen(buf) - 8);
-					if (strlen(temp) == 1) Current_Header.course = atoi(temp);		//数字表記
+					if (strlen(temp) == 1) course = atoi(temp);		//数字表記
 					else if (strcmp(temp, "Easy") == 0 || strcmp(temp, "easy") == 0)   course = COURSE_EASY;	//文字表記
 					else if (strcmp(temp, "Normal") == 0 || strcmp(temp, "normal") == 0) course = COURSE_NORMAL;
 					else if (strcmp(temp, "Hard") == 0 || strcmp(temp, "hard") == 0)   course = COURSE_HARD;
@@ -336,7 +336,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					while ((b = strtok(NULL, ","))) {
 						exam[1][cnt] = b;
 						if (cnt == 1) Cdn[0][1] = atoi(b);
-						else if (cnt == 2) Cdn[1][1] = atoi(a);
+						else if (cnt == 2) Cdn[1][1] = atoi(b);
 						++cnt;
 					}
 				}
@@ -352,7 +352,7 @@ bool load_tja_head(int course,LIST_T Song) {
 					while ((c = strtok(NULL, ","))) {
 						exam[2][cnt] = c;
 						if (cnt == 1) Cdn[0][2] = atoi(c);
-						else if (cnt == 2) Cdn[1][2] = atoi(a);
+						else if (cnt == 2) Cdn[1][2] = atoi(c);
 						++cnt;
 					}
 				}
@@ -362,13 +362,13 @@ bool load_tja_head(int course,LIST_T Song) {
 			if (strstr(buf, "EXAM4:") == buf) { //「段位道場」のみで使えるタグ、４つ目の条件を設定する
 				if (buf[6] != '\n' && buf[6] != '\r') {
 					strlcpy(temp, buf + 6, strlen(buf) - 7);
-					char *c = strtok(temp, ",");
-					exam[3][0] = c;
+					char *d = strtok(temp, ",");
+					exam[3][0] = d;
 					cnt = 1;
-					while ((c = strtok(NULL, ","))) {
-						exam[3][cnt] = c;
-						if (cnt == 1) Cdn[0][3] = atoi(c);
-						else if (cnt == 2) Cdn[1][3] = atoi(a);
+					while ((d = strtok(NULL, ","))) {
+						exam[3][cnt] = d;
+						if (cnt == 1) Cdn[0][3] = atoi(d);
+						else if (cnt == 2) Cdn[1][3] = atoi(d);
 						++cnt;
 					}
 				}
