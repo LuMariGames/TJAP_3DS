@@ -934,7 +934,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 			case NOTES_POTATO:
 
-				if (BalloonNotes[Notes[i].roll_id].current_hit == 0) {
+				if (Notes[i].x != NOTES_JUDGE_X) {
 
 					sprites[SPRITE_POTATO].params.pos.x = Notes[i].x;
 					sprites[SPRITE_POTATO].params.pos.y = notes_y;
