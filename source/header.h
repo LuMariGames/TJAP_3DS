@@ -162,6 +162,9 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_DONCHAN_3,		//どんちゃんの画像,GOGOである2
 	SPRITE_TOUCH,			//タッチ時の画像
 	SPRITE_BOMB,			//爆弾音符の画像
+	SPRITE_POTATO,			//お芋音符の画像
+	SPRITE_POTATO_1,
+	SPRITE_POTATO_2,
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 

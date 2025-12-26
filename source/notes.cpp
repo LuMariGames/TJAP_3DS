@@ -19,7 +19,7 @@ C2D_Font font;
 int find_notes_id(), find_line_id(), make_roll_start(int NotesId), make_roll_end(int NotesId),
 make_balloon_start(int NotesId), sign(double A), make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header), draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]), notes_sort(), delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), delete_notes(int i), draw_lyric_text(const char *text),
+notes_draw(C2D_Sprite sprites[SPRITES_NUMER]), make_balloon_break(), make_potato_break(), delete_notes(int i), draw_lyric_text(const char *text),
 notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int cnt, C2D_Sprite sprites[SPRITES_NUMER]);
 
 std::vector<NOTES_T> Notes;
@@ -31,7 +31,7 @@ BRANCH_T Branch;
 
 int MeasureCount, MinMeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
 NotesNumber;	//何番目のノーツか
-bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
+bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isPotatoBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
 double JudgeMakeTime,JudgeY,JudgeEffectCnt;
 
 
@@ -212,6 +212,17 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						break;
 
 					case NOTES_BALLOON:
+						RollState = NOTES_BALLOON;
+						roll_id = make_balloon_start(id);
+						if (roll_id != -1) {
+							Notes[id].roll_id = roll_id;
+						}
+						else {
+							delete_notes(id);
+						}
+						break;
+
+					case NOTES_POTATO:
 						RollState = NOTES_BALLOON;
 						roll_id = make_balloon_start(id);
 						if (roll_id != -1) {
@@ -686,7 +697,8 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
 				update_score(BALLOON_BREAK);	//破裂
-				make_balloon_break();
+				if (Notes[BalloonNotes[i].start_id].knd == NOTES_POTATO) make_potato_break();
+				else make_balloon_break();
 				break;
 			}
 			else update_score(BALLOON);
@@ -735,6 +747,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 				break;
 
 			case NOTES_BALLOON:
+			case NOTES_POTATO:
 				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
@@ -918,6 +931,23 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				}
 				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
+
+			case NOTES_POTATO:
+
+				if (BalloonNotes[Notes[i].roll_id].current_hit == 0) {
+
+					sprites[SPRITE_POTATO].params.pos.x = Notes[i].x;
+					sprites[SPRITE_POTATO].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_POTATO].image, &sprites[SPRITE_POTATO].params, NULL);
+				}
+				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
+
+					sprites[SPRITE_POTATO_1].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_POTATO_1].params.pos.y = notes_y;
+					C2D_DrawImage(sprites[SPRITE_POTATO_1].image, &sprites[SPRITE_POTATO_1].params, NULL);
+				}
+				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
+				break;
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
@@ -947,6 +977,13 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6], NOTES_JUDGE_X, notes_y);
 		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image, &sprites[SPRITE_BALLOON_6].params, &Tint);
 	}
+	if (isPotatoBreakDisp) {
+		BalloonBreakCount--;
+		C2D_ImageTint Tint;
+		C2D_AlphaImageTint(&Tint, BalloonBreakCount / 40.0);
+		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2], NOTES_JUDGE_X, notes_y);
+		C2D_DrawImage(sprites[SPRITE_POTATO_2].image, &sprites[SPRITE_POTATO_2].params, &Tint);
+	}
 	if (BalloonBreakCount <= 0) isBalloonBreakDisp = false;
 }
 
@@ -970,7 +1007,7 @@ int ctoi(char c) {
 	case '6': return NOTES_BIGROLL;
 	case '7': return NOTES_BALLOON;
 	case '8': return NOTES_ROLLEND;
-	case '9': return NOTES_BALLOON;
+	case '9': return NOTES_POTATO;
 	case 'C': return NOTES_BOMB;
 	default: return 0;
 	}
@@ -1057,9 +1094,15 @@ inline int make_roll_end(int NotesId) {
 	else return -1;
 }
 
-void make_balloon_break() {
+inline void make_balloon_break() {
 
 	isBalloonBreakDisp = true;
+	BalloonBreakCount = 40;
+}
+
+inline void make_potato_break() {
+
+	isPotatoBreakDisp = true;
 	BalloonBreakCount = 40;
 }
 
@@ -1305,6 +1348,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	BalloonCount[3] = 0;
 	BalloonBreakCount = 0;
 	isBalloonBreakDisp = false;
+	isPotatoBreakDisp = false;
 	isGOGOTime = false;
 	Branch.knd = 0;
 	Branch.x = 0;
