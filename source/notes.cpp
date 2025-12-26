@@ -942,8 +942,8 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
-					sprites[SPRITE_POTATO_1].params.pos.x = NOTES_JUDGE_X;
-					sprites[SPRITE_POTATO_1].params.pos.y = notes_y;
+					sprites[SPRITE_POTATO_1].params.pos.x = 200;
+					sprites[SPRITE_POTATO_1].params.pos.y = 105;
 					C2D_DrawImage(sprites[SPRITE_POTATO_1].image, &sprites[SPRITE_POTATO_1].params, NULL);
 				}
 				if (BalloonNotes[Notes[i].roll_id].current_hit >= 1) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
@@ -981,7 +981,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 		BalloonBreakCount--;
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, BalloonBreakCount / 40.0);
-		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2], NOTES_JUDGE_X, notes_y);
+		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2], 200, 120);
 		C2D_DrawImage(sprites[SPRITE_POTATO_2].image, &sprites[SPRITE_POTATO_2].params, &Tint);
 	}
 	if (BalloonBreakCount <= 0) isBalloonBreakDisp = false;
