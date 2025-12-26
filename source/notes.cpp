@@ -558,7 +558,8 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
 					update_score(BALLOON_BREAK);	//破裂
-					make_balloon_break();
+					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+					else make_balloon_break();
 				}
 				else update_score(BALLOON);
 			}
@@ -984,7 +985,10 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2], 200, 120);
 		C2D_DrawImage(sprites[SPRITE_POTATO_2].image, &sprites[SPRITE_POTATO_2].params, &Tint);
 	}
-	if (BalloonBreakCount <= 0) isBalloonBreakDisp = false;
+	if (BalloonBreakCount <= 0) {
+		isBalloonBreakDisp = false;
+		isPotatoBreakDisp = false;
+	}
 }
 
 int get_branch_course() {
