@@ -1,3 +1,6 @@
 --atlas -f rgba8888 -z auto
 touch.png
 bomb.png
+potato_0.png
+potato_1.png
+potato_2.png
