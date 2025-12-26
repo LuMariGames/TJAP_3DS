@@ -308,7 +308,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 	if (!get_isPause()) notes_calc(isDon, isKatsu, bpm, CurrentTimeNotes, cnt, sprites);
 	if (!Option.isStelth) notes_draw(sprites);
-	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes, sprites);
 	
 	if (MaxMeasureCount < MeasureCount) MaxMeasureCount = MeasureCount;
@@ -969,6 +968,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 			}
 		}
 	}
+	draw_emblem(sprites);
 
 	//割れた風船
 	if (isBalloonBreakDisp) {
