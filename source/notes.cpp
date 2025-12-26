@@ -1193,7 +1193,7 @@ void delete_notes(int i) {
 			delete_balloon(Notes[i].roll_id);
 			update_balloon_count(0);
 		}
-		else if (Notes[i].knd == NOTES_BALLOON) {
+		else if (Notes[i].knd == NOTES_BALLOON || Notes[i].knd == NOTES_POTATO) {
 
 			BalloonNotes[Notes[i].roll_id].start_id = -1;
 
