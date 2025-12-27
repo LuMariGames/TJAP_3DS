@@ -31,7 +31,8 @@ BRANCH_T Branch;
 
 int MeasureCount, MinMeasureCount, MaxMeasureCount, RollState, NotesCount, JudgeDispknd, JudgeRollState, BalloonBreakCount, PreNotesKnd,
 NotesNumber;	//何番目のノーツか
-bool  isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isPotatoBreakDisp = false,isGOGOTime = false,isLevelHold = false;	//要初期化
+bool isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isPotatoBreakDisp = false,
+	isPttBorder = false, isGOGOTime = false,isLevelHold = false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt;
 
 
@@ -148,6 +149,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					if ((knd == NOTES_ROLL || knd == NOTES_BIGROLL || knd == NOTES_BALLOON) && (PreNotesKnd == knd)) {	//55558のような表記に対応
 						continue;
 					}
+					else if (knd == NOTES_POTATO && PreNotesKnd == knd) knd = NOTES_PTTBORDER;
 
 					if (Option.random > 0) {		//ランダム(きまぐれ,でたらめ)
 						if (rand() % 100 < Option.random * 100) {
@@ -754,11 +756,16 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 				}
 				break;
 
+			case NOTES_PTTBORDER:
+				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) isPttBorder = true;
+				break;
+
 			case NOTES_BALLOONEND:
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].end_id = i;
 				}
 				if (Notes[i].judge_time <= CurrentTimeNotes) {
+					isPttBorder = false;
 					delete_notes(i);
 				}
 				break;
@@ -994,6 +1001,11 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 int get_branch_course() {
 
 	return Branch.course;
+}
+
+bool get_isPttBorder() {
+
+	return isPttBorder;
 }
 
 int ctoi(char c) {
@@ -1353,6 +1365,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	BalloonBreakCount = 0;
 	isBalloonBreakDisp = false;
 	isPotatoBreakDisp = false;
+	isPttBorder = false;
 	isGOGOTime = false;
 	Branch.knd = 0;
 	Branch.x = 0;

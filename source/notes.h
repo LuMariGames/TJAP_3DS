@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "tja.h"
 
 typedef struct {
@@ -47,4 +47,4 @@ void notes_main(
 init_notes(TJA_HEADER_T TJA_Header),draw_title(),draw_condition(),
 newfont(),fontfree(),plus_measure(),min_measure(),set_measure();
 int ctoi(char c), get_branch_course();
-bool get_notes_finish();
+bool get_notes_finish(), get_isPttBorder();

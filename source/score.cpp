@@ -217,13 +217,13 @@ void update_score(int knd) {
 
 	case BALLOON_BREAK:
 		if (scoremode != 3) {
-			if (isGOGO == true) {
-				TotalScore += 6000;
-				CurrentScore += 6000;
+			if (!get_isPttBorder()) {
+				TotalScore += ((isGOGO) ? 6000 : 5000);
+				CurrentScore += ((isGOGO) ? 6000 : 5000);
 			}
 			else {
-				TotalScore += 5000;
-				CurrentScore += 5000;
+				TotalScore += ((isGOGO) ? 1200 : 1000);
+				CurrentScore += ((isGOGO) ? 1200 : 1000);
 			}
 		}
 		else if (scoremode == 3) {	//ニジイロ配点

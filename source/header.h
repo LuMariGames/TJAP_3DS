@@ -65,6 +65,7 @@ enum NOTES_KND {
 	NOTES_BIGROLLEND,	//大連打終了
 	NOTES_BALLOONEND,	//風船終了
 	NOTES_BOMB,			//爆弾音符
+	NOTES_PTTBORDER,	//お芋音符の5000点ボーダー
 };
 
 enum SPRITE_NOTES_KND {	//スプライト用
