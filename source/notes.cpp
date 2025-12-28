@@ -496,7 +496,11 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	}
 	if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
 		BalloonNotes[JudgeBalloonState].current_hit = 0;
-		if (balloon[branch][BalloonCount[branch]] > 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
+		if (balloon[branch][BalloonCount[branch]] > 0 || Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) {
+			BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]] + 1;
+			++BalloonNotes[JudgeBalloonState].current_hit;
+		}
+		else if (balloon[branch][BalloonCount[branch]] > 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
 		else BalloonNotes[JudgeBalloonState].need_hit = 5;
 		if (branch == 0) ++BalloonCount[0];
 		else {
