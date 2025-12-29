@@ -14,7 +14,7 @@
 #include <iostream>
 
 #define C3D_CMDBUF_SIZE 0x40000
-#define VERSION "1.8.5"
+#define VERSION "2.0.0"
 #define DECODE_MEM 524288
 #define DEFAULT_DIR "sdmc:/tjafiles"
 #define NOTDEF_DIR "romfs:/tjafiles/"
