@@ -724,10 +724,11 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	//風船の消去処理
 	if (JudgeBalloonState != -1 && BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
+		if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN) play_sound(SOUND_DENDENBREAK);
+		else play_sound(SOUND_BALLOONBREAK);
+
 		if (BalloonNotes[JudgeBalloonState].end_id != -1) delete_notes(BalloonNotes[JudgeBalloonState].end_id);
 		else delete_notes(BalloonNotes[JudgeBalloonState].start_id);
-
-		play_sound(SOUND_BALLOONBREAK);
 		update_balloon_count(0);
 	}
 }
@@ -972,13 +973,10 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 			case NOTES_DENDEN:
 
-				if (Notes[i].x != NOTES_JUDGE_X) {
-
-					sprites[SPRITE_DENDEN].params.pos.x = Notes[i].x;
-					sprites[SPRITE_DENDEN].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_DENDEN].image, &sprites[SPRITE_DENDEN].params, NULL);
-				}
-				else update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
+				sprites[SPRITE_DENDEN].params.pos.x = Notes[i].x;
+				sprites[SPRITE_DENDEN].params.pos.y = notes_y;
+				C2D_DrawImage(sprites[SPRITE_DENDEN].image, &sprites[SPRITE_DENDEN].params, NULL);
+				if (Notes[i].x == NOTES_JUDGE_X) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 
 			case NOTES_ROLLEND:
