@@ -695,19 +695,22 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		int dc = 0,kc = 0;
 		while (JudgeBalloonState != -1 && (dc < isDon || kc < isKatsu)) {	//風船
 
-			if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && kc >= isKatsu && isDendenCH == 1) {
+			if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && kc < isKatsu && isDendenCH == 1) {
 				++BalloonNotes[JudgeBalloonState].current_hit;
 				++kc;
 				isDendenCH = 0;
 			}
-			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && dc >= isDon && isDendenCH == 0) {
+			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && dc < isDon && isDendenCH == 0) {
 				++BalloonNotes[JudgeBalloonState].current_hit;
 				++dc;
 				isDendenCH = 1;
 			}
-			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd != NOTES_DENDEN && dc >= isDon) {
+			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd != NOTES_DENDEN && dc < isDon) {
 				++BalloonNotes[JudgeBalloonState].current_hit;
 				++dc;
+			}
+			else {
+				break;
 			}
 
 			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
