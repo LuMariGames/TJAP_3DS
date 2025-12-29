@@ -966,8 +966,8 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 					sprites[SPRITE_POTATO_1].params.pos.x = 200;
 					sprites[SPRITE_POTATO_1].params.pos.y = 105;
 					C2D_DrawImage(sprites[SPRITE_POTATO_1].image, &sprites[SPRITE_POTATO_1].params, NULL);
+					update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				}
-				update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 
 			case NOTES_DENDEN:
@@ -976,9 +976,9 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					sprites[SPRITE_DENDEN].params.pos.x = Notes[i].x;
 					sprites[SPRITE_DENDEN].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_DENDEN].image, &sprites[SPRITE_POTATO].params, NULL);
+					C2D_DrawImage(sprites[SPRITE_DENDEN].image, &sprites[SPRITE_DENDEN].params, NULL);
 				}
-				update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
+				else update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 
 			case NOTES_ROLLEND:
