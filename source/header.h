@@ -65,6 +65,7 @@ enum NOTES_KND {
 	NOTES_BIGROLLEND,	//大連打終了
 	NOTES_BALLOONEND,	//風船終了
 	NOTES_BOMB,			//爆弾音符
+	NOTES_DENDEN,		//でんでん音符開始
 	NOTES_PTTBORDER,	//お芋音符の5000点ボーダー
 };
 
@@ -166,6 +167,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_POTATO,			//お芋音符の画像
 	SPRITE_POTATO_1,
 	SPRITE_POTATO_2,
+	SPRITE_DENDEN,			//でんでん音符の画像
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
