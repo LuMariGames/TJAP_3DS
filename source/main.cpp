@@ -580,7 +580,7 @@ int main() {
 			//コンボボイス
 			ComboCnt = ((combo < 1500) ? combo : 1500);
 			if ((int)(combo*0.01) != BeforeCombo && combo >= 50) {
-				play_sound(ComboCnt*0.01+(get_isauto() ? 20 : 4));
+				play_sound(ComboCnt*0.01+(get_isauto() ? 21 : 5));
 				BeforeCombo = combo*0.01;
 			}
 			if (combo < 50) {
