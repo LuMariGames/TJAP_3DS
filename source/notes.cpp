@@ -733,6 +733,10 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				}
 				else update_score(BALLOON);
 			}
+			else {
+				++dc;
+				++kc;
+			}
 		}
 	}
 
