@@ -236,7 +236,7 @@ void load_combo() {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
-		FILE * file = fopen(sound_address[i-4], "rb");
+		FILE * file = fopen(sound_address[i - SOUND_NUMBER], "rb");
 		if (file == 0) {
 			printf("no file\n");
 			while (1);
