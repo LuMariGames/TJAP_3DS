@@ -232,7 +232,7 @@ void load_combo() {
 		"romfs:/combo/fullmeka.ogg",
 	};
 
-	for (int i = 4; i < SNUM; ++i) {
+	for (int i = SOUND_NUMBER; i < SNUM; ++i) {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
