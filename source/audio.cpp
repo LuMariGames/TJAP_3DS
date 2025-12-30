@@ -8,7 +8,7 @@
 
 #define AUDIO_BUFFER_SIZE 4096
 #define STACKSIZE (4 * 1024)
-#define SOUND_NUMBER 4
+#define SOUND_NUMBER 5
 #define SNUM 39
 
 typedef struct {
@@ -36,6 +36,7 @@ void load_sound() {
 		"romfs:/ka.ogg",
 		"romfs:/balloonbreak.ogg",
 		"romfs:/failed.ogg",
+		"romfs:/dendenbreak.ogg",
 	};
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
@@ -118,6 +119,7 @@ void sd_load_sound() {
 		"sdmc:/tjafiles/theme/ka.ogg",
 		"sdmc:/tjafiles/theme/balloonbreak.ogg",
 		"sdmc:/tjafiles/theme/failed.ogg",
+		"sdmc:/tjafiles/theme/dendenbreak.ogg",
 	};
 
 	for (int i = 0; i < SOUND_NUMBER; ++i) {
@@ -193,7 +195,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[35][30] = {
+	char sound_address[34][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
@@ -228,7 +230,6 @@ void load_combo() {
 		"romfs:/combo/mekaover.ogg",
 		"romfs:/combo/fullcombo.ogg",
 		"romfs:/combo/fullmeka.ogg",
-		"romfs:/dendenbreak.ogg",
 	};
 
 	for (int i = 4; i < SNUM; ++i) {
@@ -322,6 +323,7 @@ void exit_music() {
 	ndspChnWaveBufClear(sound[2].audiochannel);
 	ndspChnWaveBufClear(sound[3].audiochannel);
 	ndspChnWaveBufClear(sound[4].audiochannel);
+	ndspChnWaveBufClear(sound[5].audiochannel);
 	for (int i = 0; i < SNUM; ++i) {
 		linearFree(sound[i].data);
 	}
