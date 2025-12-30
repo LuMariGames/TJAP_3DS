@@ -695,32 +695,44 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		int dc = 0,kc = 0;
 		while (JudgeBalloonState != -1 && (dc < isDon || kc < isKatsu)) {	//風船
 
-			if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && kc < isKatsu && isDendenCH == 1) {
+			if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && kc >= isKatsu && isDendenCH != 0) {
 				++BalloonNotes[JudgeBalloonState].current_hit;
 				++kc;
 				isDendenCH = 0;
+				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
+
+					update_score(BALLOON_BREAK);	//破裂
+					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+					else make_balloon_break();
+					break;
+				}
+				else update_score(BALLOON);
 			}
-			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && dc < isDon && isDendenCH == 0) {
+			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && dc >= isDon && isDendenCH <= 0) {
 				++BalloonNotes[JudgeBalloonState].current_hit;
 				++dc;
 				isDendenCH = 1;
+				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
+
+					update_score(BALLOON_BREAK);	//破裂
+					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+					else make_balloon_break();
+					break;
+				}
+				else update_score(BALLOON);
 			}
-			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd != NOTES_DENDEN && dc < isDon) {
+			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd != NOTES_DENDEN && dc >= isDon) {
 				++BalloonNotes[JudgeBalloonState].current_hit;
 				++dc;
-			}
-			else {
-				break;
-			}
+				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
-
-				update_score(BALLOON_BREAK);	//破裂
-				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
-				else make_balloon_break();
-				break;
+					update_score(BALLOON_BREAK);	//破裂
+					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+					else make_balloon_break();
+					break;
+				}
+				else update_score(BALLOON);
 			}
-			else update_score(BALLOON);
 		}
 	}
 
@@ -1391,7 +1403,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	BalloonCount[2] = 0;
 	BalloonCount[3] = 0;
 	BalloonBreakCount = 0;
-	isDendenCH = 0;
+	isDendenCH = -1;
 	isBalloonBreakDisp = false;
 	isPotatoBreakDisp = false;
 	isPttBorder = false;
