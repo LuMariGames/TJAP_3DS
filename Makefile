@@ -45,7 +45,7 @@ APP_TITLE				:= TJAPlayer for 3DS
 APP_DESCRIPTION			:= Music game of the TJA file.
 APP_AUTHOR				:= Togetoge
 PRODUCT_CODE			:= CTR-HB-TJAP
-UNIQUE_ID				:= 0xB8765
+UNIQUE_ID				:= 0xB7655
 
 BANNER_AUDIO			:= resource/banner.wav
 BANNER_IMAGE			:= resource/banner.cgfx
