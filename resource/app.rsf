@@ -15,8 +15,8 @@ TitleInfo:
 Option:
   UseOnSD                 : true # true if App is to be installed to SD
   FreeProductCode         : true # Removes limitations on ProductCode
-  MediaFootPadding        : true # If true CCI files are created with padding
-  EnableCrypt             : true # Enables encryption for NCCH and CIA
+  MediaFootPadding        : false # If true CCI files are created with padding
+  EnableCrypt             : false # Enables encryption for NCCH and CIA
   EnableCompress          : true # Compresses where applicable (currently only exefs:/.code)
   
 AccessControlInfo:
