@@ -8,7 +8,7 @@ RomFs:
   RootPath: $(APP_ROMFS)
 
 TitleInfo:
-  Category                : Patch # Application/SystemApplication/Applet/Firmware/Base/DlpChild/Demo/Contents/SystemContents/SharedContents/AddOnContents/Patch/AutoUpdateContents
+  Category                : Application # Application/SystemApplication/Applet/Firmware/Base/DlpChild/Demo/Contents/SystemContents/SharedContents/AddOnContents/Patch/AutoUpdateContents
   UniqueId                : $(APP_UNIQUE_ID)
 
 
