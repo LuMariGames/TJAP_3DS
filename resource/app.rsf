@@ -6,7 +6,6 @@ BasicInfo:
 
 RomFs:
   RootPath: $(APP_ROMFS)
-  HostRoot: $(APP_ROMFS)
 
 TitleInfo:
   Category                : Application # Application/SystemApplication/Applet/Firmware/Base/DlpChild/Demo/Contents/SystemContents/SharedContents/AddOnContents/Patch/AutoUpdateContents
