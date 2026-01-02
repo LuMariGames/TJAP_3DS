@@ -209,9 +209,7 @@ all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(ROMFS_FONTFILES) $(T3XH
 	@echo Building cia...
 	@$(BANNERTOOL) makebanner $(BANNER_IMAGE_ARG) $(BANNER_IMAGE) $(BANNER_AUDIO_ARG) $(BANNER_AUDIO) -o $(BUILD)/banner.bnr
 	@$(BANNERTOOL) makesmdh -s "$(APP_TITLE)" -l "$(APP_TITLE)" -p $(APP_AUTHOR) -i $(APP_ICON) -o $(BUILD)/icon.icn
-	@$(MAKEROM) -f cxi -o $(OUTPUT).cxi -rsf $(TOPDIR)/resource/app.rsf -elf $(OUTPUT).elf -target p -icon $(BUILD)/icon.icn -banner $(BUILD)/banner.bnr -desc app:4
-	@$(MAKEROM) -f cfa -o $(OUTPUT).cfa -rsf $(TOPDIR)/resource/app.rsf -target p
-	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target p -i $(OUTPUT).cxi:0:0 -i $(OUTPUT).cfa:1:1
+	@$(MAKEROM) -f cia -o $(OUTPUT).cia -target p -exefslogo $(MAKEROM_ARGS) -ver $(APP_VER)
 
 #---------------------------------------------------------------------------------
 3dsx: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
