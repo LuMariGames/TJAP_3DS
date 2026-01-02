@@ -642,7 +642,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					delete_notes(CurrentJudgeNotes[0]);
 					update_score(BAD);
 				}
-				CurrentJudgeNotesLag[0] == -1;
+				CurrentJudgeNotesLag[0] = -1;
 				CurrentJudgeNotes[0] = -1;
 				++sd;
 			}
@@ -682,7 +682,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					delete_notes(CurrentJudgeNotes[1]);
 					update_score(BAD);
 				}
-				CurrentJudgeNotesLag[1] == -1;
+				CurrentJudgeNotesLag[1] = -1;
 				CurrentJudgeNotes[1] = -1;
 				++sk;
 			}
