@@ -1,13 +1,14 @@
 BasicInfo:
   Title                   : $(APP_TITLE)
   ProductCode             : $(APP_PRODUCT_CODE)
-  Logo                    : Homebrew
+  ContentType             : Application # Application/SystemUpdate/Manual/Child/Trial
+  Logo                    : Nintendo # Nintendo/Licensed/Distributed/iQue/iQueForSystem/Homebrew
 
 RomFs:
   RootPath: $(APP_ROMFS)
 
 TitleInfo:
-  Category                : Application
+  Category                : Application # Application/SystemApplication/Applet/Firmware/Base/DlpChild/Demo/Contents/SystemContents/SharedContents/AddOnContents/Patch/AutoUpdateContents
   UniqueId                : $(APP_UNIQUE_ID)
 
 
