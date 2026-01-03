@@ -530,7 +530,7 @@ int main() {
 			if (offset > 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
 
 				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
-				if (CurrentTimeMain >= 0 && !isMusicStart) {
+				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
@@ -539,11 +539,11 @@ int main() {
 			//音楽が先
 			else if (offset <= 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
 
-				if (CurrentTimeMain >= 0 && !isPlayMain) {
+				if (CurrentTimeMain >= FirstMeasureTime && !isPlayMain) {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= 0 && !isNotesStart) {
+				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
 					isNotesStart = true;
 				}
 			}
