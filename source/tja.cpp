@@ -635,7 +635,7 @@ void load_tja_notes(int course, LIST_T Song) {
 		int MeasureCount = 0,CurrentCourse = -1;
 		double PreJudge = 0, FirstMeasureTime = 0;
 
-		FirstMeasureTime = (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
+		FirstMeasureTime = (Current_Header.offset * -1.0 + Option.offset) + (240.0 / bpm * measure)*(NOTES_JUDGE_RANGE / NOTES_AREA) - 240.0 / bpm * measure;
 		PreJudge = FirstMeasureTime;
 
 		while (
@@ -1069,7 +1069,7 @@ double get_StartTime() {
 
 	OPTION_T Option;
 	get_option(&Option);
-	return ((Option.measure > 0) ? ((Current_Header.offset * -1.0 + Option.offset) + (Measure[stme].create_time - (240.0 / Current_Header.bpm))) : 0);
+	return ((Option.measure > 0) ? ((Measure[stme].create_time - (240.0 / Current_Header.bpm))) : 0);
 }
 int get_edme() {
 	return edme;
