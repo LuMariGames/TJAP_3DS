@@ -553,7 +553,7 @@ int main() {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= Option.offset && !isNotesStart) {
+				if (CurrentTimeMain >= (Option.offset * -1.0) && !isNotesStart) {
 					isNotesStart = true;
 				}
 			}
