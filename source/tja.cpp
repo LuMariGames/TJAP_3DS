@@ -593,7 +593,7 @@ void conv_tja(LIST_T Song) {
 				fprintf(fp, "%s", sijs2u8(dst[0], dst[1]));
 				dst += 3;
 			} else {
-				fputc(*dst++, fp);
+				fprintf(fp, "%s", *dst++);
 			}
 		}
 		fclose(fp);
