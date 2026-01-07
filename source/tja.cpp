@@ -590,8 +590,8 @@ void conv_tja(LIST_T Song) {
 		char* dst = tja_text;
 		while (*dst) {
 			if (sijs2u8(dst[0], dst[1]) != "\0") {
-				fputc(sijs2u8(dst[0], dst[1]), fp);
-				dst++;
+				fprintf(fp, "%s", sijs2u8(dst[0], dst[1]));
+				dst += 3;
 			} else {
 				fputc(*dst++, fp);
 			}
