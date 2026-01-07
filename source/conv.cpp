@@ -1,7 +1,7 @@
 #include "header.h"
 #include <stdio.h>
 
-char sijs2u8(char text0, char text1) {
+const char sijs2u8(char text0, char text1) {
 
 	unsigned int code;
 	code = text0 << 8;
