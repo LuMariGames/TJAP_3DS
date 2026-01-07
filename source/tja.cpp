@@ -1,3 +1,4 @@
+#pragma once
 #include "header.h"
 #include "notes.h"
 #include "tja.h"
@@ -5,6 +6,7 @@
 #include "main.h"
 #include "select.h"
 #include "option.h"
+#include "conv.h"
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
@@ -517,10 +519,7 @@ void white_tja(LIST_T Song) {
 	if ((fp = fopen(abs_path, "r")) != NULL) {
 
 		tja_cnt = 0;
-		for (int i = 0; i < MEASURE_MAX; ++i) {
-
-			memset(tja_notes[i], 0, sizeof(tja_notes[i]));
-		}
+		memset(tja_notes, 0, sizeof(tja_notes));
 		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
 
 			++tja_cnt;
@@ -542,6 +541,7 @@ void white_tja(LIST_T Song) {
 				*dst++ = *src++;
 			}
 		}
+		*src = 0;
 		*dst = 0;
 		fclose(fp);
 		fp = fopen(abs_path, "w");
@@ -555,6 +555,43 @@ void white_tja(LIST_T Song) {
 			if (*dst == '\n') {
 				fputc('\r', fp);
 				fputc('\n', fp);
+				dst++;
+			} else {
+				fputc(*dst++, fp);
+			}
+		}
+		fclose(fp);
+	}
+}
+
+void conv_tja(LIST_T Song) {
+
+	FILE *fp;
+	char abs_path[512], tja_text[16384];
+	memset(tja_text, 0, sizeof(tja_text));
+	int text_byte = 0;
+
+	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
+	if ((fp = fopen(abs_path, "r")) != NULL) {
+
+		tja_cnt = 0;
+		memset(tja_notes, 0, sizeof(tja_notes));
+		while (fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) {
+
+			++tja_cnt;
+		}
+		for (int i = 0, j = tja_cnt; i < j; ++i) {
+
+			strcat(tja_text, tja_notes[i]);
+			text_byte += strlen(tja_notes[i]);
+		}
+		tja_text[text_byte + 1] = 0;
+		fclose(fp);
+		fp = fopen(abs_path, "w");
+		char* dst = tja_text;
+		while (*dst) {
+			if (sijs2u8(dst[0], dst[1]) != "\0") {
+				fputc(sijs2u8(dst[0], dst[1]), fp);
 				dst++;
 			} else {
 				fputc(*dst++, fp);
