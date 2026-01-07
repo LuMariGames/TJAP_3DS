@@ -1,4 +1,3 @@
-#pragma once
 #include "header.h"
 #include "notes.h"
 #include "tja.h"

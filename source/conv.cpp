@@ -1,11 +1,11 @@
 #include "header.h"
 #include <stdio.h>
 
-char* sijs2u8(char text0, char text1) {
+char sijs2u8(char text0, char text1) {
 
 	unsigned int code;
-	memset(code+2, text0, 1);
-	memset(code+3, text1, 1);
+	code = text0 << 8;
+	code += text1;
 
 	switch (code) {
 	case 0x8191: return "¢";

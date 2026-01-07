@@ -285,7 +285,7 @@ int main() {
 			draw_select_text(0, 225, "Chart Loading...");
 			C3D_FrameEnd(0);
 			if (Option.edit) {
-				white_tja(SelectedSong);
+				conv_tja(SelectedSong);
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
