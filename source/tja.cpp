@@ -7,6 +7,7 @@
 #include "option.h"
 #include "conv.h"
 #include <stdio.h>
+#include <string>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, Cdn[2][4], gaugelife;
