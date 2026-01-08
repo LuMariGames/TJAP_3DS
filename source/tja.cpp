@@ -582,13 +582,13 @@ void conv_tja(LIST_T Song) {
 		}
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
-			strcat(tja_text, tja_notes[i]);
+			strcat(tja_text.data(), tja_notes[i]);
 			text_byte += strlen(tja_notes[i]);
 		}
 		tja_text[text_byte + 1] = 0;
 		fclose(fp);
 		fp = fopen(abs_path, "w");
-		fprintf(fp, "%s", sijs2u8(tja_text));
+		fprintf(fp, "%s", sijs2u8(tja_text).data());
 		fclose(fp);
 	}
 }
