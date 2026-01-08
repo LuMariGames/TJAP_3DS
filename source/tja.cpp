@@ -588,10 +588,7 @@ void conv_tja(LIST_T Song) {
 		fclose(fp);
 		fp = fopen(abs_path, "w");
 		char* dst = tja_text;
-		while (*dst) {
-			fprintf(fp, "%s", sijs2u8(dst[0], dst[1]));
-			dst++;
-		}
+		fprintf(fp, "%s", sijs2u8(*dst));
 		fclose(fp);
 	}
 }
