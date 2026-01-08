@@ -589,7 +589,7 @@ void conv_tja(LIST_T Song) {
 		fp = fopen(abs_path, "w");
 		char* dst = tja_text;
 		while (*dst) {
-			if (sijs2u8(dst[0], dst[1]) == "") {
+			if (strncmp(sijs2u8(dst[0], dst[1]), "-10", 3) == 0) {
 				fputc(*dst++, fp);
 			}
 			else {

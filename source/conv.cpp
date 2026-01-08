@@ -6887,6 +6887,6 @@ const char* sijs2u8(char text0, char text1) {
 	case 0x8170: return (const char*)"｝";
 	case 0x8150: return (const char*)"￣";
 	case 0x818F: return (const char*)"￥";
-	default: return (const char*)"\0";
+	default: return (const char*)"-10";
 	}
 }
