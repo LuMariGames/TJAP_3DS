@@ -566,8 +566,8 @@ void white_tja(LIST_T Song) {
 void conv_tja(LIST_T Song) {
 
 	FILE *fp;
-	char abs_path[512], tja_text[16384];
-	memset(tja_text, 0, sizeof(tja_text));
+	char abs_path[512];
+	string tja_text;
 	int text_byte = 0;
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
@@ -587,8 +587,7 @@ void conv_tja(LIST_T Song) {
 		tja_text[text_byte + 1] = 0;
 		fclose(fp);
 		fp = fopen(abs_path, "w");
-		char* dst = tja_text;
-		fprintf(fp, "%s", sijs2u8(*dst));
+		fprintf(fp, "%s", sijs2u8(tja_text));
 		fclose(fp);
 	}
 }
