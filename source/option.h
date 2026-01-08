@@ -61,6 +61,8 @@ const char Text[3][64][128] = {
 		"2P",
 		"楽曲検索",
 		"編集ﾓｰﾄﾞ",
+		"EDIT",
+		"CONV",
 	},
 	{
 		"ON",
@@ -122,6 +124,8 @@ const char Text[3][64][128] = {
 		"2P",
 		"Song search",
 		"Editor Mode",
+		"EDIT",
+		"CONV",
 	},
 	{
 		"Sí",
@@ -183,14 +187,16 @@ const char Text[3][64][128] = {
 		"2P",
 		"Búsqueda de canciones",
 		"Modo editor",
+		"EDIT",
+		"CONV",
 	}
 };
 
 typedef struct {
 
 	int lang,buffer_size,Voice,special,player,measure;
-	bool isAuto,isStelth,isSwap,dispFps,fixroll,exse,edit;
-	float speed,random,offset,blacktext,musicspeed,
+	bool isAuto,isStelth,isSwap,dispFps,fixroll,exse;
+	float speed,random,offset,blacktext,musicspeed,edit,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
 	char SongTitle[256] = "\0";
 	int KEY_A, KEY_B, KEY_DRIGHT, KEY_DLEFT, KEY_DUP, KEY_DDOWN, KEY_R, KEY_L, KEY_X, KEY_Y,
@@ -270,6 +276,8 @@ enum Text_knd {
 	TEXT_2P,
 	TEXT_SEARCH,
 	TEXT_EDITOR_MODE,
+	TEXT_EDIT,
+	TEXT_CONV,
 };
 
 int get_lang();

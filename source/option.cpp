@@ -299,7 +299,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		XCnt = 0, ++YCnt;
 
 		//fps
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		/*x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_DISP_FPS], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.dispFps == false, &width, &height);
@@ -307,6 +307,27 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.dispFps == true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.dispFps = true;
+		XCnt = 0, ++YCnt;*/
+
+		//楽曲検索
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
+		++XCnt;
+		x = XSense * XCnt + gap, y = YSense * YCnt;
+		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) strcpy(Option.SongTitle, "\0");
+		XCnt = 0, ++YCnt;
+
+		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
+		C2D_DrawRectSolid(2,y,0,316,height,C2D_Color32(0x33,0x33,0x33,0xFF));
+		if (strcmp(Option.SongTitle, "\0") != 0) {
+			snprintf(get_buffer(), 257, "%s", Option.SongTitle);
+			draw_option_text(x, y, get_buffer(), true, &width, &height);
+		}
+		if ((y < py && y + height > py && 0 < px && 400 > px) && key & KEY_TOUCH) {
+			char* test = input_normal_keyboard();
+			strcpy(Option.SongTitle, test);
+		}
 		XCnt = 0, ++YCnt;
 		break;
 
@@ -551,31 +572,12 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_EDITOR_MODE], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_OFF], Option.edit == false, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.edit = false;
-		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_ON], Option.edit == true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.edit = true;
-		XCnt = 0, ++YCnt;
-
-		//楽曲検索
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_SEARCH], true, &width, &height);
-		++XCnt;
-		x = XSense * XCnt + gap, y = YSense * YCnt;
-		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) strcpy(Option.SongTitle, "\0");
-		XCnt = 0, ++YCnt;
-
-		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
-		C2D_DrawRectSolid(2,y,0,316,height,C2D_Color32(0x33,0x33,0x33,0xFF));
-		if (strcmp(Option.SongTitle, "\0") != 0) {
-			snprintf(get_buffer(), 257, "%s", Option.SongTitle);
-			draw_option_text(x, y, get_buffer(), true, &width, &height);
-		}
-		if ((y < py && y + height > py && 0 < px && 400 > px) && key & KEY_TOUCH) {
-			char* test = input_normal_keyboard();
-			strcpy(Option.SongTitle, test);
+		if (Option.edit == 1) draw_option_text(x, y, Text[Option.lang][TEXT_EDIT], true, &width, &height);
+		else if (Option.edit == 2) draw_option_text(x, y, Text[Option.lang][TEXT_CONV], true, &width, &height);
+		else draw_option_text(x, y, Text[Option.lang][TEXT_OFF], true, &width, &height);
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
+			opv = ++Option.special % 3;
+			Option.special = opv;
 		}
 		XCnt = 0, ++YCnt;
 		break;
@@ -621,7 +623,7 @@ void init_option() {
 	Option.buffer_size = DEFAULT_BUFFER_SIZE;
 	Option.offset = 0.0;
 	Option.fixroll = false;
-	Option.edit = false;
+	Option.edit = 0;
 	Option.special = 0;
 	Option.player = 0;
 	Option.musicspeed = 1.0;
