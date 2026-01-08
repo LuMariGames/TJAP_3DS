@@ -7,7 +7,6 @@
 #include "option.h"
 #include "conv.h"
 #include <stdio.h>
-#include <string>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
 int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, Cdn[2][4], gaugelife;
@@ -567,8 +566,8 @@ void white_tja(LIST_T Song) {
 void conv_tja(LIST_T Song) {
 
 	FILE *fp;
-	char abs_path[512];
-	std::string tja_text;
+	char abs_path[512], tja_text[16384];
+	memset(tja_text, 0, sizeof(tja_text));
 	int text_byte = 0;
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
@@ -582,13 +581,22 @@ void conv_tja(LIST_T Song) {
 		}
 		for (int i = 0, j = tja_cnt; i < j; ++i) {
 
-			strcat(tja_text.data(), tja_notes[i]);
+			strcat(tja_text, tja_notes[i]);
 			text_byte += strlen(tja_notes[i]);
 		}
 		tja_text[text_byte + 1] = 0;
 		fclose(fp);
 		fp = fopen(abs_path, "w");
-		fprintf(fp, "%s", sijs2u8(tja_text).data());
+		char* dst = tja_text;
+		while (*dst) {
+			if (sijs2u8(dst[0], dst[1]) == "") {
+				fputc(*dst++, fp);
+			}
+			else {
+				fprintf(fp, "%s", sijs2u8(dst[0], dst[1]));
+				dst += 2;
+			}
+		}
 		fclose(fp);
 	}
 }
