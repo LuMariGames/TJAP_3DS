@@ -568,7 +568,7 @@ void conv_tja(LIST_T Song) {
 
 	FILE *fp;
 	char abs_path[512];
-	string tja_text;
+	std::string tja_text;
 	int text_byte = 0;
 
 	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.tja);
