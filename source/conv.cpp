@@ -6764,3 +6764,4 @@ const char* sijs2u8(char text0, char text1) {
 	case 0x818F: return (const char*)"￥";
 	default: return (const char*)text0;
 	}
+}
