@@ -650,8 +650,9 @@ void load_tja_notes(int course, LIST_T Song) {
 	int FirstMultiMeasure = -1,	//複数行の小節の最初の小節id 複数出ない場合は-1
 		NotesCount = 0, BranchCourse = -1,
 		BeforeBranchFirstMultiMeasure = -1, BeforeBranchNotesCount = 0;
-	bool isStart = false, isEnd = false, isDispBarLine = true, isNoComma = false, isCourseMatch = false,
-		BeforeBranchIsDispBarLine = true, BeforeBranchIsNoComma = false, isSudden = false;
+	bool isStart = false,isEnd = false,isDispBarLine = true,isNoComma = false,isCourseMatch = false,
+		BeforeBranchIsDispBarLine = true,BeforeBranchIsNoComma = false,BeforeBranchIsDummy = false;
+		isSudden = false,isDummy = false;
 	FILE *fp;
 	COMMAND_T Command;
 	OPTION_T Option;
@@ -770,6 +771,12 @@ void load_tja_notes(int course, LIST_T Song) {
 					case COMMAND_BARLINEOFF:
 						isDispBarLine = false;
 						break;
+					case COMMAND_DUMMYON:
+						isDummy = true;
+						break;
+					case COMMAND_DUMMYOFF:
+						isDummy = false;
+						break;
 					case COMMAND_N:
 						BranchCourse = COMMAND_N;
 						break;
@@ -816,6 +823,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
 				Measure[MeasureCount].sudn_time = movetime;
+				Measure[MeasureCount].isDummy = isDummy;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
 				Measure[MeasureCount].create_time = Measure[MeasureCount].judge_time + (isSudden ? (240.0 / NextBpm - sudntime) : 0) - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * (NOTES_AREA * fabs(scroll)));
@@ -848,6 +856,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
 						BeforeBranchMoveTime = movetime;
+						BeforeBranchIsDummy = isDummy;
 						Beforely = ly;
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
 						break;
@@ -870,6 +879,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
 						movetime = BeforeBranchMoveTime;
+						isDummy = BeforeBranchIsDummy;
 						ly = Beforely;
 						break;
 					}
@@ -1074,6 +1084,8 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 		else if (strcmp(command, "LEVELHOLD") == 0) Command->knd = COMMAND_LEVELHOLD;
 		else if (strcmp(command, "BARLINEOFF") == 0) Command->knd = COMMAND_BARLINEOFF;
 		else if (strcmp(command, "BARLINEON") == 0) Command->knd = COMMAND_BARLINEON;
+		else if (strcmp(command, "DUMMYEND") == 0) Command->knd = COMMAND_DUMMYOFF;
+		else if (strcmp(command, "DUMMYSTART") == 0) Command->knd = COMMAND_DUMMYON;
 		else if (strcmp(command, "LYRIC") == 0) {
 			Command->knd = COMMAND_LYRIC;
 			strlcpy(value, buf + 7, length - 8);

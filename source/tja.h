@@ -29,7 +29,7 @@ typedef struct {
 		bpm,speed,measure,scroll;
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
-	bool flag,isDispBarLine;
+	bool flag,isDispBarLine,isDummy;
 	std::string lyric;
 
 } MEASURE_T;

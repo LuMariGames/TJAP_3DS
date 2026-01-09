@@ -184,6 +184,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					//Notes[id].create_time = CurrentTimeNotes;
 					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
+					Notes[id].isDummy = Measure[MeasureCount].isDummy;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
 
@@ -473,7 +474,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	//連打の状態
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
-		if (RollNotes[i].flag &&
+		if (RollNotes[i].flag && !Notes[RollNotes[i].start_id].isDummy &&
 			Notes[RollNotes[i].start_id].judge_time < CurrentTimeNotes &&
 			(RollNotes[i].end_id == -1 || (RollNotes[i].end_id != -1 && Notes[RollNotes[i].end_id].judge_time > CurrentTimeNotes))) JudgeRollState = RollNotes[i].knd;
 	}
@@ -482,7 +483,8 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	int JudgeBalloonState = -1;
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].flag && Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
+		if (BalloonNotes[i].flag && !Notes[BalloonNotes[i].start_id].isDummy &&
+			Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
 			JudgeBalloonState = i;
 			break;
 		}
@@ -504,7 +506,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 
-			if (Notes[i].flag && Notes[i].judge_time <= CurrentTimeNotes &&
+			if (Notes[i].flag && !Notes[i].isDummy && Notes[i].judge_time <= CurrentTimeNotes &&
 				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
 
 				switch (Notes[i].knd) {
@@ -576,7 +578,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 			//判定すべきノーツを検索
 			for (int i = 0, j = Notes.size(); i < j; ++i) {
 	
-				if (Notes[i].flag) {
+				if (!Notes[i].isDummy && Notes[i].flag) {
 	
 					if (Notes[i].knd == NOTES_DON ||
 						Notes[i].knd == NOTES_BIGDON ||
@@ -815,7 +817,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 			case NOTES_BIGDON:
 			case NOTES_BIGKATSU:
 				if (CurrentTimeNotes - Notes[i].judge_time > (Option.judge_range_bad) && !Notes[i].isThrough) {
-					update_score(THROUGH);
+					if (!Notes[i].isDummy) update_score(THROUGH);
 					Notes[i].isThrough = true;
 				}
 				break;
@@ -1280,6 +1282,7 @@ void delete_notes(int i) {
 		Notes[i].scroll = 0;
 		Notes[i].roll_id = -1;
 		Notes[i].isThrough = false;
+		Notes[i].isDummy = false;
 	}
 }
 bool get_notes_finish() {
