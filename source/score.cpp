@@ -528,7 +528,7 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 
 	int NotesCount = 0,i = 0,DiffTmp = 0,BalloonCnt = 0,combo = 0,
 	TmpBaseCeilingPoint = 0,NotesCountMax = 0,RollKnd = 0,RollCnt = 0;
-	bool isEND = false;
+	bool isEND = false,isDummy = false;
 	double init_cnt = 0,diff_cnt = 0,gogo = 1,special = 1,
 	roll_start_time = 0,roll_end_time = 0;
 	COMMAND_T Command;
@@ -585,19 +585,24 @@ void calc_base_score(MEASURE_T Measure[MEASURE_MAX], char notes[MEASURE_MAX][NOT
 			case COMMAND_GOGOEND:
 				gogo = 1.0;
 				break;
+			case COMMAND_DUMMYON:
+				isDummy = true;
+				break;
+			case COMMAND_DUMMYOFF:
+				isDummy = false;
+				break;
 			case COMMAND_END:
 				isEND = true;
 				break;
 			default:
 				break;
-
 			}
 			NotesCount = 0;
 			++i;
 			continue;
 		}
 		if (scoremode == 3) gogo = 1.0;
-		while (notes[Measure[i].notes][NotesCount] != ',' && notes[Measure[i].notes][NotesCount] != '\n' && notes[Measure[i].notes][NotesCount] != '/') {
+		while (!isDummy && notes[Measure[i].notes][NotesCount] != ',' && notes[Measure[i].notes][NotesCount] != '\n' && notes[Measure[i].notes][NotesCount] != '/') {
 
 			++NotesCount;
 		}
