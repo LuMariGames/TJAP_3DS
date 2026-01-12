@@ -710,7 +710,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				isStart = true;
 				continue;
 			}
-			else if (isStart == false && isCourseMatch && Option.player == 0 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
+			else if (isStart == false && isCourseMatch && Current_Header.style == 1 && strstr(tja_notes[tja_cnt], "#START") == tja_notes[tja_cnt]) {
 
 				isStart = true;
 				continue;
