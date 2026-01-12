@@ -677,8 +677,7 @@ void load_tja_notes(int course, LIST_T Song) {
 
 		while (
 			(fgets(tja_notes[tja_cnt], NOTES_MEASURE_MAX, fp) != NULL || tja_cnt < MEASURE_MAX) &&
-			isEnd == false
-			) {
+			isEnd == false) {
 
 			if (strstr(tja_notes[tja_cnt], "COURSE:") == tja_notes[tja_cnt]) {
 
@@ -927,7 +926,7 @@ void load_tja_notes(int course, LIST_T Song) {
 		}
 
 		MeasureMaxNumber = MeasureCount;
-		for (int i = 0,n = 0,j = 0; i < MeasureMaxNumber; ++i) {	//次の小節の判定時に発動する命令の調整
+		for (int i = 0,n = 0,j = 0; i < MeasureMaxNumber + 1; ++i) {	//次の小節の判定時に発動する命令の調整
 
 			switch (Measure[i].command) {
 			case COMMAND_END:
