@@ -18,6 +18,11 @@ AC15から常連モード、条件を達成しないとノルマ失敗！？「�
 見た目を自由に変更！「カスタムスキン」  
 v1.5.3からはバッファサイズを撤廃し、より高音質で楽しめる様に！  
 
+### 新しく増えた音符達  
+そこは叩いちゃダメ！「爆弾音符」('C'で呼び出し可能)  
+早く割って多く得点を稼げ！「くす玉音符」('9'で呼び出し可能)  
+DSシリーズからの襲来！「でんでん音符」('D'で呼び出し可能)  
+
 ## その他の内容  
 (ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。)  
 
@@ -40,6 +45,11 @@ Regular mode from AC15, quota failure if you don't meet the conditions!? "Dani D
 "Negative scroll" that overturns the common sense coming from the right  
 Feel free to change the appearance! "Custom skin"  
 Starting with v1.5.3, the buffer size has been eliminated, allowing you to enjoy higher quality music!  
+
+### Newly added notes  
+Don't hit it there! "Bomb Note" (Summoned with 'C')Don't hit it there! "Bomb Note" (Summoned with 'C')  
+Break it quickly and earn lots of points! "Kusudama Note" (Summoned with '9')  
+An attack from the DS series! "Den-Den Note" (Summoned with 'D')  
 
 ## Other contents
 (Except for the information described here, it is almost the same as the original work, so please check the original [Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README_en.md) for details.)  
