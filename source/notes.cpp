@@ -1229,8 +1229,7 @@ int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 int make_balloon_end(int NotesId) {
 
 	int id = find_balloon_end_id();
-	if (id != -1) return id;
-	else return -1;
+	return id;
 }
 
 void delete_notes(int i) {
@@ -1238,8 +1237,7 @@ void delete_notes(int i) {
 	if (i >= 0 &&
 		Notes[i].roll_id != -1 &&
 		(Notes[i].knd == NOTES_ROLLEND || Notes[i].knd == NOTES_BIGROLLEND) &&
-		RollNotes[Notes[i].roll_id].flag == true
-		) {	//連打削除
+		RollNotes[Notes[i].roll_id].flag == true) {	//連打削除
 
 		delete_notes(RollNotes[Notes[i].roll_id].start_id);
 		delete_roll(Notes[i].roll_id);

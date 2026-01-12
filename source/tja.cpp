@@ -938,6 +938,9 @@ void load_tja_notes(int course, LIST_T Song) {
 				while (n < tja_cnt && n != Measure[j].notes) ++j;
 				Measure[i].judge_time = Measure[j].judge_time;
 				break;
+			case COMMAND_END:
+				Measure[i].create_time = Measure[i].judge_time;
+				break;
 			}
 		}
 
