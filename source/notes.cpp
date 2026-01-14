@@ -1183,6 +1183,7 @@ void delete_balloon(int i) {
 		BalloonNotes[i].flag = false;
 		BalloonNotes[i].current_hit = 0;
 		BalloonNotes[i].need_hit = 5;
+		isDendenCH = -1;
 	}
 }
 
@@ -1215,7 +1216,7 @@ int make_balloon_start(int NotesId) {
 	else return -1;
 }
 
-int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
+inline int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
@@ -1245,8 +1246,7 @@ void delete_notes(int i) {
 
 	}
 
-	if (i >= 0 &&
-		Notes[i].roll_id != -1 &&
+	if (i >= 0 && Notes[i].roll_id != -1 &&
 		BalloonNotes[Notes[i].roll_id].flag) {					//風船削除
 
 		if (Notes[i].knd == NOTES_BALLOONEND) {
@@ -1258,9 +1258,7 @@ void delete_notes(int i) {
 		else if (Notes[i].knd == NOTES_BALLOON || Notes[i].knd == NOTES_POTATO || Notes[i].knd == NOTES_DENDEN) {
 
 			BalloonNotes[Notes[i].roll_id].start_id = -1;
-
 			if (BalloonNotes[Notes[i].roll_id].end_id == -1) {
-
 				delete_balloon(Notes[i].roll_id);
 			}
 		}
