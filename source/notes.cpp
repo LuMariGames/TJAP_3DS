@@ -534,7 +534,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeRollState != -1) {	//連打
 
-			if (Option.rollspeed < 0 && cnt % Option.rollspeed <= 0) {
+			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
 
 				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
 				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
@@ -545,7 +545,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeBalloonState != -1) {	//風船
 
-			if (Option.rollspeed < 0 && cnt % Option.rollspeed <= 0) {
+			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
 
 				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
 					isDendenCH == 1) {
