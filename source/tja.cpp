@@ -9,7 +9,8 @@
 #include <stdio.h>
 
 char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX], *exam[4][4];
-int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, Cdn[2][4], gaugelife;
+int tja_cnt = 0, MeasureMaxNumber = 0, stme, edme = 0, gaugelife;
+uint64_t Cdn[2][4];
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
 bool isBranch = false;
 float mix[12];

@@ -5,7 +5,8 @@
 #include "score.h"
 #include "result.h"
 
-extern int gaugelife, Cdn[2][4];
+extern int gaugelife;
+extern unit64_t Cdn[2][4];
 extern char *exam[4][4];
 bool isGOGO;
 uint64_t combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,rollmultiple,

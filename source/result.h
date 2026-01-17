@@ -2,7 +2,7 @@
 
 typedef struct {
 
-	int score,perfect,nice,bad,roll,combo,dcon;
+	uint64_t score,perfect,nice,bad,roll,combo,dcon;
 } RESULT_T;
 
 void draw_result();
