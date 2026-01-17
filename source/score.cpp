@@ -295,7 +295,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	for (int i = 0; i < 7; ++i) {
 
 		if (TotalScore / powi(10, i) > 0) {
-			int n = TotalScore / powi(10, i) % 10;
+			uint64_t n = TotalScore / powi(10, i) % 10;
 			C2D_SpriteSetPos(&sprites[SPRITE_SCORE_0 + n], 80 - i * 12, 70);
 			C2D_DrawSprite(&sprites[SPRITE_SCORE_0 + n]);
 		}
@@ -325,18 +325,18 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 	}
 
 	//連打
-	for (j = 0; j < 4; ++j) {
+	for (j = 0; j < 16; ++j) {
 		if (CurrentRollCount / powi(10, j) == 0) break;
 	}
 	if (CurrentRollCount > 0) {
 		C2D_SpriteSetPos(&sprites[SPRITE_ROLL_COUNT], 110, 35);
 		C2D_DrawImage(sprites[SPRITE_ROLL_COUNT].image, &sprites[SPRITE_ROLL_COUNT].params, NULL);
 	}
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < 16; ++i) {
 
 		if (CurrentRollCount / powi(10, i) > 0) {
 
-			int n = CurrentRollCount / powi(10, i) % 10;
+			uint64_t n = CurrentRollCount / powi(10, i) % 10;
 			C2D_SpriteSetPos(&sprites[SPRITE_ROLL_0 + n], 95 + j * 10 - i * 20, 30);
 			C2D_DrawSprite(&sprites[SPRITE_ROLL_0 + n]);
 		}
