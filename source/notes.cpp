@@ -557,7 +557,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					isDendenCH = 1;
 				}
 
-				BalloonNotes[JudgeBalloonState].current_hit += ((Option.rollspeed < 0) ? powi(Option.rollspeed*-1) : 1);
+				BalloonNotes[JudgeBalloonState].current_hit += ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1);
 				if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
 					BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
