@@ -560,7 +560,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				BalloonNotes[JudgeBalloonState].current_hit += ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1);
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-					update_balloon_count((BalloonNotes[JudgeBalloonState].current_hit - ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1)) - BalloonNotes[JudgeBalloonState].need_hit);
+					update_balloon_count((BalloonNotes[JudgeBalloonState].current_hit - ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1)) + BalloonNotes[JudgeBalloonState].need_hit);
 					update_score(BALLOON_BREAK);	//破裂
 					if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
