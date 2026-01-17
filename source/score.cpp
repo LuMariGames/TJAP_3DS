@@ -292,11 +292,11 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]) {
 
 
 	//スコア
-	for (int i = 0; i < 20; ++i) {
+	for (int i = 0; i < 10; ++i) {
 
 		if (TotalScore / powi(10, i) > 0) {
 			uint64_t n = TotalScore / powi(10, i) % 10;
-			C2D_SpriteSetPos(&sprites[SPRITE_SCORE_0 + n], 80 - i * 10, 70);
+			C2D_SpriteSetPos(&sprites[SPRITE_SCORE_0 + n], 70 - i * 10, 70);
 			C2D_DrawSprite(&sprites[SPRITE_SCORE_0 + n]);
 		}
 	}
