@@ -21,7 +21,7 @@ double input_number_keyboard(int max_digits,bool isDot,bool isMinus) {	//最大�
 	swkbdSetFeatures(&swkbd, SWKBD_FIXED_WIDTH);
 	if (isDot && isMinus == false) swkbdSetNumpadKeys(&swkbd, L'.', 0);
 	if (isDot == false && isMinus) swkbdSetNumpadKeys(&swkbd, L'-', 0);
-	if (isDot && isMinus==true) swkbdSetNumpadKeys(&swkbd, L'.', L'-');
+	if (isDot && isMinus) swkbdSetNumpadKeys(&swkbd, L'.', L'-');
 	swkbdInputText(&swkbd, get_buffer(), BUFFER_SIZE);
 	return atof(get_buffer());
 }
@@ -382,14 +382,15 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		x = XSense * XCnt, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_COMBO_VOICE], true, &width, &height);
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
-		snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.Voice);
+		if (Option.rollspeed == INT_MAX) snprintf(get_buffer(), BUFFER_SIZE, "OFF");
+		else snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.rollspeed);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			Option.Voice = input_number_keyboard(3, false,false);
+			Option.rollspeed = input_number_keyboard(3, false,true);
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
-		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.Voice = 2;
+		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) Option.rollspeed = 2;
 		XCnt = 0, ++YCnt;
 
 		//はやさ(固定)
@@ -670,7 +671,7 @@ void save_option() {
 	json_object_set(json, "judge_range_perfect", json_integer(round(Option.judge_range_perfect * 1000)));
 	json_object_set(json, "judge_range_nice", json_integer(round(Option.judge_range_nice * 1000)));
 	json_object_set(json, "judge_range_bad", json_integer(round(Option.judge_range_bad * 1000)));
-	json_object_set(json, "Voice", json_integer(Option.Voice));
+	json_object_set(json, "rollspeed", json_integer(Option.rollspeed));
 	json_object_set(json, "fixroll", json_boolean(Option.fixroll));
 	json_object_set(json, "blacktext", json_real(Option.blacktext));
 	json_object_set(json, "special", json_integer(Option.special));
@@ -720,7 +721,8 @@ void load_option() {
 		Option.judge_range_perfect = (double)json_integer_value(json_object_get(json, "judge_range_perfect"))/1000;
 		Option.judge_range_nice = (double)json_integer_value(json_object_get(json, "judge_range_nice"))/1000;
 		Option.judge_range_bad = (double)json_integer_value(json_object_get(json, "judge_range_bad"))/1000;
-		Option.Voice = json_integer_value(json_object_get(json, "Voice"));
+		Option.rollspeed = json_integer_value(json_object_get(json, "rollspeed"));
+		Option.rollspeed = json_integer_value(json_object_get(json, "Voice"));
 		Option.fixroll = json_boolean_value(json_object_get(json, "fixroll"));
 		Option.blacktext = json_real_value(json_object_get(json, "blacktext"));
 		Option.special = json_integer_value(json_object_get(json, "special"));
@@ -775,7 +777,8 @@ void get_option(OPTION_T *TMP) {
 	TMP->judge_range_perfect = Option.judge_range_perfect;
 	TMP->judge_range_nice = Option.judge_range_nice;
 	TMP->judge_range_bad = Option.judge_range_bad;
-	TMP->Voice = Option.Voice;
+	if (Option.rollspeed == 0) Option.rollspeed = INT_MAX;
+	TMP->rollspeed = Option.rollspeed;
 	TMP->fixroll = Option.fixroll;
 	TMP->blacktext = Option.blacktext;
 	TMP->special = Option.special;
@@ -786,6 +789,4 @@ void get_option(OPTION_T *TMP) {
 	TMP->edit = Option.edit;
 	strcpy(TMP->SongTitle, Option.SongTitle);
 	black = Option.blacktext;
-	if (Option.Voice == 0) comboVoice = INT_MAX;
-	else comboVoice = Option.Voice;
 }

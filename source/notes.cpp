@@ -7,12 +7,11 @@
 #include "score.h"
 #include "vorbis.h"
 #include "option.h"
-#define AUTO_ROLL_FRAME comboVoice //オート時の連打の間隔
 
 int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
-extern int isBranch, comboVoice, course, stme;
+extern int isBranch, course, stme;
 extern double black;
 C2D_Font font;
 
@@ -535,7 +534,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeRollState != -1) {	//連打
 
-			if (cnt % AUTO_ROLL_FRAME == 0) {
+			if (cnt % Option.rollspeed <= 0) {
 
 				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
 				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
@@ -546,7 +545,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeBalloonState != -1) {	//風船
 
-			if (cnt % AUTO_ROLL_FRAME == 0) {
+			if (cnt % Option.rollspeed <= 0) {
 
 				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
 					isDendenCH == 1) {
@@ -558,7 +557,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					isDendenCH = 1;
 				}
 
-				++BalloonNotes[JudgeBalloonState].current_hit;
+				++BalloonNotes[JudgeBalloonState].current_hit*((Option.rollspeed < 0) ? (Option.rollspeed*-1+1) : 1);
 
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
@@ -1376,6 +1375,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	OPTION_T Option;
 	get_option(&Option);
 
+	set_rollmultiple((Option.isAuto) ? 0 : Option.rollspeed)
 	init_notes_structure();
 	init_roll__notes();
 	init_balloon_notes();

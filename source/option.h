@@ -194,7 +194,7 @@ const char Text[3][64][128] = {
 
 typedef struct {
 
-	int lang,buffer_size,Voice,special,player,edit,measure;
+	int lang,buffer_size,rollspeed,special,player,edit,measure;
 	bool isAuto,isStelth,isSwap,dispFps,fixroll,exse;
 	float speed,random,offset,blacktext,musicspeed,
 		judge_range_perfect,judge_range_nice,judge_range_bad;
