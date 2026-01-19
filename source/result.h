@@ -2,7 +2,8 @@
 
 typedef struct {
 
-	uint64_t score,perfect,nice,bad,roll,combo,dcon;
+	uint64_t score,perfect,nice,bad,roll,combo;
+	int dcon;
 } RESULT_T;
 
 void draw_result();
