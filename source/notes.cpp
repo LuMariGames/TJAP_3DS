@@ -873,22 +873,22 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, &DummyTint);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_KATSU].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_KATSU].image, &sprites[SPRITE_KATSU].params, &DummyTint);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_BIG_DON].image, &sprites[SPRITE_BIG_DON].params, &DummyTint);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_KATSU].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image, &sprites[SPRITE_BIG_KATSU].params, &DummyTint);
 				break;
 			case NOTES_ROLL:
 
@@ -902,19 +902,19 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, DummyTint);
+							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, &DummyTint);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, DummyTint);
+							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image, &sprites[SPRITE_ROLL_INT].params, &DummyTint);
 						}
 					}
 					sprites[SPRITE_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_ROLL_START].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, DummyTint);
+					C2D_DrawImage(sprites[SPRITE_ROLL_START].image, &sprites[SPRITE_ROLL_START].params, &DummyTint);
 				}
 				break;
 
@@ -930,19 +930,19 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 						for (int n = 0, m = (end_x - RollNotes[Notes[i].roll_id].start_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * n;
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, DummyTint);
+							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, &DummyTint);
 						}
 					}
 					else if (Notes[i].scroll < 0) {
 						for (int n = 0, m = (RollNotes[Notes[i].roll_id].start_x - end_x) / 8.0; n < m; ++n) {
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x = (int)Notes[i].x + 8 * (n * -1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y = notes_y;
-							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, DummyTint);
+							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image, &sprites[SPRITE_BIG_ROLL_INT].params, &DummyTint);
 						}
 					}
 					sprites[SPRITE_BIG_ROLL_START].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, DummyTint);
+					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image, &sprites[SPRITE_BIG_ROLL_START].params, &DummyTint);
 					break;
 				}
 
@@ -952,7 +952,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					sprites[SPRITE_BALLOON].params.pos.x = Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_BALLOON].image, &sprites[SPRITE_BALLOON].params, DummyTint);
+					C2D_DrawImage(sprites[SPRITE_BALLOON].image, &sprites[SPRITE_BALLOON].params, &DummyTint);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
@@ -993,7 +993,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 					sprites[SPRITE_POTATO].params.pos.x = Notes[i].x;
 					sprites[SPRITE_POTATO].params.pos.y = notes_y;
-					C2D_DrawImage(sprites[SPRITE_POTATO].image, &sprites[SPRITE_POTATO].params, DummyTint);
+					C2D_DrawImage(sprites[SPRITE_POTATO].image, &sprites[SPRITE_POTATO].params, &DummyTint);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
@@ -1008,7 +1008,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 				sprites[SPRITE_DENDEN].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DENDEN].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_DENDEN].image, &sprites[SPRITE_DENDEN].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_DENDEN].image, &sprites[SPRITE_DENDEN].params, &DummyTint);
 				if (Notes[i].x == NOTES_JUDGE_X) update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit - BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 
@@ -1016,18 +1016,18 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				sprites[SPRITE_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y = notes_y;
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END], sign(Notes[i].scroll), 1);
-				C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_ROLL_END].image, &sprites[SPRITE_ROLL_END].params, &DummyTint);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y = notes_y;
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END], sign(Notes[i].scroll), 1);
-				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image, &sprites[SPRITE_BIG_ROLL_END].params, &DummyTint);
 				break;
 			case NOTES_BOMB:
 				sprites[SPRITE_BOMB].params.pos.x = Notes[i].x;
 				sprites[SPRITE_BOMB].params.pos.y = notes_y;
-				C2D_DrawImage(sprites[SPRITE_BOMB].image, &sprites[SPRITE_BOMB].params, DummyTint);
+				C2D_DrawImage(sprites[SPRITE_BOMB].image, &sprites[SPRITE_BOMB].params, &DummyTint);
 				break;
 			}
 		}
