@@ -329,7 +329,7 @@ int main() {
 						bgspsh = C2D_SpriteSheetLoad(abs_path);
 						bgcnt = (int)C2D_SpriteSheetCount(bgspsh) - 1;
 					}
-					else isAniBg = false;
+					else if (exist_file(abs_path) == 0) isAniBg = false;
 					play_main_music(&isPlayMain, SelectedSong);
 					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 					notes_cnt = 0;
