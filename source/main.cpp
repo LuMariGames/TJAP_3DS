@@ -255,6 +255,7 @@ int main() {
 				select_ini();
 				set_measure();
 				bgcnt = -1;
+				isAniBg = false;
 				if (isAniBg) C2D_SpriteSheetFree(bgspsh);
 			}
 
@@ -323,7 +324,7 @@ int main() {
 					cnt = -150;
 					char abs_path[512];
 					snprintf(abs_path, sizeof(abs_path), "%s/%s", SelectedSong.path, TJA_Header.bg);
-					if (exist_file(abs_path)) {
+					if (!isAniBg && exist_file(abs_path)) {
 						isAniBg = true;
 						bgspsh = C2D_SpriteSheetLoad(abs_path);
 						bgcnt = (int)C2D_SpriteSheetCount(bgspsh) - 1;
