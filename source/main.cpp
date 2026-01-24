@@ -446,9 +446,9 @@ int main() {
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 			if (isAniBg && bgcnt > 0 && cnt >= 0) {
 				int bgcount = cnt*(TJA_Header.bgfps/60.0);
-				C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, (size_t)((bgcnt >= bgcount) ? bgcount : bgcnt)), &sprites[SPRITE_TOP_3].params, NULL);
+				C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, (size_t)((bgcnt >= bgcount) ? bgcount : bgcnt)), &sprites[SPRITE_BACKGROUND].params, NULL);
 			}
-			else if (isAniBg && bgcnt == 0) C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, 0), &sprites[SPRITE_TOP_3].params, NULL);
+			else if (isAniBg && bgcnt == 0) C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, 0), &sprites[SPRITE_BACKGROUND].params, NULL);
 			else C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image, &sprites[SPRITE_TOP].params, NULL);
 
@@ -665,6 +665,9 @@ inline static void load_sprites() {
 	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_2], 0.5f, 0.0f);
 	C2D_SpriteFromSheet(&sprites[SPRITE_DENDEN], otherspsh, 5);
 	C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND], otherspsh, 6);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BACKGROUND], 0.5f, 0.5f);
+	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND], TOP_WIDTH * 0.5, 192);
 
 	if (dance) {
 		for (int i = 0, j = dancnt; i < j; ++i) {

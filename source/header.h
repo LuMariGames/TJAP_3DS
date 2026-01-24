@@ -168,6 +168,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_POTATO_1,
 	SPRITE_POTATO_2,
 	SPRITE_DENDEN,			//でんでん音符の画像
+	SPRITE_BACKGROUND,		//上画面の下背景固定用
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
