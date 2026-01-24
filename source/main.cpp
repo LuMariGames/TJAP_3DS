@@ -255,8 +255,8 @@ int main() {
 				select_ini();
 				set_measure();
 				bgcnt = -1;
-				isAniBg = false;
 				if (isAniBg) C2D_SpriteSheetFree(bgspsh);
+				isAniBg = false;
 			}
 
 			disp_file_list();
