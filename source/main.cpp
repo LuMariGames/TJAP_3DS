@@ -326,7 +326,7 @@ int main() {
 					if (exist_file(abs_path)) {
 						isAniBg = true;
 						bgspsh = C2D_SpriteSheetLoad(abs_path);
-						bgcnt = (int)C2D_SpriteSheetCount(abs_path) - 1;
+						bgcnt = (int)C2D_SpriteSheetCount(bgspsh) - 1;
 					}
 					else isAniBg = false;
 					play_main_music(&isPlayMain, SelectedSong);

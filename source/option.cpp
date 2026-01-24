@@ -721,7 +721,6 @@ void load_option() {
 		Option.judge_range_perfect = (double)json_integer_value(json_object_get(json, "judge_range_perfect"))/1000;
 		Option.judge_range_nice = (double)json_integer_value(json_object_get(json, "judge_range_nice"))/1000;
 		Option.judge_range_bad = (double)json_integer_value(json_object_get(json, "judge_range_bad"))/1000;
-		Option.rollspeed = json_integer_value(json_object_get(json, "Voice"));
 		Option.rollspeed = json_integer_value(json_object_get(json, "rollspeed"));
 		Option.fixroll = json_boolean_value(json_object_get(json, "fixroll"));
 		Option.blacktext = json_real_value(json_object_get(json, "blacktext"));
