@@ -77,6 +77,9 @@ bool load_tja_head(int course,LIST_T Song) {
 	Current_Header.course = course;
 	Current_Header.style = 1;
 	Current_Header.life = -1;
+	Current_Header.bg = (char*)"bg.t3x"
+	Current_Header.bgfps = 0;
+	//Current_Header.Bgoffst
 	//Current_Header.demostart = 0;
 	//Current_Header.side = 3;
 	Current_Header.scoremode = 3;
@@ -182,6 +185,24 @@ bool load_tja_head(int course,LIST_T Song) {
 				if (buf[5] != '\n' && buf[5] != '\r') {
 					strlcpy(temp, buf + 5, strlen(buf) - 6);
 					Current_Header.wave = temp;
+				}
+				free(temp);
+				continue;
+			}
+
+			if (strstr(buf, "BGIMG:") == buf) { //上画面の下背景に追加する画像ファイルを記述するタグ、対応拡張子は.t3xである。
+				if (buf[6] != '\n' && buf[6] != '\r') {
+					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					Current_Header.bg = temp;
+				}
+				free(temp);
+				continue;
+			}
+
+			if (strstr(buf, "BGFPS:") == buf) { //モード毎に難易度を決めるタグ
+				if (buf[6] != '\n' && buf[6] != '\r') {
+					strlcpy(temp, buf + 6, strlen(buf) - 7);
+					Current_Header.bgfps = atof(temp);
 				}
 				free(temp);
 				continue;

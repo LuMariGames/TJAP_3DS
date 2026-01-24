@@ -20,13 +20,13 @@ extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[164];	//画像用
-static C2D_SpriteSheet spriteSheet, otherspsh, dancerspsh;
+static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 Thread chartload;
-bool isPause = false, isNotesStart = false, isMusicStart = false, isPlayMain = false, isExit = false;
+bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
-int scene_state = SCENE_SELECTLOAD,dn_x,dn_y,dg_x,dg_y;
+int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
 
@@ -254,6 +254,8 @@ int main() {
 			if (cnt == 0) {
 				select_ini();
 				set_measure();
+				bgcnt = -1;
+				if (isAniBg) C2D_SpriteSheetFree(bgspsh);
 			}
 
 			disp_file_list();
@@ -319,6 +321,14 @@ int main() {
 				}
 				else if (tmp == -1) {
 					cnt = -150;
+					char abs_path[512];
+					snprintf(abs_path, sizeof(abs_path), "%s/%s", SelectedSong.path, TJA_Header.bg);
+					if (exist_file(abs_path)) {
+						isAniBg = true;
+						bgspsh = C2D_SpriteSheetLoad(abs_path);
+						bgcnt = (int)C2D_SpriteSheetCount(abs_path) - 1;
+					}
+					else isAniBg = false;
 					play_main_music(&isPlayMain, SelectedSong);
 					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 					notes_cnt = 0;
@@ -433,11 +443,14 @@ int main() {
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
-			C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
+			if (isAniBg && bgcnt > 0 && cnt >= 0)
+				C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, (size_t)((bgcnt >= cnt) ? cnt/(TJA_Header.bgfps/60.0) : bgcnt)), &sprites[SPRITE_TOP_3].params, NULL);
+			else if (isAniBg && bgcnt == 0) C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, 0), &sprites[SPRITE_TOP_3].params, NULL);
+			else C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image, &sprites[SPRITE_TOP].params, NULL);
 
 			//ダンサー表示
-			if (dance && course != COURSE_DAN) {
+			if (!isAniBg && dance && course != COURSE_DAN) {
 				//ダンサーのコマ数調整
 				mintime1 = SPRITE_DANCER_0 + Skin.d1anime[dancer_time_count(CurrentTimeMain, Skin.d1total)];
 				mintime2 = SPRITE_DANCER_0 + Skin.d2anime[dancer_time_count(CurrentTimeMain, Skin.d2total)] + Skin.d1num;
