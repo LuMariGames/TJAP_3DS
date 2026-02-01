@@ -713,7 +713,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
 					else make_balloon_break();
-					JudgeBalloonState = -1;
 					break;
 				}
 				else update_score(BALLOON);
@@ -727,7 +726,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
 					else make_balloon_break();
-					JudgeBalloonState = -1;
 					break;
 				}
 				else update_score(BALLOON);
@@ -740,7 +738,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
 					else make_balloon_break();
-					JudgeBalloonState = -1;
 					break;
 				}
 				else update_score(BALLOON);
