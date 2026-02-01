@@ -9,7 +9,6 @@ extern int gaugelife;
 extern uint64_t Cdn[2][4];
 extern char *exam[4][4];
 bool isGOGO;
-int rollmultiple;
 uint64_t combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,
 TotalPerfectCount,TotalNiceCount,TotalBadCount,TotalScore,TotalRollCount,
 TotalCount,MaxComboCount,CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,
@@ -18,11 +17,6 @@ double BaseCeilingPoint, tmp, Precision, CurrentPrecision;
 TJA_HEADER_T TJA_Header;
 char buf_score[160];
 GAUGE_T Gauge;
-
-void set_rollmultiple(int i) {
-
-	rollmultiple = i;
-}
 
 void init_guage_structure() {
 
@@ -162,64 +156,64 @@ void update_score(int knd) {
 	case ROLL:
 		if (scoremode == 0 || scoremode == 1) {	//旧配点
 			if (isGOGO == true) {
-				TotalScore += 360*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 360*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 360;
+				CurrentScore += 360;
 			}
 			else {
-				TotalScore += 300*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 300*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 300;
+				CurrentScore += 300;
 			}
 		}
 		else if (scoremode == 2) {	//新配点
 			if (isGOGO == true) {
-				TotalScore += 120*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 120*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 120;
+				CurrentScore += 120;
 			}
 			else {
-				TotalScore += 100*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 100*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 100;
+				CurrentScore += 100;
 			}
 		}
 		else if (scoremode == 3) {	//ニジイロ配点
-			TotalScore += 100*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-			CurrentScore += 100*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+			TotalScore += 100;
+			CurrentScore += 100;
 		}
 
 		if (knd == ROLL) {
-			CurrentRollCount += ((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-			CurrentTotalRollCount += ((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+			++CurrentRollCount;
+			++CurrentTotalRollCount;
 		}
-		TotalRollCount += ((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+		++TotalRollCount;
 		break;
 
 	case BIG_ROLL:
 		if (scoremode == 0 || scoremode == 1) {	//旧配点
 			if (isGOGO == true) {
-				TotalScore += 430*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 430*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 430;
+				CurrentScore += 430;
 			}
 			else {
-				TotalScore += 360*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 360*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 360;
+				CurrentScore += 360;
 			}
 		}
 		else if (scoremode == 2) {	//新配点
 			if (isGOGO == true) {
-				TotalScore += 240*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 240*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 240;
+				CurrentScore += 240;
 			}
 			else {
-				TotalScore += 200*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-				CurrentScore += 200*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+				TotalScore += 200;
+				CurrentScore += 200;
 			}
 		}
 		else if (scoremode == 3) {	//ニジイロ配点
-			TotalScore += 100*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-			CurrentScore += 100*((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+			TotalScore += 100;
+			CurrentScore += 100;
 		}
-		CurrentTotalRollCount += ((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-		TotalRollCount += ((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
-		CurrentRollCount += ((rollmultiple < 0) ? powi(2,rollmultiple*-1) : 1);
+		++CurrentTotalRollCount;
+		++TotalRollCount;
+		++CurrentRollCount;
 		break;
 
 	case BALLOON_BREAK:
