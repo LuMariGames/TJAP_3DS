@@ -257,7 +257,7 @@ void update_score(int knd) {
 			TotalScore += 100;
 			CurrentScore += 100;
 		}
-		TotalRollCount += ((rollmultiple < 0) ? CurrentBalloonCount : 1);
+		++TotalRollCount;
 		break;
 
 	case ROLL_END:
