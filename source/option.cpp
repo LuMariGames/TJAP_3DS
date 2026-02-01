@@ -386,7 +386,7 @@ void draw_option(u16 px, u16 py, unsigned int key, C2D_Sprite sprites[SPRITES_NU
 		else snprintf(get_buffer(), BUFFER_SIZE, "%d", Option.rollspeed);
 		draw_option_text(x, y, get_buffer(), true, &width, &height);
 		if ((y < py && y + height > py && x < px && x + width > px) && key & KEY_TOUCH) {
-			Option.rollspeed = input_number_keyboard(3, false,true);
+			Option.rollspeed = input_number_keyboard(3, false,false);
 		}
 		x = XSense * XCnt + gap, y = YSense * YCnt, ++XCnt;
 		draw_option_text(x, y, Text[Option.lang][TEXT_RESET], true, &width, &height);
