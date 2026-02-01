@@ -534,7 +534,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeRollState != -1) {	//連打
 
-			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
+			if (cnt % Option.rollspeed <= 0) {
 
 				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
 				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
@@ -545,7 +545,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeBalloonState != -1) {	//風船
 
-			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
+			if (cnt % Option.rollspeed <= 0) {
 
 				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
 					isDendenCH == 1) {
@@ -557,10 +557,10 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					isDendenCH = 1;
 				}
 
-				BalloonNotes[JudgeBalloonState].current_hit += ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1);
+				++BalloonNotes[JudgeBalloonState].current_hit;
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-					update_balloon_count((BalloonNotes[JudgeBalloonState].current_hit - ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1)) + BalloonNotes[JudgeBalloonState].need_hit);
+					update_balloon_count(BalloonNotes[JudgeBalloonState].need_hit - BalloonNotes[JudgeBalloonState].current_hit);
 					update_score(BALLOON_BREAK);	//破裂
 					if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
@@ -713,6 +713,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
 					else make_balloon_break();
+					JudgeBalloonState = -1;
 					break;
 				}
 				else update_score(BALLOON);
@@ -726,6 +727,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
 					else make_balloon_break();
+					JudgeBalloonState = -1;
 					break;
 				}
 				else update_score(BALLOON);
@@ -738,6 +740,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
 					else make_balloon_break();
+					JudgeBalloonState = -1;
 					break;
 				}
 				else update_score(BALLOON);
@@ -1382,7 +1385,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	set_rollmultiple((Option.isAuto) ? Option.rollspeed : 0);
 	init_notes_structure();
 	init_roll__notes();
 	init_balloon_notes();
