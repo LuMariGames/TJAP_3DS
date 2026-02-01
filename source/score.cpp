@@ -217,32 +217,7 @@ void update_score(int knd) {
 		break;
 
 	case BALLOON_BREAK:
-		if (CurrentBalloonCount > 1) {
-			if (scoremode == 0 || scoremode == 1) {	//旧配点
-				if (isGOGO == true) {
-					TotalScore += 360*(CurrentBalloonCount-1);
-					CurrentScore += 360*(CurrentBalloonCount-1);
-				}
-				else {
-					TotalScore += 300*(CurrentBalloonCount-1);
-					CurrentScore += 300*(CurrentBalloonCount-1);
-				}
-			}
-			else if (scoremode == 2) {	//新配点
-				if (isGOGO == true) {
-					TotalScore += 120*(CurrentBalloonCount-1);
-					CurrentScore += 120*(CurrentBalloonCount-1);
-				}
-				else {
-					TotalScore += 100*(CurrentBalloonCount-1);
-					CurrentScore += 100*(CurrentBalloonCount-1);
-				}
-			}
-			else if (scoremode == 3) {	//ニジイロ配点
-				TotalScore += 100*(CurrentBalloonCount-1);
-				CurrentScore += 100*(CurrentBalloonCount-1);
-			}
-		}
+
 		if (scoremode != 3) {
 			if (!get_isPttBorder()) {
 				TotalScore += ((isGOGO) ? 6000 : 5000);
