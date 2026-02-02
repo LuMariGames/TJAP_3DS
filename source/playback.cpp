@@ -145,8 +145,8 @@ void playFile(void* infoIn){
 
 	memset(waveBuf, 0, sizeof(waveBuf));
 
-	if 		(!isMp3) setVorbisTime(starttime());
-	else if (isMp3)  seekMp3(starttime());
+	if 		(!isMp3 && get_ismeasure()) setVorbisTime(starttime());
+	else if (isMp3  && get_ismeasure()) seekMp3(starttime());
 	
 	waveBuf[0].nsamples = (*decoder.decode)(&buffer[0][0]) / (*decoder.channels)();
 	waveBuf[0].data_vaddr = &buffer[0][0];
