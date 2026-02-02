@@ -12,7 +12,8 @@ bool isGOGO;
 uint64_t combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,
 TotalPerfectCount,TotalNiceCount,TotalBadCount,TotalScore,TotalRollCount,
 TotalCount,MaxComboCount,CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,
-CurrentTotalRollCount,CurrentRollCount,CurrentScore,CurrentBalloonCount,CurrentDaiNotes;
+CurrentTotalRollCount,CurrentRollCount,CurrentScore,CurrentDaiNotes;
+int CurrentBalloonCount;
 double BaseCeilingPoint, tmp, Precision, CurrentPrecision;
 TJA_HEADER_T TJA_Header;
 char buf_score[160];
