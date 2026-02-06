@@ -418,7 +418,10 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 		C2D_AlphaImageTint(&Tint, 1.0 - JudgeEffectCnt * 0.05);
 
 		//アニメーション
-		if (CurrentTimeNotes - JudgeMakeTime < 0.05)  JudgeY = 73 + (CurrentTimeNotes - JudgeMakeTime) * 140;
+		if (CurrentTimeNotes - JudgeMakeTime < 0.05) {
+			JudgeY = 73 + (CurrentTimeNotes - JudgeMakeTime) * 140;
+			for (int i = 0; i < 20; ++i) C2D_SpriteSetScale(&sprites[SPRITE_COMBO_0 + n], 1, 1.2f - (CurrentTimeNotes - JudgeMakeTime) * 4);
+		}
 		if (JudgeY >= 80) JudgeY = 80;
 
 		switch (JudgeDispknd) {
@@ -534,7 +537,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeRollState != -1) {	//連打
 
-			if (cnt % Option.rollspeed <= 0) {
+			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
 
 				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
 				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
@@ -545,7 +548,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeBalloonState != -1) {	//風船
 
-			if (cnt % Option.rollspeed <= 0) {
+			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
 
 				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
 					isDendenCH == 1) {
@@ -557,10 +560,10 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					isDendenCH = 1;
 				}
 
-				++BalloonNotes[JudgeBalloonState].current_hit;
+				BalloonNotes[JudgeBalloonState].current_hit += ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1);
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-					update_balloon_count(BalloonNotes[JudgeBalloonState].need_hit - BalloonNotes[JudgeBalloonState].current_hit);
+					update_balloon_count((BalloonNotes[JudgeBalloonState].current_hit - ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1)) + BalloonNotes[JudgeBalloonState].need_hit);
 					update_score(BALLOON_BREAK);	//破裂
 					if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
@@ -1382,6 +1385,7 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	OPTION_T Option;
 	get_option(&Option);
 
+	set_rollmultiple((Option.isAuto) ? Option.rollspeed : 0);
 	init_notes_structure();
 	init_roll__notes();
 	init_balloon_notes();
