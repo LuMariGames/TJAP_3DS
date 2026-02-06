@@ -1385,7 +1385,6 @@ void init_notes(TJA_HEADER_T TJA_Header) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	set_rollmultiple((Option.isAuto) ? Option.rollspeed : 0);
 	init_notes_structure();
 	init_roll__notes();
 	init_balloon_notes();
