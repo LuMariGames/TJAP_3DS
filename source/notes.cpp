@@ -96,6 +96,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case COMMAND_BRANCHEND:
 						Branch.course = -1;
 						break;
+					case COMMAND_JPOSSCROLL:
+						NOTES_JUDGE_X += (Command.val[1] * Command.val[2]);
+						break;
 					}
 					NotesCount = 0;
 					++MeasureCount;
@@ -113,7 +116,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 				BarLine[BarLineId].flag = true;
 				BarLine[BarLineId].scroll = Measure[MeasureCount].scroll * Option.speed;
 				BarLine[BarLineId].measure = MeasureCount;
-				BarLine[BarLineId].x_ini = NOTES_JUDGE_RANGE * BarLine[BarLineId].scroll + NOTES_JUDGE_X;
+				BarLine[BarLineId].x_ini = NOTES_JUDGE_RANGE * BarLine[BarLineId].scroll;
 				BarLine[BarLineId].create_time = CurrentTimeNotes;
 				BarLine[BarLineId].isDisp = Measure[MeasureCount].isDispBarLine;
 				if (Measure[MeasureCount].judge_time < Measure[MinMeasureCount].judge_time) BarLine[BarLineId].flag = false;
@@ -175,7 +178,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].notes_max = NotesCount;
 					Notes[id].num = NotesNumber;
 					Notes[id].scroll = Measure[MeasureCount].scroll*Option.speed;
-					Notes[id].x_ini = NOTES_JUDGE_RANGE*Notes[id].scroll+NOTES_JUDGE_X;
+					Notes[id].x_ini = NOTES_JUDGE_RANGE*Notes[id].scroll;
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
@@ -288,7 +291,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 
 		if (BarLine[i].flag) {
 
-			BarLine[i].x = BarLine[i].x_ini -
+			BarLine[i].x = (BarLine[i].x_ini + NOTES_JUDGE_X) -
 				NOTES_AREA * BarLine[i].scroll * (CurrentTimeNotes - Measure[BarLine[i].measure].pop_time) * (Measure[BarLine[i].measure].bpm / 240.0);
 
 			if (BarLine[i].isDisp) {
@@ -420,38 +423,42 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 		//アニメーション
 		if (CurrentTimeNotes - JudgeMakeTime < 0.05) {
 			JudgeY = 73 + (CurrentTimeNotes - JudgeMakeTime) * 140;
-			for (int i = 0; i < 20; ++i) C2D_SpriteSetScale(&sprites[SPRITE_COMBO_0 + i], 1, 1.25f - (CurrentTimeNotes - JudgeMakeTime) * 5);
+			for (int i = 0; i < 20; ++i) C2D_SpriteSetScale(&sprites[SPRITE_COMBO_0 + i], 1.0f, 1.25f - (CurrentTimeNotes - JudgeMakeTime) * 5);
 		}
 		if (JudgeY >= 80) JudgeY = 80;
 
 		switch (JudgeDispknd) {
 
 		case PERFECT:			//良
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT], NOTES_JUDGE_X, 109);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_PERFECT].image, &sprites[SPRITE_EFFECT_PERFECT].params, &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image, &sprites[SPRITE_JUDGE_PERFECT].params, NULL);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT], NOTES_JUDGE_X, 109);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_PERFECT].image, &sprites[SPRITE_EFFECT_SPECIAL_PERFECT].params, &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image, &sprites[SPRITE_JUDGE_PERFECT].params, NULL);
 			break;
 
 		case NICE:				//可
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_NICE], NOTES_JUDGE_X, 109);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_NICE].image, &sprites[SPRITE_EFFECT_NICE].params, &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image, &sprites[SPRITE_JUDGE_NICE].params, NULL);
 			break;
 
 		case SPECIAL_NICE:		//特可
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_NICE], NOTES_JUDGE_X, 109);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_NICE].image, &sprites[SPRITE_EFFECT_SPECIAL_NICE].params, &Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], 93, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image, &sprites[SPRITE_JUDGE_NICE].params, NULL);
 			break;
 
 		case BAD:				//不可
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], 92, JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_BAD].image, &sprites[SPRITE_JUDGE_BAD].params, NULL);
 			break;
 
@@ -537,7 +544,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeRollState != -1) {	//連打
 
-			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
+			if (cnt % Option.rollspeed <= 0) {
 
 				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
 				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
@@ -548,7 +555,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 		if (JudgeBalloonState != -1) {	//風船
 
-			if (Option.rollspeed < 0 || cnt % Option.rollspeed <= 0) {
+			if (cnt % Option.rollspeed <= 0) {
 
 				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
 					isDendenCH == 1) {
@@ -560,10 +567,10 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					isDendenCH = 1;
 				}
 
-				BalloonNotes[JudgeBalloonState].current_hit += ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1);
+				++BalloonNotes[JudgeBalloonState].current_hit;
 				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-					update_balloon_count((BalloonNotes[JudgeBalloonState].current_hit - ((Option.rollspeed < 0) ? powi(2,Option.rollspeed*-1) : 1)) + BalloonNotes[JudgeBalloonState].need_hit);
+					update_balloon_count(BalloonNotes[JudgeBalloonState].need_hit - BalloonNotes[JudgeBalloonState].current_hit);
 					update_score(BALLOON_BREAK);	//破裂
 					if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
@@ -773,7 +780,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 
 		if (Notes[i].flag) {
 
-			Notes[i].x = Notes[i].x_ini - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
+			Notes[i].x = (Notes[i].x_ini + NOTES_JUDGE_X) - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
 
 			switch (Notes[i].knd) {
 
@@ -959,31 +966,31 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.2f) {
 
-					sprites[SPRITE_BALLOON_1].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_1].params.pos.x = 93.0f;
 					sprites[SPRITE_BALLOON_1].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_1].image, &sprites[SPRITE_BALLOON_1].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.4f) {
 
-					sprites[SPRITE_BALLOON_2].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_2].params.pos.x = 93.0f;
 					sprites[SPRITE_BALLOON_2].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_2].image, &sprites[SPRITE_BALLOON_2].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.6f) {
 
-					sprites[SPRITE_BALLOON_3].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_3].params.pos.x = 93.0f;
 					sprites[SPRITE_BALLOON_3].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_3].image, &sprites[SPRITE_BALLOON_3].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit * 0.8f) {
 
-					sprites[SPRITE_BALLOON_4].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_4].params.pos.x = 93.0f;
 					sprites[SPRITE_BALLOON_4].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_4].image, &sprites[SPRITE_BALLOON_4].params, NULL);
 				}
 				else if (BalloonNotes[Notes[i].roll_id].current_hit <= BalloonNotes[Notes[i].roll_id].need_hit) {
 
-					sprites[SPRITE_BALLOON_5].params.pos.x = NOTES_JUDGE_X;
+					sprites[SPRITE_BALLOON_5].params.pos.x = 93.0f;
 					sprites[SPRITE_BALLOON_5].params.pos.y = notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_5].image, &sprites[SPRITE_BALLOON_5].params, NULL);
 				}
@@ -1042,7 +1049,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 		BalloonBreakCount--;
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint, BalloonBreakCount / 40.0);
-		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6], NOTES_JUDGE_X, notes_y);
+		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6], 93.0f, notes_y);
 		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image, &sprites[SPRITE_BALLOON_6].params, &Tint);
 	}
 	if (isPotatoBreakDisp) {

@@ -30,7 +30,8 @@
 #define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
 #define MEASURE_MAX 8192
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
-#define NOTES_JUDGE_X 93.0	//判定枠の中心のX座標
+extern float NOTES_JUDGE_X;	//判定枠の中心のX座標
+#define JPOSMAG 257.0/750.0
 #define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
 
 #define TOP_WIDTH  400
@@ -53,18 +54,18 @@
 enum NOTES_KND {
 
 	NOTES_REST = 0,		//休符
-	NOTES_DON,			//ドン
+	NOTES_DON,		//ドン
 	NOTES_KATSU,		//カツ
 	NOTES_BIGDON,		//ドン(大)
 	NOTES_BIGKATSU,		//カツ(大)
-	NOTES_ROLL,			//連打開始
+	NOTES_ROLL,		//連打開始
 	NOTES_BIGROLL,		//連打(大)開始
 	NOTES_BALLOON,		//風船開始
 	NOTES_ROLLEND,		//連打終了
 	NOTES_POTATO,		//お芋音符開始
 	NOTES_BIGROLLEND,	//大連打終了
 	NOTES_BALLOONEND,	//風船終了
-	NOTES_BOMB,			//爆弾音符
+	NOTES_BOMB,		//爆弾音符
 	NOTES_DENDEN,		//でんでん音符開始
 	NOTES_PTTBORDER,	//お芋音符の5000点ボーダー
 };
@@ -154,7 +155,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_HARD,
 	SPRITE_EMBLEM_ONI,
 	SPRITE_EMBLEM_EDIT,
-	SPRITE_EMBLEM_TOWER,	//太鼓タワーの画像
+	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
@@ -195,6 +196,7 @@ enum COMMAND_KND {
 	COMMAND_BARLINEON,
 	COMMAND_SUDDEN,
 	COMMAND_LYRIC,
+	COMMAND_JPOSSCROLL,
 	COMMAND_DUMMYOFF,
 	COMMAND_DUMMYON,
 };
@@ -260,7 +262,7 @@ enum TIME_KND {
 
 enum WARNING_KND {
 
-	WARNING_DSP1 = 0,			//DSP1未起動
+	WARNING_DSP1 = 0,		//DSP1未起動
 	WARNING_WAVE_NO_EXIST,		//音楽ファイルが存在しない
 	WARNING_WAVE_NOT_OGG,		//音楽ファイルがOGG(またはMP3)ファイルじゃない
 	WARNING_TJA_NOT_EXIST,		//TJAファイルが存在しない

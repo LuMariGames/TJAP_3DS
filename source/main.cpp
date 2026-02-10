@@ -16,6 +16,7 @@
 #include "mp3.h"
 #include "vorbis.h"
 
+
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
@@ -322,12 +323,15 @@ int main() {
 				}
 				else if (tmp == -1) {
 					cnt = -150;
+					NOTES_JUDGE_X = 93.0f;
 					char abs_path[512];
 					snprintf(abs_path, sizeof(abs_path), "%s/%s", SelectedSong.path, TJA_Header.bg);
 					if (!isAniBg && exist_file(abs_path)) {
 						isAniBg = true;
 						bgspsh = C2D_SpriteSheetLoad(abs_path);
-						bgcnt = (int)C2D_SpriteSheetCount(bgspsh) - 1;
+						C2D_SpriteFromSheet(&sprites[163], bgspsh, 0);
+						C2D_SpriteSetCenter(&sprites[163], 0.5f, 0.5f);
+						bgcnt = 0;
 					}
 					else if (exist_file(abs_path) == 0) isAniBg = false;
 					play_main_music(&isPlayMain, SelectedSong);
@@ -444,11 +448,7 @@ int main() {
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
-			if (isAniBg && bgcnt > 0 && cnt >= 0) {
-				int bgcount = cnt*(TJA_Header.bgfps/60.0);
-				C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, (size_t)((bgcnt >= bgcount) ? bgcount : bgcnt)), &sprites[SPRITE_BACKGROUND].params, NULL);
-			}
-			else if (isAniBg && bgcnt == 0) C2D_DrawImage(C2D_SpriteSheetGetImage(bgspsh, 0), &sprites[SPRITE_BACKGROUND].params, NULL);
+			if (isAniBg && bgcnt == 0) C2D_DrawImage(sprites[163].image, &sprites[SPRITE_BACKGROUND].params, NULL);
 			else C2D_DrawImage(sprites[SPRITE_TOP_3].image, &sprites[SPRITE_TOP_3].params, NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image, &sprites[SPRITE_TOP].params, NULL);
 
@@ -683,9 +683,10 @@ inline static void load_sprites() {
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
-	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], 93, 109);
+	for (int i = 0; i < 20; ++i) C2D_SpriteSetCenter(&sprites[SPRITE_COMBO_0 + i], 0.5f, 1.0f);
+	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], NOTES_JUDGE_X, 109);
 
-	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO], 110, 92);
+	C2D_SpriteSetCenter(&sprites[SPRITE_EFFECT_GOGO], 0.5-(17.0/90.0), 0.5f);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH * 0.5, 200);
@@ -694,7 +695,6 @@ inline static void load_sprites() {
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
-	for (int i = 0; i < 20; ++i) C2D_SpriteSetCenter(&sprites[SPRITE_COMBO_0 + i], 0.5f, 1.0f);
 	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
 
 	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);

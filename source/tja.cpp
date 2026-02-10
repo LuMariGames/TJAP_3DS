@@ -39,7 +39,7 @@ void init_measure_structure() {
 		Measure[i].original_id = -1;
 		Measure[i].notes_count = 0;
 		Measure[i].command = -1;
-		Measure[i].sudn_time = 0;
+		//Measure[i].sudn_time = 0;
 		Measure[i].lyric = "";
 	}
 }
@@ -679,8 +679,8 @@ void load_tja_notes(int course, LIST_T Song) {
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0,movetime = 0,
-		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0,BeforeBranchMoveTime = 0,
+	double bpm = Current_Header.bpm,NextBpm = bpm,measure = 1,scroll = 1,NextMeasure = 1,delay = 0,percent = 1,sudntime = 0, //movetime = 0,
+		BeforeBranchJudgeTime = 0,BeforeBranchCreateTime = 0,BeforeBranchPopTime = 0,BeforeBranchPreJudge = 0,BeforeBranchBpm = 0, //BeforeBranchMoveTime = 0,
 		BeforeBranchDelay = 0,BeforeBranchMeasure = 0,BeforeBranchScroll = 1,BeforeBranchNextBpm = 0,BeforeBranchNextMeasure = 0,BeforeBranchPercent = 1;
 	std::string ly = "", Beforely = "";
 
@@ -779,7 +779,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						break;
 					case COMMAND_SUDDEN:
 						sudntime = Command.val[0];
-						movetime = sudntime - Command.val[1];
+						//movetime = sudntime - Command.val[1];
 						isSudden = true;
 						break;
 					case COMMAND_LYRIC:
@@ -842,7 +842,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[MeasureCount].bpm = NextBpm;
 				Measure[MeasureCount].measure = NextMeasure;
 				Measure[MeasureCount].scroll = scroll;
-				Measure[MeasureCount].sudn_time = movetime;
+				//Measure[MeasureCount].sudn_time = movetime;
 				Measure[MeasureCount].isDummy = isDummy;
 				Measure[MeasureCount].judge_time = 240.0 / bpm * measure * percent + PreJudge + delay;
 				Measure[MeasureCount].pop_time = Measure[MeasureCount].judge_time - (240.0 * NOTES_JUDGE_RANGE) / (Measure[MeasureCount].bpm * NOTES_AREA);
@@ -875,7 +875,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						BeforeBranchIsNoComma = isNoComma;
 						BeforeBranchNotesCount = NotesCount;
 						BeforeBranchPercent = percent;
-						BeforeBranchMoveTime = movetime;
+						//BeforeBranchMoveTime = movetime;
 						BeforeBranchIsDummy = isDummy;
 						Beforely = ly;
 						if (tja_cnt == 0) Measure[MeasureCount].judge_time = 0;	//ノーツの前に分岐はすぐに判定
@@ -898,7 +898,7 @@ void load_tja_notes(int course, LIST_T Song) {
 						isNoComma = BeforeBranchIsNoComma;
 						NotesCount = BeforeBranchNotesCount;
 						percent = BeforeBranchPercent;
-						movetime = BeforeBranchMoveTime;
+						//movetime = BeforeBranchMoveTime;
 						isDummy = BeforeBranchIsDummy;
 						ly = Beforely;
 						break;
@@ -953,6 +953,12 @@ void load_tja_notes(int course, LIST_T Song) {
 			switch (Measure[i].command) {
 			case COMMAND_END:
 				Measure[i].create_time = Measure[i].judge_time;
+				break;
+			case COMMAND_JPOSSCROLL:
+				n = Measure[i].notes + 1;
+				while (n <= tja_cnt && tja_notes[n][0] == '#') ++n;
+				while (n < tja_cnt && n != Measure[j].notes) ++j;
+				Measure[i].create_time = Measure[j].judge_time;
 				break;
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
@@ -1113,6 +1119,18 @@ void get_command_value(char* buf, COMMAND_T *Command) {
 			Command->knd = COMMAND_LYRIC;
 			strlcpy(value, buf + 7, length - 8);
 			Command->value_s = value;
+		}
+		else if (strcmp(command, "JPOSSCROLL") == 0) {
+			Command->knd = COMMAND_JPOSSCROLL;
+			char* tp;
+			tp = strtok(value, " ");
+			Command->val[0] = strtod(tp, NULL);
+			tp = strtok(NULL, " ");
+			Command->val[1] = strtod(tp, NULL);
+			tp = strtok(NULL, " ");
+			Command->val[2] = strtod(tp, NULL);
+			if (Command->val[2] >= 1) Command->val[2] = JPOSMAG;
+			else Command->val[2] = JPOSMAG * -1.0;
 		}
 		/*else if (strcmp(command, "BMSCROLL") == 0) Command->knd = COMMAND_BMSCROLL;
 		else if (strcmp(command, "HBSCROLL") == 0) Command->knd = COMMAND_HBSCROLL;*/
