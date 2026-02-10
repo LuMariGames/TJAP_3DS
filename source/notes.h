@@ -38,6 +38,13 @@ typedef struct {
 
 }BRANCH_T;
 
+struct notejudge_t {
+	int* donc;
+	int* katsuc;
+	int* count;
+	int* bth;
+};
+
 void notes_main(
 	int isDon, int isKatsu,
 	char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],
