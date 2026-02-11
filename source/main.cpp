@@ -16,6 +16,7 @@
 #include "mp3.h"
 #include "vorbis.h"
 #include "lodepng.h"
+#define LODEPNG_COMPILE_DECODER
 
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
@@ -105,8 +106,8 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	unsigned int width, height;
 	unsigned char* image;
 
-	// 1. PNGを読み込み（RGBA形式で強制取得）
-	unsigned error =lodepng_decode32_file(&image, &width, &height, filename);
+	// 1. PNGを読み込み（RGB形式で強制取得）
+	unsigned error =lodepng_decode_file(&image, &width, &height, filename, LCT_PALETTE, 8);
 	if (error) return (C2D_Image){0};
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
