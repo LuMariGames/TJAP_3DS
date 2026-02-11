@@ -1312,28 +1312,11 @@ C2D_Text NotesText;
 
 void draw_notes_text(float x, float y, const char *text, float *width, float *height) {
 
-	float size = 0.6; 
-	float outlineWidth = 2.0f;
-	float xPos = x - outlineWidth;
-	float xNeg = x + outlineWidth;
-	float yPos = y - outlineWidth;
-	float yNeg = y + outlineWidth;
-
+	float size = 0.6;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText, font, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
-
-	int steps = 2. + outlineWidth;
-	float stepSize = outlineWidth * 1.33333 / steps;
-	for (float i = xNeg; i >= xPos; i -= stepSize) {
-		for (float j = yNeg; j >= yPos; j -= stepSize) {
-			if (i != xNeg && i != xPos && j != yNeg && j != yPos) continue;
-			if (round(i) == round(x) && round(j) == round(y)) continue;
-			C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, i, j, 1.0f, size, size, C2D_Color32f(0,0,0,1.0f));
-		}
-	}
-
-	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(1,1,1,1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor | C2D_AlignRight, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
 }
 
 inline void draw_lyric_text(const char *text) {
