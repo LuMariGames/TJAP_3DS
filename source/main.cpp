@@ -116,7 +116,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	// 3. 3DSのGPU用テクスチャを初期化
 	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGBA8);
+	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGB8);
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
@@ -124,12 +124,12 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	// 5. 表示範囲を設定（サブテクスチャ定義）
 	Tex3DS_SubTexture* subtex = (Tex3DS_SubTexture*)malloc(sizeof(Tex3DS_SubTexture));
-	subtex->width = (uint16_t)width;
-	subtex->height = (uint16_t)height;
+	subtex->width = 400;
+	subtex->height = 96;
 	subtex->left = 0.0f;
 	subtex->top = 1.0f;
-	subtex->right = (float)width / texW;
-	subtex->bottom = 1.0f - (float)height / texH;
+	subtex->right = 400.0f / texW;
+	subtex->bottom = 1.0f - 96.0f / texH;
 
 	// 6. メモリ解放
 	stbi_image_free(data);
