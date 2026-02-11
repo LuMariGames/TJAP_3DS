@@ -120,7 +120,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	C3D_TexUpload(tex, data, width, height, GPU_RGBA8, 0);
+	C3D_TexUpload(tex, data);
 
 	// 5. 表示範囲を設定（サブテクスチャ定義）
 	Tex3DS_SubTexture* subtex = (Tex3DS_SubTexture*)malloc(sizeof(Tex3DS_SubTexture));
