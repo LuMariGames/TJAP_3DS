@@ -15,7 +15,9 @@
 #include "main.h"
 #include "mp3.h"
 #include "vorbis.h"
-
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_ONLY_BMP //BMPのみに制限してコンパイル時間を短縮
+#include "stb_image.h"
 
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;

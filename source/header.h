@@ -12,9 +12,6 @@
 #include <ctype.h>
 #include <vector>
 #include <iostream>
-#define STB_IMAGE_IMPLEMENTATION
-#define STBI_ONLY_BMP //BMPのみに制限してコンパイル時間を短縮
-#include "stb_image.h"
 
 #define C3D_CMDBUF_SIZE 0x40000
 #define VERSION "2.1.0"
