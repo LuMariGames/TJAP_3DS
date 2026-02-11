@@ -118,7 +118,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	// 3. 3DSのGPU用テクスチャを初期化
 	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGBA8);
+	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGB8);
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
