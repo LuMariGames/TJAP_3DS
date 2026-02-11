@@ -107,7 +107,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	unsigned char* image;
 
 	// 1. PNGを読み込み（RGB形式で強制取得）
-	unsigned error =lodepng_decode_file(&image, &width, &height, filename, LCT_PALETTE, 8);
+	unsigned error =lodepng_decode24_file(&image, &width, &height, filename);
 	if (error) return (C2D_Image){0};
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
