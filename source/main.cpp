@@ -106,7 +106,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	int width, height, channels;
 	// 1. BMPを読み込み（RGBA形式で強制取得）
-	unsigned char* data = stbi_load(filename, &width, &height, &channels, STBI_rgb_alpha);
+	unsigned char* data = stbi_load(filename, &width, &height, &channels, STBI_rgb);
 	
 	if (!data) return (C2D_Image){NULL, NULL};
 
