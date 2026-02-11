@@ -1324,7 +1324,7 @@ void draw_notes_text(float x, float y, const char *text, float *width, float *he
 	C2D_TextOptimize(&NotesText);
 
 	int steps = 2. + outlineWidth;
-	float stepSize = outlineWidth * 1.5 / steps;
+	float stepSize = outlineWidth * 1.33333 / steps;
 	for (float i = xNeg; i >= xPos; i -= stepSize) {
 		for (float j = yNeg; j >= yPos; j -= stepSize) {
 			if (i != xNeg && i != xPos && j != yNeg && j != yPos) continue;
