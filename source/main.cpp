@@ -16,7 +16,7 @@
 #include "mp3.h"
 #include "vorbis.h"
 #define STB_IMAGE_IMPLEMENTATION
-#define STBI_ONLY_BMP //BMPのみに制限してコンパイル時間を短縮
+#define STBI_ONLY_PNG //PNGのみに制限してコンパイル時間を短縮
 #include "stb_image.h"
 
 extern int course,courselife,TotalBadCount,combo,loadend;
@@ -127,9 +127,9 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 	subtex->width = 400;
 	subtex->height = 96;
 	subtex->left = 0.0f;
-	subtex->top = 1.0f;
+	subtex->top = 0.0f;
 	subtex->right = 1.0f;
-	subtex->bottom = 0.4140625f; //1.0f - 96.0f / texH;
+	subtex->bottom = 1.0f;
 
 	// 6. メモリ解放
 	stbi_image_free(data);
