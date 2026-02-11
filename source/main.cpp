@@ -128,8 +128,8 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 	subtex->height = 96;
 	subtex->left = 0.0f;
 	subtex->top = 1.0f;
-	subtex->right = 400.0f / texW;
-	subtex->bottom = 0.5f; //1.0f - 96.0f / texH;
+	subtex->right = 1.0f;
+	subtex->bottom = 0.0f; //1.0f - 96.0f / texH;
 
 	// 6. メモリ解放
 	stbi_image_free(data);
