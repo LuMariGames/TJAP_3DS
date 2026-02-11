@@ -105,7 +105,7 @@ bool check_dsp1() { //DSP1を起動しているか確認
 C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	int width, height, channels;
-	// 1. BMPを読み込み（RGBA形式で強制取得）
+	// 1. BMPを読み込み（RGB形式で強制取得）
 	unsigned char* data = stbi_load(filename, &width, &height, &channels, STBI_rgb);
 	
 	if (!data) return (C2D_Image){NULL, NULL};
@@ -129,7 +129,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 	subtex->left = 0.0f;
 	subtex->top = 1.0f;
 	subtex->right = 400.0f / texW;
-	subtex->bottom = 1.0f - 96.0f / texH;
+	subtex->bottom = 1.0f; // - 96.0f / texH;
 
 	// 6. メモリ解放
 	stbi_image_free(data);
