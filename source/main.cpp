@@ -102,9 +102,10 @@ bool check_dsp1() { //DSP1を起動しているか確認
 
 C2D_Image loadBMPAsC2DImage(const char* filename) {
 
-	int width, height, channels;
-	// 1. BMPを読み込み（RGB形式で強制取得）
+	unsigned int width, height;
 	unsigned char* image;
+
+	// 1. PNGを読み込み（RGBA形式で強制取得）
 	unsigned error =lodepng_decode32_file(&image, &width, &height, filename);
 	if (error) return (C2D_Image){0};
 
@@ -114,7 +115,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	// 3. 3DSのGPU用テクスチャを初期化
 	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGB8);
+	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGBA8);
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
@@ -130,7 +131,7 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 	subtex->bottom = 0.0f;
 
 	// 6. メモリ解放
-	stbi_image_free(data);
+	free(image);
 	return (C2D_Image){tex, subtex};
 }
 
