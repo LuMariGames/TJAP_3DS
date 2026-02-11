@@ -15,9 +15,7 @@
 #include "main.h"
 #include "mp3.h"
 #include "vorbis.h"
-#define STB_IMAGE_IMPLEMENTATION
-#define STBI_ONLY_PNG //PNGのみに制限してコンパイル時間を短縮
-#include "stb_image.h"
+#include "lodepng.h"
 
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
@@ -91,7 +89,7 @@ inline void button_game(int *isDon,int *isKatsu,OPTION_T Option, unsigned int ke
 		}
 	}
 }
-
+`
 bool check_dsp1() { //DSP1を起動しているか確認
 
 	FILE* fp = fopen(PATH_DSP1, "r");
@@ -106,9 +104,9 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	int width, height, channels;
 	// 1. BMPを読み込み（RGB形式で強制取得）
-	unsigned char* data = stbi_load(filename, &width, &height, &channels, STBI_rgb);
-	
-	if (!data) return (C2D_Image){NULL, NULL};
+	unsigned char* image;
+	unsigned error =lodepng_decode32_file(&image, &width, &height, filename);
+	if (error) return (C2D_Image){0};
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
 	int texW = 512;
@@ -120,16 +118,16 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	C3D_TexUpload(tex, data);
+	C3D_TexUpload(tex, image);
 
 	// 5. 表示範囲を設定（サブテクスチャ定義）
 	Tex3DS_SubTexture* subtex = (Tex3DS_SubTexture*)malloc(sizeof(Tex3DS_SubTexture));
 	subtex->width = 400;
 	subtex->height = 96;
 	subtex->left = 0.0f;
-	subtex->top = 0.0f;
+	subtex->top = 1.0f;
 	subtex->right = 1.0f;
-	subtex->bottom = 1.0f;
+	subtex->bottom = 0.0f;
 
 	// 6. メモリ解放
 	stbi_image_free(data);
