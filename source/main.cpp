@@ -293,8 +293,7 @@ int main() {
 				set_measure();
 				bgcnt = -1;
 				if (isAniBg) {
-					free(sprites[163].image.subtex);
-					free(sprites[163].image.tex);
+					C3D_TexDelete(sprites[163].image.tex);
 				}
 				isAniBg = false;
 			}
