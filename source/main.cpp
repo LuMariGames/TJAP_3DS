@@ -106,19 +106,17 @@ C2D_Image loadBMPAsC2DImage(const char* filename) {
 
 	int width, height, channels;
 	// 1. BMPを読み込み（RGBA形式で強制取得）
-	unsigned char* data = stbi_load(filename, &width, &height, &channels, STBI_rgb_alpha);
+	unsigned char* data = stbi_load(filename, &width, &height, &channels, STBI_rgb);
 	
 	if (!data) return (C2D_Image){NULL, NULL};
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
-	int texW = 1 << (32 - __builtin_clz(width - 1));
-	int texH = 1 << (32 - __builtin_clz(height - 1));
-	if (texW < 512) texW = 512; // 最小サイズ制限
-	if (texH < 128) texH = 128;
+	int texW = 512;
+	int texH = 128;
 
 	// 3. 3DSのGPU用テクスチャを初期化
 	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGB8);
+	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGBA8);
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
