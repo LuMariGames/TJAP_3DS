@@ -1310,37 +1310,6 @@ bool get_notes_finish() {
 C2D_TextBuf g_NotesText = C2D_TextBufNew(4096);
 C2D_Text NotesText;
 
-void renderTextWithOutline(C2D_Text* text, u32 flags, float x, float y, float z, float scaleX, float scaleY, float outlineWidth, u32 textClr, u32 outlineClr, ...) {
-	if (y > SCREEN_TOP_HEIGHT) return;
-	
-	// I hate this so much this is so stupid
-	// ^ soru agrees to that sentiment. sadly she had to make it even worse for the outlines she wants
-
-	float xPos = x + outlineWidth;
-	float xNeg = x - outlineWidth;
-	float yPos = y + outlineWidth;
-	float yNeg = y - outlineWidth;
-
-	va_list args;
-	va_start(args, outlineClr);
-
-	// Outline
-	int steps = 3 + outlineWidth;
-	float stepSize = outlineWidth * 2. / steps;
-	for (float i = xNeg; i <= xPos; i += stepSize) {
-		for (float j = yNeg; j <= yPos; j += stepSize) {
-			if (i != xNeg && i != xPos && j != yNeg && j != yPos) continue;
-			if (round(i) == round(x) && round(j) == round(y)) continue;
-			C2D_DrawText(text, C2D_WithColor | flags, i, j, z, scaleX, scaleY, outlineClr, args);
-		}
-	}
-
-	// Actual text
-	C2D_DrawText(text, C2D_WithColor | flags, x, y, z, scaleX, scaleY, textClr, args);
-
-	va_end(args);
-}
-
 void draw_notes_text(float x, float y, const char *text, float *width, float *height) {
 
 	float size = 0.6; 
