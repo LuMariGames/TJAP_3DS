@@ -89,7 +89,7 @@ inline void button_game(int *isDon,int *isKatsu,OPTION_T Option, unsigned int ke
 		}
 	}
 }
-`
+
 bool check_dsp1() { //DSP1を起動しているか確認
 
 	FILE* fp = fopen(PATH_DSP1, "r");
@@ -100,7 +100,7 @@ bool check_dsp1() { //DSP1を起動しているか確認
 	return true;
 }
 
-C2D_Image loadBMPAsC2DImage(const char* filename) {
+C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	unsigned int width, height;
 	unsigned char* image;
@@ -365,7 +365,7 @@ int main() {
 					snprintf(abs_path, sizeof(abs_path), "%s/%s", SelectedSong.path, TJA_Header.bg);
 					if (!isAniBg && exist_file(abs_path)) {
 						isAniBg = true;
-						sprites[163].image = loadBMPAsC2DImage(abs_path);
+						sprites[163].image = loadPNGAsC2DImage(abs_path);
 						C2D_SpriteSetCenter(&sprites[163], 0.5f, 0.5f);
 						bgcnt = 0;
 					}
