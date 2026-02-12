@@ -101,22 +101,35 @@ bool check_dsp1() { //DSP1を起動しているか確認
 	return true;
 }
 
+static inline void _rgb24_to_rgb565(u16 *dest, const u8 *src, size_t dim)
+{
+	for (size_t i = 0; i < dim; i++) {
+		u8 r, g, b;
+
+		r = *(src++) >> 3;
+		g = *(src++) >> 2;
+		b = *(src++) >> 3;
+		*(dest++) = r << 11 | g << 5 | b;
+	}
+}
+
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	unsigned int width = 400, height = 96;
-	unsigned char* image;
+	u16* image = NULL;
 
 	// 1. PNGを読み込み（RGB形式で強制取得）
-	unsigned error = lodepng_decode24_file(&image, &width, &height, filename);
+	unsigned error = lodepng_decode24_file((u8**)&image, &width, &height, filename);
 	if (error) return (C2D_Image){0};
 
+	_rgb24_to_rgb565(image, (const u8*)image, width * height);
+
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
-	int texW = 512;
-	int texH = 128;
+	uint16_t texW = 512, texH = 128;
 
 	// 3. 3DSのGPU用テクスチャを初期化
 	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, width, height, GPU_RGB8);
+	C3D_TexInit(tex, texW, texH, GPU_RGB8);
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
