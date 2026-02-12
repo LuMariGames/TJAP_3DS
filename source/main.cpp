@@ -109,7 +109,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	// 1. PNGを読み込み（RGB形式で強制取得）
 	FILE* fp = fopen(filename, "rb");
 	if (fp == NULL) return (C2D_Image){0};
-	fread(image, 1, 115200, fp); //400*96*3
+	fread(image, 115200, 1, fp); //400*96*3
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
 	uint16_t texW = 512, texH = 128;
