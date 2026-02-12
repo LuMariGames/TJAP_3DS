@@ -103,11 +103,11 @@ bool check_dsp1() { //DSP1を起動しているか確認
 
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
-	unsigned int width, height;
+	unsigned int width = 400, height = 96;
 	unsigned char* image;
 
 	// 1. PNGを読み込み（RGB形式で強制取得）
-	unsigned error =lodepng_decode24_file(&image, &width, &height, filename);
+	unsigned error = lodepng_decode24_file(&image, &width, &height, filename);
 	if (error) return (C2D_Image){0};
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
@@ -116,7 +116,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 3. 3DSのGPU用テクスチャを初期化
 	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGBA8);
+	C3D_TexInit(tex, (uint16_t)texW, (uint16_t)texH, GPU_RGB8);
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
@@ -366,7 +366,7 @@ int main() {
 					snprintf(abs_path, sizeof(abs_path), "%s/%s", SelectedSong.path, TJA_Header.bg);
 					if (!isAniBg && exist_file(abs_path)) {
 						isAniBg = true;
-						sprites[163].image = loadPNGAsC2DImage(abs_path);
+						C2D_SpriteFromImage(&sprites[163], loadPNGAsC2DImage(abs_path));
 						C2D_SpriteSetCenter(&sprites[163], 0.5f, 0.5f);
 						bgcnt = 0;
 					}
