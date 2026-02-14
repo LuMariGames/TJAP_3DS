@@ -104,12 +104,13 @@ bool check_dsp1() { //DSP1を起動しているか確認
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	unsigned int width = 400, height = 96;
-	unsigned char* image = NULL;
+	unsigned char* image;
+	FILE *fp;
 
-	// 1. PNGを読み込み（RGB形式で強制取得）
-	FILE* fp = fopen(filename, "rb");
-	if (fp == NULL) return (C2D_Image){0};
-	fread(image, 300, 1, fp); //400*96*3
+	// 1. RGBを読み込み（RGB形式で強制取得）
+	fp = fopen(filename,"rb");
+	fread(image,115200,1,fp);
+	if (image == NULL) return (C2D_Image){0,0};
 
 	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
 	uint16_t texW = 512, texH = 128;
