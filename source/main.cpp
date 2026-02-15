@@ -141,7 +141,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	}
 
 	C3D_Tex* tex;
-	C3D_TexInit(tex, w, h, GPU_TEXCOLOR::GPU_RGBA8);
+	C3D_TexInit(tex, 512, 128, GPU_TEXCOLOR::GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
 	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
