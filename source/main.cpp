@@ -103,21 +103,106 @@ bool check_dsp1() { //DSP1を起動しているか確認
 
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
-	unsigned int width = 400, height = 96;
-	unsigned char* image;
-	FILE *fp;
+	// 1. PNGを読み込み（RGB形式で強制取得）
+	std::streamsize size;
+	std::vector<unsigned char> buffer, image;
 
-	// 1. RGBを読み込み（RGB形式で強制取得）
-	fp = fopen(filename,"rb");
-	fread(image,115200,1,fp);
-	if (image == NULL) return (C2D_Image){0,0};
+	std::ifstream file("sdmc:test_game/test.png");
+	if (file.seekg(0, std::ios::end).good()) size = file.tellg();
+	if (file.seekg(0, std::ios::beg).good()) size -= file.tellg();
 
-	// 2. 2の累乗サイズを計算（例: 100pxなら128px）
-	uint16_t texW = 512, texH = 128;
+	//read contents of the file into the vector
+	if (size > 0) {
+		buffer.resize((size_t)size);
+		file.read((char*)(&buffer[0]), size);
+	}
+	else buffer.clear();
 
-	// 3. 3DSのGPU用テクスチャを初期化
-	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, texW, texH, GPU_RGB8);
+	unsigned long w, h;
+	unsigned error = lodepng_decode24_file(&image, &width, &height, filename);
+	if (error != 0) goto error;
+	u8 *gpusrc = (u8*) linearAlloc(w*h * 3);
+	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
+
+	u8* src = &image[0]; u8 *dst = gpusrc;
+
+	// lodepng outputs big endian rgba so we need to convert
+	for (int i = 0; i< w * h; i++) {
+		int r = *src++;
+		int g = *src++;
+		int b = *src++;
+
+		*dst++ = b;
+		*dst++ = g;
+		*dst++ = r;
+	}
+
+	/* Upload to shader */
+	static const util::vertex vertex_list[] = {
+		// First face (PZ)
+		// First triangle
+		{ { -0.5f, -0.5f, +0.5f },{ 0.0f, 0.0f },{ 0.0f, 0.0f, +1.0f } },
+		{ { +0.5f, -0.5f, +0.5f },{ 1.0f, 0.0f },{ 0.0f, 0.0f, +1.0f } },
+		{ { +0.5f, +0.5f, +0.5f },{ 1.0f, 1.0f },{ 0.0f, 0.0f, +1.0f } },
+		// Second triangle
+		{ { +0.5f, +0.5f, +0.5f },{ 1.0f, 1.0f },{ 0.0f, 0.0f, +1.0f } },
+		{ { -0.5f, +0.5f, +0.5f },{ 0.0f, 1.0f },{ 0.0f, 0.0f, +1.0f } },
+		{ { -0.5f, -0.5f, +0.5f },{ 0.0f, 0.0f },{ 0.0f, 0.0f, +1.0f } }
+	};
+
+	DVLB_s* vshader_dvlb;
+	shaderProgram_s program;
+	int uLoc_projection, uLoc_modelView;
+	int uLoc_lightVec, uLoc_lightHalfVec, uLoc_lightClr, uLoc_material;
+	C3D_Mtx projection;
+	C3D_Mtx material = {
+		{
+			{ { 0.0f, 0.2f, 0.2f, 0.2f } }, // Ambient
+			{ { 0.0f, 0.4f, 0.4f, 0.4f } }, // Diffuse
+			{ { 0.0f, 0.8f, 0.8f, 0.8f } }, // Specular
+			{ { 1.0f, 0.0f, 0.0f, 0.0f } }, // Emission
+		}
+	};
+
+	// Load the vertex shader, create a shader program and bind it
+	vshader_dvlb = DVLB_ParseFile((u32*)vshader_shbin, vshader_shbin_size);
+	shaderProgramInit(&program);
+	shaderProgramSetVsh(&program, &vshader_dvlb->DVLE[0]);
+	C3D_BindProgram(&program);
+
+	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "projection");
+	uLoc_modelView = shaderInstanceGetUniformLocation(program.vertexShader, "modelView");
+	uLoc_lightVec = shaderInstanceGetUniformLocation(program.vertexShader, "lightVec");
+	uLoc_lightHalfVec = shaderInstanceGetUniformLocation(program.vertexShader, "lightHalfVec");
+	uLoc_lightClr = shaderInstanceGetUniformLocation(program.vertexShader, "lightClr");
+	uLoc_material = shaderInstanceGetUniformLocation(program.vertexShader, "material");
+
+	// Configure attributes for use with the vertex shader
+	C3D_AttrInfo* attrInfo = C3D_GetAttrInfo();
+	AttrInfo_Init(attrInfo);
+	AttrInfo_AddLoader(attrInfo, 0, GPU_FLOAT, 3); // v0=position
+	AttrInfo_AddLoader(attrInfo, 1, GPU_FLOAT, 2); // v1=texcoord
+	AttrInfo_AddLoader(attrInfo, 2, GPU_FLOAT, 3); // v2=normal
+
+	// Compute the projection matrix
+	Mtx_PerspTilt(&projection, C3D_AngleFromDegrees(80.0f), C3D_AspectRatioTop, 0.01f, 1000.0f, false);
+
+	// Create the VBO (vertex buffer object)
+	void* vbo_data = linearAlloc(sizeof(vertex_list));
+	memcpy(vbo_data, vertex_list, sizeof(vertex_list));
+
+	// Configure buffers
+	C3D_BufInfo* bufInfo = C3D_GetBufInfo();
+	BufInfo_Init(bufInfo);
+	BufInfo_Add(bufInfo, vbo_data, sizeof(util::vertex), 3, 0x210);
+
+	C3D_Tex tex;
+	C3D_TexInit(&tex, w, h, GPU_TEXCOLOR::GPU_RGBA8);
+
+	// Load the texture and bind it to the first texture unit
+	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
+	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), TEXTURE_TRANSFER_FLAGS);
+	gspWaitForPPF();
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
@@ -127,14 +212,17 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	Tex3DS_SubTexture* subtex = (Tex3DS_SubTexture*)malloc(sizeof(Tex3DS_SubTexture));
 	subtex->width = 400;
 	subtex->height = 96;
-	subtex->left = 0.0f;
+	subtex->left = 1.0f;
 	subtex->top = 1.0f;
-	subtex->right = 1.0f;
+	subtex->right = 0.0f;
 	subtex->bottom = 0.0f;
 
 	// 6. メモリ解放
 	free(image);
 	return (C2D_Image){tex, subtex};
+
+error:
+	return (C2D_Image){0,0};
 }
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
