@@ -106,7 +106,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	// 1. PNGを読み込み（RGB形式で強制取得）
 	std::streamsize size;
 	std::vector<unsigned char> buffer;
-	unsigned char image;
+	unsigned char* image;
 
 	std::ifstream file("sdmc:test_game/test.png");
 	if (file.seekg(0, std::ios::end).good()) size = file.tellg();
@@ -159,7 +159,6 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	subtex->right = 0.0f;
 	subtex->bottom = 0.0f;
 
-	// 6. メモリ解放
 	free(image);
 	return (C2D_Image){tex, subtex};
 }
