@@ -108,7 +108,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	std::vector<unsigned char> buffer;
 	unsigned char* image;
 
-	std::ifstream file("sdmc:test_game/test.png");
+	std::ifstream file(filename);
 	if (file.seekg(0, std::ios::end).good()) size = file.tellg();
 	if (file.seekg(0, std::ios::beg).good()) size -= file.tellg();
 
@@ -119,11 +119,11 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	}
 	else buffer.clear();
 
-	unsigned long w, h;
-	unsigned error = lodepng_decode24_file(&image, &w, &h, filename);
+	unsigned w, h;
+	unsigned error = lodepng_decode32_file(&image, &w, &h, filename);
 	if (error != 0) return (C2D_Image){0,0};
-	u8 *gpusrc = (u8*) linearAlloc(w*h * 3);
-	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
+	u8 *gpusrc = (u8*) linearAlloc(w*h * 4);
+	u8 *img_fix = (u8*)linearAlloc(w*h * 4);
 
 	u8* src = &image[0]; u8 *dst = gpusrc;
 
@@ -132,14 +132,16 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		int r = *src++;
 		int g = *src++;
 		int b = *src++;
+		int a = *src++;
 
+		*dst++ = a;
 		*dst++ = b;
 		*dst++ = g;
 		*dst++ = r;
 	}
 
 	C3D_Tex* tex;
-	C3D_TexInit(&tex, w, h, GPU_TEXCOLOR::GPU_RGBA8);
+	C3D_TexInit(tex, w, h, GPU_TEXCOLOR::GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
 	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
