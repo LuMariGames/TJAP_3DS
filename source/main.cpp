@@ -142,7 +142,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 5. 表示範囲を設定(サブテクスチャ定義)
 	Tex3DS_SubTexture subtex;
-	subtex)width = 400;
+	subtex.width = 400;
 	subtex.height = 96;
 	subtex.left = 1.0f;
 	subtex.top = 1.0f;
