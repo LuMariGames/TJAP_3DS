@@ -1359,23 +1359,23 @@ void draw_condition() {
 	for (int j = 0; j < 4; ++j) {
 
 		tx = 0;
-		if (strcmp(exam[j][0], "jb") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
-		else if (strcmp(exam[j][0], "jg") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
-		else if (strcmp(exam[j][0], "jp") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
-		else if (strcmp(exam[j][0], "s") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_SCORE], &width, &height);
-		else if (strcmp(exam[j][0], "r") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_ROLL], &width, &height);
-		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
-		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
+		if (strcmp(exam[j][0], "jb") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
+		else if (strcmp(exam[j][0], "jg") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
+		else if (strcmp(exam[j][0], "jp") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
+		else if (strcmp(exam[j][0], "s") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_SCORE], &width, &height);
+		else if (strcmp(exam[j][0], "r") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_ROLL], &width, &height);
+		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
+		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
 		tx += width;
-		draw_condition_text(50+tx, 148+20*j, exam[j][1], &width, &height);
+		draw_condition_text(50+tx, 148+18*j, exam[j][1], &width, &height);
 		tx += width;
 
 		if (strcmp(exam[j][0], "g") == 0) {
-			draw_condition_text(50+tx, 148+20*j, "%", &width, &height);
+			draw_condition_text(50+tx, 148+18*j, "%", &width, &height);
 			tx += width;
 		}
-		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
-		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
+		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 148+18*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
+		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 148+18*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
 	}
 }
 inline void init_notes_structure() {
