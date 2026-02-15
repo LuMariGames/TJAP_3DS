@@ -127,8 +127,8 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = r;
 	}
 
-	C3D_Tex* tex = (C3D_Tex*)malloc(sizeof(C3D_Tex));
-	C3D_TexInit(tex, 512, 128, GPU_TEXCOLOR::GPU_RGBA8);
+	C3D_Tex tex;
+	C3D_TexInit(&tex, 512, 128, GPU_TEXCOLOR::GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
 	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
@@ -136,21 +136,21 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	C3D_TexUpload(tex, &img_fix[0]);
-	//C3D_TexUpload(tex, &image[0]);
-	C3D_TexBind(0, tex);
+	C3D_TexUpload(&tex, &img_fix[0]);
+	//C3D_TexUpload(&tex, &image[0]);
+	C3D_TexBind(0, &tex);
 
 	// 5. 表示範囲を設定(サブテクスチャ定義)
-	Tex3DS_SubTexture* subtex = (Tex3DS_SubTexture*)malloc(sizeof(Tex3DS_SubTexture));
-	subtex->width = 400;
-	subtex->height = 96;
-	subtex->left = 1.0f;
-	subtex->top = 1.0f;
-	subtex->right = 0.0f;
-	subtex->bottom = 0.0f;
+	Tex3DS_SubTexture subtex;
+	subtex)width = 400;
+	subtex.height = 96;
+	subtex.left = 1.0f;
+	subtex.top = 1.0f;
+	subtex.right = 0.0f;
+	subtex.bottom = 0.0f;
 
 	free(image);
-	return (C2D_Image){tex, subtex};
+	return (C2D_Image){&tex, &subtex};
 }
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
