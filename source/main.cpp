@@ -104,25 +104,12 @@ bool check_dsp1() { //DSP1を起動しているか確認
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 1. PNGを読み込み（RGB形式で強制取得）
-	std::streamsize size;
-	std::vector<unsigned char> buffer;
 	unsigned char* image;
-
-	std::ifstream file(filename);
-	if (file.seekg(0, std::ios::end).good()) size = file.tellg();
-	if (file.seekg(0, std::ios::beg).good()) size -= file.tellg();
-
-	//read contents of the file into the vector
-	if (size > 0) {
-		buffer.resize((size_t)size);
-		file.read((char*)(&buffer[0]), size);
-	}
-	else buffer.clear();
 
 	unsigned w, h;
 	unsigned error = lodepng_decode32_file(&image, &w, &h, filename);
 	if (error != 0) return (C2D_Image){0,0};
-	u8 *gpusrc = (u8*) linearAlloc(w*h * 4);
+	u8 *gpusrc = (u8*)linearAlloc(w*h * 4);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 4);
 
 	u8* src = &image[0]; u8 *dst = gpusrc;
