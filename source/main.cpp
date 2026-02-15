@@ -101,6 +101,9 @@ bool check_dsp1() { //DSP1を起動しているか確認
 	return true;
 }
 
+C3D_Tex tex;
+Tex3DS_SubTexture subtex;
+
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 1. PNGを読み込み(RGB形式で強制取得)
@@ -127,7 +130,6 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = r;
 	}
 
-	C3D_Tex tex;
 	C3D_TexInit(&tex, 512, 128, GPU_TEXCOLOR::GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
@@ -140,8 +142,12 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	//C3D_TexUpload(&tex, &image[0]);
 	C3D_TexBind(0, &tex);
 
+	C3D_TexEnv* env = C3D_GetTexEnv(0);
+	C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE0, GPU_PRIMARY_COLOR, 0);
+	C3D_TexEnvOp(env, C3D_Both, 0, 0, 0);
+	C3D_TexEnvFunc(env, C3D_Both, GPU_MODULATE);
+
 	// 5. 表示範囲を設定(サブテクスチャ定義)
-	Tex3DS_SubTexture subtex;
 	subtex.width = 400;
 	subtex.height = 96;
 	subtex.left = 1.0f;
