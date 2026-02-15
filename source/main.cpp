@@ -142,11 +142,6 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	//C3D_TexUpload(&tex, &image[0]);
 	C3D_TexBind(0, &tex);
 
-	C3D_TexEnv* env = C3D_GetTexEnv(0);
-	C3D_TexEnvSrc(env, C3D_Both, GPU_TEXTURE0, GPU_PRIMARY_COLOR, 0);
-	C3D_TexEnvOp(env, C3D_Both, 0, 0, 0);
-	C3D_TexEnvFunc(env, C3D_Both, GPU_MODULATE);
-
 	// 5. 表示範囲を設定(サブテクスチャ定義)
 	subtex.width = 400;
 	subtex.height = 96;
