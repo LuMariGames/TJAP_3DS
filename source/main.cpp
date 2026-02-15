@@ -15,14 +15,13 @@
 #include "main.h"
 #include "mp3.h"
 #include "vorbis.h"
-#include "lodepng.h"
-#define LODEPNG_COMPILE_DECODER
+
 
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[164];	//画像用
-static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
+static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 Thread chartload;
@@ -99,59 +98,6 @@ bool check_dsp1() { //DSP1を起動しているか確認
 	fclose(fp);
 
 	return true;
-}
-
-C3D_Tex tex;
-Tex3DS_SubTexture subtex;
-
-C2D_Image loadPNGAsC2DImage(const char* filename) {
-
-	// 1. PNGを読み込み(RGB形式で強制取得)
-	unsigned char* image;
-
-	unsigned int w, h;
-	unsigned int error = lodepng_decode32_file(&image, &w, &h, filename);
-	if (error != 0) return (C2D_Image){0,0};
-	u8 *gpusrc = (u8*)linearAlloc(w*h * 4);
-	u8 *img_fix = (u8*)linearAlloc(w*h * 4);
-
-	u8* src = &image[0]; u8 *dst = gpusrc;
-
-	// lodepng outputs big endian rgba so we need to convert
-	for (int i = 0, j = w * h; i < j; i++) {
-		int r = *src++;
-		int g = *src++;
-		int b = *src++;
-		int a = *src++;
-
-		*dst++ = a;
-		*dst++ = b;
-		*dst++ = g;
-		*dst++ = r;
-	}
-
-	C3D_TexInit(&tex, 512, 128, GPU_TEXCOLOR::GPU_RGBA8);
-
-	// Load the texture and bind it to the first texture unit
-	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
-	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), GX_TRANSFER_FLIP_VERT(1));
-
-	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
-	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	C3D_TexUpload(&tex, &img_fix[0]);
-	//C3D_TexUpload(&tex, &image[0]);
-	C3D_TexBind(0, &tex);
-
-	// 5. 表示範囲を設定(サブテクスチャ定義)
-	subtex.width = 400;
-	subtex.height = 96;
-	subtex.left = 1.0f;
-	subtex.top = 1.0f;
-	subtex.right = 0.0f;
-	subtex.bottom = 0.0f;
-
-	free(image);
-	return (C2D_Image){&tex, &subtex};
 }
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
@@ -310,9 +256,7 @@ int main() {
 				select_ini();
 				set_measure();
 				bgcnt = -1;
-				if (isAniBg) {
-					C3D_TexDelete(sprites[163].image.tex);
-				}
+				if (isAniBg) C2D_SpriteSheetFree(bgspsh);
 				isAniBg = false;
 			}
 
@@ -384,7 +328,8 @@ int main() {
 					snprintf(abs_path, sizeof(abs_path), "%s/%s", SelectedSong.path, TJA_Header.bg);
 					if (!isAniBg && exist_file(abs_path)) {
 						isAniBg = true;
-						C2D_SpriteFromImage(&sprites[163], loadPNGAsC2DImage(abs_path));
+						bgspsh = C2D_SpriteSheetLoad(abs_path);
+						C2D_SpriteFromSheet(&sprites[163], bgspsh, 0);
 						C2D_SpriteSetCenter(&sprites[163], 0.5f, 0.5f);
 						bgcnt = 0;
 					}
@@ -839,12 +784,12 @@ inline int message_window(touchPosition tp, unsigned int key,int text) {
 
 int exist_file(const char* path) {
 
-	FILE* fp = fopen(path, "r");
-	if (fp == NULL) {
-		return 0;
-	}
-	fclose(fp);
-	return 1;
+    FILE* fp = fopen(path, "r");
+    if (fp == NULL) {
+        return 0;
+    }
+    fclose(fp);
+    return 1;
 }
 
 inline int time_count(double TIME) noexcept {

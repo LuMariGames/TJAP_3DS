@@ -1354,6 +1354,7 @@ void draw_condition() {
 	get_option(&Option);
 	extern char *exam[4][4];
 	float width = 0, height = 0, tx = 0;
+	C2D_DrawRectSolid(40, 144, 0, 320, 76, C2D_Color32f(0, 0, 0, 1));
 
 	for (int j = 0; j < 4; ++j) {
 
