@@ -109,7 +109,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	unsigned w, h;
 	unsigned error = lodepng_decode32_file(&image, &w, &h, filename);
 	if (error != 0) return (C2D_Image){0,0};
-	u8 *gpusrc = (u8*)linearAlloc(w*h * 4);
+	/*u8 *gpusrc = (u8*)linearAlloc(w*h * 4);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 4);
 
 	u8* src = &image[0]; u8 *dst = gpusrc;
@@ -125,7 +125,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = b;
 		*dst++ = g;
 		*dst++ = r;
-	}
+	}*/
 
 	C3D_Tex* tex;
 	C3D_TexInit(tex, 512, 128, GPU_TEXCOLOR::GPU_RGBA8);
