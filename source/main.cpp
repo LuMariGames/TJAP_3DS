@@ -119,7 +119,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	else buffer.clear();
 
 	unsigned long w, h;
-	unsigned error = lodepng_decode24_file(&image, &width, &height, filename);
+	unsigned error = lodepng_decode24_file(&image, &w, &h, filename);
 	if (error != 0) goto error;
 	u8 *gpusrc = (u8*) linearAlloc(w*h * 3);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
@@ -127,7 +127,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	u8* src = &image[0]; u8 *dst = gpusrc;
 
 	// lodepng outputs big endian rgba so we need to convert
-	for (int i = 0; i< w * h; i++) {
+	for (int i = 0, j = w * h; i < j; i++) {
 		int r = *src++;
 		int g = *src++;
 		int b = *src++;
@@ -137,76 +137,17 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = r;
 	}
 
-	/* Upload to shader */
-	static const util::vertex vertex_list[] = {
-		// First face (PZ)
-		// First triangle
-		{ { -0.5f, -0.5f, +0.5f },{ 0.0f, 0.0f },{ 0.0f, 0.0f, +1.0f } },
-		{ { +0.5f, -0.5f, +0.5f },{ 1.0f, 0.0f },{ 0.0f, 0.0f, +1.0f } },
-		{ { +0.5f, +0.5f, +0.5f },{ 1.0f, 1.0f },{ 0.0f, 0.0f, +1.0f } },
-		// Second triangle
-		{ { +0.5f, +0.5f, +0.5f },{ 1.0f, 1.0f },{ 0.0f, 0.0f, +1.0f } },
-		{ { -0.5f, +0.5f, +0.5f },{ 0.0f, 1.0f },{ 0.0f, 0.0f, +1.0f } },
-		{ { -0.5f, -0.5f, +0.5f },{ 0.0f, 0.0f },{ 0.0f, 0.0f, +1.0f } }
-	};
-
-	DVLB_s* vshader_dvlb;
-	shaderProgram_s program;
-	int uLoc_projection, uLoc_modelView;
-	int uLoc_lightVec, uLoc_lightHalfVec, uLoc_lightClr, uLoc_material;
-	C3D_Mtx projection;
-	C3D_Mtx material = {
-		{
-			{ { 0.0f, 0.2f, 0.2f, 0.2f } }, // Ambient
-			{ { 0.0f, 0.4f, 0.4f, 0.4f } }, // Diffuse
-			{ { 0.0f, 0.8f, 0.8f, 0.8f } }, // Specular
-			{ { 1.0f, 0.0f, 0.0f, 0.0f } }, // Emission
-		}
-	};
-
-	// Load the vertex shader, create a shader program and bind it
-	vshader_dvlb = DVLB_ParseFile((u32*)vshader_shbin, vshader_shbin_size);
-	shaderProgramInit(&program);
-	shaderProgramSetVsh(&program, &vshader_dvlb->DVLE[0]);
-	C3D_BindProgram(&program);
-
-	uLoc_projection = shaderInstanceGetUniformLocation(program.vertexShader, "projection");
-	uLoc_modelView = shaderInstanceGetUniformLocation(program.vertexShader, "modelView");
-	uLoc_lightVec = shaderInstanceGetUniformLocation(program.vertexShader, "lightVec");
-	uLoc_lightHalfVec = shaderInstanceGetUniformLocation(program.vertexShader, "lightHalfVec");
-	uLoc_lightClr = shaderInstanceGetUniformLocation(program.vertexShader, "lightClr");
-	uLoc_material = shaderInstanceGetUniformLocation(program.vertexShader, "material");
-
-	// Configure attributes for use with the vertex shader
-	C3D_AttrInfo* attrInfo = C3D_GetAttrInfo();
-	AttrInfo_Init(attrInfo);
-	AttrInfo_AddLoader(attrInfo, 0, GPU_FLOAT, 3); // v0=position
-	AttrInfo_AddLoader(attrInfo, 1, GPU_FLOAT, 2); // v1=texcoord
-	AttrInfo_AddLoader(attrInfo, 2, GPU_FLOAT, 3); // v2=normal
-
-	// Compute the projection matrix
-	Mtx_PerspTilt(&projection, C3D_AngleFromDegrees(80.0f), C3D_AspectRatioTop, 0.01f, 1000.0f, false);
-
-	// Create the VBO (vertex buffer object)
-	void* vbo_data = linearAlloc(sizeof(vertex_list));
-	memcpy(vbo_data, vertex_list, sizeof(vertex_list));
-
-	// Configure buffers
-	C3D_BufInfo* bufInfo = C3D_GetBufInfo();
-	BufInfo_Init(bufInfo);
-	BufInfo_Add(bufInfo, vbo_data, sizeof(util::vertex), 3, 0x210);
-
 	C3D_Tex tex;
 	C3D_TexInit(&tex, w, h, GPU_TEXCOLOR::GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
 	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
 	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), TEXTURE_TRANSFER_FLAGS);
-	gspWaitForPPF();
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	C3D_TexUpload(tex, image);
+	C3D_TexUpload(tex, &img_fix[0]);
+	C3D_TexBind(0, &tex);
 
 	// 5. 表示範囲を設定（サブテクスチャ定義）
 	Tex3DS_SubTexture* subtex = (Tex3DS_SubTexture*)malloc(sizeof(Tex3DS_SubTexture));
