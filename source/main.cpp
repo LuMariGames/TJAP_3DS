@@ -132,7 +132,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// Load the texture and bind it to the first texture unit
 	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
-	GX_TextureCopy((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), (w*h*4), GX_TRANSFER_FLIP_VERT(1));
+	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), GX_TRANSFER_FLIP_VERT(1));
 
 	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
