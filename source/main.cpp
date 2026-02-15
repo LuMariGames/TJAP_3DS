@@ -105,7 +105,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 1. PNGを読み込み（RGB形式で強制取得）
 	std::streamsize size;
-	std::vector<unsigned char> buffer, image;
+	unsigned char buffer, image;
 
 	std::ifstream file("sdmc:test_game/test.png");
 	if (file.seekg(0, std::ios::end).good()) size = file.tellg();
@@ -120,7 +120,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	unsigned long w, h;
 	unsigned error = lodepng_decode24_file(&image, &w, &h, filename);
-	if (error != 0) goto error;
+	if (error != 0) return (C2D_Image){0,0};
 	u8 *gpusrc = (u8*) linearAlloc(w*h * 3);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
 
@@ -137,12 +137,12 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = r;
 	}
 
-	C3D_Tex tex;
+	C3D_Tex* tex;
 	C3D_TexInit(&tex, w, h, GPU_TEXCOLOR::GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
 	GSPGPU_FlushDataCache(gpusrc, w*h * 4);
-	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), TEXTURE_TRANSFER_FLAGS);
+	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), GX_TRANSFER_FLIP_VERT(1));
 
 	// 4. 線形メモリ（Linear）からタイル形式（Tiled）へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
@@ -161,9 +161,6 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	// 6. メモリ解放
 	free(image);
 	return (C2D_Image){tex, subtex};
-
-error:
-	return (C2D_Image){0,0};
 }
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
