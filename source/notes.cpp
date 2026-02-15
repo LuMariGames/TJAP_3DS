@@ -1335,7 +1335,7 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
-	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(1, 1, 1, 1.0f));
 }
 
 void draw_title() {
@@ -1354,7 +1354,7 @@ void draw_condition() {
 	get_option(&Option);
 	extern char *exam[4][4];
 	float width = 0, height = 0, tx = 0;
-	C2D_DrawRectSolid(40, 144, 0, 320, 76, C2D_Color32f(0, 0, 0, 1));
+	C2D_DrawRectSolid(40, 144, 0, 320, 76, C2D_Color32f(0, 0, 0, 0.75f));
 
 	for (int j = 0; j < 4; ++j) {
 
