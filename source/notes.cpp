@@ -525,7 +525,7 @@ void notes_judge(void* NoteInfo) {
 		}
 		JBS = JudgeBalloonState;
 
-		if (Option.isAuto) {	//オート
+		if (Option.isAuto && !get_isPause()) {	//オート
 
 			svcSleepThread(1000000);
 			for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
@@ -599,7 +599,7 @@ void notes_judge(void* NoteInfo) {
 			}
 		}
 
-		else if (!Option.isAuto) {			//手動
+		else if (!Option.isAuto && !get_isPause()) {			//手動
 
 			for (int j = 0,sd = 0,sk = 0,gn = ((isDon >= isKatsu) ? isDon : isKatsu); j < gn; ++j) {
 
@@ -774,7 +774,7 @@ void notes_judge(void* NoteInfo) {
 					++kc;
 				}
 			}
-			//svcSleepThread(100000);
+			svcSleepThread(100000);
 		}
 
 		//風船の消去処理
