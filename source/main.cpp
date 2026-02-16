@@ -253,6 +253,10 @@ int main() {
 		case SCENE_SELECTSONG:	//選曲
 
 			if (cnt == 0) {
+				threadJoin(notesjudge, U64_MAX);
+				threadFree(notesjudge);
+				notesjudge = NULL;
+
 				select_ini();
 				set_measure();
 				bgcnt = -1;

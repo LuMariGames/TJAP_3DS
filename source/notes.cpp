@@ -11,7 +11,7 @@
 int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
-extern int isBranch, course, stme;
+extern int isBranch,course,stme,scene_state;
 extern double black;
 C2D_Font font;
 
@@ -474,7 +474,7 @@ void notes_judge(void* NoteInfo) {
 	int isDon = 0,isKatsu = 0,cnt = 0,branch = 0;
 	struct notejudge_t* info = (notejudge_t*)NoteInfo;
 
-	while (get_notes_finish() == false) {
+	while (scene_state == SCENE_MAINGAME) {
 
 		svcSleepThread(1000000);
 		OPTION_T Option;
@@ -777,6 +777,8 @@ void notes_judge(void* NoteInfo) {
 			update_balloon_count(0);
 		}
 	}
+	time_ini();
+	return;
 }
 
 /*inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch) {
