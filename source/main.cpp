@@ -253,10 +253,6 @@ int main() {
 		case SCENE_SELECTSONG:	//選曲
 
 			if (cnt == 0) {
-				threadJoin(notesjudge, 100000000);
-				threadFree(notesjudge);
-				notesjudge = NULL;
-
 				select_ini();
 				set_measure();
 				bgcnt = -1;
@@ -342,6 +338,9 @@ int main() {
 					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
+					threadJoin(notesjudge, 1000000000);
+					threadFree(notesjudge);
+					notesjudge = NULL;
 				}
 				else {
 					warning = tmp;
@@ -452,7 +451,7 @@ int main() {
 
 			NoteInfo.donc = &isDon;
 			NoteInfo.katsuc = &isKatsu;
-			NoteInfo.count = &cnt;
+			NoteInfo.count = &notes_cnt;
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
