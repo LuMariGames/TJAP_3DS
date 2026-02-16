@@ -476,7 +476,6 @@ void notes_judge(void* NoteInfo) {
 
 	while (scene_state == SCENE_MAINGAME) {
 
-		svcSleepThread(1000000);
 		OPTION_T Option;
 		get_option(&Option);
 		CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
@@ -520,6 +519,7 @@ void notes_judge(void* NoteInfo) {
 
 		if (Option.isAuto) {	//オート
 
+			svcSleepThread(1000000);
 			for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
 
 				if (Notes[i].flag && !Notes[i].isDummy && Notes[i].judge_time <= CurrentTimeNotes &&
@@ -558,6 +558,7 @@ void notes_judge(void* NoteInfo) {
 
 					play_sound(SOUND_DON);
 				}
+				svcSleepThread(15666667);
 			}
 
 			if (JudgeBalloonState != -1) {	//風船
@@ -586,11 +587,13 @@ void notes_judge(void* NoteInfo) {
 					}
 					else update_score(BALLOON);
 				}
+				svcSleepThread(15666667);
 			}
 		}
 
 		else if (!Option.isAuto) {			//手動
 
+			svcSleepThread(16666667);
 			for (int j = 0,sd = 0,sk = 0,gn = ((isDon >= isKatsu) ? isDon : isKatsu); j < gn; ++j) {
 
 				//判定すべきノーツを検索
