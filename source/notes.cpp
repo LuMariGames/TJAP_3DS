@@ -480,15 +480,12 @@ void notes_judge(void* NoteInfo) {
 
 	double CurrentTimeNotes = 0;
 	int isDon = 0,isKatsu = 0,cnt = 0,branch = 0;
-	struct notejudge_t* info = (notejudge_t*)NoteInfo;
 
-	while (true) {
+	while (get_scene() == SCENE_MAINGAME) {
 
-		if (get_scene() != SCENE_MAINGAME) {
-			break;
-		}
 		OPTION_T Option;
 		get_option(&Option);
+		struct notejudge_t* info = (notejudge_t*)NoteInfo;
 		CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
 		isDon = *info->donc,isKatsu = *info->katsuc,cnt = *info->count,branch = ((Branch.course == -1) ? 0 : Branch.course - 11);
 
