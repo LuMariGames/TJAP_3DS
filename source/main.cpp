@@ -23,7 +23,7 @@ C2D_Sprite sprites[164];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-Thread chartload,notesjudge = NULL;
+Thread chartload;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
@@ -120,6 +120,7 @@ int main() {
 	int ComboCnt = 0, cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
+	static Thread notesjudge = NULL;
 
 	load_option();
 	get_option(&Option);
@@ -338,11 +339,6 @@ int main() {
 					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
-					if (notesjudge != NULL) {
-						threadJoin(notesjudge, U64_MAX);
-						threadFree(notesjudge);
-						notesjudge = NULL;
-					}
 				}
 				else {
 					warning = tmp;
@@ -485,7 +481,7 @@ int main() {
 
 			if (isNotesStart) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (notes_cnt == 0) notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x3f, 0, true);
+				if (notes_cnt == 0) notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x3f, -2, true);
 				if (!isPause) ++notes_cnt;
 			}
 			draw_score(sprites);
