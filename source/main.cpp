@@ -647,7 +647,6 @@ int main() {
 		threadFree(notesjudge);
 		notesjudge = NULL;
 	}
-
 	exit_main();
 	exit(0);
 }
