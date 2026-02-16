@@ -120,7 +120,7 @@ int main() {
 	int ComboCnt = 0, cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
-	static Thread notesjudge = NULL;
+	Thread notesjudge;
 
 	load_option();
 	get_option(&Option);
