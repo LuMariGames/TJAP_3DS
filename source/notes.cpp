@@ -174,7 +174,10 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						}
 					}
 
-					Notes[id].flag = true;
+					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
+					//Notes[id].create_time = CurrentTimeNotes;
+					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
+					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].notes_max = NotesCount;
 					Notes[id].num = NotesNumber;
 					Notes[id].scroll = Measure[MeasureCount].scroll*Option.speed;
@@ -182,13 +185,10 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
-					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
-					//Notes[id].create_time = CurrentTimeNotes;
-					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
-					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].isDummy = Measure[MeasureCount].isDummy;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
+					Notes[id].flag = true;
 
 					PreNotesKnd = knd;
 

@@ -253,7 +253,7 @@ int main() {
 		case SCENE_SELECTSONG:	//選曲
 
 			if (cnt == 0) {
-				threadJoin(notesjudge, U64_MAX);
+				threadJoin(notesjudge, 100000000);
 				threadFree(notesjudge);
 				notesjudge = NULL;
 
