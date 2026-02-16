@@ -188,7 +188,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].isDummy = Measure[MeasureCount].isDummy;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
-					Notes[id].flag = true;
 
 					PreNotesKnd = knd;
 
@@ -201,6 +200,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						roll_id = make_roll_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
+							Notes[id].flag = true;
 						}
 						else {
 							delete_notes(id);
@@ -212,6 +212,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						roll_id = make_roll_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
+							Notes[id].flag = true;
 						}
 						else {
 							delete_notes(id);
@@ -225,6 +226,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						roll_id = make_balloon_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
+							Notes[id].flag = true;
 						}
 						else {
 							delete_notes(id);
@@ -240,6 +242,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_ROLLEND;
 								RollState = 0;
+								Notes[id].flag = true;
 							}
 							else {
 								delete_notes(id);
@@ -252,6 +255,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_BIGROLLEND;
 								RollState = 0;
+								Notes[id].flag = true;
 							}
 							else {
 								delete_notes(id);
@@ -265,6 +269,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_BALLOONEND;
 								RollState = 0;
+								Notes[id].flag = true;
 							}
 							else {
 								delete_notes(id);
@@ -276,6 +281,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							break;
 						}
 						RollState = 0;
+						break;
+					default:
+						Notes[id].flag = true;
 						break;
 					}
 					++NotesNumber;
