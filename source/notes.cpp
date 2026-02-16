@@ -479,7 +479,7 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 void auto_judge(void* NoteInfo) {
 
 	double CurrentTimeNotes = 0;
-	int isDon = 0,isKatsu = 0,cnt = 0,branch = 0;
+	int cnt = 0,branch = 0;
 	struct notejudge_t* info = (notejudge_t*)NoteInfo;
 
 	while (get_scene() == SCENE_MAINGAME) {
@@ -490,10 +490,7 @@ void auto_judge(void* NoteInfo) {
 		if (Option.isAuto) {
 
 			CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
-			isDon = *info->donc,isKatsu = *info->katsuc,cnt = *info->count,branch = ((Branch.course == -1) ? 0 : Branch.course - 11);
-
-			int CurrentJudgeNotes[2] = { -1,-1 };		//現在判定すべきノーツ ドン,カツ
-			double CurrentJudgeNotesLag[2] = { -1,-1 };	//判定すべきノーツの誤差(s)
+			cnt = *info->count,branch = ((Branch.course == -1) ? 0 : Branch.course - 11);
 
 			JudgeRollState = -1;
 
