@@ -774,7 +774,7 @@ void notes_judge(void* NoteInfo) {
 					++kc;
 				}
 			}
-			svcSleepThread(15000000);
+			svcSleepThread(1000000);
 		}
 
 		//風船の消去処理
