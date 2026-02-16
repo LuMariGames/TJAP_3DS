@@ -482,8 +482,12 @@ void notes_judge(void* NoteInfo) {
 	int isDon = 0,isKatsu = 0,cnt = 0,branch = 0;
 	struct notejudge_t* info = (notejudge_t*)NoteInfo;
 
-	while (get_scene() == 110) {
+	while (true) {
 
+		if (get_scene() == 110) {
+			time_ini();
+			return;
+		}
 		OPTION_T Option;
 		get_option(&Option);
 		CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
@@ -788,7 +792,6 @@ void notes_judge(void* NoteInfo) {
 			update_balloon_count(0);
 		}
 	}
-	time_ini();
 }
 
 /*inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch) {
