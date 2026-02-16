@@ -253,11 +253,6 @@ int main() {
 		case SCENE_SELECTSONG:	//選曲
 
 			if (cnt == 0) {
-				if (notesjudge != NULL) {
-					threadJoin(notesjudge, 1000000000);
-					threadFree(notesjudge);
-					notesjudge = NULL;
-				}
 				select_ini();
 				set_measure();
 				bgcnt = -1;
@@ -641,11 +636,6 @@ int main() {
 			if (katsu_cnt > 0) --katsu_cnt;
 			if (tch_cnt > 0) --tch_cnt;
 		}
-	}
-	if (notesjudge != NULL) {
-		threadJoin(notesjudge, 1000000000);
-		threadFree(notesjudge);
-		notesjudge = NULL;
 	}
 	exit_main();
 	exit(0);
