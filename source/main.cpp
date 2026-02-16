@@ -253,6 +253,11 @@ int main() {
 		case SCENE_SELECTSONG:	//選曲
 
 			if (cnt == 0) {
+				if (notesjudge != NULL) {
+					threadJoin(notesjudge, 1000000000);
+					threadFree(notesjudge);
+					notesjudge = NULL;
+				}
 				select_ini();
 				set_measure();
 				bgcnt = -1;
@@ -408,7 +413,7 @@ int main() {
 
 			if (cnt == -60) scene_state = SCENE_MAINGAME;
 			break;
-			
+
 		case SCENE_MAINGAME:		//演奏画面
 
 			if (!isPause) {
@@ -485,7 +490,7 @@ int main() {
 
 			if (isNotesStart) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (notes_cnt == 0) notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x18, 0, true);
+				if (notes_cnt == 0) notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x3f, 0, true);
 				if (!isPause) ++notes_cnt;
 			}
 			draw_score(sprites);
@@ -637,6 +642,12 @@ int main() {
 			if (tch_cnt > 0) --tch_cnt;
 		}
 	}
+	if (notesjudge != NULL) {
+		threadJoin(notesjudge, 1000000000);
+		threadFree(notesjudge);
+		notesjudge = NULL;
+	}
+
 	exit_main();
 	exit(0);
 }

@@ -11,7 +11,7 @@
 int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
-extern int isBranch,course,stme,scene_state;
+extern int isBranch,course,stme;
 extern double black;
 C2D_Font font;
 
@@ -476,13 +476,15 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 	}
 }
 
+extern int scene_state;
+
 void notes_judge(void* NoteInfo) {
 
 	double CurrentTimeNotes = 0;
 	int isDon = 0,isKatsu = 0,cnt = 0,branch = 0;
 	struct notejudge_t* info = (notejudge_t*)NoteInfo;
 
-	while (scene_state == SCENE_MAINGAME) {
+	while (scene_state == 110) {
 
 		OPTION_T Option;
 		get_option(&Option);
