@@ -476,7 +476,7 @@ void notes_judge(void* NoteInfo) {
 
 	while (get_notes_finish() == false) {
 
-		svcSleepThread(100000);
+		svcSleepThread(1000000);
 		OPTION_T Option;
 		get_option(&Option);
 		CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
