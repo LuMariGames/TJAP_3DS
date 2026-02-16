@@ -601,7 +601,6 @@ void notes_judge(void* NoteInfo) {
 
 		else if (!Option.isAuto) {			//手動
 
-			svcSleepThread(16666667);
 			for (int j = 0,sd = 0,sk = 0,gn = ((isDon >= isKatsu) ? isDon : isKatsu); j < gn; ++j) {
 
 				//判定すべきノーツを検索
@@ -775,6 +774,7 @@ void notes_judge(void* NoteInfo) {
 					++kc;
 				}
 			}
+			svcSleepThread(16666667);
 		}
 
 		//風船の消去処理
