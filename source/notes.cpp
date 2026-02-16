@@ -774,7 +774,7 @@ void notes_judge(void* NoteInfo) {
 					++kc;
 				}
 			}
-			C3D_FrameSync()
+			C3D_FrameSync();
 		}
 
 		//風船の消去処理
