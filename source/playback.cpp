@@ -231,7 +231,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	if (thread != NULL) {
 		stopPlayback();
 
-		threadJoin(thread, 4000000000);
+		threadJoin(thread, U64_MAX);
 		threadFree(thread);
 		thread = NULL;
 	}

@@ -789,7 +789,6 @@ void notes_judge(void* NoteInfo) {
 		}
 	}
 	time_ini();
-	return;
 }
 
 /*inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch) {

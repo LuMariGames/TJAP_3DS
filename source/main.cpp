@@ -23,7 +23,7 @@ C2D_Sprite sprites[164];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-Thread chartload,notesjudge;
+Thread chartload,notesjudge = NULL;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
@@ -338,9 +338,11 @@ int main() {
 					tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
-					threadJoin(notesjudge, 1000000000);
-					threadFree(notesjudge);
-					notesjudge = NULL;
+					if (notesjudge != NULL) {
+						threadJoin(notesjudge, 1000000000);
+						threadFree(notesjudge);
+						notesjudge = NULL;
+					}
 				}
 				else {
 					warning = tmp;
