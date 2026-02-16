@@ -31,8 +31,8 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
 bool isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isPotatoBreakDisp = false,
-	isPttBorder = false,isGOGOTime = false,isLevelHold = false;
-double JudgeMakeTime,JudgeY,JudgeEffectCnt;
+isPttBorder = false,isGOGOTime = false,isLevelHold = false;
+double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 
 void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],MEASURE_T Measure[MEASURE_MAX],int cnt,C2D_Sprite sprites[SPRITES_NUMER]) {
@@ -41,7 +41,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes = Measure[stme].create_time;
+	double CurrentTimeNotes = OffSetTime = Measure[stme].create_time;
 	if (cnt >= 0) CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
 	if (cnt == 0) Branch.course = Measure[stme].branch;
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
@@ -461,13 +461,11 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_BAD].image, &sprites[SPRITE_JUDGE_BAD].params, NULL);
 			break;
-
 		}
 		//snprintf(buf_notes, sizeof(buf_notes), "%f", JudgeY);
 		//draw_debug(92, JudgeY, buf_notes);
 		if (CurrentTimeNotes - JudgeMakeTime >= 0.5) isJudgeDisp = false;
 	}
-
 }
 
 void notes_judge(void* NoteInfo) {
@@ -480,8 +478,8 @@ void notes_judge(void* NoteInfo) {
 		OPTION_T Option;
 		get_option(&Option);
 		struct notejudge_t* info = (notejudge_t*)NoteInfo;
-		CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
-		isDon = info->donc,isKatsu = info->katsuc,cnt = info->count,branch = ((Branch.course == -1) ? 0 : Branch.course - 11);
+		CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
+		isDon = *info->donc,isKatsu = *info->katsuc,cnt = *info->count,branch = ((Branch.course == -1) ? 0 : Branch.course - 11);
 
 		int CurrentJudgeNotes[2] = { -1,-1 };		//現在判定すべきノーツ ドン,カツ
 		double CurrentJudgeNotesLag[2] = { -1,-1 };	//判定すべきノーツの誤差(s)

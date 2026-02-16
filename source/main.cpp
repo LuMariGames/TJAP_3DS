@@ -16,7 +16,6 @@
 #include "mp3.h"
 #include "vorbis.h"
 
-
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
@@ -447,9 +446,9 @@ int main() {
 				}
 			}
 
-			NoteInfo.donc = isDon;
-			NoteInfo.katsuc = isKatsu;
-			NoteInfo.count = cnt;
+			NoteInfo.donc = &isDon;
+			NoteInfo.katsuc = &isKatsu;
+			NoteInfo.count = &cnt;
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
@@ -481,6 +480,7 @@ int main() {
 
 			if (isNotesStart) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+				if (notes_cnt == 0) notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x18, 0, true);
 				if (!isPause) ++notes_cnt;
 			}
 			draw_score(sprites);
@@ -555,10 +555,7 @@ int main() {
 			//譜面が先
 			if (offset > 0 && (!isNotesStart || !isMusicStart) && measure <= 0) {
 
-				if (CurrentTimeMain >= 0 && !isNotesStart) {
-					isNotesStart = true;
-					notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x18, 0, true);
-				}
+				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
 				if (CurrentTimeMain >= offset + FirstMeasureTime && !isMusicStart) {
 					isPlayMain = true;
 					isMusicStart = true;
@@ -572,10 +569,7 @@ int main() {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
-					isNotesStart = true;
-					notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x18, 0, true);
-				}
+				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) isNotesStart = true;
 			}
 			else if (measure > 0) {
 
@@ -583,10 +577,7 @@ int main() {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= 0 && !isNotesStart) {
-					isNotesStart = true;
-					notesjudge = threadCreate(notes_judge, (void*)&NoteInfo, 8192, 0x18, 0, true);
-				}
+				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
 			}
 
 			if (TotalBadCount > 0) {
