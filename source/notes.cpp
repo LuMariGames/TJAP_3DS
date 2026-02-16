@@ -484,9 +484,8 @@ void notes_judge(void* NoteInfo) {
 
 	while (true) {
 
-		if (get_scene() == 110) {
-			time_ini();
-			return;
+		if (get_scene() != SCENE_MAINGAME) {
+			break;
 		}
 		OPTION_T Option;
 		get_option(&Option);
@@ -792,6 +791,8 @@ void notes_judge(void* NoteInfo) {
 			update_balloon_count(0);
 		}
 	}
+	time_ini();
+	return;
 }
 
 /*inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch) {
