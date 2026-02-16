@@ -339,7 +339,7 @@ int main() {
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
 					if (notesjudge != NULL) {
-						threadJoin(notesjudge, 1000000000);
+						threadJoin(notesjudge, U64_MAX);
 						threadFree(notesjudge);
 						notesjudge = NULL;
 					}
