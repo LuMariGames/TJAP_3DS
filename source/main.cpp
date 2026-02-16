@@ -23,7 +23,7 @@ C2D_Sprite sprites[164];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-Thread chartload;
+Thread chartload,notesjudge;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
@@ -120,7 +120,6 @@ int main() {
 	int ComboCnt = 0, cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
-	Thread notesjudge;
 
 	load_option();
 	get_option(&Option);
