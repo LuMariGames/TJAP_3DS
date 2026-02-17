@@ -38,12 +38,11 @@ typedef struct {
 
 }BRANCH_T;
 
-/*struct notejudge_t {
+struct notejudge_t {
 	int* donc;
 	int* katsuc;
 	int* count;
-	int* bth;
-};*/
+};
 
 void notes_main(
 	int isDon, int isKatsu,
@@ -55,3 +54,4 @@ init_notes(TJA_HEADER_T TJA_Header),draw_title(),draw_condition(),
 newfont(),fontfree(),plus_measure(),min_measure(),set_measure();
 int ctoi(char c), get_branch_course();
 bool get_notes_finish(), get_isPttBorder();
+void auto_judge(void* NoteInfo);
