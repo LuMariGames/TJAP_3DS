@@ -16,7 +16,6 @@
 #include "mp3.h"
 #include "vorbis.h"
 
-
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
@@ -24,7 +23,7 @@ C2D_Sprite sprites[164];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-Thread chartload;
+Thread chartload,notesjudge;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
@@ -102,6 +101,7 @@ bool check_dsp1() { //DSP1を起動しているか確認
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
 memtch_x,memtch_y;
+struct notejudge_t NoteInfo;
 
 int main() {
 
@@ -403,7 +403,7 @@ int main() {
 
 			if (cnt == -60) scene_state = SCENE_MAINGAME;
 			break;
-			
+
 		case SCENE_MAINGAME:		//演奏画面
 
 			if (!isPause) {
@@ -446,6 +446,10 @@ int main() {
 				}
 			}
 
+			NoteInfo.donc = &isDon;
+			NoteInfo.katsuc = &isKatsu;
+			NoteInfo.count = &notes_cnt;
+
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 			if (isAniBg && bgcnt == 0) C2D_DrawImage(sprites[163].image, &sprites[SPRITE_BACKGROUND].params, NULL);
@@ -476,6 +480,7 @@ int main() {
 
 			if (isNotesStart) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
+				if (notes_cnt == 0) notesjudge = threadCreate(auto_judge, (void*)&NoteInfo, 8192, 0x3f, -2, true);
 				if (!isPause) ++notes_cnt;
 			}
 			draw_score(sprites);
@@ -564,9 +569,7 @@ int main() {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) {
-					isNotesStart = true;
-				}
+				if (CurrentTimeMain >= (-1.0) * offset && !isNotesStart) isNotesStart = true;
 			}
 			else if (measure > 0) {
 
@@ -574,9 +577,7 @@ int main() {
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain >= 0 && !isNotesStart) {
-					isNotesStart = true;
-				}
+				if (CurrentTimeMain >= 0 && !isNotesStart) isNotesStart = true;
 			}
 
 			if (TotalBadCount > 0) {

@@ -11,7 +11,7 @@
 int balloon[4][256], BalloonCount[4], TotalFailedCount, NowMeCount, dcd, JBS = -1;
 double bpm, offset;
 float NowBPM = 120.0f;
-extern int isBranch, course, stme;
+extern int isBranch,course,stme;
 extern double black;
 C2D_Font font;
 
@@ -31,8 +31,8 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
 bool isNotesLoad = true,isJudgeDisp = false,isBalloonBreakDisp = false,isPotatoBreakDisp = false,
-	isPttBorder = false,isGOGOTime = false,isLevelHold = false;
-double JudgeMakeTime,JudgeY,JudgeEffectCnt;
+isPttBorder = false,isGOGOTime = false,isLevelHold = false;
+double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 
 void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],MEASURE_T Measure[MEASURE_MAX],int cnt,C2D_Sprite sprites[SPRITES_NUMER]) {
@@ -41,7 +41,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 	get_option(&Option);
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes = Measure[stme].create_time;
+	double CurrentTimeNotes = OffSetTime = Measure[stme].create_time;
 	if (cnt >= 0) CurrentTimeNotes = get_current_time(TIME_NOTES) + Measure[stme].create_time;
 	if (cnt == 0) Branch.course = Measure[stme].branch;
 	//snprintf(get_buffer(), BUFFER_SIZE, "fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f", get_FirstMeasureTime(), CurrentTimeNotes, CurrentTimeNotes - Measure[0].create_time, Measure[stme].create_time);
@@ -174,7 +174,10 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						}
 					}
 
-					Notes[id].flag = true;
+					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
+					//Notes[id].create_time = CurrentTimeNotes;
+					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
+					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].notes_max = NotesCount;
 					Notes[id].num = NotesNumber;
 					Notes[id].scroll = Measure[MeasureCount].scroll*Option.speed;
@@ -182,10 +185,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].bpm = Measure[MeasureCount].bpm;
 					Notes[id].knd = knd;
 					Notes[id].x = Notes[id].x_ini;
-					double NoteTime = 240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
-					//Notes[id].create_time = CurrentTimeNotes;
-					Notes[id].pop_time = Measure[MeasureCount].pop_time+NoteTime;
-					Notes[id].judge_time = Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].isDummy = Measure[MeasureCount].isDummy;
 					Notes[id].roll_id = -1;
 					Notes[id].isThrough = false;
@@ -201,6 +200,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						roll_id = make_roll_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
+							Notes[id].flag = true;
 						}
 						else {
 							delete_notes(id);
@@ -212,6 +212,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						roll_id = make_roll_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
+							Notes[id].flag = true;
 						}
 						else {
 							delete_notes(id);
@@ -225,6 +226,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						roll_id = make_balloon_start(id);
 						if (roll_id != -1) {
 							Notes[id].roll_id = roll_id;
+							Notes[id].flag = true;
 						}
 						else {
 							delete_notes(id);
@@ -240,6 +242,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_ROLLEND;
 								RollState = 0;
+								Notes[id].flag = true;
 							}
 							else {
 								delete_notes(id);
@@ -252,6 +255,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_BIGROLLEND;
 								RollState = 0;
+								Notes[id].flag = true;
 							}
 							else {
 								delete_notes(id);
@@ -265,6 +269,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].roll_id = roll_id;
 								Notes[id].knd = NOTES_BALLOONEND;
 								RollState = 0;
+								Notes[id].flag = true;
 							}
 							else {
 								delete_notes(id);
@@ -276,6 +281,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 							break;
 						}
 						RollState = 0;
+						break;
+					default:
+						Notes[id].flag = true;
 						break;
 					}
 					++NotesNumber;
@@ -461,13 +469,148 @@ void draw_judge(double CurrentTimeNotes, C2D_Sprite sprites[SPRITES_NUMER]) {
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD], NOTES_JUDGE_X, JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_BAD].image, &sprites[SPRITE_JUDGE_BAD].params, NULL);
 			break;
-
 		}
 		//snprintf(buf_notes, sizeof(buf_notes), "%f", JudgeY);
 		//draw_debug(92, JudgeY, buf_notes);
 		if (CurrentTimeNotes - JudgeMakeTime >= 0.5) isJudgeDisp = false;
 	}
+}
 
+void auto_judge(void* NoteInfo) {
+
+	double CurrentTimeNotes = 0;
+	int cnt = 0,branch = 0;
+	struct notejudge_t* info = (notejudge_t*)NoteInfo;
+
+	while (get_scene() == SCENE_MAINGAME) {
+
+		OPTION_T Option;
+		get_option(&Option);
+		CurrentTimeNotes = get_current_time(TIME_NOTES) + OffSetTime;
+
+		if (Option.isAuto && !get_isPause()) {
+
+			cnt = *info->count,branch = ((Branch.course == -1) ? 0 : Branch.course - 11);
+
+			JudgeRollState = -1;
+
+			//連打の状態
+			for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
+
+				if (RollNotes[i].flag && !Notes[RollNotes[i].start_id].isDummy &&
+					Notes[RollNotes[i].start_id].judge_time < CurrentTimeNotes &&
+					(RollNotes[i].end_id == -1 || (RollNotes[i].end_id != -1 && Notes[RollNotes[i].end_id].judge_time > CurrentTimeNotes))) JudgeRollState = RollNotes[i].knd;
+			}
+
+			//風船の処理
+			int JudgeBalloonState = -1;
+			for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
+
+				if (BalloonNotes[i].flag && !Notes[BalloonNotes[i].start_id].isDummy &&
+					Notes[BalloonNotes[i].start_id].judge_time <= CurrentTimeNotes) {
+					JudgeBalloonState = i;
+					break;
+				}
+			}
+			if (JBS != JudgeBalloonState && JudgeBalloonState != -1) {
+				BalloonNotes[JudgeBalloonState].current_hit = 0;
+				if (balloon[branch][BalloonCount[branch]] > 0) BalloonNotes[JudgeBalloonState].need_hit = balloon[branch][BalloonCount[branch]];
+				else BalloonNotes[JudgeBalloonState].need_hit = 5;
+				if (branch == 0) ++BalloonCount[0];
+				else {
+					++BalloonCount[1];
+					++BalloonCount[2];
+					++BalloonCount[3];
+				}
+			}
+			JBS = JudgeBalloonState;
+
+			for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
+
+				if (Notes[i].flag && !Notes[i].isDummy && Notes[i].judge_time <= CurrentTimeNotes &&
+					Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
+
+					switch (Notes[i].knd) {
+					case NOTES_DON:
+						play_sound(SOUND_DON);
+						make_judge(PERFECT, CurrentTimeNotes);
+						break;
+					case NOTES_BIGDON:
+						play_sound(SOUND_DON);
+						make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
+						break;
+					case NOTES_KATSU:
+						play_sound(SOUND_KATSU);
+						make_judge(PERFECT, CurrentTimeNotes);
+						break;
+					case NOTES_BIGKATSU:
+						play_sound(SOUND_KATSU);
+						make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
+						break;
+					}
+					if (Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU) update_score(SPECIAL_PERFECT);
+					else if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU) update_score(PERFECT);
+					delete_notes(i);
+				}
+			}
+			svcSleepThread(1000000);
+
+			if (JudgeRollState != -1) {	//連打
+
+				if (cnt % Option.rollspeed <= 0) {
+
+					if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
+					else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
+
+					play_sound(SOUND_DON);
+				}
+				svcSleepThread(15666667);
+			}
+
+			if (JudgeBalloonState != -1) {	//風船
+
+				if (cnt % Option.rollspeed <= 0) {
+
+					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
+						isDendenCH == 1) {
+						play_sound(SOUND_KATSU);
+						isDendenCH = 0;
+					}
+					else {
+						play_sound(SOUND_DON);
+						isDendenCH = 1;
+					}
+
+					++BalloonNotes[JudgeBalloonState].current_hit;
+					if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
+
+						update_balloon_count(BalloonNotes[JudgeBalloonState].need_hit - BalloonNotes[JudgeBalloonState].current_hit);
+						update_score(BALLOON_BREAK);	//破裂
+						if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
+							BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
+						if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+						else make_balloon_break();
+					}
+					else update_score(BALLOON);
+				}
+				svcSleepThread(15666667);
+			}
+
+			//風船の消去処理
+			if (JudgeBalloonState != -1 && BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
+
+				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN) play_sound(SOUND_DENDENBREAK);
+				else play_sound(SOUND_BALLOONBREAK);
+
+				if (BalloonNotes[JudgeBalloonState].end_id != -1) delete_notes(BalloonNotes[JudgeBalloonState].end_id);
+				else delete_notes(BalloonNotes[JudgeBalloonState].start_id);
+				update_balloon_count(0);
+			}
+		}
+		//else svcSleepThread(17800000);
+	}
+	time_ini();
+	return;
 }
 
 inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch) {
@@ -511,251 +654,178 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 	}
 	JBS = JudgeBalloonState;
 
-	if (Option.isAuto) {	//オート
 
-		for (int i = 0, j = Notes.size() - 1; i < j; ++i) {
+	for (int j = 0,sd = 0,sk = 0,gn = ((isDon >= isKatsu) ? isDon : isKatsu); j < gn; ++j) {
 
-			if (Notes[i].flag && !Notes[i].isDummy && Notes[i].judge_time <= CurrentTimeNotes &&
-				Notes[i].isThrough == false && Notes[i].knd < NOTES_ROLL) {
-
-				switch (Notes[i].knd) {
-				case NOTES_DON:
-					play_sound(SOUND_DON);
-					make_judge(PERFECT, CurrentTimeNotes);
-					break;
-				case NOTES_BIGDON:
-					play_sound(SOUND_DON);
-					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
-					break;
-				case NOTES_KATSU:
-					play_sound(SOUND_KATSU);
-					make_judge(PERFECT, CurrentTimeNotes);
-					break;
-				case NOTES_BIGKATSU:
-					play_sound(SOUND_KATSU);
-					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
-					break;
+		//判定すべきノーツを検索
+		for (int i = 0, j = Notes.size(); i < j; ++i) {
+	
+			if (!Notes[i].isDummy && Notes[i].flag) {
+	
+				if (Notes[i].knd == NOTES_DON ||
+					Notes[i].knd == NOTES_BIGDON ||
+					Notes[i].knd == NOTES_BOMB) {	//ドン
+	
+					if (CurrentJudgeNotesLag[0] > fabs(Notes[i].judge_time - CurrentTimeNotes) ||
+						CurrentJudgeNotesLag[0] == -1) {
+	
+						CurrentJudgeNotes[0] = i;
+						CurrentJudgeNotesLag[0] = fabs(Notes[i].judge_time - CurrentTimeNotes);
+					}
 				}
-				if (Notes[i].knd == NOTES_BIGDON || Notes[i].knd == NOTES_BIGKATSU) update_score(SPECIAL_PERFECT);
-				else if (Notes[i].knd == NOTES_DON || Notes[i].knd == NOTES_KATSU) update_score(PERFECT);
-				delete_notes(i);
+				if (Notes[i].knd == NOTES_KATSU ||
+					Notes[i].knd == NOTES_BIGKATSU ||
+					Notes[i].knd == NOTES_BOMB) {	//カツ
+	
+					if (CurrentJudgeNotesLag[1] > fabs(Notes[i].judge_time - CurrentTimeNotes) ||
+						CurrentJudgeNotesLag[1] == -1) {
+	
+						CurrentJudgeNotes[1] = i;
+						CurrentJudgeNotesLag[1] = fabs(Notes[i].judge_time - CurrentTimeNotes);
+					}
+				}
 			}
 		}
-
-		if (JudgeRollState != -1) {	//連打
-
-			if (cnt % Option.rollspeed <= 0) {
-
-				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
-				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
-
-				play_sound(SOUND_DON);
-			}
-		}
-
-		if (JudgeBalloonState != -1) {	//風船
-
-			if (cnt % Option.rollspeed <= 0) {
-
-				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN &&
-					isDendenCH == 1) {
-					play_sound(SOUND_KATSU);
-					isDendenCH = 0;
+	
+		bool isBig,isBomb;
+		if ((isDon > sd && Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGDON) || (isKatsu > sk && Notes[CurrentJudgeNotes[1]].knd == NOTES_BIGKATSU)) isBig = true;
+		else isBig = false;
+		if ((isDon > sd && Notes[CurrentJudgeNotes[0]].knd == NOTES_BOMB) || (isKatsu > sk && Notes[CurrentJudgeNotes[1]].knd == NOTES_BOMB)) isBomb = true;
+		else isBomb = false;
+	
+		if (isDon > sd && CurrentJudgeNotes[0] != -1) {	//ドン
+	
+			if (CurrentJudgeNotesLag[0] <= Option.judge_range_perfect) {			//良
+				delete_notes(CurrentJudgeNotes[0]);
+				if (isBig) {
+					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
+					update_score(SPECIAL_PERFECT);
+				}
+				else if (isBomb) {
+					update_score(BAD);
 				}
 				else {
-					play_sound(SOUND_DON);
-					isDendenCH = 1;
+					make_judge(PERFECT, CurrentTimeNotes);
+					update_score(PERFECT);
 				}
-
-				++BalloonNotes[JudgeBalloonState].current_hit;
-				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
-
-					update_balloon_count(BalloonNotes[JudgeBalloonState].need_hit - BalloonNotes[JudgeBalloonState].current_hit);
-					update_score(BALLOON_BREAK);	//破裂
-					if (BalloonNotes[JudgeBalloonState].current_hit > BalloonNotes[JudgeBalloonState].need_hit)
-						BalloonNotes[JudgeBalloonState].current_hit = BalloonNotes[JudgeBalloonState].need_hit;
-					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
-					else make_balloon_break();
-				}
-				else update_score(BALLOON);
 			}
+			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_nice) {	//可
+				delete_notes(CurrentJudgeNotes[0]);
+				if (isBig) {
+					make_judge(SPECIAL_NICE, CurrentTimeNotes);
+					update_score(SPECIAL_NICE);
+				}
+				else if (isBomb) {
+					update_score(BAD);
+				}
+				else {
+					make_judge(NICE, CurrentTimeNotes);
+					update_score(NICE);
+				}
+			}
+			else if (CurrentJudgeNotesLag[0] <= Option.judge_range_bad) {	//不可
+				make_judge(BAD, CurrentTimeNotes);
+				delete_notes(CurrentJudgeNotes[0]);
+				update_score(BAD);
+			}
+			CurrentJudgeNotesLag[0] = -1;
+			CurrentJudgeNotes[0] = -1;
+			++sd;
+		}
+	
+		if (isKatsu > sk && CurrentJudgeNotes[1] != -1) {	//カツ
+	
+			if (CurrentJudgeNotesLag[1] <= Option.judge_range_perfect) {			//良
+				delete_notes(CurrentJudgeNotes[1]);
+				if (isBig) {
+					make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
+					update_score(SPECIAL_PERFECT);
+				}
+				else if (isBomb) {
+					update_score(BAD);
+				}
+				else {
+					make_judge(PERFECT, CurrentTimeNotes);
+					update_score(PERFECT);
+				}
+			}
+			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_nice) {	//可
+				delete_notes(CurrentJudgeNotes[1]);
+				if (isBig) {
+					make_judge(SPECIAL_NICE, CurrentTimeNotes);
+					update_score(SPECIAL_NICE);
+				}
+				else if (isBomb) {
+					update_score(BAD);
+				}
+				else {
+					make_judge(NICE, CurrentTimeNotes);
+					update_score(NICE);
+				}
+			}
+			else if (CurrentJudgeNotesLag[1] <= Option.judge_range_bad) {	//不可
+				make_judge(BAD, CurrentTimeNotes);
+				delete_notes(CurrentJudgeNotes[1]);
+				update_score(BAD);
+			}
+			CurrentJudgeNotesLag[1] = -1;
+			CurrentJudgeNotes[1] = -1;
+			++sk;
 		}
 	}
 
-	else if (!Option.isAuto) {			//手動
+	if (JudgeRollState != -1) {	//連打
 
-		for (int j = 0,sd = 0,sk = 0,gn = ((isDon >= isKatsu) ? isDon : isKatsu); j < gn; ++j) {
-
-			//判定すべきノーツを検索
-			for (int i = 0, j = Notes.size(); i < j; ++i) {
-	
-				if (!Notes[i].isDummy && Notes[i].flag) {
-	
-					if (Notes[i].knd == NOTES_DON ||
-						Notes[i].knd == NOTES_BIGDON ||
-						Notes[i].knd == NOTES_BOMB) {	//ドン
-	
-						if (CurrentJudgeNotesLag[0] > fabs(Notes[i].judge_time - CurrentTimeNotes) ||
-							CurrentJudgeNotesLag[0] == -1) {
-	
-							CurrentJudgeNotes[0] = i;
-							CurrentJudgeNotesLag[0] = fabs(Notes[i].judge_time - CurrentTimeNotes);
-						}
-					}
-					if (Notes[i].knd == NOTES_KATSU ||
-						Notes[i].knd == NOTES_BIGKATSU ||
-						Notes[i].knd == NOTES_BOMB) {	//カツ
-	
-						if (CurrentJudgeNotesLag[1] > fabs(Notes[i].judge_time - CurrentTimeNotes) ||
-							CurrentJudgeNotesLag[1] == -1) {
-	
-							CurrentJudgeNotes[1] = i;
-							CurrentJudgeNotesLag[1] = fabs(Notes[i].judge_time - CurrentTimeNotes);
-						}
-					}
-				}
-			}
-	
-			bool isBig,isBomb;
-			if ((isDon > sd && Notes[CurrentJudgeNotes[0]].knd == NOTES_BIGDON) || (isKatsu > sk && Notes[CurrentJudgeNotes[1]].knd == NOTES_BIGKATSU)) isBig = true;
-			else isBig = false;
-			if ((isDon > sd && Notes[CurrentJudgeNotes[0]].knd == NOTES_BOMB) || (isKatsu > sk && Notes[CurrentJudgeNotes[1]].knd == NOTES_BOMB)) isBomb = true;
-			else isBomb = false;
-	
-			if (isDon > sd && CurrentJudgeNotes[0] != -1) {	//ドン
-	
-				if (CurrentJudgeNotesLag[0] <= Option.judge_range_perfect) {			//良
-					delete_notes(CurrentJudgeNotes[0]);
-					if (isBig) {
-						make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
-						update_score(SPECIAL_PERFECT);
-					}
-					else if (isBomb) {
-						update_score(BAD);
-					}
-					else {
-						make_judge(PERFECT, CurrentTimeNotes);
-						update_score(PERFECT);
-					}
-				}
-				else if (CurrentJudgeNotesLag[0] <= Option.judge_range_nice) {	//可
-					delete_notes(CurrentJudgeNotes[0]);
-					if (isBig) {
-						make_judge(SPECIAL_NICE, CurrentTimeNotes);
-						update_score(SPECIAL_NICE);
-					}
-					else if (isBomb) {
-						update_score(BAD);
-					}
-					else {
-						make_judge(NICE, CurrentTimeNotes);
-						update_score(NICE);
-					}
-				}
-				else if (CurrentJudgeNotesLag[0] <= Option.judge_range_bad) {	//不可
-					make_judge(BAD, CurrentTimeNotes);
-					delete_notes(CurrentJudgeNotes[0]);
-					update_score(BAD);
-				}
-				CurrentJudgeNotesLag[0] = -1;
-				CurrentJudgeNotes[0] = -1;
-				++sd;
-			}
-	
-			if (isKatsu > sk && CurrentJudgeNotes[1] != -1) {	//カツ
-	
-				if (CurrentJudgeNotesLag[1] <= Option.judge_range_perfect) {			//良
-					delete_notes(CurrentJudgeNotes[1]);
-					if (isBig) {
-						make_judge(SPECIAL_PERFECT, CurrentTimeNotes);
-						update_score(SPECIAL_PERFECT);
-					}
-					else if (isBomb) {
-						update_score(BAD);
-					}
-					else {
-						make_judge(PERFECT, CurrentTimeNotes);
-						update_score(PERFECT);
-					}
-				}
-				else if (CurrentJudgeNotesLag[1] <= Option.judge_range_nice) {	//可
-					delete_notes(CurrentJudgeNotes[1]);
-					if (isBig) {
-						make_judge(SPECIAL_NICE, CurrentTimeNotes);
-						update_score(SPECIAL_NICE);
-					}
-					else if (isBomb) {
-						update_score(BAD);
-					}
-					else {
-						make_judge(NICE, CurrentTimeNotes);
-						update_score(NICE);
-					}
-				}
-				else if (CurrentJudgeNotesLag[1] <= Option.judge_range_bad) {	//不可
-					make_judge(BAD, CurrentTimeNotes);
-					delete_notes(CurrentJudgeNotes[1]);
-					update_score(BAD);
-				}
-				CurrentJudgeNotesLag[1] = -1;
-				CurrentJudgeNotes[1] = -1;
-				++sk;
-			}
+		for (int i = 0, j = (isDon + isKatsu); i < j; ++i) {
+			if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
+			else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
 		}
+	}
 
-		if (JudgeRollState != -1) {	//連打
+	int dc = 0,kc = 0;
+	while (JudgeBalloonState != -1 && (dc < isDon || kc < isKatsu)) {	//風船
 
-			for (int i = 0, j = (isDon + isKatsu); i < j; ++i) {
-				if (JudgeRollState == NOTES_ROLL) update_score(ROLL);
-				else if (JudgeRollState == NOTES_BIGROLL) update_score(BIG_ROLL);
+		if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && kc < isKatsu && isDendenCH != 0) {
+			++BalloonNotes[JudgeBalloonState].current_hit;
+			++kc;
+			isDendenCH = 0;
+			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
+
+				update_score(BALLOON_BREAK);	//破裂
+				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+				else make_balloon_break();
+				break;
 			}
+			else update_score(BALLOON);
 		}
+		else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && dc < isDon && isDendenCH <= 0) {
+			++BalloonNotes[JudgeBalloonState].current_hit;
+			++dc;
+			isDendenCH = 1;
+			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-		int dc = 0,kc = 0;
-		while (JudgeBalloonState != -1 && (dc < isDon || kc < isKatsu)) {	//風船
-
-			if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && kc < isKatsu && isDendenCH != 0) {
-				++BalloonNotes[JudgeBalloonState].current_hit;
-				++kc;
-				isDendenCH = 0;
-				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
-
-					update_score(BALLOON_BREAK);	//破裂
-					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
-					else make_balloon_break();
-					break;
-				}
-				else update_score(BALLOON);
+				update_score(BALLOON_BREAK);	//破裂
+				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+				else make_balloon_break();
+				break;
 			}
-			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_DENDEN && dc < isDon && isDendenCH <= 0) {
-				++BalloonNotes[JudgeBalloonState].current_hit;
-				++dc;
-				isDendenCH = 1;
-				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
+			else update_score(BALLOON);
+		}
+		else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd != NOTES_DENDEN && dc < isDon) {
+			++BalloonNotes[JudgeBalloonState].current_hit;
+			++dc;
+			if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
 
-					update_score(BALLOON_BREAK);	//破裂
-					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
-					else make_balloon_break();
-					break;
-				}
-				else update_score(BALLOON);
+				update_score(BALLOON_BREAK);	//破裂
+				if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
+				else make_balloon_break();
+				break;
 			}
-			else if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd != NOTES_DENDEN && dc < isDon) {
-				++BalloonNotes[JudgeBalloonState].current_hit;
-				++dc;
-				if (BalloonNotes[JudgeBalloonState].current_hit >= BalloonNotes[JudgeBalloonState].need_hit) {
-
-					update_score(BALLOON_BREAK);	//破裂
-					if (Notes[BalloonNotes[JudgeBalloonState].start_id].knd == NOTES_POTATO) make_potato_break();
-					else make_balloon_break();
-					break;
-				}
-				else update_score(BALLOON);
-			}
-			else {
-				++dc;
-				++kc;
-			}
+			else update_score(BALLOON);
+		}
+		else {
+			++dc;
+			++kc;
 		}
 	}
 
@@ -863,7 +933,7 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 			delete_notes(i);
 		}
 	}
-	notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt, ((Branch.course == -1) ? 0 : Branch.course - 11));
+	if (!Option.isAuto) notes_judge(CurrentTimeNotes, isDon, isKatsu, cnt, ((Branch.course == -1) ? 0 : Branch.course - 11));
 }
 
 inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
@@ -1335,7 +1405,7 @@ void draw_condition_text(float x, float y, const char *text, float *width, float
 	C2D_TextParse(&NotesText, g_NotesText, text);
 	C2D_TextOptimize(&NotesText);
 	C2D_TextGetDimensions(&NotesText, size, size, width, height);
-	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(black, black, black, 1.0f));
+	C2D_DrawText(&NotesText, C2D_WithColor, x, y, 1.0f, size, size, C2D_Color32f(1, 1, 1, 1.0f));
 }
 
 void draw_title() {
@@ -1354,27 +1424,28 @@ void draw_condition() {
 	get_option(&Option);
 	extern char *exam[4][4];
 	float width = 0, height = 0, tx = 0;
+	C2D_DrawRectSolid(40, 144, 0, 320, 76, C2D_Color32f(0, 0, 0, 0.75f));
 
 	for (int j = 0; j < 4; ++j) {
 
 		tx = 0;
-		if (strcmp(exam[j][0], "jb") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
-		else if (strcmp(exam[j][0], "jg") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
-		else if (strcmp(exam[j][0], "jp") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
-		else if (strcmp(exam[j][0], "s") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_SCORE], &width, &height);
-		else if (strcmp(exam[j][0], "r") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_ROLL], &width, &height);
-		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
-		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 148+20*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
+		if (strcmp(exam[j][0], "jb") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_BAD], &width, &height);
+		else if (strcmp(exam[j][0], "jg") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_NICE], &width, &height);
+		else if (strcmp(exam[j][0], "jp") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_PERFECT], &width, &height);
+		else if (strcmp(exam[j][0], "s") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_SCORE], &width, &height);
+		else if (strcmp(exam[j][0], "r") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_ROLL], &width, &height);
+		else if (strcmp(exam[j][0], "h") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_HIT], &width, &height);
+		else if (strcmp(exam[j][0], "g") == 0) draw_condition_text(50, 148+18*j, Text[get_lang()][TEXT_NUM_GAUGE], &width, &height);
 		tx += width;
-		draw_condition_text(50+tx, 148+20*j, exam[j][1], &width, &height);
+		draw_condition_text(50+tx, 148+18*j, exam[j][1], &width, &height);
 		tx += width;
 
 		if (strcmp(exam[j][0], "g") == 0) {
-			draw_condition_text(50+tx, 148+20*j, "%", &width, &height);
+			draw_condition_text(50+tx, 148+18*j, "%", &width, &height);
 			tx += width;
 		}
-		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
-		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 148+20*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
+		if (strcmp(exam[j][3], "m") == 0) draw_condition_text(50+tx, 148+18*j, Text[get_lang()][TEXT_NUM_UP], &width, &height);
+		else if (strcmp(exam[j][3], "l") == 0) draw_condition_text(50+tx, 148+18*j, Text[get_lang()][TEXT_NUM_DOWN], &width, &height);
 	}
 }
 inline void init_notes_structure() {
