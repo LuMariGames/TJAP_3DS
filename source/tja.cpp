@@ -955,10 +955,7 @@ void load_tja_notes(int course, LIST_T Song) {
 				Measure[i].create_time = Measure[i].judge_time;
 				break;
 			case COMMAND_JPOSSCROLL:
-				n = Measure[i].notes + 1;
-				while (n <= tja_cnt && tja_notes[n][0] == '#') ++n;
-				while (n < tja_cnt && n != Measure[j].notes) ++j;
-				Measure[i].create_time = Measure[j].judge_time;
+				Measure[i].create_time = Measure[i].pop_time;
 				break;
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
