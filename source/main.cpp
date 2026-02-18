@@ -480,7 +480,7 @@ int main() {
 
 			if (isNotesStart) {
 				tja_to_notes(isDon, isKatsu, notes_cnt, sprites);
-				if (notes_cnt == 0) notesjudge = threadCreate(auto_judge, (void*)&NoteInfo, 8192, 0x3f, -2, true);
+				if (notes_cnt == 0) notesjudge = threadCreate(auto_judge, (void*)&NoteInfo, 8192, 0x3f, 0, true);
 				if (!isPause) ++notes_cnt;
 			}
 			draw_score(sprites);
