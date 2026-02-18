@@ -607,7 +607,7 @@ void auto_judge(void* NoteInfo) {
 				update_balloon_count(0);
 			}
 		}
-		//else svcSleepThread(17800000);
+		else svcSleepThread(16666667);
 	}
 	time_ini();
 	return;
