@@ -952,9 +952,8 @@ void load_tja_notes(int course, LIST_T Song) {
 
 			switch (Measure[i].command) {
 			case COMMAND_END:
-				Measure[i].create_time = Measure[i].judge_time;
-				break;
 			case COMMAND_JPOSSCROLL:
+			case COMMAND_LEVELHOLD:
 				Measure[i].create_time = Measure[i].judge_time;
 				break;
 			case COMMAND_SECTION:
