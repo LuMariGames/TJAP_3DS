@@ -99,6 +99,9 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case COMMAND_JPOSSCROLL:
 						NOTES_JUDGE_X += (Command.val[1] * Command.val[2]);
 						break;
+					case COMMAND_LEVELHOLD:
+						isLevelHold = true;
+						break;
 					}
 					NotesCount = 0;
 					++MeasureCount;
@@ -345,9 +348,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 						Branch.wait = false;
 					}
 					else NotFalse = true;
-					break;
-				case COMMAND_LEVELHOLD:
-					isLevelHold = true;
 					break;
 				default:
 					break;
