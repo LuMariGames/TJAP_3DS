@@ -115,17 +115,17 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	subtex.width = 400;
 	subtex.height = 96;
 
-	for (u32 row = 0; row < subtex->width; row++) {
-		for (u32 col = 0; col < subtex->height; col++) {
-			u32 z = (row + col * subtex->width) * 3;
+	for (u32 row = 0; row < subtex.width; row++) {
+		for (u32 col = 0; col < subtex.height; col++) {
+			u32 z = (row + col * subtex.width) * 3;
 
-			u8 r = *(u8 *)(buf + z);
-			u8 g = *(u8 *)(buf + z + 1);
-			u8 b = *(u8 *)(buf + z + 2);
+			u8 r = *(u8 *)(image + z);
+			u8 g = *(u8 *)(image + z + 1);
+			u8 b = *(u8 *)(image + z + 2);
 
-			*(buf + z) = a;
-			*(buf + z + 1) = b;
-			*(buf + z + 2) = g;
+			*(image + z) = b;
+			*(image + z + 1) = g;
+			*(image + z + 2) = r;
 		}
 	}
 
@@ -137,13 +137,13 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	memset(tex.data, 0, tex.size);
 	for (u32 x = 0; x < subtex.width; x++) {
 		for (u32 y = 0; y < subtex.height; y++) {
-			u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 3;
+			u32 dst_pos = ((((y >> 3) * (0x200 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 3;
 			u32 src_pos = (y * subtex.width + x) * 3;
-			std::memcpy(&(static_cast<u8 *>(tex.data))[dst_pos], &(static_cast<u8 *>(buf))[src_pos], 3);
+			memcpy(&(static_cast<u8>(tex.data))[dst_pos], &(static_cast<u8>(image))[src_pos], 3);
 		}
 	}
 	C3D_TexFlush(&tex);
-	tex.border = TRANSPARENT_COLOR;
+	tex->border = 0x00000000;
 	C3D_TexSetWrap(&tex, GPU_CLAMP_TO_BORDER, GPU_CLAMP_TO_BORDER);
 
 	free(image);
