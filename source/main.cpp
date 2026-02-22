@@ -110,9 +110,9 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	unsigned char* image;
 
 	unsigned int w, h;
-	unsigned int error = lodepng_decode24_file(&image, &w, &h, filename);
+	unsigned int error = lodepng::decode(image, w, h, filename);
 	if (error != 0) return (C2D_Image){0,0};
-	u8 *gpusrc = (u8*)linearAlloc(w*h * 3);
+	/*u8 *gpusrc = (u8*)linearAlloc(w*h * 3);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
 
 	u8* src = &image[0]; u8 *dst = gpusrc;
@@ -126,28 +126,26 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = b;
 		*dst++ = g;
 		*dst++ = r;
-	}
+	}*/
 
-	C3D_TexInit(&tex, 512, 128, GPU_TEXCOLOR::GPU_RGB8);
+	C3D_TexInit(&tex, 512, 128, GPU_RGBA8);
 
 	// Load the texture and bind it to the first texture unit
-	GSPGPU_FlushDataCache(gpusrc, w*h * 3);
-	GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), GX_TRANSFER_FLIP_VERT(1));
+	//GSPGPU_FlushDataCache(gpusrc, w*h * 3);
+	//GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), GX_TRANSFER_FLIP_VERT(1));
 
 	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	C3D_TexUpload(&tex, &img_fix[0]);
-	//C3D_TexUpload(&tex, &image[0]);
+	//C3D_TexUpload(&tex, &img_fix[0]);
+	C3D_TexUpload(&tex, &image[0]);
 	C3D_TexBind(0, &tex);
 
 	// 5. 表示範囲を設定(サブテクスチャ定義)
-	tex.width = 400;
-	tex.height = 96;
 	subtex.width = 400;
 	subtex.height = 96;
-	subtex.left = 1.0f;
+	subtex.left = 0.0f;
 	subtex.top = 1.0f;
-	subtex.right = 0.0f;
+	subtex.right = 1.0f;
 	subtex.bottom = 0.0f;
 
 	free(image);
