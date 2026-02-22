@@ -139,7 +139,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		for (u32 y = 0; y < subtex.height; y++) {
 			u32 dst_pos = ((((y >> 3) * (0x200 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 3;
 			u32 src_pos = (y * subtex.width + x) * 3;
-			memcpy((unsigned char)tex.data[dst_pos], (unsigned char)image[src_pos], 3);
+			memcpy(&((unsigned char*)tex.data)[dst_pos], (unsigned char)image[src_pos], 3);
 		}
 	}
 	C3D_TexFlush(&tex);
