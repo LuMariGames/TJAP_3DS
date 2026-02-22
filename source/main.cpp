@@ -107,7 +107,7 @@ Tex3DS_SubTexture subtex;
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 1. PNGを読み込み(RGB形式で強制取得)
-	unsigned char* image;
+	std::vector<unsigned char> image;
 
 	unsigned int w, h;
 	unsigned int error = lodepng::decode(image, w, h, filename);
@@ -137,7 +137,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
 	//C3D_TexUpload(&tex, &img_fix[0]);
-	C3D_TexUpload(&tex, &image[0]);
+	C3D_TexUpload(&tex, image.data());
 	C3D_TexBind(0, &tex);
 
 	// 5. 表示範囲を設定(サブテクスチャ定義)
