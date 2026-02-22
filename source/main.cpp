@@ -139,7 +139,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	//C3D_TexUpload(&tex, &img_fix[0]);
 	tex.width = 400;
 	tex.height = 96;
-	C3D_TexUpload(&tex, image.data());
+	C3D_TexUpload(&tex, image);
 	C3D_TexBind(0, &tex);
 
 	// 5. 表示範囲を設定(サブテクスチャ定義)
