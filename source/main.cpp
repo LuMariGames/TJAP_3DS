@@ -111,7 +111,10 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	unsigned int w = 400, h = 96;
 	unsigned int error = lodepng_decode24_file(&image, &w, &h, filename);
-	if (error != 0) return (C2D_Image){0,0};
+	if (error != 0 || w != 400 || h != 96) {
+		free(image);
+		return (C2D_Image){0,0};
+	}
 	subtex.width = 400;
 	subtex.height = 96;
 
