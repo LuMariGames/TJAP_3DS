@@ -107,10 +107,10 @@ Tex3DS_SubTexture subtex;
 C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	// 1. PNGを読み込み(RGB形式で強制取得)
-	std::vector<unsigned char> image;
+	unsigned char* image;
 
 	unsigned int w = 400, h = 96;
-	unsigned int error = lodepng_decode24_file(image, w, h, filename);
+	unsigned int error = lodepng_decode24_file(&image, &w, &h, filename);
 	if (error != 0) return (C2D_Image){0,0};
 	/*u8 *gpusrc = (u8*)linearAlloc(w*h * 3);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
@@ -150,6 +150,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	subtex.right = 1.0f;
 	subtex.bottom = 0.0f;
 
+	free(image);
 	return (C2D_Image){&tex, &subtex};
 }
 
