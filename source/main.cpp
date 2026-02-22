@@ -15,6 +15,8 @@
 #include "main.h"
 #include "mp3.h"
 #include "vorbis.h"
+#include "lodepng.h"
+#define LODEPNG_COMPILE_DECODER
 
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
