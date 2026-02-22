@@ -303,9 +303,6 @@ int main() {
 
 		case SCENE_SELECTSONG:	//選曲
 
-			snprintf(get_buffer(), BUFFER_SIZE, "%d", sprites[SPRITE_TOP].image.tex->height);
-			draw_debug(0, 0, get_buffer());
-
 			if (cnt == 0) {
 				select_ini();
 				set_measure();
