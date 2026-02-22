@@ -109,7 +109,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	// 1. PNGを読み込み(RGB形式で強制取得)
 	std::vector<unsigned char> image;
 
-	unsigned int w, h;
+	unsigned int w = 400, h = 96;
 	unsigned int error = lodepng::decode(image, w, h, filename);
 	if (error != 0) return (C2D_Image){0,0};
 	/*u8 *gpusrc = (u8*)linearAlloc(w*h * 3);
@@ -137,6 +137,8 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
 	// C3D_TexUploadを使うと内部でタイリング処理が行われます
 	//C3D_TexUpload(&tex, &img_fix[0]);
+	tex.width = 400;
+	tex.height = 96;
 	C3D_TexUpload(&tex, image.data());
 	C3D_TexBind(0, &tex);
 
@@ -311,7 +313,7 @@ int main() {
 				select_ini();
 				set_measure();
 				bgcnt = -1;
-				if (isAniBg) C2D_SpriteSheetFree(bgspsh);
+				if (isAniBg) C3D_TexDelete(sprites[163].image.tex);
 				isAniBg = false;
 			}
 
