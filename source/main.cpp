@@ -148,7 +148,6 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	subtex.right = 1.0f;
 	subtex.bottom = 0.0f;
 
-	free(image);
 	return (C2D_Image){&tex, &subtex};
 }
 
