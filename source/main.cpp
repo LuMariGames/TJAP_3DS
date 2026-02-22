@@ -112,43 +112,39 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	unsigned int w = 400, h = 96;
 	unsigned int error = lodepng_decode24_file(&image, &w, &h, filename);
 	if (error != 0) return (C2D_Image){0,0};
-	/*u8 *gpusrc = (u8*)linearAlloc(w*h * 3);
-	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
-
-	u8* src = &image[0]; u8 *dst = gpusrc;
-
-	// lodepng outputs big endian rgba so we need to convert
-	for (int i = 0, j = w * h; i < j; i++) {
-		int r = *src++;
-		int g = *src++;
-		int b = *src++;
-
-		*dst++ = b;
-		*dst++ = g;
-		*dst++ = r;
-	}*/
-
-	C3D_TexInit(&tex, 512, 128, GPU_RGB8);
-
-	// Load the texture and bind it to the first texture unit
-	//GSPGPU_FlushDataCache(gpusrc, w*h * 3);
-	//GX_DisplayTransfer((u32*)gpusrc, GX_BUFFER_DIM(w, h), (u32*)img_fix, GX_BUFFER_DIM(w, h), GX_TRANSFER_FLIP_VERT(1));
-
-	// 4. 線形メモリ(Linear)からタイル形式(Tiled)へ変換してアップロード
-	// C3D_TexUploadを使うと内部でタイリング処理が行われます
-	//C3D_TexUpload(&tex, &img_fix[0]);
-	tex.width = 400;
-	tex.height = 96;
-	C3D_TexUpload(&tex, image);
-	C3D_TexBind(0, &tex);
-
-	// 5. 表示範囲を設定(サブテクスチャ定義)
 	subtex.width = 400;
 	subtex.height = 96;
-	subtex.left = 0.0f;
-	subtex.top = 1.0f;
-	subtex.right = 1.0f;
-	subtex.bottom = 0.0f;
+
+	for (u32 row = 0; row < subtex->width; row++) {
+		for (u32 col = 0; col < subtex->height; col++) {
+			u32 z = (row + col * subtex->width) * 3;
+
+			u8 r = *(u8 *)(buf + z);
+			u8 g = *(u8 *)(buf + z + 1);
+			u8 b = *(u8 *)(buf + z + 2);
+
+			*(buf + z) = a;
+			*(buf + z + 1) = b;
+			*(buf + z + 2) = g;
+		}
+	}
+
+	subtex.left = 0.f;
+	subtex.top = 1.f;
+	subtex.right = 400.f / 512.f;
+	subtex.bottom = 1.f - (96.f / 128.f);
+	C3D_TexInit(&tex, 512, 128, GPU_RGB8);
+	memset(tex.data, 0, tex.size);
+	for (u32 x = 0; x < subtex.width; x++) {
+		for (u32 y = 0; y < subtex.height; y++) {
+			u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 3;
+			u32 src_pos = (y * subtex.width + x) * 3;
+			std::memcpy(&(static_cast<u8 *>(tex.data))[dst_pos], &(static_cast<u8 *>(buf))[src_pos], 3);
+		}
+	}
+	C3D_TexFlush(&tex);
+	tex.border = TRANSPARENT_COLOR;
+	C3D_TexSetWrap(&tex, GPU_CLAMP_TO_BORDER, GPU_CLAMP_TO_BORDER);
 
 	free(image);
 	return (C2D_Image){&tex, &subtex};
