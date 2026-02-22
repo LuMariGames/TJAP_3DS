@@ -59,7 +59,7 @@ RSF_PATH				:= resource/app.rsf
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
 CFLAGS	:=	-g -Wall -O3 -mword-relocations -finline-functions -fomit-frame-pointer \
-			-ffunction-sections -ffast-math \
+			-ffunction-sections -ffast-math -ansi -pedantic \
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -D_3DS__
