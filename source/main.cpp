@@ -110,7 +110,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 	std::vector<unsigned char> image;
 
 	unsigned int w = 400, h = 96;
-	unsigned int error = lodepng::decode(image, w, h, filename);
+	unsigned int error = lodepng_decode24_file(image, w, h, filename);
 	if (error != 0) return (C2D_Image){0,0};
 	/*u8 *gpusrc = (u8*)linearAlloc(w*h * 3);
 	u8 *img_fix = (u8*)linearAlloc(w*h * 3);
@@ -128,7 +128,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 		*dst++ = r;
 	}*/
 
-	C3D_TexInit(&tex, 512, 128, GPU_RGBA8);
+	C3D_TexInit(&tex, 512, 128, GPU_RGB8);
 
 	// Load the texture and bind it to the first texture unit
 	//GSPGPU_FlushDataCache(gpusrc, w*h * 3);
