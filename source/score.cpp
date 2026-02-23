@@ -482,10 +482,10 @@ void send_gogotime(bool arg) {
 
 int dan_condition() {
 	int isBadCondition = -1; //ここで何回条件に反しているかをリセットする
-	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "g"};
-	uint64_t counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, (uint64_t)(Gauge.score / Gauge.soul * 100.0)};
+	const char* types[] = {"jb", "jg", "jp", "s", "r", "h", "c", "g"};
+	uint64_t counts[] = {TotalBadCount, TotalNiceCount, TotalPerfectCount, TotalScore, TotalRollCount, TotalCount, MaxComboCount, (uint64_t)(Gauge.score / Gauge.soul * 100.0)};
 
-	for (int i = 0; i < 7; ++i) {
+	for (int i = 0; i < 8; ++i) {
 		if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "l") == 0 && counts[i] >= Cdn[1][0]) ||
 		(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "l") == 0 && counts[i] >= Cdn[1][1]) ||
 		(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "l") == 0 && counts[i] >= Cdn[1][2]) ||
@@ -495,7 +495,7 @@ int dan_condition() {
 		}
 	}
 
-	for (int i = 0; i < 7; ++i) {
+	for (int i = 0; i < 8; ++i) {
 		if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "l") == 0 && counts[i] >= Cdn[0][0]) ||
 		(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "l") == 0 && counts[i] >= Cdn[0][1]) ||
 		(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "l") == 0 && counts[i] >= Cdn[0][2]) ||
@@ -503,7 +503,7 @@ int dan_condition() {
 	}
 
 	if (get_notes_finish() == true) { //条件に以上(例:exam[3] = "m")がある場合、曲が終わるまで判定しない
-		for (int i = 0; i < 7; ++i) {
+		for (int i = 0; i < 8; ++i) {
 			if (isBadCondition == -1 &&
 			((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "m") == 0 && counts[i] < Cdn[1][0]) ||
 			(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "m") == 0 && counts[i] < Cdn[1][1]) ||
@@ -513,7 +513,7 @@ int dan_condition() {
 				i = 7;
 			}
 		}
-		for (int i = 0; i < 7; ++i) {
+		for (int i = 0; i < 8; ++i) {
 			if ((strcmp(exam[0][0], types[i]) == 0 && strcmp(exam[0][3], "m") == 0 && counts[i] < Cdn[0][0]) ||
 			(strcmp(exam[1][0], types[i]) == 0 && strcmp(exam[1][3], "m") == 0 && counts[i] < Cdn[0][1]) ||
 			(strcmp(exam[2][0], types[i]) == 0 && strcmp(exam[2][3], "m") == 0 && counts[i] < Cdn[0][2]) ||
