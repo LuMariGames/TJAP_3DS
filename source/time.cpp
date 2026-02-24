@@ -29,7 +29,7 @@ double get_current_time(int id) {
 			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
 		else if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
-			Time[id] += 1.0/30.0;
+			Time[id] += 1.0/20.0;
 		++cnt[id];
 	}
 	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
