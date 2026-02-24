@@ -315,7 +315,7 @@ int main() {
 				isAniBg = false;
 			}
 
-			if (keyhold & KEY_L && keyhold & KEY_R) bottaikoview = !bottaikoview;
+			if (keyhold & KEY_L && keyhold & KEY_R && (key & KEY_L || key & KEY_R)) bottaikoview = !bottaikoview;
 			if (bottaikoview) {
 
 				draw_select_text(0, 225, Text[Option.lang][TEXT_LANDR]);
@@ -345,6 +345,16 @@ int main() {
 					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
 				}
 				button_game(&isDon, &isKatsu, Option, key);
+				if (isKatsu > 0) {
+					katsu_cnt = 30;
+					don_cnt = 0;
+					play_sound(SOUND_KATSU);		//カツ
+				}
+				else if (isDon > 0) {
+					katsu_cnt = 0;
+					don_cnt = 30;
+					play_sound(SOUND_DON);		//ドン
+				}
 
 				//下画面
 				if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
