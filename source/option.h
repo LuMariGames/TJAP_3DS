@@ -63,6 +63,7 @@ const char Text[3][64][128] = {
 		"編集ﾓｰﾄﾞ",
 		"EDIT",
 		"CONV",
+		"LとRボタン同時押しで戻る",
 	},
 	{
 		"ON",
@@ -126,6 +127,7 @@ const char Text[3][64][128] = {
 		"Editor Mode",
 		"EDIT",
 		"CONV",
+		"Press the L and R buttons to return.",
 	},
 	{
 		"Sí",
@@ -189,6 +191,7 @@ const char Text[3][64][128] = {
 		"Modo editor",
 		"EDIT",
 		"CONV",
+		"Presione los botones L y R para regresar.",
 	}
 };
 
@@ -278,6 +281,7 @@ enum Text_knd {
 	TEXT_EDITOR_MODE,
 	TEXT_EDITOR,
 	TEXT_CONV,
+	TEXT_LANDR,
 };
 
 int get_lang();
