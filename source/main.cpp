@@ -22,7 +22,7 @@ extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
 C2D_Sprite sprites[164];	//画像用
-static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh,bgspsh;
+static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
 Thread chartload,notesjudge;
@@ -174,6 +174,7 @@ int main() {
 	int ComboCnt = 0, cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
+	bool bottaikoview = false;
 
 	load_option();
 	get_option(&Option);
@@ -314,25 +315,45 @@ int main() {
 				isAniBg = false;
 			}
 
-			disp_file_list();
-			get_SelectedId(&SelectedSong, &course);
+			if (key & KEY_L && key & KEY_R) bottaikoview = !bottaikoview;
+			if (bottaikoview) {
 
-			//下画面
-			C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
-			C3D_FrameDrawOn(bottom);
-			C2D_SceneTarget(bottom);
-			draw_option(tp.px, tp.py, key, sprites);
+				draw_select_text(0, 225, Text[Option.lang][TEXT_LANDR]);
 
-			if (key & KEY_UP)		update_cursor(KEY_UP);
-			if (key & KEY_DOWN)		update_cursor(KEY_DOWN);
-			if (key & KEY_RIGHT)		update_cursor(KEY_RIGHT);
-			if (key & KEY_LEFT)		update_cursor(KEY_LEFT);
-			if (key & KEY_A)		update_cursor(KEY_A);
-			if (key & KEY_B)		update_cursor(KEY_B);
+				//下画面
+				if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
+				else C2D_TargetClear(bottom, C2D_Color32(0xFF, 0xE7, 0x8C, 0xFF));
+				C3D_FrameDrawOn(bottom);
+				C2D_SceneTarget(bottom);
+				C2D_DrawImage(sprites[SPRITE_BOTTOM].image, &sprites[SPRITE_BOTTOM].params, NULL);
+				if (don_cnt > 0) C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7, 0x4A, 0x21, 0x7F));
 
-			if (get_isGameStart()) {
-				scene_state = SCENE_MAINLOAD;
-				cnt = -1;
+				//タッチエフェクト
+				if (tch_cnt > 0) {
+					C2D_SpriteSetPos(&sprites[SPRITE_TOUCH], memtch_x, memtch_y);
+					C2D_DrawImage(sprites[SPRITE_TOUCH].image, &sprites[SPRITE_TOUCH].params, NULL);
+				}
+			}
+			else {
+				disp_file_list();
+				get_SelectedId(&SelectedSong, &course);
+
+				C2D_TargetClear(bottom, C2D_Color32(0x42, 0x42, 0x42, 0xFF));
+				C3D_FrameDrawOn(bottom);
+				C2D_SceneTarget(bottom);
+				draw_option(tp.px, tp.py, key, sprites);
+
+				if (key & KEY_UP)		update_cursor(KEY_UP);
+				if (key & KEY_DOWN)		update_cursor(KEY_DOWN);
+				if (key & KEY_RIGHT)		update_cursor(KEY_RIGHT);
+				if (key & KEY_LEFT)		update_cursor(KEY_LEFT);
+				if (key & KEY_A)		update_cursor(KEY_A);
+				if (key & KEY_B)		update_cursor(KEY_B);
+
+				if (get_isGameStart()) {
+					scene_state = SCENE_MAINLOAD;
+					cnt = -1;
+				}
 			}
 			isPause = false;
 			if (loadend == 3 && key & KEY_START) isExit = true;
