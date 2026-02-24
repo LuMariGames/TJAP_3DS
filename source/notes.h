@@ -38,11 +38,11 @@ typedef struct {
 
 }BRANCH_T;
 
-/*struct notejudge_t {
+struct notejudge_t {
 	int* donc;
 	int* katsuc;
 	int* count;
-};*/
+};
 
 void notes_main(
 	int isDon, int isKatsu,
