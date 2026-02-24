@@ -315,10 +315,36 @@ int main() {
 				isAniBg = false;
 			}
 
-			if (key & KEY_L && key & KEY_R) bottaikoview = !bottaikoview;
+			if (keyhold & KEY_L && keyhold & KEY_R) bottaikoview = !bottaikoview;
 			if (bottaikoview) {
 
 				draw_select_text(0, 225, Text[Option.lang][TEXT_LANDR]);
+				if (tp.px != 0 && tp.py != 0) {
+
+					PreTouch_x = touch_x, PreTouch_y = touch_y;
+					touch_x = tp.px, touch_y = tp.py;
+
+					if ((key & KEY_TOUCH || 
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
+						(touch_x - 160)*(touch_x - 160) + (touch_y - 135)*(touch_y - 135) <= 105 * 105 && touch_cnt < 2) {
+						++isDon;
+						tch_cnt = 6;
+						memtch_x = touch_x, memtch_y = touch_y;
+						++touch_cnt;
+					}
+					else if ((key & KEY_TOUCH ||
+						pow((touch_x - PreTouch_x)*(touch_x - PreTouch_x) + (touch_y - PreTouch_y)*(touch_y - PreTouch_y), 0.5) > 20.0) &&
+						touch_cnt < 2) {
+						++isKatsu;
+						tch_cnt = 6;
+						memtch_x = touch_x, memtch_y = touch_y;
+						++touch_cnt;
+					}
+				}
+				else {
+					touch_x = 0, touch_y = 0, touch_cnt = 0, PreTouch_x = 0, PreTouch_y = 0;
+				}
+				button_game(&isDon, &isKatsu, Option, key);
 
 				//下画面
 				if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
