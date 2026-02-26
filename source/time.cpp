@@ -25,12 +25,7 @@ double get_current_time(int id) {
 	clock_gettime(CLOCK_MONOTONIC, &tv);
 	if (isStop[id] != 1) {
 
-		if (cnt[id] != 0 &&
-			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
-			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
-		else if (cnt[id] != 0 &&
-			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
-			Time[id] += 0.052885;
+		if (cnt[id] != 0) Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
 		++cnt[id];
 	}
 	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
@@ -42,10 +37,16 @@ double get_current_time(int id) {
 void restart_time(int id) {
 	isStop[id] = 0;
 }
-
 void stop_time(int id) {
 
 	isStop[id] = 1;
+	Time[id] += 0.0178;
+	cnt[id] = 0;
+}
+void home_time(int id) {
+
+	isStop[id] = 1;
+	Time[id] += 0.052885;
 	cnt[id] = 0;
 }
 
@@ -53,10 +54,7 @@ void toggle_time(int id) {
 
 	if (Time[id] != 0) {
 		if (isStop[id] == 1) restart_time(id);
-		else {
-			Time[id] += 0.0178;
-			stop_time(id);
-		}
+		else stop_time(id);
 	}
 }
 
