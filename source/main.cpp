@@ -717,12 +717,13 @@ int main() {
 					break;
 				}
 
-				if (tmp > -1) {
+				if (tmp > -1 || isPause) {
 					togglePlayback();
 					toggle_time(0);
 					toggle_time(1);
 					isPause = !isPause;
 					play_sound(SOUND_DON);
+					get_current_time(3);
 				}
 				if (keyhold & KEY_DLEFT) --khdcnt;
 				else if (keyhold & KEY_DRIGHT) ++khdcnt;
