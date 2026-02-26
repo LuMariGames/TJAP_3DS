@@ -6,6 +6,7 @@
 #include "main.h"
 #include "option.h"
 #include "select.h"
+#include "time.h"
 
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
