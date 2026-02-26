@@ -161,11 +161,8 @@ void playFile(void* infoIn){
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
-		if (!aptIsActive() && !get_isPause()) {
-			get_current_time(3);
-			set_isPause();
-			get_current_time(3);
-		}
+		if (!aptIsActive() && !get_isPause()) set_isPause();
+		else if (aptIsActive() && get_isPause()) get_current_time(3);
 		if (aptShouldClose()) {
 			ndspChnSetPaused(CHANNEL, true);
 			break;
