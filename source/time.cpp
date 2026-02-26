@@ -43,7 +43,6 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
-	Time[id] += 0.0178;
 	cnt[id] = 0;
 }
 
@@ -51,7 +50,10 @@ void toggle_time(int id) {
 
 	if (Time[id] != 0) {
 		if (isStop[id] == 1) restart_time(id);
-		else stop_time(id);
+		else {
+			Time[id] += 0.0178;
+			stop_time(id);
+		}
 	}
 }
 
