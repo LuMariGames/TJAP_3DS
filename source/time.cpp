@@ -46,7 +46,7 @@ void stop_time(int id) {
 void home_time(int id) {
 
 	isStop[id] = 1;
-	Time[id] += 0.043109;
+	Time[id] += 0.0512;
 	cnt[id] = 0;
 }
 
