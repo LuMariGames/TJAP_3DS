@@ -21,15 +21,13 @@ double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME
 
 double get_current_time(int id) {
 
+
 	clock_gettime(CLOCK_MONOTONIC, &tv);
 	if (isStop[id] != 1) {
 
 		if (cnt[id] != 0 &&
 			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) < 1.0)
 			Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
-		else if (cnt[id] != 0 &&
-			(tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id]) >= 1.0)
-			Time[id] += 0.0534;
 		++cnt[id];
 	}
 	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;

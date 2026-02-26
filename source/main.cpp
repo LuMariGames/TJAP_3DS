@@ -25,15 +25,12 @@ C2D_Sprite sprites[164];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-Thread chartload,notesjudge;
+Thread chartload,pausehome;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
 bool dance = false;		//拡張スキン用
 unsigned int dancnt = 0;	//拡張スキン用
-
-static void load_sprites();
-static int time_count(double TIME), dancer_time_count(double TIME, int NUM);
 
 void draw_debug(float x, float y, const char *text) {
 
@@ -101,6 +98,88 @@ bool check_dsp1() { //DSP1を起動しているか確認
 	return true;
 }
 
+inline int time_count(double TIME) noexcept {
+	if (TIME < 0) return 0;
+	return ((int)floor(TIME*(NowBPM/60.0*(2-isGOGO))) % 2)+(isGOGO*2);
+}
+inline int dancer_time_count(double TIME, int NUM) noexcept {
+	if (TIME < 0) return 0;
+	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
+}
+inline static void load_sprites() {
+
+	if (exist_file("sdmc:/tjafiles/theme/default.t3x")) spriteSheet = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/default.t3x");
+	else spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
+	otherspsh = C2D_SpriteSheetLoad("romfs:/gfx/other.t3x");
+	if (exist_file("sdmc:/tjafiles/theme/dancer.t3x")) {
+		dancerspsh = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/dancer.t3x");
+		dance = true;
+		dancnt = (unsigned int)C2D_SpriteSheetCount(dancerspsh);
+	}
+
+	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
+
+	for (int i = 0, j = SPRITES_NUMER; i < j; ++i) {
+		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
+		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
+	}
+
+	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH], otherspsh, 0);
+	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BOMB], otherspsh, 1);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BOMB], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO], otherspsh, 2);
+	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_1], otherspsh, 3);
+	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_1], 0.5f, 0.0f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_2], otherspsh, 4);
+	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_2], 0.5f, 0.0f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_DENDEN], otherspsh, 5);
+	C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN], 0.5f, 0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND], otherspsh, 6);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BACKGROUND], 0.5f, 0.5f);
+	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND], TOP_WIDTH * 0.5, 192);
+
+	if (dance) {
+		for (int i = 0, j = dancnt; i < j; ++i) {
+			C2D_SpriteFromSheet(&sprites[SPRITE_DANCER_0 + i], dancerspsh, i);
+			C2D_SpriteSetCenter(&sprites[SPRITE_DANCER_0 + i], 0.5f, 0.5f);
+		}
+	}
+
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_2], 9, 26);
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_3], 9, 31);
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
+	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
+	for (int i = 0; i < 20; ++i) C2D_SpriteSetCenter(&sprites[SPRITE_COMBO_0 + i], 0.5f, 1.0f);
+	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], NOTES_JUDGE_X, 109);
+
+	C2D_SpriteSetCenter(&sprites[SPRITE_EFFECT_GOGO], 0.5-(17.0/90.0), 0.5f);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH * 0.5, 200);
+	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH * 0.5, BOTTOM_HEIGHT * 0.5);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], dn_x, dn_y);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
+	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
+	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
+
+	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_LINEAR);
+	C3D_TexSetFilter(sprites[SPRITE_BOMB].image.tex, GPU_LINEAR, GPU_LINEAR);
+}
+
 C3D_Tex tex;
 Tex3DS_SubTexture subtex;
 
@@ -155,7 +234,6 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
 memtch_x,memtch_y;
-//struct notejudge_t NoteInfo;
 
 int main() {
 
@@ -556,10 +634,6 @@ int main() {
 				}
 			}
 
-			/*NoteInfo.donc = &isDon;
-			NoteInfo.katsuc = &isKatsu;
-			NoteInfo.count = &notes_cnt;*/
-
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image, &sprites[SPRITE_TOP_2].params, NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0 + time_count(CurrentTimeMain)]);
 			if (isAniBg && bgcnt == 0) C2D_DrawImage(sprites[163].image, &sprites[SPRITE_BACKGROUND].params, NULL);
@@ -746,88 +820,17 @@ int main() {
 	exit(0);
 }
 
-inline static void load_sprites() {
-
-	if (exist_file("sdmc:/tjafiles/theme/default.t3x")) spriteSheet = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/default.t3x");
-	else spriteSheet = C2D_SpriteSheetLoad("romfs:/gfx/sprites.t3x");
-	otherspsh = C2D_SpriteSheetLoad("romfs:/gfx/other.t3x");
-	if (exist_file("sdmc:/tjafiles/theme/dancer.t3x")) {
-		dancerspsh = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/dancer.t3x");
-		dance = true;
-		dancnt = (unsigned int)C2D_SpriteSheetCount(dancerspsh);
-	}
-
-	if (!spriteSheet) svcBreak(USERBREAK_PANIC);
-
-	for (int i = 0, j = SPRITES_NUMER; i < j; ++i) {
-		C2D_SpriteFromSheet(&sprites[i], spriteSheet, i);
-		C2D_SpriteSetCenter(&sprites[i], 0.5f, 0.5f);
-	}
-
-	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH], otherspsh, 0);
-	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH], 0.5f, 0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_BOMB], otherspsh, 1);
-	C2D_SpriteSetCenter(&sprites[SPRITE_BOMB], 0.5f, 0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO], otherspsh, 2);
-	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO], 0.5f, 0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_1], otherspsh, 3);
-	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_1], 0.5f, 0.0f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_2], otherspsh, 4);
-	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_2], 0.5f, 0.0f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_DENDEN], otherspsh, 5);
-	C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN], 0.5f, 0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND], otherspsh, 6);
-	C2D_SpriteSetCenter(&sprites[SPRITE_BACKGROUND], 0.5f, 0.5f);
-	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND], TOP_WIDTH * 0.5, 192);
-
-	if (dance) {
-		for (int i = 0, j = dancnt; i < j; ++i) {
-			C2D_SpriteFromSheet(&sprites[SPRITE_DANCER_0 + i], dancerspsh, i);
-			C2D_SpriteSetCenter(&sprites[SPRITE_DANCER_0 + i], 0.5f, 0.5f);
-		}
-	}
-
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON], 13, 13);
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1], 9, 12);
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_2], 9, 26);
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_3], 9, 31);
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4], 9, 45);
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5], 9, 51);
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6], 9, 59);
-	for (int i = 0; i < 20; ++i) C2D_SpriteSetCenter(&sprites[SPRITE_COMBO_0 + i], 0.5f, 1.0f);
-	for (int i = 0; i < 4; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT + i], NOTES_JUDGE_X, 109);
-
-	C2D_SpriteSetCenter(&sprites[SPRITE_EFFECT_GOGO], 0.5-(17.0/90.0), 0.5f);
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP], TOP_WIDTH * 0.5, TOP_HEIGHT * 0.5);
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2], TOP_WIDTH * 0.5, 43);
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3], TOP_WIDTH * 0.5, 200);
-	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM], BOTTOM_WIDTH * 0.5, BOTTOM_HEIGHT * 0.5);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0], dn_x, dn_y);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1], dn_x, dn_y);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2], dg_x, dg_y);
-	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3], dg_x, dg_y);
-	for (int i = 0; i < 7; ++i) C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY + i], 31, 113);
-
-	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BIG_DON].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BIG_KATSU].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_START].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex, GPU_LINEAR, GPU_LINEAR);
-	C3D_TexSetFilter(sprites[SPRITE_BOMB].image.tex, GPU_LINEAR, GPU_LINEAR);
-}
-
 bool get_isPause() {
 	return isPause;
 }
+void set_isPause() {
+	ndspChnSetPaused(CHANNEL, true);
+	stop_time(0);
+	stop_time(1);
+	isPause = true;
+}
 bool get_isMusicStart() {
 	return isMusicStart;
-}
-int get_scene() {
-	return scene_state;
 }
 char *get_buffer() {
 	return buffer;
@@ -903,14 +906,6 @@ int exist_file(const char* path) {
     return 1;
 }
 
-inline int time_count(double TIME) noexcept {
-	if (TIME < 0) return 0;
-	return ((int)floor(TIME*(NowBPM/60.0*(2-isGOGO))) % 2)+(isGOGO*2);
-}
-inline int dancer_time_count(double TIME, int NUM) noexcept {
-	if (TIME < 0) return 0;
-	return (int)floor(TIME*(NowBPM/(960.0/NUM))) % NUM;
-}
 double starttime() {
 	return get_StartTime();
 }
