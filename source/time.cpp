@@ -81,6 +81,11 @@ void draw_fps() {
 	draw_debug(0, 0, get_buffer());
 }
 
+void draw_time(int id) {
+	snprintf(get_buffer(), BUFFER_SIZE, "%.10f", Time[id]);
+	draw_debug(0, 0, get_buffer());
+}
+
 void time_ini() {
 
 	for (int i = 0; i < TIME_NUM; ++i) {
