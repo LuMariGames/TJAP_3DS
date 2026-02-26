@@ -672,7 +672,6 @@ int main() {
 
 			if (course == COURSE_DAN) draw_condition();
 			if (Option.dispFps) draw_fps();
-			draw_time(3);
 
 			//下画面
 			if (katsu_cnt > 0) C2D_TargetClear(bottom, C2D_Color32(0x73, 0xF7, 0xEF, 0xFF));
