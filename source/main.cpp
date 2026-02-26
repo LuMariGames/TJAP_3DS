@@ -825,8 +825,8 @@ bool get_isPause() {
 }
 void set_isPause() {
 	ndspChnSetPaused(CHANNEL, true);
-	stop_time(0);
-	stop_time(1);
+	home_time(0);
+	home_time(1);
 	isPause = true;
 }
 bool get_isMusicStart() {
