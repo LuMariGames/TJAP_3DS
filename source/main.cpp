@@ -16,7 +16,6 @@
 #include "mp3.h"
 #include "vorbis.h"
 #include "lodepng.h"
-#define LODEPNG_COMPILE_DECODER
 
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
@@ -190,7 +189,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename) {
 
 	unsigned int w = 400, h = 96;
 	unsigned int error = lodepng_decode24_file(&image, &w, &h, filename);
-	if (error != 0 || w != 400 || h != 96) {
+	if (error != 0) {
 		free(image);
 		return (C2D_Image){0,0};
 	}
@@ -396,7 +395,13 @@ int main() {
 			if (keyhold & KEY_L && keyhold & KEY_R && (key & KEY_L || key & KEY_R)) bottaikoview = !bottaikoview;
 			if (bottaikoview) {
 
-				draw_select_text(0, 225, Text[Option.lang][TEXT_LANDR]);
+				draw_select_text(0, 0, "Credits / クレジット");
+				draw_select_text(0, 20, "Togetoge - The creator of TJAPlayer for 3DS.");
+				draw_select_text(0, 36, "Tomo-Tg - Found a problem.");
+
+				draw_select_text(0, 60, "Library / 使用したライブラリ");
+				draw_select_text(0, 80, "lodepng, citro2d, citro3d, libctru, vorbisidec,\nlibogg, mpg123, jansson");
+				draw_select_text(0, 224, Text[Option.lang][TEXT_LANDR]);
 				if (tp.px != 0 && tp.py != 0) {
 
 					PreTouch_x = touch_x, PreTouch_y = touch_y;
@@ -428,7 +433,7 @@ int main() {
 					don_cnt = 0;
 					play_sound(SOUND_KATSU);		//カツ
 				}
-				else if (isDon > 0) {
+				if (isDon > 0) {
 					katsu_cnt = 0;
 					don_cnt = 30;
 					play_sound(SOUND_DON);		//ドン
@@ -569,7 +574,7 @@ int main() {
 				don_cnt = 0;
 				play_sound(SOUND_KATSU);		//カツ
 			}
-			else if (isDon > 0) {
+			if (isDon > 0) {
 				katsu_cnt = 0;
 				don_cnt = 30;
 				play_sound(SOUND_DON);		//ドン
@@ -627,7 +632,7 @@ int main() {
 					don_cnt = 0;
 					play_sound(SOUND_KATSU);		//カツ
 				}
-				else if (isDon > 0) {
+				if (isDon > 0) {
 					katsu_cnt = 0;
 					don_cnt = 30;
 					play_sound(SOUND_DON);		//ドン

@@ -73,7 +73,7 @@ from here.*/
 #ifdef LODEPNG_COMPILE_ALLOCATORS
 static void* lodepng_malloc(size_t size) {
 #ifdef LODEPNG_MAX_ALLOC
-  if(size > LODEPNG_MAX_ALLOC) return 0;
+  if (size > LODEPNG_MAX_ALLOC) return 0;
 #endif
   return malloc(size);
 }
@@ -81,7 +81,7 @@ static void* lodepng_malloc(size_t size) {
 /* NOTE: when realloc returns NULL, it leaves the original memory untouched */
 static void* lodepng_realloc(void* ptr, size_t new_size) {
 #ifdef LODEPNG_MAX_ALLOC
-  if(new_size > LODEPNG_MAX_ALLOC) return 0;
+  if (new_size > LODEPNG_MAX_ALLOC) return 0;
 #endif
   return realloc(ptr, new_size);
 }
