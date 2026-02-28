@@ -787,8 +787,8 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 		if (Notes[i].flag) {
 
 			Notes[i].x = (Notes[i].x_ini + NOTES_JUDGE_X) - NOTES_AREA * Notes[i].scroll * (CurrentTimeNotes - Notes[i].pop_time) * (Notes[i].bpm / 240.0);
-			if (Notes[i].x <= 20.f) Notes[i].x = 20.f;
-			else if (Notes[i].x >= 420.f) Notes[i].x = 420.f;
+			if (Notes[i].x <= -50.f) Notes[i].x = -50.f;
+			else if (Notes[i].x >= 450.f) Notes[i].x = 450.f;
 
 			switch (Notes[i].knd) {
 
