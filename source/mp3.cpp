@@ -48,7 +48,6 @@ int initMp3(const char* file)
 		printf("Trouble with mpg123: %s\n", mpg123_strerror(mh));
 		return -1;
 	}
-	mpg123_seek(mh, 0, SEEK_SET);
 	mpg123_param(mh, MPG123_DOWN_SAMPLE, 1, 1.0);
 	mpg123_format_none(mh);
 	mpg123_format(mh, rate, channels, encoding);
