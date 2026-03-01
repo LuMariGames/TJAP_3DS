@@ -1178,7 +1178,7 @@ inline int make_roll_end(int NotesId) {
 
 	int id = find_roll_end_id();
 	if (id != -1) {
-		RollNotes[roll_id].end_id = NotesId;
+		RollNotes[id].end_id = NotesId;
 		RollNotes[id].end_x = Notes[NotesId].x;
 		return id;
 	}
