@@ -31,6 +31,7 @@ int initVorbis(const char* file){
 	if(ov_open(f, &vorbisFile, NULL, 0) < 0)
 		goto out;
 
+	ov_pcm_seek(&vorbisFile, 0);
 	if((vi = ov_info(&vorbisFile, -1)) == NULL)
 		goto out;
 
