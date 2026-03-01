@@ -888,7 +888,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 			switch (Notes[i].knd) {
 			case NOTES_DON:
-			case NOTES_BALLOONEND:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
 				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, &DummyTint);
