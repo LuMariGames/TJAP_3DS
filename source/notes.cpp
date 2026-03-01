@@ -888,6 +888,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]) {
 
 			switch (Notes[i].knd) {
 			case NOTES_DON:
+			case NOTES_BALLOONEND:
 				sprites[SPRITE_DON].params.pos.x = Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y = notes_y;
 				C2D_DrawImage(sprites[SPRITE_DON].image, &sprites[SPRITE_DON].params, &DummyTint);
@@ -1123,12 +1124,12 @@ void delete_roll(int i) {
 
 	if (i >= 0 && i < ROLL_MAX) {
 		if (RollNotes[i].start_id != -1 && Notes[RollNotes[i].start_id].flag) delete_notes(RollNotes[i].start_id);
+		RollNotes[i].flag = false;
 		RollNotes[i].id = -1;
 		RollNotes[i].start_x = -1;
 		RollNotes[i].start_id = -1;
 		RollNotes[i].end_x = -1;
 		RollNotes[i].end_id = -1;
-		RollNotes[i].flag = false;
 		RollNotes[i].knd = -1;
 	}
 }
@@ -1157,6 +1158,7 @@ inline int make_roll_start(int NotesId) {
 		RollNotes[id].start_x = Notes[NotesId].x;
 		RollNotes[id].start_id = NotesId;
 		RollNotes[id].knd = Notes[NotesId].knd;
+		RollNotes[id].end_x = -1;
 		RollNotes[id].flag = true;
 		return id;
 	}
@@ -1167,7 +1169,9 @@ static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
-		if (RollNotes[i].end_id == -1) return i;
+		if (RollNotes[i].flag &&
+			RollNotes[i].start_x != -1 &&
+			RollNotes[i].end_x == -1) return i;
 	}
 	return -1;
 }
@@ -1198,10 +1202,10 @@ inline void make_potato_break() {
 void delete_balloon(int i) {
 
 	if (i >= 0 && i < BALLOON_MAX) {
+		BalloonNotes[i].flag = false;
 		BalloonNotes[i].id = -1;
 		BalloonNotes[i].start_id = -1;
 		BalloonNotes[i].end_id = -1;
-		BalloonNotes[i].flag = false;
 		BalloonNotes[i].current_hit = 0;
 		BalloonNotes[i].need_hit = 5;
 		isDendenCH = -1;
@@ -1230,6 +1234,7 @@ int make_balloon_start(int NotesId) {
 
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
+		BalloonNotes[id].end_id = -1;
 		BalloonNotes[id].flag = true;
 		return id;
 	}
@@ -1240,7 +1245,9 @@ inline int find_balloon_end_id() {	//風船終了が先に登場する可能性�
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].end_id == -1) return i;
+		if (BalloonNotes[i].flag &&
+			BalloonNotes[i].start_id != -1 &&
+			BalloonNotes[i].end_id == -1) return i;
 	}
 	return -1;
 }
@@ -1248,6 +1255,7 @@ inline int find_balloon_end_id() {	//風船終了が先に登場する可能性�
 int make_balloon_end(int NotesId) {
 
 	int id = find_balloon_end_id();
+	if (id != -1) BalloonNotes[id].end_id = NotesId;
 	return id;
 }
 
