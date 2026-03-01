@@ -810,14 +810,14 @@ void notes_calc(int isDon, int isKatsu, double bpm, double CurrentTimeNotes, int
 			case NOTES_BALLOON:
 			case NOTES_POTATO:
 			case NOTES_DENDEN:
-				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) Notes[i].x = NOTES_JUDGE_X;
+				if (Notes[i].judge_time <= CurrentTimeNotes) Notes[i].x = NOTES_JUDGE_X;
 				if (Notes[i].roll_id != -1) {
 					BalloonNotes[Notes[i].roll_id].start_id = i;
 				}
 				break;
 
 			case NOTES_PTTBORDER:
-				if ((Notes[i].x <= NOTES_JUDGE_X && Notes[i].scroll > 0) || (Notes[i].x >= NOTES_JUDGE_X && Notes[i].scroll < 0)) isPttBorder = true;
+				if (Notes[i].judge_time <= CurrentTimeNotes) isPttBorder = true;
 				break;
 
 			case NOTES_BALLOONEND:
@@ -1156,7 +1156,6 @@ inline int make_roll_start(int NotesId) {
 		RollNotes[id].id = id;
 		RollNotes[id].start_x = Notes[NotesId].x;
 		RollNotes[id].knd = Notes[NotesId].knd;
-		RollNotes[id].end_x = -1;
 		RollNotes[id].flag = true;
 		return id;
 	}
@@ -1167,9 +1166,7 @@ static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
-		if (RollNotes[i].flag &&
-			RollNotes[i].start_x != -1 &&
-			RollNotes[i].end_x == -1) return i;
+		if (RollNotes[i].end_x == -1) return i;
 	}
 	return -1;
 }
@@ -1232,20 +1229,17 @@ int make_balloon_start(int NotesId) {
 
 		BalloonNotes[id].id = id;
 		BalloonNotes[id].start_id = NotesId;
-		BalloonNotes[id].end_id = -1;
 		BalloonNotes[id].flag = true;
 		return id;
 	}
 	else return -1;
 }
 
-inline int find_balloon_end_id() {	//startの値だけ入ってる風船idを返す
+inline int find_balloon_end_id() {	//風船終了が先に登場する可能性を考えて
 
 	for (int i = 0, j = BALLOON_MAX - 1; i < j; ++i) {
 
-		if (BalloonNotes[i].flag &&
-			BalloonNotes[i].start_id != -1 &&
-			BalloonNotes[i].end_id == -1) return i;
+		if (BalloonNotes[i].end_id == -1) return i;
 	}
 	return -1;
 }
