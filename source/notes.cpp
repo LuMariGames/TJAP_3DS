@@ -1155,6 +1155,7 @@ inline int make_roll_start(int NotesId) {
 
 		RollNotes[id].id = id;
 		RollNotes[id].start_x = Notes[NotesId].x;
+		RollNotes[id].start_id = NotesId;
 		RollNotes[id].knd = Notes[NotesId].knd;
 		RollNotes[id].flag = true;
 		return id;
@@ -1166,7 +1167,7 @@ static int find_roll_end_id() {	//startの値だけ入ってる連打idを返す
 
 	for (int i = 0, j = ROLL_MAX - 1; i < j; ++i) {
 
-		if (RollNotes[i].end_x == -1) return i;
+		if (RollNotes[i].end_id == -1) return i;
 	}
 	return -1;
 }
