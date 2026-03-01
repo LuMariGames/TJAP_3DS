@@ -622,7 +622,7 @@ void conv_tja(LIST_T Song) {
 		fclose(fp);
 	}
 }
-void sort_measure_insertion(MEASURE_T t[], int array_size) {	//judge_timeでソート
+void sort_measure_insertion(MEASURE_T t[], int array_size) {	//create_timeでソート
 
 	for (int i = 1; i < array_size; ++i) {
 
