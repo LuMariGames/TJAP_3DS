@@ -9,7 +9,7 @@ SKIN_T Skin;
 json_t *sjson;
 json_error_t error_sjson;
 
-char temp[512] = "", *tp = NULL;
+char temp[512] = "",*tp = NULL;
 
 void init_skin() {
 
@@ -34,23 +34,23 @@ void load_skin() {
 
 	init_skin();
 	
-	sjson = json_load_file(SKIN_SETTING_FILE, 0, &error_sjson);
+	sjson = json_load_file(SKIN_SETTING_FILE,0,&error_sjson);
 
 	if (sjson != NULL){
 
 		int cnt = 0;
 
-		Skin.don_x = json_integer_value(json_object_get(sjson, "don_x"));
-		Skin.don_y = json_integer_value(json_object_get(sjson, "don_y"));
-		Skin.don_gogo_x = json_integer_value(json_object_get(sjson, "don_go_x"));
-		Skin.don_gogo_y = json_integer_value(json_object_get(sjson, "don_go_y"));
+		Skin.don_x = json_integer_value(json_object_get(sjson,"don_x"));
+		Skin.don_y = json_integer_value(json_object_get(sjson,"don_y"));
+		Skin.don_gogo_x = json_integer_value(json_object_get(sjson,"don_go_x"));
+		Skin.don_gogo_y = json_integer_value(json_object_get(sjson,"don_go_y"));
 
-		if (json_string_value(json_object_get(sjson, "d1anime")) != NULL) {
-			strlcpy(temp, json_string_value(json_object_get(sjson, "d1anime")), sizeof(temp));
-			tp = strtok(temp, ",");
+		if (json_string_value(json_object_get(sjson,"d1anime")) != NULL) {
+			strlcpy(temp,json_string_value(json_object_get(sjson,"d1anime")),sizeof(temp));
+			tp = strtok(temp,",");
 			Skin.d1anime[0] = atoi(tp);
 			cnt = 1;
-			while ((tp = strtok(NULL, ","))) {
+			while ((tp = strtok(NULL,","))) {
 				Skin.d1anime[cnt] = atoi(tp);
 				if (Skin.d1anime[cnt] > Skin.d1num) Skin.d1num = Skin.d1anime[cnt];
 				++cnt;
@@ -58,12 +58,12 @@ void load_skin() {
 			Skin.d1total = cnt;
 		}
 
-		if (json_string_value(json_object_get(sjson, "d2anime")) != NULL) {
-			strlcpy(temp, json_string_value(json_object_get(sjson, "d2anime")), sizeof(temp));
-			tp = strtok(temp, ",");
+		if (json_string_value(json_object_get(sjson,"d2anime")) != NULL) {
+			strlcpy(temp,json_string_value(json_object_get(sjson,"d2anime")),sizeof(temp));
+			tp = strtok(temp,",");
 			Skin.d2anime[0] = atoi(tp);
 			cnt = 1;
-			while ((tp = strtok(NULL, ","))) {
+			while ((tp = strtok(NULL,","))) {
 				Skin.d2anime[cnt] = atoi(tp);
 				if (Skin.d2anime[cnt] > Skin.d2num) Skin.d2num = Skin.d2anime[cnt];
 				++cnt;
@@ -71,12 +71,12 @@ void load_skin() {
 			Skin.d2total = cnt;
 		}
 
-		if (json_string_value(json_object_get(sjson, "d3anime")) != NULL) {
-			strlcpy(temp, json_string_value(json_object_get(sjson, "d3anime")), sizeof(temp));
-			tp = strtok(temp, ",");
+		if (json_string_value(json_object_get(sjson,"d3anime")) != NULL) {
+			strlcpy(temp,json_string_value(json_object_get(sjson,"d3anime")),sizeof(temp));
+			tp = strtok(temp,",");
 			Skin.d3anime[0] = atoi(tp);
 			cnt = 1;
-			while ((tp = strtok(NULL, ","))) {
+			while ((tp = strtok(NULL,","))) {
 				Skin.d3anime[cnt] = atoi(tp);
 				if (Skin.d3anime[cnt] > Skin.d3num) Skin.d3num = Skin.d3anime[cnt];
 				++cnt;

@@ -18,7 +18,7 @@ extern float mix[12];
 bool togglePlayback(void){
 
 	bool paused = ndspChnIsPaused(CHANNEL);
-	ndspChnSetPaused(CHANNEL, !paused);
+	ndspChnSetPaused(CHANNEL,!paused);
 	return !paused;
 }
 
@@ -34,7 +34,7 @@ bool isPlaying(void){
 
 int getFileType(const char *file){
 
-	FILE* ftest = fopen(file, "rb");
+	FILE* ftest = fopen(file,"rb");
 	uint32_t fileSig;
 	enum file_types file_type = FILE_TYPE_ERROR;
 
@@ -42,19 +42,19 @@ int getFileType(const char *file){
 	if(ftest == NULL)
 		return -1;
 
-	if(fread(&fileSig, 4, 1, ftest) == 0)
+	if(fread(&fileSig,4,1,ftest) == 0)
 		goto err;
 
 	switch(fileSig){
 
 		// "RIFF"
 		case 0x46464952:
-			if(fseek(ftest, 4, SEEK_CUR) != 0)
+			if(fseek(ftest,4,SEEK_CUR) != 0)
 				break;
 
 			// "WAVE"
 			// Check required as AVI file format also uses "RIFF".
-			if(fread(&fileSig, 4, 1, ftest) == 0)
+			if(fread(&fileSig,4,1,ftest) == 0)
 				break;
 
 			if(fileSig != 0x45564157)
@@ -97,7 +97,7 @@ void playFile(void* infoIn){
 	struct playbackInfo_t* info = (playbackInfo_t*)infoIn;
 	int16_t*	buffer[2] = {NULL};
 	ndspWaveBuf	waveBuf[2];
-	bool		lastbuf = false, isNdspInit = false, isMp3 = false;
+	bool		lastbuf = false,isNdspInit = false,isMp3 = false;
 	int		ret = -1;
 	const char*	file = info->file;
 
@@ -139,12 +139,12 @@ void playFile(void* infoIn){
 
 	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
-	ndspChnSetInterp(CHANNEL, NDSP_INTERP_LINEAR);
-	ndspChnSetRate(CHANNEL, (*decoder.rate)() * mspeed());
-	ndspChnSetFormat(CHANNEL, (*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
-	ndspChnSetMix(CHANNEL, mix);
+	ndspChnSetInterp(CHANNEL,NDSP_INTERP_LINEAR);
+	ndspChnSetRate(CHANNEL,(*decoder.rate)() * mspeed());
+	ndspChnSetFormat(CHANNEL,(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
+	ndspChnSetMix(CHANNEL,mix);
 
-	memset(waveBuf, 0, sizeof(waveBuf));
+	memset(waveBuf,0,sizeof(waveBuf));
 
 	if 		(!isMp3 && get_ismeasure()) setVorbisTime(starttime());
 	else if (isMp3  && get_ismeasure()) seekMp3(starttime());
@@ -153,17 +153,17 @@ void playFile(void* infoIn){
 	waveBuf[0].data_vaddr = &buffer[0][0];
 	while (*info->isPlay == false) svcSleepThread(100000);
 
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
+	ndspChnWaveBufAdd(CHANNEL,&waveBuf[0]);
 	waveBuf[1].nsamples = (*decoder.decode)(&buffer[1][0]) / (*decoder.channels)();
 	waveBuf[1].data_vaddr = &buffer[1][0];
-	ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
+	ndspChnWaveBufAdd(CHANNEL,&waveBuf[1]);
 
 	while(ndspChnIsPlaying(CHANNEL) == false);
 
 	while(stop == false){
 		if (!aptIsActive() && !get_isPause()) set_isPause();
 		if (aptShouldClose()) {
-			ndspChnSetPaused(CHANNEL, true);
+			ndspChnSetPaused(CHANNEL,true);
 			break;
 		}
 		svcSleepThread(100000);
@@ -181,7 +181,7 @@ void playFile(void* infoIn){
 				continue;
 			}
 			else if(read < decoder.buffSize) waveBuf[0].nsamples = read / (*decoder.channels)();
-			ndspChnWaveBufAdd(CHANNEL, &waveBuf[0]);
+			ndspChnWaveBufAdd(CHANNEL,&waveBuf[0]);
 		}
 		if(waveBuf[1].status == NDSP_WBUF_DONE) {
 			size_t read = (*decoder.decode)(&buffer[1][0]);
@@ -190,7 +190,7 @@ void playFile(void* infoIn){
 				continue;
 			}
 			else if(read < decoder.buffSize) waveBuf[1].nsamples = read / (*decoder.channels)();
-			ndspChnWaveBufAdd(CHANNEL, &waveBuf[1]);
+			ndspChnWaveBufAdd(CHANNEL,&waveBuf[1]);
 		}
 	}
 
@@ -215,7 +215,7 @@ err:
 
 struct playbackInfo_t playbackInfo;
 
-inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, bool *p_isPlayMain){
+inline int changeFile(const char* ep_file,struct playbackInfo_t* playbackInfo,bool *p_isPlayMain){
 
 	s32 prio;
 	static Thread thread = NULL;
@@ -233,7 +233,7 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	if (thread != NULL) {
 		stopPlayback();
 
-		threadJoin(thread, U64_MAX);
+		threadJoin(thread,U64_MAX);
 		threadFree(thread);
 		thread = NULL;
 	}
@@ -244,8 +244,8 @@ inline int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo, 
 	playbackInfo->file = strdup(ep_file);
 	playbackInfo->isPlay = p_isPlayMain;
 
-	svcGetThreadPriority(&prio, CUR_THREAD_HANDLE);
-	thread = threadCreate(playFile, playbackInfo, DECODE_MEM, prio - 1, Decode_CoreID, false);
+	svcGetThreadPriority(&prio,CUR_THREAD_HANDLE);
+	thread = threadCreate(playFile,playbackInfo,DECODE_MEM,prio - 1,Decode_CoreID,false);
 	return 0;
 }
 
@@ -253,8 +253,8 @@ void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
 	char abs_path[512];
 
-	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.wave);
-	changeFile(abs_path, &playbackInfo, p_isPlayMain);
+	snprintf(abs_path,sizeof(abs_path),"%s/%s",Song.path,Song.wave);
+	changeFile(abs_path,&playbackInfo,p_isPlayMain);
 }
 
 void pasue_main_music() {
@@ -267,7 +267,7 @@ void pasue_main_music() {
 void stop_main_music() {
 
 	stopPlayback();
-	changeFile(NULL, &playbackInfo ,NULL);
+	changeFile(NULL,&playbackInfo ,NULL);
 }
 
 void init_main_music() {
@@ -279,7 +279,7 @@ int check_wave(LIST_T Song) { //音楽ファイルの確認
 
 	char abs_path[512];
 
-	snprintf(abs_path, sizeof(abs_path), "%s/%s", Song.path, Song.wave);
+	snprintf(abs_path,sizeof(abs_path),"%s/%s",Song.path,Song.wave);
 	int result = getFileType(abs_path);
 
 	if (result == -1) return WARNING_WAVE_NO_EXIST;

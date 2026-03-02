@@ -25,13 +25,13 @@ void setVorbis(struct decoder_fn* decoder){
 int initVorbis(const char* file){
 	int err = -1;
 
-	if((f = fopen(file, "rb")) == NULL)
+	if((f = fopen(file,"rb")) == NULL)
 		goto out;
 
-	if(ov_open(f, &vorbisFile, NULL, 0) < 0)
+	if(ov_open(f,&vorbisFile,NULL,0) < 0)
 		goto out;
 
-	if((vi = ov_info(&vorbisFile, -1)) == NULL)
+	if((vi = ov_info(&vorbisFile,-1)) == NULL)
 		goto out;
 
 	err = 0;
@@ -71,7 +71,7 @@ uint64_t fillVorbisBuffer(char* bufferOut)
 	{
 		static int current_section;
 		int samplesJustRead =
-			ov_read(&vorbisFile, bufferOut, samplesToRead, &current_section);
+			ov_read(&vorbisFile,bufferOut,samplesToRead,&current_section);
 
 		if(samplesJustRead < 0)
 			return samplesJustRead;
@@ -88,14 +88,14 @@ uint64_t fillVorbisBuffer(char* bufferOut)
 }
 
 int isVorbis(const char *in){
-	FILE *ft = fopen(in, "r");
+	FILE *ft = fopen(in,"r");
 	OggVorbis_File testvf;
 	int err;
 
 	if(ft == NULL)
 		return -1;
 
-	err = ov_test(ft, &testvf, NULL, 0);
+	err = ov_test(ft,&testvf,NULL,0);
 
 	ov_clear(&testvf);
 	fclose(ft);
@@ -108,7 +108,7 @@ double getVorbisTime() {
 	else return -1000;
 }
 int setVorbisTime(double after_time) {
-	return ov_pcm_seek(&vorbisFile, (after_time * vi->rate));
+	return ov_pcm_seek(&vorbisFile,(after_time * vi->rate));
 }
 
 int get_buffer_size() {

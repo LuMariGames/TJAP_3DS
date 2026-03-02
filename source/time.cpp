@@ -15,22 +15,22 @@ enum msec_status {
 #define TIME_NUM 4
 
 struct timespec tv;
-int cnt[TIME_NUM], msec[TIME_NUM][4], sec[TIME_NUM];
+int cnt[TIME_NUM],msec[TIME_NUM][4],sec[TIME_NUM];
 int isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
 
 double get_current_time(int id) {
 
 
-	clock_gettime(CLOCK_MONOTONIC, &tv);
+	clock_gettime(CLOCK_MONOTONIC,&tv);
 	if (isStop[id] != 1) {
 
 		if (cnt[id] != 0) Time[id] += tv.tv_sec + tv.tv_nsec * 0.000000001 - OffTime[id];
 		++cnt[id];
 	}
 	OffTime[id] = tv.tv_sec + tv.tv_nsec * 0.000000001;
-	//snprintf(get_buffer(), BUFFER_SIZE, "t:%.1f", Time[id]);
-	//draw_debug(0, id*10, get_buffer());
+	//snprintf(get_buffer(),BUFFER_SIZE,"t:%.1f",Time[id]);
+	//draw_debug(0,id*10,get_buffer());
 	return Time[id] * mspeed();
 }
 
@@ -77,13 +77,13 @@ void draw_fps() {
 		fps = FPS_SAMPLE / fps_sum;
 		fps_sum = 0;
 	}
-	snprintf(get_buffer(), BUFFER_SIZE, "%.2ffps", fps);
-	draw_debug(0, 0, get_buffer());
+	snprintf(get_buffer(),BUFFER_SIZE,"%.2ffps",fps);
+	draw_debug(0,0,get_buffer());
 }
 
 /*void draw_time(int id) {
-	snprintf(get_buffer(), BUFFER_SIZE, "%.10f", Time[id]);
-	draw_debug(0, 0, get_buffer());
+	snprintf(get_buffer(),BUFFER_SIZE,"%.10f",Time[id]);
+	draw_debug(0,0,get_buffer());
 }*/
 
 void time_ini() {
