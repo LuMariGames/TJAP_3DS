@@ -844,9 +844,9 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].scroll=scroll;
 				//Measure[MeasureCount].sudn_time=movetime;
 				Measure[MeasureCount].isDummy=isDummy;
-				Measure[MeasureCount].judge_time=240.0/bpm * measure * percent+PreJudge+delay;
-				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time-(240.0 * NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm * NOTES_AREA);
-				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/NextBpm-sudntime): 0)-(240.0 * NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm *(NOTES_AREA * fabs(scroll)));
+				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
+				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*NOTES_AREA);
+				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/NextBpm-sudntime): 0)-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*(NOTES_AREA*fabs(scroll)));
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
 				Measure[MeasureCount].lyric=ly;
@@ -956,12 +956,12 @@ void load_tja_notes(int course,LIST_T Song){
 			case COMMAND_LEVELHOLD:
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
-			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
+			case COMMAND_SECTION:
 				n=Measure[i].notes+1;
-				while(n<=tja_cnt && tja_notes[n][0]=='#')++n;
-				while(n<tja_cnt && n!=Measure[j].notes)++j;
+				while(n<=tja_cnt&&(tja_notes[n][0]=='#'||tja_notes[n][0]=='\r'))++n;
+				while(n<tja_cnt&&n!=Measure[j].notes)++j;
 				Measure[i].judge_time=Measure[j].judge_time;
 				break;
 			}

@@ -8,7 +8,7 @@
 #include "vorbis.h"
 #include "option.h"
 
-int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;;
+int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;
 double bpm,offset;
 float NowBPM=120.0f;
 extern int isBranch,course,stme;
@@ -193,7 +193,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					Notes[id].isThrough=false;
 
 					PreNotesKnd=knd;
-
 					int roll_id=-1;
 
 					switch(Notes[id].knd){
@@ -282,7 +281,6 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 								Notes[id].knd=NOTES_BALLOONEND;
 								RollState=0;
 								Notes[id].flag=true;
-								
 							}
 							else delete_notes(id);
 							break;
@@ -804,6 +802,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					RollNotes[Notes[i].roll_id].start_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].start_id=i;
 				}
+				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_ROLLEND:
@@ -812,6 +811,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					RollNotes[Notes[i].roll_id].end_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].end_id=i;
 				}
+				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_BALLOON:
@@ -857,8 +857,8 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
-		if(Notes[i].flag &&
-			((Notes[i].x<=-500.f&&Notes[i].scroll>0)||(Notes[i].x>=500.f&&Notes[i].scroll<0))&&
+		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
+			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
 			if(Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
@@ -931,7 +931,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 					}
 					else if(Notes[i].scroll<0){
 						for(int n=0,m=(RollNotes[Notes[i].roll_id].start_x-end_x)/8.0;n<m;++n){
-							sprites[SPRITE_ROLL_INT].params.pos.x=(int)Notes[i].x+8 *(n*-1);
+							sprites[SPRITE_ROLL_INT].params.pos.x=(int)Notes[i].x+8*(n*-1);
 							sprites[SPRITE_ROLL_INT].params.pos.y=notes_y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image,&sprites[SPRITE_ROLL_INT].params,&DummyTint);
 						}
@@ -959,7 +959,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 					}
 					else if(Notes[i].scroll<0){
 						for(int n=0,m=(RollNotes[Notes[i].roll_id].start_x-end_x)/8.0;n<m;++n){
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.x=(int)Notes[i].x+8 *(n*-1);
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.x=(int)Notes[i].x+8*(n*-1);
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.y=notes_y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image,&sprites[SPRITE_BIG_ROLL_INT].params,&DummyTint);
 						}
