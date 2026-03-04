@@ -261,7 +261,7 @@ const char* sijs2u8(char text0, char text1){
 	case 0x81AC:return(const char*)"〓";
 	case 0x816B:return(const char*)"〔";
 	case 0x816C:return(const char*)"〕";
-	case 0x8160:return(const char*)"〜";
+	case 0x8160:return(const char*)"～";
 	case 0x829F:return(const char*)"ぁ";
 	case 0x82A0:return(const char*)"あ";
 	case 0x82A1:return(const char*)"ぃ";
