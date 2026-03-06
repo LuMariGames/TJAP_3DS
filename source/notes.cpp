@@ -220,6 +220,7 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					case NOTES_BALLOON:
 					case NOTES_POTATO:
 					case NOTES_DENDEN:
+					case NOTES_TIMEBOMB:
 						RollState=NOTES_BALLOON;
 						roll_id=make_balloon_start(id);
 						if(roll_id!=-1){
@@ -731,8 +732,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
-					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else make_balloon_break();
 					break;
 				}
 				else update_score(BALLOON);
@@ -744,8 +743,6 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
-					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else make_balloon_break();
 					break;
 				}
 				else update_score(BALLOON);
@@ -757,7 +754,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 					update_score(BALLOON_BREAK);	//破裂
 					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else make_balloon_break();
+					else if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_BALLOON)make_balloon_break();
 					break;
 				}
 				else update_score(BALLOON);
@@ -817,6 +814,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			case NOTES_BALLOON:
 			case NOTES_POTATO:
 			case NOTES_DENDEN:
+			case NOTES_TIMEBOMB:
 				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
@@ -832,6 +830,10 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					BalloonNotes[Notes[i].roll_id].end_id=i;
 				}
 				if(Notes[i].judge_time<=CurrentTimeNotes){
+					if(Notes[BalloonNotes[Notes[i].roll_id].start_id].knd==NOTES_TIMEBOMB){
+						make_judge(BAD,CurrentTimeNotes);
+						update_score(BAD);
+					}
 					isPttBorder=false;
 					delete_notes(i);
 				}
@@ -915,7 +917,6 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
 				break;
 			case NOTES_ROLL:
-
 				if(RollNotes[Notes[i].roll_id].flag){
 
 					double end_x;
@@ -941,9 +942,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 					C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
 				}
 				break;
-
 			case NOTES_BIGROLL:
-
 				if(RollNotes[Notes[i].roll_id].flag){
 
 					double end_x;
@@ -969,9 +968,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
 					break;
 				}
-
 			case NOTES_BALLOON:
-
 				if(BalloonNotes[Notes[i].roll_id].current_hit==0){
 
 					sprites[SPRITE_BALLOON].params.pos.x=Notes[i].x;
@@ -1010,9 +1007,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 				}
 				if(BalloonNotes[Notes[i].roll_id].current_hit>=1)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
-
 			case NOTES_POTATO:
-
 				if(Notes[i].x!=NOTES_JUDGE_X){
 
 					sprites[SPRITE_POTATO].params.pos.x=Notes[i].x;
@@ -1027,15 +1022,18 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 					update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				}
 				break;
-
 			case NOTES_DENDEN:
-
 				sprites[SPRITE_DENDEN].params.pos.x=Notes[i].x;
 				sprites[SPRITE_DENDEN].params.pos.y=notes_y;
 				C2D_DrawImage(sprites[SPRITE_DENDEN].image,&sprites[SPRITE_DENDEN].params,&DummyTint);
 				if(Notes[i].x==NOTES_JUDGE_X)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
-
+			case NOTES_TIMEBOMB:
+				sprites[SPRITE_TIMEBOMB].params.pos.x=Notes[i].x;
+				sprites[SPRITE_TIMEBOMB].params.pos.y=notes_y;
+				C2D_DrawImage(sprites[SPRITE_TIMEBOMB].image,&sprites[SPRITE_TIMEBOMB].params,&DummyTint);
+				if(BalloonNotes[Notes[i].roll_id].current_hit>=1)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
+				break;
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x=Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y=notes_y;
@@ -1106,7 +1104,8 @@ int ctoi(char c){
 	case '8':return NOTES_ROLLEND;
 	case '9':return NOTES_POTATO;
 	case 'C':return NOTES_BOMB;
-	case 'D':return NOTES_DENDEN;
+	case 'D':return NOTES_TIMEBOMB;
+	case 'P':return NOTES_DENDEN;
 	default:return 0;
 	}
 }
@@ -1287,7 +1286,8 @@ void delete_notes(int i){
 			delete_balloon(Notes[i].roll_id);
 			update_balloon_count(0);
 		}
-		else if(Notes[i].knd==NOTES_BALLOON||Notes[i].knd==NOTES_POTATO||Notes[i].knd==NOTES_DENDEN){
+		else if(Notes[i].knd==NOTES_BALLOON||Notes[i].knd==NOTES_POTATO||
+			Notes[i].knd==NOTES_DENDEN||Notes[i].knd==NOTES_TIMEBOMB){
 
 			BalloonNotes[Notes[i].roll_id].start_id=-1;
 			if(BalloonNotes[Notes[i].roll_id].end_id==-1){
