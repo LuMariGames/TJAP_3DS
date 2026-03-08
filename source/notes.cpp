@@ -586,7 +586,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					if(BalloonNotes[JudgeBalloonState].current_hit>BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit=BalloonNotes[JudgeBalloonState].need_hit;
 					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else make_balloon_break();
+					else if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_BALLOON)make_balloon_break();
 				}
 				else update_score(BALLOON);
 			}
