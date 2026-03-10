@@ -20,7 +20,7 @@
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
-C2D_Sprite sprites[164];	//画像用
+C2D_Sprite sprites[166];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
@@ -135,9 +135,11 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_2],0.5f,0.0f);
 	C2D_SpriteFromSheet(&sprites[SPRITE_DENDEN],otherspsh,5);
 	C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_TIMEBOMB],otherspsh,6);
+	C2D_SpriteFromSheet(&sprites[SPRITE_RAINBOW],otherspsh,6);
+	C2D_SpriteSetCenter(&sprites[SPRITE_RAINBOW],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_TIMEBOMB],otherspsh,7);
 	C2D_SpriteSetCenter(&sprites[SPRITE_TIMEBOMB],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND],otherspsh,7);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND],otherspsh,8);
 	C2D_SpriteSetCenter(&sprites[SPRITE_BACKGROUND],0.5f,0.5f);
 	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND],TOP_WIDTH * 0.5,192);
 
