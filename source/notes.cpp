@@ -1059,17 +1059,16 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 	draw_emblem(sprites);
 
 	//割れた風船
+	C2D_ImageTint Tint;
 	switch(isBalloonBreakDisp){
 	case 1:
 		BalloonBreakCount--;
-		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
 		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
 		break;
 	case 2:
 		BalloonBreakCount--;
-		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
 		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
