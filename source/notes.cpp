@@ -585,8 +585,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					update_score(BALLOON_BREAK);	//破裂
 					if(BalloonNotes[JudgeBalloonState].current_hit>BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit=BalloonNotes[JudgeBalloonState].need_hit;
-					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else make_balloon_break();
+					make_balloon_break(Notes[BalloonNotes[JudgeBalloonState].start_id].knd,40);
 				}
 				else update_score(BALLOON);
 			}
@@ -732,7 +731,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
-					make_balloon_break();
+					make_balloon_break(NOTES_DENDEN,40);
 					break;
 				}
 				else update_score(BALLOON);
@@ -744,7 +743,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
-					make_balloon_break();
+					make_balloon_break(NOTES_DENDEN,40);
 					break;
 				}
 				else update_score(BALLOON);
@@ -755,8 +754,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
-					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else make_balloon_break();
+					make_balloon_break(Notes[BalloonNotes[JudgeBalloonState].start_id].knd,40);
 					break;
 				}
 				else update_score(BALLOON);
@@ -1061,17 +1059,24 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 	//割れた風船
 	C2D_ImageTint Tint;
 	switch(isBalloonBreakDisp){
-	case 1:
-		BalloonBreakCount--;
-		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
-		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
-		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
-		break;
-	case 2:
+	case NOTES_POTATO:
 		BalloonBreakCount--;
 		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
 		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
+		break;
+	case NOTES_DENDEN:
+		BalloonBreakCount--;
+		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
+		C2D_SpriteSetScale(&sprites[SPRITE_RAINBOW],2-(BalloonBreakCount/20.0),1);
+		C2D_SpriteSetPos(&sprites[SPRITE_RAINBOW],200,120);
+		C2D_DrawImage(sprites[SPRITE_RAINBOW].image,&sprites[SPRITE_RAINBOW].params,&Tint);
+		break;
+	default:
+		BalloonBreakCount--;
+		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
+		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
+		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
 		break;
 	}
 	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
@@ -1192,16 +1197,10 @@ inline int make_roll_end(int NotesId){
 	else return -1;
 }
 
-inline void make_balloon_break(){
+inline void make_balloon_break(int notesid,int count){
 
-	isBalloonBreakDisp=1;
-	BalloonBreakCount=40;
-}
-
-inline void make_potato_break(){
-
-	isBalloonBreakDisp=2;
-	BalloonBreakCount=40;
+	isBalloonBreakDisp=notesid;
+	BalloonBreakCount=count;
 }
 
 void delete_balloon(int i){
