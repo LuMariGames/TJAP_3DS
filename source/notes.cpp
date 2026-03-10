@@ -28,10 +28,10 @@ ROLL_T RollNotes[ROLL_MAX];
 BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
-int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,PreNotesKnd,isDendenCH,
+int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
+isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isBalloonBreakDisp=false,isPotatoBreakDisp=false,
-isPttBorder=false,isGOGOTime=false,isLevelHold=false;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 
@@ -586,7 +586,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 					if(BalloonNotes[JudgeBalloonState].current_hit>BalloonNotes[JudgeBalloonState].need_hit)
 						BalloonNotes[JudgeBalloonState].current_hit=BalloonNotes[JudgeBalloonState].need_hit;
 					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_BALLOON)make_balloon_break();
+					else make_balloon_break();
 				}
 				else update_score(BALLOON);
 			}
@@ -732,6 +732,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
+					make_balloon_break();
 					break;
 				}
 				else update_score(BALLOON);
@@ -743,6 +744,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 				if(BalloonNotes[JudgeBalloonState].current_hit>=BalloonNotes[JudgeBalloonState].need_hit){
 
 					update_score(BALLOON_BREAK);	//破裂
+					make_balloon_break();
 					break;
 				}
 				else update_score(BALLOON);
@@ -754,7 +756,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 					update_score(BALLOON_BREAK);	//破裂
 					if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_POTATO)make_potato_break();
-					else if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_BALLOON)make_balloon_break();
+					else make_balloon_break();
 					break;
 				}
 				else update_score(BALLOON);
@@ -1057,24 +1059,23 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 	draw_emblem(sprites);
 
 	//割れた風船
-	if(isBalloonBreakDisp){
+	switch(isBalloonBreakDisp){
+	case 1:
 		BalloonBreakCount--;
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
 		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
-	}
-	if(isPotatoBreakDisp){
+		break;
+	case 2:
 		BalloonBreakCount--;
 		C2D_ImageTint Tint;
 		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
 		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
 		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
+		break;
 	}
-	if(BalloonBreakCount<=0){
-		isBalloonBreakDisp=false;
-		isPotatoBreakDisp=false;
-	}
+	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
 }
 
 int get_branch_course(){
@@ -1194,13 +1195,13 @@ inline int make_roll_end(int NotesId){
 
 inline void make_balloon_break(){
 
-	isBalloonBreakDisp=true;
+	isBalloonBreakDisp=1;
 	BalloonBreakCount=40;
 }
 
 inline void make_potato_break(){
 
-	isPotatoBreakDisp=true;
+	isBalloonBreakDisp=2;
 	BalloonBreakCount=40;
 }
 
@@ -1447,8 +1448,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	BalloonCount[3]=0;
 	BalloonBreakCount=0;
 	isDendenCH=-1;
-	isBalloonBreakDisp=false;
-	isPotatoBreakDisp=false;
+	isBalloonBreakDisp=0;
 	isPttBorder=false;
 	isGOGOTime=false;
 	Branch.knd=0;
