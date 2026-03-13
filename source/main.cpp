@@ -124,7 +124,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 
 	// 1. PNGを読み込み(RGB形式で強制取得)
 	unsigned char* image;
-	unsigned int w = width,h = height;
+	unsigned int w,h;
 
 	if (rgba) {
 		unsigned int error = lodepng_decode32_file(&image,&w,&h,filename);
@@ -151,11 +151,11 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 		
-		subtex.left = 0.f+(img_x/1024.f);
-		subtex.top = 1.f-(img_y/1024.f);
-		subtex.right = (float)width+img_x / 1024.f;
-		subtex.bottom = 1.f-((float)height+img_y / 1024.f);
-		C3D_TexInit(&tex,1024,1024,GPU_RGBA8);
+		subtex.left = 0.f+(img_x/(float)GetNextPowerOf2(w));
+		subtex.top = 1.f-(img_y/(float)GetNextPowerOf2(h));
+		subtex.right = (float)width+img_x/(float)GetNextPowerOf2(w);
+		subtex.bottom = 1.f-((float)height+img_y/(float)GetNextPowerOf2(h));
+		C3D_TexInit(&tex,(u16)GetNextPowerOf2(w),(u16)GetNextPowerOf2(h),GPU_RGBA8);
 		memset(tex.data,0,tex.size);
 		for (u32 x = 0; x<subtex.width; x++){
 			for (u32 y = 0; y<subtex.height; y++){
@@ -188,11 +188,11 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 		
-		subtex.left = 0.f+(img_x/1024.f);
-		subtex.top = 1.f-(img_y/1024.f);
-		subtex.right = (float)width+img_x / 1024.f;
-		subtex.bottom = 1.f-((float)height+img_y / 1024.f);
-		C3D_TexInit(&tex,1024,1024,GPU_RGB8);
+		subtex.left = 0.f+(img_x/(float)GetNextPowerOf2(w));
+		subtex.top = 1.f-(img_y/(float)GetNextPowerOf2(h));
+		subtex.right = (float)width+img_x/(float)GetNextPowerOf2(w);
+		subtex.bottom = 1.f-((float)height+img_y/(float)GetNextPowerOf2(h));
+		C3D_TexInit(&tex,(u16)GetNextPowerOf2(w),(u16)GetNextPowerOf2(h),GPU_RGB8);
 		memset(tex.data,0,tex.size);
 		for (u32 x = 0; x<subtex.width; x++){
 			for (u32 y = 0; y<subtex.height; y++){
