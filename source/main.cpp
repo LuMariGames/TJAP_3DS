@@ -151,14 +151,14 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 
-		u32 w_pow2 = GetNextPowerOf2(w);
-		u32 h_pow2 = GetNextPowerOf2(h);
+		u32 w_pow2 = GetNextPowerOf2(width);
+		u32 h_pow2 = GetNextPowerOf2(height);
 
 		subtex.left = 0.f+(img_x/(float)w_pow2);
 		subtex.top = 1.f-(img_y/(float)h_pow2);
 		subtex.right = (float)width+img_x/(float)w_pow2;
 		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
-		C3D_TexInit(&tex,(u16)w_pow2,(u16)h_pow2,GPU_RGBA8);
+		C3D_TexInit(&tex,w,h,GPU_RGBA8);
 		memset(tex.data,0,tex.size);
 		for (u32 x = 0; x<subtex.width; x++){
 			for (u32 y = 0; y<subtex.height; y++){
@@ -191,14 +191,14 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 		
-		u32 w_pow2 = GetNextPowerOf2(w);
-		u32 h_pow2 = GetNextPowerOf2(h);
+		u32 w_pow2 = GetNextPowerOf2(width);
+		u32 h_pow2 = GetNextPowerOf2(height);
 
 		subtex.left = 0.f+(img_x/(float)w_pow2);
 		subtex.top = 1.f-(img_y/(float)h_pow2);
 		subtex.right = (float)width+img_x/(float)w_pow2;
 		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
-		C3D_TexInit(&tex,(u16)w_pow2,(u16)h_pow2,GPU_RGB8);
+		C3D_TexInit(&tex,w,h,GPU_RGB8);
 		memset(tex.data,0,tex.size);
 		for (u32 x = 0; x<subtex.width; x++){
 			for (u32 y = 0; y<subtex.height; y++){
