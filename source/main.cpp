@@ -220,13 +220,18 @@ inline static void load_sprites(){
 		dance = true;
 		dancnt = (unsigned int)C2D_SpriteSheetCount(dancerspsh);
 	}
-	//if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
-
 	if (!spriteSheet)svcBreak(USERBREAK_PANIC);
 
 	for (int i = 0,j = SPRITES_NUMER; i<j; ++i){
 		C2D_SpriteFromSheet(&sprites[i],spriteSheet,i);
 		C2D_SpriteSetCenter(&sprites[i],0.5f,0.5f);
+	}
+
+	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_0],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,0,0));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_1],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,256,0));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_2],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,0,128));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_3],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,256,128));
 	}
 
 	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
