@@ -150,16 +150,19 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 				*(image+z+3)= r;
 			}
 		}
-		
-		subtex.left = 0.f+(img_x/1024.f);
-		subtex.top = 1.f-(img_y/1024.f);
-		subtex.right = (float)width+img_x/1024.f;
-		subtex.bottom = 1.f-((float)height+img_y/1024.f);
-		C3D_TexInit(&tex,1024,1024,GPU_RGBA8);
+
+		u32 w_pow2 = GetNextPowerOf2(w);
+		u32 h_pow2 = GetNextPowerOf2(h);
+
+		subtex.left = 0.f+(img_x/(float)w_pow2);
+		subtex.top = 1.f-(img_y/(float)h_pow2);
+		subtex.right = (float)width+img_x/(float)w_pow2;
+		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
+		C3D_TexInit(&tex,(u16)w_pow2,(u16)h_pow2,GPU_RGBA8);
 		memset(tex.data,0,tex.size);
 		for (u32 x = 0; x<subtex.width; x++){
 			for (u32 y = 0; y<subtex.height; y++){
-				u32 dst_pos = ((((y >> 3)* (0x200 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 4;
+				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 4;
 				u32 src_pos = (y * subtex.width+x)* 4;
 				memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],4);
 			}
@@ -188,15 +191,18 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 		
-		subtex.left = 0.f+(img_x/1024.f);
-		subtex.top = 1.f-(img_y/1024.f);
-		subtex.right = (float)width+img_x/1024.f;
-		subtex.bottom = 1.f-((float)height+img_y/1024.f);
-		C3D_TexInit(&tex,1024,1024,GPU_RGB8);
+		u32 w_pow2 = GetNextPowerOf2(w);
+		u32 h_pow2 = GetNextPowerOf2(h);
+
+		subtex.left = 0.f+(img_x/(float)w_pow2);
+		subtex.top = 1.f-(img_y/(float)h_pow2);
+		subtex.right = (float)width+img_x/(float)w_pow2;
+		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
+		C3D_TexInit(&tex,(u16)w_pow2,(u16)h_pow2,GPU_RGB8);
 		memset(tex.data,0,tex.size);
 		for (u32 x = 0; x<subtex.width; x++){
 			for (u32 y = 0; y<subtex.height; y++){
-				u32 dst_pos = ((((y >> 3)* (0x200 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 3;
+				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 3;
 				u32 src_pos = (y * subtex.width+x)* 3;
 				memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],3);
 			}
