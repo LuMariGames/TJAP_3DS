@@ -135,9 +135,9 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 		subtex.width = width;
 		subtex.height = height;
 		
-		for (u32 row = 0; row<subtex.width; row++){
-			for (u32 col = 0; col<subtex.height; col++){
-				u32 z = (row+col*subtex.width)*4;
+		for (u32 row = 0; row<w; row++){
+			for (u32 col = 0; col<h; col++){
+				u32 z = (row+col*w)*4;
 				
 				u8 r = *(u8 *)(image+z);
 				u8 g = *(u8 *)(image+z+1);
@@ -151,19 +151,19 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 
-		u32 w_pow2 = GetNextPowerOf2(width);
-		u32 h_pow2 = GetNextPowerOf2(height);
+		u32 w_pow2 = GetNextPowerOf2(w);
+		u32 h_pow2 = GetNextPowerOf2(h);
 
 		subtex.left = 0.f+(img_x/(float)w_pow2);
 		subtex.top = 1.f-(img_y/(float)h_pow2);
 		subtex.right = (float)width+img_x/(float)w_pow2;
 		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
-		C3D_TexInit(&tex,w,h,GPU_RGBA8);
+		C3D_TexInit(&tex,w_pow2,h_pow2,GPU_RGBA8);
 		memset(tex.data,0,tex.size);
-		for (u32 x = 0; x<subtex.width; x++){
-			for (u32 y = 0; y<subtex.height; y++){
+		for (u32 x = 0; x<w; x++){
+			for (u32 y = 0; y<h; y++){
 				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 4;
-				u32 src_pos = (y * subtex.width+x)* 4;
+				u32 src_pos = (y * w+x)* 4;
 				memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],4);
 			}
 		}
@@ -191,19 +191,19 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 			}
 		}
 		
-		u32 w_pow2 = GetNextPowerOf2(width);
-		u32 h_pow2 = GetNextPowerOf2(height);
+		u32 w_pow2 = GetNextPowerOf2(w);
+		u32 h_pow2 = GetNextPowerOf2(h);
 
 		subtex.left = 0.f+(img_x/(float)w_pow2);
 		subtex.top = 1.f-(img_y/(float)h_pow2);
 		subtex.right = (float)width+img_x/(float)w_pow2;
 		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
-		C3D_TexInit(&tex,w,h,GPU_RGB8);
+		C3D_TexInit(&tex,w_pow2,h_pow2,GPU_RGB8);
 		memset(tex.data,0,tex.size);
-		for (u32 x = 0; x<subtex.width; x++){
-			for (u32 y = 0; y<subtex.height; y++){
+		for (u32 x = 0; x<w; x++){
+			for (u32 y = 0; y<h; y++){
 				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 3;
-				u32 src_pos = (y * subtex.width+x)* 3;
+				u32 src_pos = (y * w+x)* 3;
 				memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],3);
 			}
 		}
