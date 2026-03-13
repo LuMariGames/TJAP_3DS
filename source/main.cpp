@@ -228,10 +228,10 @@ inline static void load_sprites(){
 	}
 
 	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_0],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,0,0));
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_1],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,256,0));
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_2],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,0,128));
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_3],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",false,256,128,256,128));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_0],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_1],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,256,0));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_2],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,0,128));
+		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_3],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,256,128));
 	}
 
 	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
