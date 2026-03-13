@@ -105,117 +105,6 @@ inline int dancer_time_count(double TIME,int NUM)noexcept {
 	if (TIME<0)return 0;
 	return(int)floor(TIME*(NowBPM/(960.0/NUM)))%NUM;
 }
-
-C3D_Tex tex;
-Tex3DS_SubTexture subtex;
-
-static u32 GetNextPowerOf2(u32 v) {
-	v--;
-	v |= v >> 1;
-	v |= v >> 2;
-	v |= v >> 4;
-	v |= v >> 8;
-	v |= v >> 16;
-	v++;
-	return (v >= 64 ? v : 64);
-}
-
-C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,unsigned int height,float img_x,float img_y){
-
-	// 1. PNGを読み込み(RGB形式で強制取得)
-	unsigned char* image;
-	unsigned int w,h;
-
-	if (rgba) {
-		unsigned int error = lodepng_decode32_file(&image,&w,&h,filename);
-		if(error != 0){
-			free(image);
-			return(C2D_Image){0,0};
-		}
-		subtex.width = width;
-		subtex.height = height;
-		
-		for (u32 row = 0; row<w; row++){
-			for (u32 col = 0; col<h; col++){
-				u32 z = (row+col*w)*4;
-				
-				u8 r = *(u8 *)(image+z);
-				u8 g = *(u8 *)(image+z+1);
-				u8 b = *(u8 *)(image+z+2);
-				u8 a = *(u8 *)(image+z+3);
-				
-				*(image+z)= a;
-				*(image+z+1)= b;
-				*(image+z+2)= g;
-				*(image+z+3)= r;
-			}
-		}
-
-		u32 w_pow2 = GetNextPowerOf2(w);
-		u32 h_pow2 = GetNextPowerOf2(h);
-
-		subtex.left = 0.f+(img_x/(float)w_pow2);
-		subtex.top = 1.f-(img_y/(float)h_pow2);
-		subtex.right = (float)width+img_x/(float)w_pow2;
-		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
-		C3D_TexInit(&tex,w_pow2,h_pow2,GPU_RGBA8);
-		memset(tex.data,0,tex.size);
-		for (u32 x = 0; x<w; x++){
-			for (u32 y = 0; y<h; y++){
-				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 4;
-				u32 src_pos = (y * w+x)* 4;
-				memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],4);
-			}
-		}
-	}
-	else {
-		unsigned int error = lodepng_decode24_file(&image,&w,&h,filename);
-		if(error != 0){
-			free(image);
-			return(C2D_Image){0,0};
-		}
-		subtex.width = width;
-		subtex.height = height;
-		
-		for (u32 row = 0; row<subtex.width; row++){
-			for (u32 col = 0; col<subtex.height; col++){
-				u32 z = (row+col*subtex.width)*3;
-				
-				u8 r = *(u8 *)(image+z);
-				u8 g = *(u8 *)(image+z+1);
-				u8 b = *(u8 *)(image+z+2);
-				
-				*(image+z)= b;
-				*(image+z+1)= g;
-				*(image+z+2)= r;
-			}
-		}
-		
-		u32 w_pow2 = GetNextPowerOf2(w);
-		u32 h_pow2 = GetNextPowerOf2(h);
-
-		subtex.left = 0.f+(img_x/(float)w_pow2);
-		subtex.top = 1.f-(img_y/(float)h_pow2);
-		subtex.right = (float)width+img_x/(float)w_pow2;
-		subtex.bottom = 1.f-((float)height+img_y/(float)h_pow2);
-		C3D_TexInit(&tex,w_pow2,h_pow2,GPU_RGB8);
-		memset(tex.data,0,tex.size);
-		for (u32 x = 0; x<w; x++){
-			for (u32 y = 0; y<h; y++){
-				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 3;
-				u32 src_pos = (y * w+x)* 3;
-				memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],3);
-			}
-		}
-	}
-	C3D_TexFlush(&tex);
-	tex.border = 0x00000000;
-	C3D_TexSetWrap(&tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
-
-	free(image);
-	return(C2D_Image){&tex,&subtex};
-}
-
 inline static void load_sprites(){
 
 	if (exist_file("sdmc:/tjafiles/theme/default.t3x"))spriteSheet = C2D_SpriteSheetLoad("sdmc:/tjafiles/theme/default.t3x");
@@ -226,18 +115,12 @@ inline static void load_sprites(){
 		dance = true;
 		dancnt = (unsigned int)C2D_SpriteSheetCount(dancerspsh);
 	}
+
 	if (!spriteSheet)svcBreak(USERBREAK_PANIC);
 
 	for (int i = 0,j = SPRITES_NUMER; i<j; ++i){
 		C2D_SpriteFromSheet(&sprites[i],spriteSheet,i);
 		C2D_SpriteSetCenter(&sprites[i],0.5f,0.5f);
-	}
-
-	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_0],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0));
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_1],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,256,0));
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_2],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,0,128));
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_3],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,256,128));
 	}
 
 	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
@@ -298,6 +181,58 @@ inline static void load_sprites(){
 	C3D_TexSetFilter(sprites[SPRITE_BIG_ROLL_END].image.tex,GPU_LINEAR,GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BALLOON].image.tex,GPU_LINEAR,GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_BOMB].image.tex,GPU_LINEAR,GPU_LINEAR);
+}
+
+C3D_Tex tex;
+Tex3DS_SubTexture subtex;
+
+C2D_Image loadPNGAsC2DImage(const char* filename){
+
+	// 1. PNGを読み込み(RGB形式で強制取得)
+	unsigned char* image;
+
+	unsigned int w = 400,h = 96;
+	unsigned int error = lodepng_decode24_file(&image,&w,&h,filename);
+	if (error != 0){
+		free(image);
+		return(C2D_Image){0,0};
+	}
+	subtex.width = 400;
+	subtex.height = 96;
+
+	for (u32 row = 0; row<subtex.width; row++){
+		for (u32 col = 0; col<subtex.height; col++){
+			u32 z = (row+col * subtex.width)* 3;
+
+			u8 r = *(u8 *)(image+z);
+			u8 g = *(u8 *)(image+z+1);
+			u8 b = *(u8 *)(image+z+2);
+
+			*(image+z)= b;
+			*(image+z+1)= g;
+			*(image+z+2)= r;
+		}
+	}
+
+	subtex.left = 0.f;
+	subtex.top = 1.f;
+	subtex.right = 400.f / 512.f;
+	subtex.bottom = 1.f-(96.f / 128.f);
+	C3D_TexInit(&tex,512,128,GPU_RGB8);
+	memset(tex.data,0,tex.size);
+	for (u32 x = 0; x<subtex.width; x++){
+		for (u32 y = 0; y<subtex.height; y++){
+			u32 dst_pos = ((((y >> 3)* (0x200 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 3;
+			u32 src_pos = (y * subtex.width+x)* 3;
+			memcpy(&((unsigned char*)tex.data)[dst_pos],&((unsigned char*)image)[src_pos],3);
+		}
+	}
+	C3D_TexFlush(&tex);
+	tex.border = 0x00000000;
+	C3D_TexSetWrap(&tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
+
+	free(image);
+	return(C2D_Image){&tex,&subtex};
 }
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
@@ -590,11 +525,11 @@ int main(){
 					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
 					if (!isAniBg&&exist_file(abs_path)){
 						isAniBg = true;
-						C2D_SpriteFromImage(&sprites[163],loadPNGAsC2DImage(abs_path,false,400,96,0,0));
+						C2D_SpriteFromImage(&sprites[163],loadPNGAsC2DImage(abs_path));
 						C2D_SpriteSetCenter(&sprites[163],0.5f,0.5f);
 						bgcnt = 0;
 					}
-					else if (exist_file(abs_path)==0)isAniBg = false;
+					else if (exist_file(abs_path)== 0)isAniBg = false;
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					notes_cnt = 0;
