@@ -195,14 +195,14 @@ C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,un
 		subtex->right = (float)(subtex->width+img_x)/(float)w_pow2;
 		subtex->bottom = 1.f-((float)(subtex->height+img_y)/(float)h_pow2);
 	}
-	C3D_TexFlush(&tex);
-	tex.border = 0x00000000;
-	C3D_TexSetWrap(&tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
+	C3D_TexFlush(tex);
+	tex->border = 0x00000000;
+	C3D_TexSetWrap(tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
 	texture->tex = tex;
 	texture->subtex = subtex;
 
 	free(image);
-	return(C2D_Image){&tex,&subtex};
+	return(C2D_Image){tex,subtex};
 }
 
 inline static void load_sprites(){
