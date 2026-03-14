@@ -141,7 +141,7 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 		for (u32 x = 0; x<w; x++){
 			for (u32 y = 0; y<h; y++){
 				u32 dst_pos = ((((y >> 3)* (w_pow2 >> 3)+(x >> 3))<< 6)+((x&1)| ((y&1)<< 1)| ((x&2)<< 1)| ((y&2)<< 2)| ((x&4)<< 2)| ((y&4)<< 3)))* 4;
-				u32 src_pos = (y * subtex.width+x)* 4;
+				u32 src_pos = (y * w+x)* 4;
 				
 				u8 r = image[src_pos + 0];
 				u8 g = image[src_pos + 1];
