@@ -285,7 +285,7 @@ inline static void load_sprites(){
 		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.5f,0.5f);
 		C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON],13,33);
 	}
-	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
+	if(exist_file("sdmc:/tjafiles/theme/def/donchan.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0);
 		sprites[SPRITE_DONCHAN_0].params.pos.w = 256; sprites[SPRITE_DONCHAN_0].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_0],0.5f,0.5f);
