@@ -106,9 +106,6 @@ inline int dancer_time_count(double TIME,int NUM)noexcept {
 	return(int)floor(TIME*(NowBPM/(960.0/NUM)))%NUM;
 }
 
-C3D_Tex tex;
-Tex3DS_SubTexture subtex;
-
 static u32 GetNextPowerOf2(u32 v) {
 	v--;
 	v |= v >> 1;
@@ -125,6 +122,8 @@ C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,un
 	// 1. PNGを読み込み(RGB形式で強制取得)
 	unsigned char* image;
 	unsigned int w,h;
+	C3D_Tex *tex = new C3D_Tex[sizeof(C3D_Tex)];
+	Tex3DS_SubTexture *subtex = new Tex3DS_SubTexture[sizeof(Tex3DS_SubTexture)];
 
 	if(rgba){
 		unsigned int error = lodepng_decode32_file(&image,&w,&h,filename);
