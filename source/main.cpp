@@ -120,7 +120,7 @@ static u32 GetNextPowerOf2(u32 v) {
 	return (v >= 64 ? v : 64);
 }
 
-C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,unsigned int height,float img_x,float img_y){
+C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,unsigned int width,unsigned int height,float img_x,float img_y){
 
 	// 1. PNGを読み込み(RGB形式で強制取得)
 	unsigned char* image;
@@ -199,6 +199,8 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 	C3D_TexFlush(&tex);
 	tex.border = 0x00000000;
 	C3D_TexSetWrap(&tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
+	texture->tex = tex;
+	texture->subtex = subtex;
 
 	free(image);
 	return(C2D_Image){&tex,&subtex};
@@ -222,13 +224,13 @@ inline static void load_sprites(){
 	}
 
 	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_0],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0));
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_0],0.5f,0.5f);
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_1],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,256,0));
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_1].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,256,0);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_1],0.5f,0.5f);
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_2],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,0,128));
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_2].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,0,128);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_2],0.5f,0.5f);
-		C2D_SpriteFromImage(&sprites[SPRITE_DONCHAN_3],loadPNGAsC2DImage("sdmc:/tjafiles/theme/donchan.png",true,256,128,256,128));
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_3].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,256,128);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
 	}
 
@@ -582,7 +584,7 @@ int main(){
 					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
 					if (!isAniBg&&exist_file(abs_path)){
 						isAniBg = true;
-						C2D_SpriteFromImage(&sprites[163],loadPNGAsC2DImage(abs_path,false,400,96,0,0));
+						loadPNGAsC2DImage(&sprites[163].image,abs_path,false,400,96,0,0);
 						C2D_SpriteSetCenter(&sprites[163],0.5f,0.5f);
 						bgcnt = 0;
 					}
