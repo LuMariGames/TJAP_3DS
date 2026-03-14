@@ -283,6 +283,7 @@ inline static void load_sprites(){
 		loadPNGAsC2DImage(&sprites[SPRITE_BALLOON].image,"sdmc:/tjafiles/theme/def/balloon.png",true,64,64,0,0);
 		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.5f,0.5f);
+		C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON],13,33);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0);
