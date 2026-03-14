@@ -239,12 +239,12 @@ inline static void load_sprites(){
 		sprites[SPRITE_KATSU].params.pos.w = 64; sprites[SPRITE_KATSU].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_KATSU],0.5f,0.5f);
 	}
-	if(exist_file("sdmc:/tjafiles/theme/def/bigdon.png")){
+	if(exist_file("sdmc:/tjafiles/theme/def/big_don.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_DON].image,"sdmc:/tjafiles/theme/def/bigdon.png",true,64,64,0,0);
 		sprites[SPRITE_BIG_DON].params.pos.w = 64; sprites[SPRITE_BIG_DON].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_DON],0.5f,0.5f);
 	}
-	if(exist_file("sdmc:/tjafiles/theme/def/bigkatsu.png")){
+	if(exist_file("sdmc:/tjafiles/theme/def/big_katsu.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_KATSU].image,"sdmc:/tjafiles/theme/def/bigkatsu.png",true,64,64,0,0);
 		sprites[SPRITE_BIG_KATSU].params.pos.w = 64; sprites[SPRITE_BIG_KATSU].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_KATSU],0.5f,0.5f);
