@@ -225,16 +225,16 @@ inline static void load_sprites(){
 	if(exist_file("sdmc:/tjafiles/theme/donchan.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,0,0);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_0],0.5f,0.5f);
-		sprites[SPRITE_DONCHAN_0].params->pos.w = 256; sprites[SPRITE_DONCHAN_0].params->pos.h = 128;
+		sprites[SPRITE_DONCHAN_0].params.pos.w = 256; sprites[SPRITE_DONCHAN_0].params.pos.h = 128;
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_1].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,256,0);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_1],0.5f,0.5f);
-		sprites[SPRITE_DONCHAN_1].params->pos.w = 256; sprites[SPRITE_DONCHAN_1].params->pos.h = 128;
+		sprites[SPRITE_DONCHAN_1].params.pos.w = 256; sprites[SPRITE_DONCHAN_1].params.pos.h = 128;
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_2].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,0,128);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_2],0.5f,0.5f);
-		sprites[SPRITE_DONCHAN_2].params->pos.w = 256; sprites[SPRITE_DONCHAN_2].params->pos.h = 128;
+		sprites[SPRITE_DONCHAN_2].params.pos.w = 256; sprites[SPRITE_DONCHAN_2].params.pos.h = 128;
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_3].image,"sdmc:/tjafiles/theme/donchan.png",true,256,128,256,128);
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
-		sprites[SPRITE_DONCHAN_3].params->pos.w = 256; sprites[SPRITE_DONCHAN_3].params->pos.h = 128;
+		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 	}
 
 	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
