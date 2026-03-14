@@ -299,6 +299,14 @@ inline static void load_sprites(){
 		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
 	}
+	if(exist_file("sdmc:/tjafiles/theme/def/bg.png")){
+		loadPNGAsC2DImage(&sprites[SPRITE_TOP_2].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,86,0,0);
+		sprites[SPRITE_TOP_2].params.pos.w = 400; sprites[SPRITE_TOP_2].params.pos.h = 86;
+		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_2],0.5f,0.5f);
+		loadPNGAsC2DImage(&sprites[SPRITE_TOP_3].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,96,0,144);
+		sprites[SPRITE_TOP_3].params.pos.w = 400; sprites[SPRITE_TOP_3].params.pos.h = 96;
+		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_3],0.5f,0.5f);
+	}
 
 	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
 	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH],0.5f,0.5f);
@@ -333,7 +341,7 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenter(&sprites[SPRITE_EFFECT_GOGO],0.5-(17.0/90.0),0.5f);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP],TOP_WIDTH * 0.5,TOP_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP_2],TOP_WIDTH * 0.5,43);
-	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3],TOP_WIDTH * 0.5,200);
+	C2D_SpriteSetPos(&sprites[SPRITE_TOP_3],TOP_WIDTH * 0.5,192);
 	C2D_SpriteSetPos(&sprites[SPRITE_BOTTOM],BOTTOM_WIDTH * 0.5,BOTTOM_HEIGHT * 0.5);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_0],dn_x,dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1],dn_x,dn_y);
