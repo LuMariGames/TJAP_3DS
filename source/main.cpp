@@ -159,8 +159,8 @@ C2D_Image loadPNGAsC2DImage(const char* filename,bool rgba,unsigned int width,un
 		subtex.height = height;
 		subtex.left = img_x/(float)w_pow2;
 		subtex.top = 1.f-(img_y/(float)h_pow2);
-		subtex.right = (float)subtex.width+img_x/(float)w_pow2;
-		subtex.bottom = 1.f-((float)subtex.height+img_y/(float)h_pow2);
+		subtex.right = ((float)subtex.width+img_x)/(float)w_pow2;
+		subtex.bottom = 1.f-(((float)subtex.height+img_y)/(float)h_pow2);
 	}
 	else{
 		unsigned int error = lodepng_decode24_file(&image,&w,&h,filename);
