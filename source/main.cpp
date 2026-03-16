@@ -20,7 +20,7 @@
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
-C2D_Sprite sprites[166];	//画像用
+C2D_Sprite sprites[168];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
@@ -28,8 +28,8 @@ Thread chartload,pausehome;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
-bool dance = false;		//拡張スキン用
-unsigned int dancnt = 0;	//拡張スキン用
+bool dance = false,plusimg_player = false;	//拡張スキン用
+unsigned int dancnt = 0;		//拡張スキン用
 
 void draw_debug(float x,float y,const char *text){
 
@@ -99,8 +99,28 @@ bool check_dsp1(){ //DSP1を起動しているか確認
 
 inline int time_count(double TIME)noexcept {
 	if (TIME<0)return 0;
-	return((int)floor(TIME*(NowBPM/60.0*(2-isGOGO)))%2)+(isGOGO*2);
+	u8 tc;
+	if(plusimg_player&&isGOGO)tc=((int)floor(TIME*(NowBPM/10.0))%12);
+	else {
+		return(int)floor(TIME*(NowBPM/60.0*(2-isGOGO)))%2+(isGOGO*2);
+	}
+	switch(tc){
+	case 0:return 0+(isGOGO*2);
+	case 1:return 0+(isGOGO*2);
+	case 2:return 0+(isGOGO*2);
+	case 3:return 0+(isGOGO*2);
+	case 4:return 1+(isGOGO*2);
+	case 5:return 2+(isGOGO*2);
+	case 6:return 3+(isGOGO*2);
+	case 7:return 3+(isGOGO*2);
+	case 8:return 3+(isGOGO*2);
+	case 9:return 3+(isGOGO*2);
+	case 10:return 2+(isGOGO*2);
+	case 11:return 1+(isGOGO*2);
+	default:return 0;
+	}
 }
+
 inline int dancer_time_count(double TIME,int NUM)noexcept {
 	if (TIME<0)return 0;
 	return(int)floor(TIME*(NowBPM/(960.0/NUM)))%NUM;
@@ -117,7 +137,7 @@ static u32 GetNextPowerOf2(u32 v) {
 	return (v >= 64 ? v : 64);
 }
 
-C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,unsigned int width,unsigned int height,float img_x,float img_y){
+bool loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,unsigned int width,unsigned int height,float img_x,float img_y){
 
 	// 1. PNGを読み込み(RGB形式で強制取得)
 	unsigned char* image;
@@ -129,7 +149,7 @@ C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,un
 		unsigned int error = lodepng_decode32_file(&image,&w,&h,filename);
 		if(error != 0){
 			free(image);
-			return(C2D_Image){0,0};
+			return false;
 		}
 
 		u32 w_pow2 = GetNextPowerOf2(w);
@@ -165,7 +185,7 @@ C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,un
 		unsigned int error = lodepng_decode24_file(&image,&w,&h,filename);
 		if(error != 0){
 			free(image);
-			return(C2D_Image){0,0};
+			return false;
 		}
 
 		u32 w_pow2 = GetNextPowerOf2(w);
@@ -198,11 +218,14 @@ C2D_Image loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,un
 	C3D_TexFlush(tex);
 	tex->border = 0x00000000;
 	C3D_TexSetWrap(tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
-	texture->tex = tex;
-	texture->subtex = subtex;
-
+	if(subtex->left<=1.0f||subtex->top>=0.0f){
+		texture->tex = tex;
+		texture->subtex = subtex;
+		free(image);
+		return true;
+	}
 	free(image);
-	return(C2D_Image){tex,subtex};
+	return false;
 }
 
 inline static void load_sprites(){
@@ -298,6 +321,9 @@ inline static void load_sprites(){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_3].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,256,128);
 		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
+
+		plusimg_player = loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,512,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_5].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,768,128);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/bg.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_TOP_2].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,86,0,0);
@@ -347,6 +373,14 @@ inline static void load_sprites(){
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_1],dn_x,dn_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2],dg_x,dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3],dg_x,dg_y);
+	if(plusimg_player){
+		sprites[SPRITE_DONCHAN_4].params.pos.w = 256; sprites[SPRITE_DONCHAN_4].params.pos.h = 128;
+		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_4],0.5f,0.5f);
+		C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_4],dg_x,dg_y);
+		sprites[SPRITE_DONCHAN_5].params.pos.w = 256; sprites[SPRITE_DONCHAN_5].params.pos.h = 128;
+		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_5],0.5f,0.5f);
+		C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_5],dg_x,dg_y);
+	}
 	for (int i = 0; i<7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY+i],31,113);
 
 	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex,GPU_LINEAR,GPU_LINEAR);
