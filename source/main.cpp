@@ -251,60 +251,80 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4],9,45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5],9,51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6],9,59);
+	for (int i = 0; i<17; ++i)sprites[SPRITE_DON].params.pos.y=109;
+	sprites[SPRITE_POTATO].params.pos.y=109;
+	sprites[SPRITE_DENDEN].params.pos.y=109;
+	sprites[NOTES_TIMEBOMB].params.pos.y=109;
+	sprites[NOTES_BOMB].params.pos.y=109;
 
 	if(exist_file("sdmc:/tjafiles/theme/def/don.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/don.png",true,64,64,0,0);
-		sprites[SPRITE_DON].params.pos.w = 64; sprites[SPRITE_DON].params.pos.h = 64;
+		sprites[SPRITE_DON].params.pos.w = 64; sprites[SPRITE_DON].params.pos.h = 64; sprites[SPRITE_DON].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DON],0.5f,0.5f);
+	}
+	if(exist_file("sdmc:/tjafiles/theme/def/do.png")){
+		loadPNGAsC2DImage(&sprites[SPRITE_DON_1].image,"sdmc:/tjafiles/theme/def/do.png",true,64,64,0,0);
+		sprites[SPRITE_DON_1].params.pos.w = 64; sprites[SPRITE_DON_1].params.pos.h = 64; sprites[SPRITE_DON_1].params.pos.y=112;
+		C2D_SpriteSetCenter(&sprites[SPRITE_DON_1],0.5f,0.5f);
+	}
+	if(exist_file("sdmc:/tjafiles/theme/def/ko.png")){
+		loadPNGAsC2DImage(&sprites[SPRITE_DON_2].image,"sdmc:/tjafiles/theme/def/ko.png",true,64,64,0,0);
+		sprites[SPRITE_DON_2].params.pos.w = 64; sprites[SPRITE_DON_2].params.pos.h = 64; sprites[SPRITE_DON_2].params.pos.y=112;
+		C2D_SpriteSetCenter(&sprites[SPRITE_DON_2],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/katsu.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_KATSU].image,"sdmc:/tjafiles/theme/def/katsu.png",true,64,64,0,0);
-		sprites[SPRITE_KATSU].params.pos.w = 64; sprites[SPRITE_KATSU].params.pos.h = 64;
+		sprites[SPRITE_KATSU].params.pos.w = 64; sprites[SPRITE_KATSU].params.pos.h = 64; sprites[SPRITE_KATSU].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_KATSU],0.5f,0.5f);
+	}
+	if(exist_file("sdmc:/tjafiles/theme/def/ka.png")){
+		loadPNGAsC2DImage(&sprites[SPRITE_KATSU_1].image,"sdmc:/tjafiles/theme/def/ka.png",true,64,64,0,0);
+		sprites[SPRITE_KATSU_1].params.pos.w = 64; sprites[SPRITE_KATSU_1].params.pos.h = 64; sprites[SPRITE_KATSU_1].params.pos.y=112;
+		C2D_SpriteSetCenter(&sprites[SPRITE_KATSU_1],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/big_don.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_DON].image,"sdmc:/tjafiles/theme/def/big_don.png",true,64,64,0,0);
-		sprites[SPRITE_BIG_DON].params.pos.w = 64; sprites[SPRITE_BIG_DON].params.pos.h = 64;
+		sprites[SPRITE_BIG_DON].params.pos.w = 64; sprites[SPRITE_BIG_DON].params.pos.h = 64; sprites[SPRITE_BIG_DON].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_DON],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/big_katsu.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_KATSU].image,"sdmc:/tjafiles/theme/def/big_katsu.png",true,64,64,0,0);
-		sprites[SPRITE_BIG_KATSU].params.pos.w = 64; sprites[SPRITE_BIG_KATSU].params.pos.h = 64;
+		sprites[SPRITE_BIG_KATSU].params.pos.w = 64; sprites[SPRITE_BIG_KATSU].params.pos.h = 64; sprites[SPRITE_BIG_KATSU].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_KATSU],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/roll_start.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_START].image,"sdmc:/tjafiles/theme/def/roll_start.png",true,64,64,0,0);
-		sprites[SPRITE_ROLL_START].params.pos.w = 64; sprites[SPRITE_ROLL_START].params.pos.h = 64;
+		sprites[SPRITE_ROLL_START].params.pos.w = 64; sprites[SPRITE_ROLL_START].params.pos.h = 64; sprites[SPRITE_ROLL_START].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_START],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/roll_int.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_INT].image,"sdmc:/tjafiles/theme/def/roll_int.png",true,64,64,0,0);
-		sprites[SPRITE_ROLL_INT].params.pos.w = 64; sprites[SPRITE_ROLL_INT].params.pos.h = 64;
+		sprites[SPRITE_ROLL_INT].params.pos.w = 64; sprites[SPRITE_ROLL_INT].params.pos.h = 64; sprites[SPRITE_ROLL_INT].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_INT],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/roll_end.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_END].image,"sdmc:/tjafiles/theme/def/roll_end.png",true,64,64,0,0);
-		sprites[SPRITE_ROLL_END].params.pos.w = 64; sprites[SPRITE_ROLL_END].params.pos.h = 64;
+		sprites[SPRITE_ROLL_END].params.pos.w = 64; sprites[SPRITE_ROLL_END].params.pos.h = 64; sprites[SPRITE_ROLL_END].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_END],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/big_roll_start.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_START].image,"sdmc:/tjafiles/theme/def/big_roll_start.png",true,64,64,0,0);
-		sprites[SPRITE_BIG_ROLL_START].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_START].params.pos.h = 64;
+		sprites[SPRITE_BIG_ROLL_START].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_START].params.pos.h = 64; sprites[SPRITE_BIG_ROLL_START].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_START],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/big_roll_int.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_INT].image,"sdmc:/tjafiles/theme/def/big_roll_int.png",true,64,64,0,0);
-		sprites[SPRITE_BIG_ROLL_INT].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_INT].params.pos.h = 64;
+		sprites[SPRITE_BIG_ROLL_INT].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_INT].params.pos.h = 64; sprites[SPRITE_BIG_ROLL_INT].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_INT],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/big_roll_end.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_END].image,"sdmc:/tjafiles/theme/def/big_roll_end.png",true,64,64,0,0);
-		sprites[SPRITE_BIG_ROLL_END].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_END].params.pos.h = 64;
+		sprites[SPRITE_BIG_ROLL_END].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_END].params.pos.h = 64; sprites[SPRITE_BIG_ROLL_END].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_END],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/balloon.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BALLOON].image,"sdmc:/tjafiles/theme/def/balloon.png",true,64,64,0,0);
-		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 64;
+		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 64; sprites[SPRITE_BALLOON].params.pos.y=112;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.5f,0.5f);
 		C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON],13,33);
 	}
@@ -322,8 +342,8 @@ inline static void load_sprites(){
 		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
 
-		plusimg_player = loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,512,128);
-		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_5].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,768,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,512,128);
+		plusimg_player = loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_5].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,768,128);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/bg.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_TOP_2].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,86,0,0);
