@@ -557,27 +557,9 @@ void white_tja(LIST_T Song){
 		fclose(fp);
 		fp=fopen(abs_path,"w");
 		SwkbdState swkbd;
-		SwkbdDictWord word[16];
 		swkbdInit(&swkbd,SWKBD_TYPE_NORMAL,1,16384);
 		swkbdSetInitialText(&swkbd,tja_text);
 		swkbdSetFeatures(&swkbd,SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
-		swkbdSetDictWord(&word[0],"#","#BPMCHANGE (float)");
-		swkbdSetDictWord(&word[1],"#","#SCROLL (float)");
-		swkbdSetDictWord(&word[2],"#","#MEASURE (int)/(int)");
-		swkbdSetDictWord(&word[3],"#","#GOGOSTART");
-		swkbdSetDictWord(&word[4],"#","#GOGOEND");
-		swkbdSetDictWord(&word[5],"#","#BARLINEON");
-		swkbdSetDictWord(&word[6],"#","#BARLINEOFF");
-		swkbdSetDictWord(&word[7],"#","#DELAY (float)");
-		swkbdSetDictWord(&word[8],"#","#BRANCHSTART ");
-		swkbdSetDictWord(&word[9],"#","#N");
-		swkbdSetDictWord(&word[10],"#","#E");
-		swkbdSetDictWord(&word[11],"#","#M");
-		swkbdSetDictWord(&word[12],"#","#LEVELHOLD");
-		swkbdSetDictWord(&word[13],"#","#DUMMYSTART");
-		swkbdSetDictWord(&word[14],"#","#DUMMYEND");
-		swkbdSetDictWord(&word[15],"#","#LYRIC \"text\"");
-		swkbdSetDictionary(&swkbd, word, sizeof(word)/sizeof(SwkbdDictWord));
 		swkbdInputText(&swkbd,tja_text,sizeof(tja_text));
 		dst=tja_text;
 		while(*dst){
