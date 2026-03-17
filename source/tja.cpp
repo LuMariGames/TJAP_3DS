@@ -195,16 +195,6 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+6,strlen(buf)-7);
 					Current_Header.bg=temp;
 				}
-				free(temp);
-				continue;
-			}
-
-			if(strstr(buf,"BGFPS:")==buf){ //モード毎に難易度を決めるタグ
-				if(buf[6]!='\n' && buf[6]!='\r'){
-					strlcpy(temp,buf+6,strlen(buf)-7);
-					Current_Header.bgfps=atof(temp);
-				}
-				free(temp);
 				continue;
 			}
 
@@ -567,9 +557,27 @@ void white_tja(LIST_T Song){
 		fclose(fp);
 		fp=fopen(abs_path,"w");
 		SwkbdState swkbd;
+		SwkbdDictWord word;
 		swkbdInit(&swkbd,SWKBD_TYPE_NORMAL,1,16384);
 		swkbdSetInitialText(&swkbd,tja_text);
 		swkbdSetFeatures(&swkbd,SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
+		swkbdSetDictWord(&word[0],"#","#BPMCHANGE (float)");
+		swkbdSetDictWord(&word[1],"#","#SCROLL (float)");
+		swkbdSetDictWord(&word[2],"#","#MEASURE (int)/(int)");
+		swkbdSetDictWord(&word[3],"#","#GOGOSTART");
+		swkbdSetDictWord(&word[4],"#","#GOGOEND");
+		swkbdSetDictWord(&word[5],"#","#BARLINEON");
+		swkbdSetDictWord(&word[6],"#","#BARLINEOFF");
+		swkbdSetDictWord(&word[7],"#","#DELAY (float)");
+		swkbdSetDictWord(&word[8],"#","#BRANCHSTART (r/p/s/d/c),(int),(int)");
+		swkbdSetDictWord(&word[9],"#","#N");
+		swkbdSetDictWord(&word[10],"#","#E");
+		swkbdSetDictWord(&word[11],"#","#M");
+		swkbdSetDictWord(&word[12],"#","#LEVELHOLD");
+		swkbdSetDictWord(&word[13],"#","#DUMMYSTART");
+		swkbdSetDictWord(&word[14],"#","#DUMMYEND");
+		swkbdSetDictWord(&word[15],"#","#LYRIC \"text\"");
+		swkbdSetDictionary(&swkbd, words, sizeof(words)/sizeof(SwkbdDictWord));
 		swkbdInputText(&swkbd,tja_text,sizeof(tja_text));
 		dst=tja_text;
 		while(*dst){
