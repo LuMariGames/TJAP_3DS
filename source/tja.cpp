@@ -557,7 +557,7 @@ void white_tja(LIST_T Song){
 		fclose(fp);
 		fp=fopen(abs_path,"w");
 		SwkbdState swkbd;
-		SwkbdDictWord word;
+		SwkbdDictWord word[16];
 		swkbdInit(&swkbd,SWKBD_TYPE_NORMAL,1,16384);
 		swkbdSetInitialText(&swkbd,tja_text);
 		swkbdSetFeatures(&swkbd,SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
