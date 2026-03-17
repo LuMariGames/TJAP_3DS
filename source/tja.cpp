@@ -569,7 +569,7 @@ void white_tja(LIST_T Song){
 		swkbdSetDictWord(&word[5],"#","#BARLINEON");
 		swkbdSetDictWord(&word[6],"#","#BARLINEOFF");
 		swkbdSetDictWord(&word[7],"#","#DELAY (float)");
-		swkbdSetDictWord(&word[8],"#","#BRANCHSTART (r/p/s/d/c),(int),(int)");
+		swkbdSetDictWord(&word[8],"#","#BRANCHSTART ");
 		swkbdSetDictWord(&word[9],"#","#N");
 		swkbdSetDictWord(&word[10],"#","#E");
 		swkbdSetDictWord(&word[11],"#","#M");
@@ -577,7 +577,7 @@ void white_tja(LIST_T Song){
 		swkbdSetDictWord(&word[13],"#","#DUMMYSTART");
 		swkbdSetDictWord(&word[14],"#","#DUMMYEND");
 		swkbdSetDictWord(&word[15],"#","#LYRIC \"text\"");
-		swkbdSetDictionary(&swkbd, &word, sizeof(word)/sizeof(SwkbdDictWord));
+		swkbdSetDictionary(&swkbd, word, sizeof(word)/sizeof(SwkbdDictWord));
 		swkbdInputText(&swkbd,tja_text,sizeof(tja_text));
 		dst=tja_text;
 		while(*dst){
