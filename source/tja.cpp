@@ -577,7 +577,7 @@ void white_tja(LIST_T Song){
 		swkbdSetDictWord(&word[13],"#","#DUMMYSTART");
 		swkbdSetDictWord(&word[14],"#","#DUMMYEND");
 		swkbdSetDictWord(&word[15],"#","#LYRIC \"text\"");
-		swkbdSetDictionary(&swkbd, words, sizeof(words)/sizeof(SwkbdDictWord));
+		swkbdSetDictionary(&swkbd, word, sizeof(words)/sizeof(SwkbdDictWord));
 		swkbdInputText(&swkbd,tja_text,sizeof(tja_text));
 		dst=tja_text;
 		while(*dst){
