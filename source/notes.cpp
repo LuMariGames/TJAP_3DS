@@ -144,16 +144,16 @@ void notes_main(int isDon,int isKatsu,char tja_notes[MEASURE_MAX][NOTES_MEASURE_
 					int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
 					if(Measure[MeasureCount].judge_time<Measure[MinMeasureCount].judge_time &&
-						(knd==NOTES_BALLOON||knd==NOTES_POTATO||knd==NOTES_DENDEN)&& Measure[MeasureCount].branch==-1)++BalloonCount[0];
+						(knd==NOTES_BALLOON||knd==NOTES_POTATO||knd==NOTES_DENDEN||NOTES_TIMEBOMB)&& Measure[MeasureCount].branch==-1)++BalloonCount[0];
 					if(Measure[MeasureCount].judge_time<Measure[MinMeasureCount].judge_time &&
-						(knd==NOTES_BALLOON||knd==NOTES_POTATO||knd==NOTES_DENDEN)&& Measure[MeasureCount].branch!=-1){
+						(knd==NOTES_BALLOON||knd==NOTES_POTATO||knd==NOTES_DENDEN||NOTES_TIMEBOMB)&& Measure[MeasureCount].branch!=-1){
 						++BalloonCount[1];
 						++BalloonCount[2];
 						++BalloonCount[3];
 					}
 
 					if(Measure[MeasureCount].judge_time<Measure[MinMeasureCount].judge_time)continue;
-					if((knd==NOTES_ROLL||knd==NOTES_BIGROLL||knd==NOTES_BALLOON||knd==NOTES_DENDEN)&&(PreNotesKnd==knd)){	//55558のような表記に対応
+					if((knd==NOTES_ROLL||knd==NOTES_BIGROLL||knd==NOTES_BALLOON||knd==NOTES_DENDEN||NOTES_TIMEBOMB)&&(PreNotesKnd==knd)){	//55558のような表記に対応
 						continue;
 					}
 					else if(knd==NOTES_POTATO&&PreNotesKnd==knd)knd=NOTES_PTTBORDER;
