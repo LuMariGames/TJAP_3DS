@@ -529,7 +529,7 @@ int round_down(int arg){
 	return arg-temp;
 }
 
-void calc_base_score(MEASURE_T Measure[MEASURE_MAX],char notes[MEASURE_MAX][NOTES_MEASURE_MAX]){	//初項と公差を計算　魂ゲージの伸びも
+void calc_base_score(MEASURE_T Measure[MEASURE_MAX],char (&notes)[MEASURE_MAX][NOTES_MEASURE_MAX]){	//初項と公差を計算　魂ゲージの伸びも
 
 	int NotesCount=0,i=0,DiffTmp=0,BalloonCnt=0,combo=0,
 	TmpBaseCeilingPoint=0,NotesCountMax=0,RollKnd=0,RollCnt=0;
