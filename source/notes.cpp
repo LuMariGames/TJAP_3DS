@@ -524,7 +524,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 	if(Option.isAuto){	//オート
 
-		for(int i=0,j=Notes.size()-1;i<j;++i){
+		for(int i=Notes.size(),j=((Notes.size()>512)?Notes.size()-512:0);i>j;--i){
 
 			if(Notes[i].flag&&!Notes[i].isDummy&&Notes[i].judge_time<=CurrentTimeNotes &&
 				Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
@@ -597,7 +597,7 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 		for(int j=0,sd=0,sk=0,gn=((isDon>=isKatsu)?isDon:isKatsu);j<gn;++j){
 
 			//判定すべきノーツを検索
-			for(int i=0,j=Notes.size();i<j;++i){
+			for(int i=Notes.size(),j=((Notes.size()>512)?Notes.size()-512:0);i<j;--i){
 	
 				if(!Notes[i].isDummy&&Notes[i].flag){
 	
@@ -857,7 +857,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 		}
 	}
 
-	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
+	for(int i=Notes.size(),j=((Notes.size()>512)?Notes.size()-512:0);i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
 		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
 			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0))&&
