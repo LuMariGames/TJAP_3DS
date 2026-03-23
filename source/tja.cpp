@@ -973,7 +973,7 @@ void get_tja_header(TJA_HEADER_T *TJA_Header){
 
 void tja_to_notes(int isDon,int isKatsu,int count,C2D_Sprite sprites[SPRITES_NUMER]){
 
-	notes_main(isDon,isKatsu,&tja_notes,Measure,count,sprites);
+	notes_main(isDon,isKatsu,tja_notes,Measure,count,sprites);
 }
 
 //コマンドと値を取り出す

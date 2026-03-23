@@ -41,7 +41,7 @@ typedef struct {
 
 void notes_main(
 	int isDon, int isKatsu,
-	char* tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],
+	char& tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],
 	MEASURE_T Measure[MEASURE_MAX],
 	int cnt, C2D_Sprite sprites[SPRITES_NUMER]
 ),
