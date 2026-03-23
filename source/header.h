@@ -28,7 +28,7 @@
 #define DEFAULT_JUDGE_RANGE_BAD		0.120
 
 #define NOTES_MEASURE_MAX 256	//一小節の最大ノーツ数+1
-#define MEASURE_MAX 8192
+#define MEASURE_MAX 16384
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
 extern float NOTES_JUDGE_X;	//判定枠の中心のX座標
 #define JPOSMAG 257.0/750.0
