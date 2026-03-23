@@ -884,7 +884,6 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 
-	int notes_y=109;
 	C2D_ImageTint DummyTint;
 
 	for(int i=((Notes.size()<512)?0:Notes.size()-512),j=Notes.size();i<j;++i){	//描画
