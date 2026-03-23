@@ -783,7 +783,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	OPTION_T Option;
 	get_option(&Option);
 
-	for(int i=0,j=Notes.size()-1;i<j;++i){	//計算
+	for(int i=0,j=((Notes.size()<512)?Notes.size():512);i<j;++i){	//計算
 
 		if(Notes[i].flag){
 
@@ -886,7 +886,7 @@ inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
 
 	C2D_ImageTint DummyTint;
 
-	for(int i=((Notes.size()<512)?0:Notes.size()-512),j=Notes.size();i<j;++i){	//描画
+	for(int i=0,j=((Notes.size()<512)?Notes.size():512);i<j;++i){	//描画
 
 		if(Notes[i].flag){
 
