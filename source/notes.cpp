@@ -594,11 +594,11 @@ inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,in
 
 	else if(!Option.isAuto){			//手動
 
-		for(int i=Notes.size()-1,j=((Notes.size()>512)?Notes.size()-512:0);i>=j;--i){
+		for(int j=0,sd=0,sk=0,gn=((isDon>=isKatsu)?isDon:isKatsu);j<gn;++j){
 
 			//判定すべきノーツを検索
-			for(int i=Notes.size(),j=((Notes.size()>512)?Notes.size()-512:0);i<j;--i){
-	
+			for(int i=Notes.size()-1,j=((Notes.size()>512)?Notes.size()-512:0);i>=j;--i){
+
 				if(!Notes[i].isDummy&&Notes[i].flag){
 	
 					if(Notes[i].knd==NOTES_DON ||
