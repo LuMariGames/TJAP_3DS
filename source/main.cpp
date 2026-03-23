@@ -692,6 +692,16 @@ int main(){
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
+					for(int i=0;i<17)sprites[SPRITE_DON+i].params.pos.y=109.f
+					C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.f,109.f);
+					sprites[SPRITE_BOMB].params.pos.y=109.f;
+					sprites[SPRITE_POTATO].params.pos.y=109.f
+					sprites[SPRITE_TIMEBOMB].params.pos.y=109.f
+					sprites[SPRITE_DENDEN].params.pos.y=109.f
+					sprites[SPRITE_POTATO_1].params.pos.x=200.f;
+					sprites[SPRITE_POTATO_1].params.pos.y=0.f;
+					C2D_SpriteSetPos(&sprites[SPRITE_RAINBOW],200.f,120.f);
+					C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200.f,0.f);
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
 				}
