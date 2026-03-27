@@ -31,7 +31,7 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
 isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isNew;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 
@@ -1478,7 +1478,9 @@ int sign(double A){	//正か負かの判別
 }
 void newfont(){
 	font=C2D_FontLoad("romfs:/gfx/main.bcfnt");
-	Notes.reserve(2048);
+	PTMSYSM_CheckNew3DS(&isNew);
+	if(isNew)Notes.reserve(32768);
+	else Notes.reserve(2048);
 	Notes.resize(64);
 }
 void fontfree(){

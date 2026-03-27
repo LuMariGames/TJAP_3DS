@@ -14,7 +14,7 @@
 #include <iostream>
 
 #define C3D_CMDBUF_SIZE 0x40000
-#define VERSION "2.1.1(A)"
+#define VERSION "2.2.0"
 #define DECODE_MEM 524288
 #define DEFAULT_DIR "sdmc:/tjafiles"
 #define NOTDEF_DIR "romfs:/tjafiles/"
@@ -41,7 +41,7 @@ extern float NOTES_JUDGE_X;	//判定枠の中心のX座標
 
 #define SPRITES_NUMER 91
 
-#define NOTES_MAX 3072
+#define NOTES_MAX 2048
 #define BARLINE_MAX 256
 #define ROLL_MAX 256
 #define BALLOON_MAX 256

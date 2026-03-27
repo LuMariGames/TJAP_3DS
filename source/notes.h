@@ -2,39 +2,36 @@
 #include "tja.h"
 
 typedef struct {
-	int num,notes_max,knd,roll_id;
-	float create_time,judge_time,pop_time,bpm,scroll,x_ini;
 	bool flag,isThrough,isDummy = false;
-	float x;
+	float create_time,judge_time,pop_time,x,bpm,scroll,x_ini;
+	int num,notes_max,knd,roll_id;
 
 } NOTES_T;
 
 typedef struct {
+	bool flag,isDisp;
+	float create_time,scroll,x_ini,x;
 	int measure;
-	float create_time, scroll, x_ini;
-	bool flag, isDisp;
-	float x;
 
 } BARLINE_T;
 
 typedef struct {
-	int id, start_id, end_id, knd;
-	float start_x, end_x;
 	bool flag;
+	int id,start_id,end_id,knd;
+	float start_x,end_x;
 
 }ROLL_T;
 
 typedef struct {
-	int id, start_id, end_id,
-		need_hit, current_hit;
 	bool flag;
+	int id,start_id,end_id,need_hit,current_hit;
 
 }BALLOON_T;
 
 typedef struct {
-	int knd, course;
-	float x, y;
-	bool next, wait;
+	int knd,course;
+	float x,y;
+	bool next,wait;
 
 }BRANCH_T;
 
