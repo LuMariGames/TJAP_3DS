@@ -866,6 +866,8 @@ int main(){
 				if (Option.measure>0){
 					snprintf(get_buffer(),BUFFER_SIZE,"%d / %d小節目",Option.measure,get_edme());
 					draw_debug(0,0,get_buffer());
+					snprintf(get_buffer(),BUFFER_SIZE,"%.12f",FirstMeasureTime);
+					draw_debug(0,32,get_buffer());
 				}
 
 				tmp = pause_window(tp,key);
