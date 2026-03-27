@@ -832,7 +832,6 @@ int main(){
 
 			if (isNotesStart){
 				tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
-				//if (notes_cnt == 0)notesjudge = threadCreate(auto_judge,(void*)&NoteInfo,8192,0x3f,0,true);
 				if (!isPause)++notes_cnt;
 			}
 			draw_score(sprites);
@@ -866,8 +865,6 @@ int main(){
 				if (Option.measure>0){
 					snprintf(get_buffer(),BUFFER_SIZE,"%d / %d小節目",Option.measure,get_edme());
 					draw_debug(0,0,get_buffer());
-					snprintf(get_buffer(),BUFFER_SIZE,"%.12f",FirstMeasureTime);
-					draw_debug(0,32,get_buffer());
 				}
 
 				tmp = pause_window(tp,key);
