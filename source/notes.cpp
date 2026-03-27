@@ -396,9 +396,12 @@ int find_notes_id(){
 	for(int i=0,j=Notes.size()-1;i<j;++i){
 		if(!Notes[i].flag)return i;
 	}
+	int i=Notes.size();
 	Notes.resize(Notes.size()*2);
-	for(int i=0,j=Notes.size()-1;i<j;++i){
+	int j=Notes.size()-1;
+	while(i<j){
 		if(!Notes[i].flag)return i;
+		++i;
 	}
 	return -1;
 }
