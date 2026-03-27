@@ -396,7 +396,7 @@ int find_notes_id(){
 	for(int i=0,j=Notes.size()-1;i<j;++i){
 		if(!Notes[i].flag)return i;
 	}
-	int i=Notes.size();
+	int i=Notes.size()-1;
 	Notes.resize(Notes.size()*2);
 	int j=Notes.size()-1;
 	while(i<j){
