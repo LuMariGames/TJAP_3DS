@@ -34,6 +34,14 @@ NotesNumber;	//何番目のノーツか
 bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
+void change_judge(float time,float move){
+	float movx=move/1000.0;
+	for(int i=0,j=time*1000;i<j;++i){
+		NOTES_JUDGE_X+=movx;
+		svcSleepThread(1000000);
+	}
+	return;
+}
 
 void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASURE_MAX],MEASURE_T Measure[MEASURE_MAX],int cnt,C2D_Sprite sprites[SPRITES_NUMER]){
 
@@ -97,7 +105,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						Branch.course=-1;
 						break;
 					case COMMAND_JPOSSCROLL:
-						NOTES_JUDGE_X+=(Command.val[1]*Command.val[2]);
+						
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
