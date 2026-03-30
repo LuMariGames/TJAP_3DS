@@ -40,10 +40,9 @@ NotesNumber;	//何番目のノーツか
 bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
-void change_judge(void* movejudge){
-	struct judgedata* info = (judgedata*)movejudge;
-	float movx=info->move/1000.0;
-	for(int i=0,j=info->time*1000;i<j;++i){
+void change_judge(void *arg){
+	float movx=judgedata.move;
+	for(int i=0,j=judgedata.time;i<j;++i){
 		NOTES_JUDGE_X+=movx;
 		svcSleepThread(1000000);
 	}
@@ -112,7 +111,9 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						Branch.course=-1;
 						break;
 					case COMMAND_JPOSSCROLL:
-						judgemove=threadCreate(change_judge,&judgedata,8192,0x3F,0,true);
+						judgedata.time=Command.val[0]*1000;
+						judgedata.move=(Command.val[1]*Command.val[2])/1000.0;
+						judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
