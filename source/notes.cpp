@@ -8,6 +8,12 @@
 #include "vorbis.h"
 #include "option.h"
 
+struct {
+	float time;
+	float move;
+} judgedata;
+
+Thread judgemove;
 int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;
 double bpm,offset;
 float NowBPM=120.0f;
@@ -34,9 +40,10 @@ NotesNumber;	//何番目のノーツか
 bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
-void change_judge(float time,float move){
-	float movx=move/1000.0;
-	for(int i=0,j=time*1000;i<j;++i){
+void change_judge(void* movejudge){
+	struct judgedata* info = (judgedata*)movejudge;
+	float movx=info->move/1000.0;
+	for(int i=0,j=info->time*1000;i<j;++i){
 		NOTES_JUDGE_X+=movx;
 		svcSleepThread(1000000);
 	}
@@ -105,7 +112,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						Branch.course=-1;
 						break;
 					case COMMAND_JPOSSCROLL:
-						
+						judgemove=threadCreate(change_judge,&judgedata,8192,0x3F,0,true);
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
