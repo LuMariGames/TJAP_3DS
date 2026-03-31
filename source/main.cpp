@@ -51,7 +51,6 @@ void init_main(){
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
 	g_dynamicBuf = C2D_TextBufNew(4096);
-	aptSetSleepAllowed(false);
 	osSetSpeedupEnable(true);
 }
 
@@ -555,6 +554,7 @@ int main(){
 				bgcnt = -1;
 				if (isAniBg)C3D_TexDelete(sprites[163].image.tex);
 				isAniBg = false;
+				aptSetSleepAllowed(true);
 			}
 
 			if (keyhold&KEY_L&&keyhold&KEY_R&&(key&KEY_L || key&KEY_R))bottaikoview = !bottaikoview;
@@ -695,6 +695,7 @@ int main(){
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
+					aptSetSleepAllowed(false);
 				}
 				else {
 					warning = tmp;
