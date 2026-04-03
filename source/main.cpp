@@ -24,7 +24,7 @@ C2D_Sprite sprites[168];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
-Thread chartload,pausehome;
+Thread chartload;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
@@ -322,8 +322,8 @@ inline static void load_sprites(){
 		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
 
-		plusimg_player = loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,512,128);
-		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_5].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,768,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,512,128);
+		plusimg_player = loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_5].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,768,128);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/bg.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_TOP_2].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,86,0,0);
