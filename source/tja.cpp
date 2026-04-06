@@ -947,7 +947,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_BRANCHSTART:
-				Measure[i].judge_time=Measure[Measure[i-1].firstmeasure].judge_time;
+				Measure[i].judge_time=Measure[Measure[i].firstmeasure].judge_time;
 				break;
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
