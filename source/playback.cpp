@@ -222,7 +222,11 @@ inline int changeFile(const char* ep_file,struct playbackInfo_t* playbackInfo,bo
 
 	if (ep_file != NULL && getFileType(ep_file) == FILE_TYPE_ERROR) return -1;
 
-	if (getFileType(ep_file) == FILE_TYPE_VORBIS) {
+	if (PTMSYSM_CheckNew3DS()) {
+		Decode_CoreID = 2;
+		APT_SetAppCpuTimeLimit(0);
+	}
+	else if (getFileType(ep_file) == FILE_TYPE_VORBIS) {
 		Decode_CoreID = 1;
 		APT_SetAppCpuTimeLimit(50);
 	}
