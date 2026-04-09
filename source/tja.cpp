@@ -946,6 +946,9 @@ void load_tja_notes(int course,LIST_T Song){
 			case COMMAND_LEVELHOLD:
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
+			case COMMAND_BRANCHSTART:
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*(NOTES_AREA*fabs(Measure[i].scroll))))-((240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*(NOTES_AREA*fabs(Measure[i].scroll))))*Measure[i].measure
+				break;
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
 			case COMMAND_SECTION:
