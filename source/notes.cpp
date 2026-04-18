@@ -16,6 +16,7 @@ struct {
 Thread judgemove;
 int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;
 double bpm,offset;
+constexpr double conbpm=1.0/240.0;
 float NowBPM=120.0f;
 extern int isBranch,course,stme;
 extern double black;
@@ -322,7 +323,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		if(BarLine[i].flag){
 
 			BarLine[i].x=(BarLine[i].x_ini+NOTES_JUDGE_X)-
-				NOTES_AREA*BarLine[i].scroll *(CurrentTimeNotes-Measure[BarLine[i].measure].pop_time)*(Measure[BarLine[i].measure].bpm/240.0);
+				NOTES_AREA*BarLine[i].scroll *(CurrentTimeNotes-Measure[BarLine[i].measure].pop_time)*(Measure[BarLine[i].measure].bpm*conbpm);
 
 			if(BarLine[i].isDisp){
 				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
@@ -806,7 +807,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 		if(Notes[i].flag){
 
-			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll *(CurrentTimeNotes-Notes[i].pop_time)*(Notes[i].bpm/240.0);
+			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll *(CurrentTimeNotes-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
 			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
 			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
 
