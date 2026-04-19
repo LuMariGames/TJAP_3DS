@@ -260,7 +260,6 @@ void update_score(int knd){
 
 void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]){
 
-
 	//スコア
 	for(int i=0;i<10;++i){
 
@@ -270,7 +269,6 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]){
 			C2D_DrawSprite(&sprites[SPRITE_SCORE_0+n]);
 		}
 	}
-
 	int j;
 
 	//コンボ
@@ -343,9 +341,9 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]){
 	C2D_DrawRectSolid(123,76,0,250.0*gauge,8,C2D_Color32f(1,0,0,1));
 
 	//黄
-	C2D_DrawRectSolid(123+250.0*Gauge.norma/Gauge.soul,67,0,250-250.0*Gauge.norma/Gauge.soul,17,C2D_Color32f(102.0/255,68.0/255,0,1));
+	C2D_DrawRectSolid(123+250.0*Gauge.norma/Gauge.soul,76,0,250-250.0*Gauge.norma/Gauge.soul,8,C2D_Color32f(102.0/255,68.0/255,0,1));
 	if(250*gauge-(250.0*Gauge.norma/Gauge.soul)>= 0)
-		C2D_DrawRectSolid(123+250.0*Gauge.norma/Gauge.soul,67,0,250*gauge-(250.0*Gauge.norma/Gauge.soul),17,C2D_Color32f(1,1,12.0/255,1));
+		C2D_DrawRectSolid(123+250.0*Gauge.norma/Gauge.soul,76,0,250*gauge-(250.0*Gauge.norma/Gauge.soul),8,C2D_Color32f(1,1,12.0/255,1));
 
 	//魂
 	for(int i=0;i<2;++i)C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON+i],385,75);
