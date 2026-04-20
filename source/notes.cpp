@@ -802,12 +802,13 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	OPTION_T Option;
 	get_option(&Option);
+	const float currentTime = (float)CurrentTimeNotes;
 
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//計算
 
 		if(Notes[i].flag){
 
-			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll *(CurrentTimeNotes-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
+			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll *(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
 			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
 			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
 
@@ -819,7 +820,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					RollNotes[Notes[i].roll_id].start_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].start_id=i;
 				}
-				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
+				if(Notes[i].judge_time<=currentTime&&Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_ROLLEND:
@@ -828,28 +829,28 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					RollNotes[Notes[i].roll_id].end_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].end_id=i;
 				}
-				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
+				if(Notes[i].judge_time<=currentTime&&Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_BALLOON:
 			case NOTES_POTATO:
 			case NOTES_DENDEN:
 			case NOTES_TIMEBOMB:
-				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
+				if(Notes[i].judge_time<=currentTime)Notes[i].x=NOTES_JUDGE_X;
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
 				}
 				break;
 
 			case NOTES_PTTBORDER:
-				if(Notes[i].judge_time<=CurrentTimeNotes)isPttBorder=true;
+				if(Notes[i].judge_time<=currentTime)isPttBorder=true;
 				break;
 
 			case NOTES_BALLOONEND:
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].end_id=i;
 				}
-				if(Notes[i].judge_time<=CurrentTimeNotes){
+				if(Notes[i].judge_time<=currentTime){
 					if(Notes[BalloonNotes[Notes[i].roll_id].start_id].knd==NOTES_TIMEBOMB){
 						make_judge(BAD,CurrentTimeNotes);
 						update_score(BAD);
@@ -863,13 +864,13 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			case NOTES_KATSU:
 			case NOTES_BIGDON:
 			case NOTES_BIGKATSU:
-				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					if(!Notes[i].isDummy)update_score(THROUGH);
 					Notes[i].isThrough=true;
 				}
 				break;
 			case NOTES_BOMB:
-				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					Notes[i].isThrough=true;
 				}
 				break;
@@ -879,7 +880,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
-		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
+		if(Notes[i].flag&&(Notes[i].judge_time<=(currentTime-Option.judge_range_bad))&&
 			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
