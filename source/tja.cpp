@@ -957,32 +957,6 @@ void load_tja_notes(int course,LIST_T Song){
 				while(n<tja_cnt&&n!=Measure[j].notes)++j;
 				Measure[i].judge_time=Measure[j].judge_time;
 				break;
-			case COMMAND_BPMCHANGE:
-			case COMMAND_MEASURE:
-			case COMMAND_SCROLL:
-			case COMMAND_DELAY:
-			case COMMAND_SUDDEN:
-			case COMMAND_LYRIC:
-			case COMMAND_BARLINEON:
-			case COMMAND_BARLINEOFF:
-			case COMMAND_DUMMYON:
-			case COMMAND_DUMMYOFF:
-				Measure[i].create_time=INT_MAX;
-				Measure[i].judge_time=INT_MAX;
-				Measure[i].pop_time=INT_MAX;
-				Measure[i].bpm=0;
-				Measure[i].scroll=0;
-				Measure[i].notes=0;
-				Measure[i].isDispBarLine=false;
-				Measure[i].firstmeasure=-1;
-				Measure[i].start_measure_count=0;
-				Measure[i].max_notes=0;
-				Measure[i].original_id=-1;
-				Measure[i].notes_count=0;
-				Measure[i].lyric="";
-				break;
-			default:
-				break;
 			}
 		}
 
