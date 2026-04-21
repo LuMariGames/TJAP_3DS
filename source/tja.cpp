@@ -972,7 +972,6 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].pop_time=INT_MAX;
 				Measure[i].bpm=0;
 				Measure[i].scroll=0;
-				Measure[i].notes=0;
 				Measure[i].flag=false;
 				Measure[i].isDispBarLine=false;
 				Measure[i].firstmeasure=-1;
