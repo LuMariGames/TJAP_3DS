@@ -979,7 +979,6 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].max_notes=0;
 				Measure[i].original_id=-1;
 				Measure[i].notes_count=0;
-				Measure[i].command=-1;
 				Measure[i].lyric="";
 				break;
 			default:
