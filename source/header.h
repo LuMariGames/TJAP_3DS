@@ -12,6 +12,7 @@
 #include <ctype.h>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #define C3D_CMDBUF_SIZE 0x40000
 #define VERSION "2.2.1"
