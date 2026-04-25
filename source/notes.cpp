@@ -38,7 +38,7 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
 isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isLoadLoop=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
@@ -75,10 +75,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			Branch.next=false;
 		}
 
+		isLoadLoop=false;
 		while(Measure[MeasureCount].create_time<=CurrentTimeNotes&&!Branch.wait){
 
+			isLoadLoop=true;
 			NotesCount=0;
-
 			if(Measure[MeasureCount].branch!=Branch.course&&Measure[MeasureCount].branch!=-1){
 
 				++MeasureCount;
@@ -156,10 +157,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				NotesCountMax=NotesCount;
 			}
 
+			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
+			double NoteTime=0.0;
 			for(int i=0;i<NotesCount;++i){
 
 				int id=find_notes_id();
-
 				if(id!=-1&&ctoi(tja_notes[Measure[MeasureCount].notes][i])!= 0&&Measure[MeasureCount].branch==Branch.course){
 
 					int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -198,7 +200,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						}
 					}
 
-					double NoteTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure*i/NotesCountMax;
 					//Notes[id].create_time=CurrentTimeNotes;
 					Notes[id].pop_time=Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
@@ -315,10 +316,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					++NotesNumber;
 				}
+				NoteTime+=MeasureTime*(1.0/NotesCountMax);
 			}
 			++MeasureCount;
-			notes_sort();	//ソート
 		}
+		if(isLoadLoop)notes_sort();	//ソート
 	}
 
 	if(cnt<0)return;
@@ -412,7 +414,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	draw_debug(250,40,get_buffer());*/
 }
 
-int find_notes_id(){
+inline int find_notes_id(){
 
 	for(int i=0,j=Notes.size()-1;i<j;++i){
 		if(!Notes[i].flag)return i;
@@ -1140,19 +1142,8 @@ int ctoi(char c){
 	}
 }
 
-int notes_cmp(const void *p,const void *q){	//比較用
-
-	int pp=((NOTES_T*)p)->judge_time*10000;
-	int qq=((NOTES_T*)q)->judge_time*10000;
-
-	//if(((NOTES_T*)p)->flag==false)pp=INT_MAX;
-	//if(((NOTES_T*)p)->flag==false)qq=INT_MAX;
-
-	return qq-pp;
-}
-
-void notes_sort(){	//ノーツを出現順にソート
-	qsort(Notes.data(),Notes.size(),sizeof(NOTES_T),notes_cmp);
+inline void notes_sort(){	//ノーツを出現順にソート
+	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.judge_time > b.judge_time;});
 }
 
 void delete_roll(int i){
