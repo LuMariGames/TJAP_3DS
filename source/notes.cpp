@@ -441,7 +441,7 @@ int find_line_id(){
 	return -1;
 }
 
-void make_judge(int knd,double CurrentTimeNotes){
+void make_judge(int knd,const float CurrentTimeNotes){
 	isJudgeDisp=true;
 	JudgeMakeTime=CurrentTimeNotes;
 	JudgeDispknd=knd;
@@ -506,7 +506,7 @@ void draw_judge(double CurrentTimeNotes,C2D_Sprite sprites[SPRITES_NUMER]){
 	}
 }
 
-inline void notes_judge(double CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch){
+inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int cnt,int branch){
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -907,7 +907,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			delete_notes(i);
 		}
 	}
-	notes_judge(CurrentTimeNotes,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
+	notes_judge(currentTime,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
 }
 
 inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
