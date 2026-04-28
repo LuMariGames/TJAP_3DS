@@ -921,37 +921,37 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
 				}
-				if(BalloonNotes[Notes[i].roll_id].current_hit==0&&!Option.isStelth){
+				if(!Option.isStelth&&BalloonNotes[Notes[i].roll_id].current_hit==0){
 
 					sprites[SPRITE_BALLOON].params.pos.x=Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON].image,&sprites[SPRITE_BALLOON].params,&DummyTint);
 				}
-				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.2f){
+				else if(!Option.isStelth&&BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.2f){
 
 					sprites[SPRITE_BALLOON_1].params.pos.x=93.0f;
 					sprites[SPRITE_BALLOON_1].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_1].image,&sprites[SPRITE_BALLOON_1].params,NULL);
 				}
-				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.4f){
+				else if(!Option.isStelth&&BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.4f){
 
 					sprites[SPRITE_BALLOON_2].params.pos.x=93.0f;
 					sprites[SPRITE_BALLOON_2].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_2].image,&sprites[SPRITE_BALLOON_2].params,NULL);
 				}
-				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.6f){
+				else if(!Option.isStelth&&BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.6f){
 
 					sprites[SPRITE_BALLOON_3].params.pos.x=93.0f;
 					sprites[SPRITE_BALLOON_3].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_3].image,&sprites[SPRITE_BALLOON_3].params,NULL);
 				}
-				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.8f){
+				else if(!Option.isStelth&&BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.8f){
 
 					sprites[SPRITE_BALLOON_4].params.pos.x=93.0f;
 					sprites[SPRITE_BALLOON_4].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON_4].image,&sprites[SPRITE_BALLOON_4].params,NULL);
 				}
-				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit){
+				else if(!Option.isStelth&&BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit){
 
 					sprites[SPRITE_BALLOON_5].params.pos.x=93.0f;
 					sprites[SPRITE_BALLOON_5].params.pos.y=notes_y;
