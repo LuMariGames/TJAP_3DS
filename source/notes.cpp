@@ -512,6 +512,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 
 	int CurrentJudgeNotes[2]={ -1,-1 };		//現在判定すべきノーツ ドン,カツ
 	double CurrentJudgeNotesLag[2]={ -1,-1 };	//判定すべきノーツの誤差(s)
+	int JudgeBalloonState=-1;
 
 	if(Option.isAuto){	//オート
 
@@ -571,7 +572,6 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 		JRS=JudgeRollState;
 
 		//風船の処理
-		int JudgeBalloonState=-1;
 		for(int i=0,j=BALLOON_MAX-1;i<j;++i){
 
 			if(BalloonNotes[i].flag&&!Notes[BalloonNotes[i].start_id].isDummy &&
@@ -780,7 +780,6 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 		JRS=JudgeRollState;
 
 		//風船の処理
-		int JudgeBalloonState=-1;
 		for(int i=0,j=BALLOON_MAX-1;i<j;++i){
 
 			if(BalloonNotes[i].flag&&!Notes[BalloonNotes[i].start_id].isDummy &&
