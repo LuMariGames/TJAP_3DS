@@ -827,6 +827,11 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			switch(Notes[i].knd){
 
 			case NOTES_ROLL:
+				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
+					RollNotes[Notes[i].roll_id].start_x=Notes[i].x;
+					RollNotes[Notes[i].roll_id].start_id=i;
+				}
+				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
 				if(RollNotes[Notes[i].roll_id].flag&&!Option.isStelth){
 
 					double end_x;
@@ -851,13 +856,13 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					sprites[SPRITE_ROLL_START].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
 				}
+				break;
+			case NOTES_BIGROLL:
 				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
 					RollNotes[Notes[i].roll_id].start_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].start_id=i;
 				}
 				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
-				break;
-			case NOTES_BIGROLL:
 				if(RollNotes[Notes[i].roll_id].flag&&!Option.isStelth){
 
 					double end_x;
@@ -882,41 +887,40 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					sprites[SPRITE_BIG_ROLL_START].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
 				}
-				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
-					RollNotes[Notes[i].roll_id].start_x=Notes[i].x;
-					RollNotes[Notes[i].roll_id].start_id=i;
-				}
-				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_ROLLEND:
+				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
+					RollNotes[Notes[i].roll_id].end_x=Notes[i].x;
+					RollNotes[Notes[i].roll_id].end_id=i;
+				}
+				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
 				if(!Option.isStelth){
 					sprites[SPRITE_ROLL_END].params.pos.x=Notes[i].x;
 					sprites[SPRITE_ROLL_END].params.pos.y=notes_y;
 					C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END],sign(Notes[i].scroll),1);
 					C2D_DrawImage(sprites[SPRITE_ROLL_END].image,&sprites[SPRITE_ROLL_END].params,&DummyTint);
 				}
+				break;
+			case NOTES_BIGROLLEND:
 				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
 					RollNotes[Notes[i].roll_id].end_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].end_id=i;
 				}
 				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
-				break;
-			case NOTES_BIGROLLEND:
 				if(!Option.isStelth){
 					sprites[SPRITE_BIG_ROLL_END].params.pos.x=Notes[i].x;
 					sprites[SPRITE_BIG_ROLL_END].params.pos.y=notes_y;
 					C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END],sign(Notes[i].scroll),1);
 					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image,&sprites[SPRITE_BIG_ROLL_END].params,&DummyTint);
 				}
-				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
-					RollNotes[Notes[i].roll_id].end_x=Notes[i].x;
-					RollNotes[Notes[i].roll_id].end_id=i;
-				}
-				if(Notes[i].judge_time<=CurrentTimeNotes&&Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_BALLOON:
+				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
+				if(Notes[i].roll_id!=-1){
+					BalloonNotes[Notes[i].roll_id].start_id=i;
+				}
 				if(BalloonNotes[Notes[i].roll_id].current_hit==0&&!Option.isStelth){
 
 					sprites[SPRITE_BALLOON].params.pos.x=Notes[i].x;
@@ -954,12 +958,12 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					C2D_DrawImage(sprites[SPRITE_BALLOON_5].image,&sprites[SPRITE_BALLOON_5].params,NULL);
 				}
 				if(BalloonNotes[Notes[i].roll_id].current_hit>=1)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
+				break;
+			case NOTES_POTATO:
 				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
 				}
-				break;
-			case NOTES_POTATO:
 				if(Notes[i].x!=NOTES_JUDGE_X&&!Option.isStelth){
 
 					sprites[SPRITE_POTATO].params.pos.x=Notes[i].x;
@@ -973,34 +977,30 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					C2D_DrawImage(sprites[SPRITE_POTATO_1].image,&sprites[SPRITE_POTATO_1].params,NULL);
 					update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				}
+				break;
+			case NOTES_DENDEN:
 				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
 				}
-				break;
-			case NOTES_DENDEN:
 				if(!Option.isStelth){
 					sprites[SPRITE_DENDEN].params.pos.x=Notes[i].x;
 					sprites[SPRITE_DENDEN].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_DENDEN].image,&sprites[SPRITE_DENDEN].params,&DummyTint);
 				}
 				if(Notes[i].x==NOTES_JUDGE_X)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
+				break;
+			case NOTES_TIMEBOMB:
 				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
 				}
-				break;
-			case NOTES_TIMEBOMB:
 				if(!Option.isStelth){
 					sprites[SPRITE_TIMEBOMB].params.pos.x=Notes[i].x;
 					sprites[SPRITE_TIMEBOMB].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_TIMEBOMB].image,&sprites[SPRITE_TIMEBOMB].params,&DummyTint);
 				}
 				if(BalloonNotes[Notes[i].roll_id].current_hit>=1)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
-				if(Notes[i].judge_time<=CurrentTimeNotes)Notes[i].x=NOTES_JUDGE_X;
-				if(Notes[i].roll_id!=-1){
-					BalloonNotes[Notes[i].roll_id].start_id=i;
-				}
 				break;
 
 			case NOTES_PTTBORDER:
@@ -1022,57 +1022,57 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				break;
 
 			case NOTES_DON:
+				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+					if(!Notes[i].isDummy)update_score(THROUGH);
+					Notes[i].isThrough=true;
+				}
 				if(!Option.isStelth){
 					sprites[SPRITE_DON].params.pos.x=Notes[i].x;
 					sprites[SPRITE_DON].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
 				}
+				break;
+			case NOTES_KATSU:
 				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					if(!Notes[i].isDummy)update_score(THROUGH);
 					Notes[i].isThrough=true;
 				}
-				break;
-			case NOTES_KATSU:
 				if(!Option.isStelth){
 					sprites[SPRITE_KATSU].params.pos.x=Notes[i].x;
 					sprites[SPRITE_KATSU].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_KATSU].image,&sprites[SPRITE_KATSU].params,&DummyTint);
 				}
+				break;
+			case NOTES_BIGDON:
 				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					if(!Notes[i].isDummy)update_score(THROUGH);
 					Notes[i].isThrough=true;
 				}
-				break;
-			case NOTES_BIGDON:
 				if(!Option.isStelth){
 					sprites[SPRITE_BIG_DON].params.pos.x=Notes[i].x;
 					sprites[SPRITE_BIG_DON].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BIG_DON].image,&sprites[SPRITE_BIG_DON].params,&DummyTint);
 				}
+				break;
+			case NOTES_BIGKATSU:
 				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					if(!Notes[i].isDummy)update_score(THROUGH);
 					Notes[i].isThrough=true;
 				}
-				break;
-			case NOTES_BIGKATSU:
 				if(!Option.isStelth){
 					sprites[SPRITE_BIG_KATSU].params.pos.x=Notes[i].x;
 					sprites[SPRITE_BIG_KATSU].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
 				}
-				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
-					if(!Notes[i].isDummy)update_score(THROUGH);
-					Notes[i].isThrough=true;
-				}
 				break;
 			case NOTES_BOMB:
+				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+					Notes[i].isThrough=true;
+				}
 				if(!Option.isStelth){
 					sprites[SPRITE_BOMB].params.pos.x=Notes[i].x;
 					sprites[SPRITE_BOMB].params.pos.y=notes_y;
 					C2D_DrawImage(sprites[SPRITE_BOMB].image,&sprites[SPRITE_BOMB].params,&DummyTint);
-				}
-				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
-					Notes[i].isThrough=true;
 				}
 				break;
 			}
