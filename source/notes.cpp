@@ -894,7 +894,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 					double end_x;
 					if(RollNotes[Notes[i].roll_id].end_id==-1||RollNotes[Notes[i].roll_id].end_x>=512.f)end_x=512.f;
-					else end_x=RollNotes[Notes[i].roll_id].end_x;
+					else end_x=Notes[RollNotes[Notes[i].roll_id].end_id].x;
 
 					if(Notes[i].scroll>0){
 						for(int n=0,m=(end_x-RollNotes[Notes[i].roll_id].start_x)/8.0;n<m;++n){
@@ -921,7 +921,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 					double end_x;
 					if(RollNotes[Notes[i].roll_id].end_id==-1||RollNotes[Notes[i].roll_id].end_x>=512.f)end_x=512.f;
-					else end_x=RollNotes[Notes[i].roll_id].end_x;
+					else end_x=Notes[RollNotes[Notes[i].roll_id].end_id].x;
 
 					if(Notes[i].scroll>0){
 						for(int n=0,m=(end_x-RollNotes[Notes[i].roll_id].start_x)/8.0;n<m;++n){
