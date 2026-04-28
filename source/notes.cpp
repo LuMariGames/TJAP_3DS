@@ -557,6 +557,10 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				Notes[i].roll_id!=-1){
 				BalloonNotes[Notes[i].roll_id].start_id=i;
 			}
+			else if(Notes[i].knd==NOTES_BALLOONEND&&Notes[i].roll_id!=-1){
+				BalloonNotes[Notes[i].roll_id].end_id=i;
+			}
+
 		}
 
 		JudgeRollState=-1;
@@ -677,6 +681,9 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				else if((Notes[i].knd==NOTES_BALLOON||Notes[i].knd==NOTES_POTATO||Notes[i].knd==NOTES_DENDEN||Notes[i].knd==NOTES_TIMEBOMB)&&
 					Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
+				}
+				else if(Notes[i].knd==NOTES_BALLOONEND&&Notes[i].roll_id!=-1){
+					BalloonNotes[Notes[i].roll_id].end_id=i;
 				}
 			}
 	
@@ -1045,9 +1052,6 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				break;
 
 			case NOTES_BALLOONEND:
-				if(Notes[i].roll_id!=-1){
-					BalloonNotes[Notes[i].roll_id].end_id=i;
-				}
 				if(Notes[i].judge_time<=CurrentTimeNotes){
 					if(Notes[BalloonNotes[Notes[i].roll_id].start_id].knd==NOTES_TIMEBOMB){
 						make_judge(BAD,CurrentTimeNotes);
