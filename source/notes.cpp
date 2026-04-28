@@ -883,8 +883,8 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			else C2D_AlphaImageTint(&DummyTint,1);
 
 			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll*(CurrentTimeNotes-Notes[i].pop_time)*(Notes[i].bpm/240.0);
-			if(Notes[i].x<=-512.f)Notes[i].x=-504.f;
-			else if(Notes[i].x>=1024.f)Notes[i].x=1016.f;
+			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
+			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
 
 			switch(Notes[i].knd){
 
