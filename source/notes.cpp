@@ -810,6 +810,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	get_option(&Option);
 	const int notes_y=109;
 	C2D_ImageTint DummyTint;
+	if(!get_isPause())notes_judge(CurrentTimeNotes,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
 
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//計算
 
@@ -1122,7 +1123,6 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 		break;
 	}
 	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
-	if(!get_isPause())notes_judge(CurrentTimeNotes,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
 }
 
 int get_branch_course(){
