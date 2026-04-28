@@ -883,8 +883,8 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			else C2D_AlphaImageTint(&DummyTint,1);
 
 			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll*(CurrentTimeNotes-Notes[i].pop_time)*(Notes[i].bpm/240.0);
-			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
-			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
+			if(Notes[i].x<=-512.f)Notes[i].x=-504.f;
+			else if(Notes[i].x>=1024.f)Notes[i].x=1016.f;
 
 			switch(Notes[i].knd){
 
@@ -893,7 +893,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				if(RollNotes[Notes[i].roll_id].flag&&!Option.isStelth){
 
 					double end_x;
-					if(RollNotes[Notes[i].roll_id].end_id==-1||RollNotes[Notes[i].roll_id].end_x>=420.0f)end_x=TOP_WIDTH+20.0f;
+					if(RollNotes[Notes[i].roll_id].end_id==-1||RollNotes[Notes[i].roll_id].end_x>=512.f)end_x=512.f;
 					else end_x=RollNotes[Notes[i].roll_id].end_x;
 
 					if(Notes[i].scroll>0){
@@ -920,7 +920,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				if(RollNotes[Notes[i].roll_id].flag&&!Option.isStelth){
 
 					double end_x;
-					if(RollNotes[Notes[i].roll_id].end_id==-1||RollNotes[Notes[i].roll_id].end_x>=420.0f)end_x=TOP_WIDTH+20.0f;
+					if(RollNotes[Notes[i].roll_id].end_id==-1||RollNotes[Notes[i].roll_id].end_x>=512.f)end_x=512.f;
 					else end_x=RollNotes[Notes[i].roll_id].end_x;
 
 					if(Notes[i].scroll>0){
