@@ -1119,6 +1119,11 @@ void get_command_value(char* buf,COMMAND_T *Command){
 			Command->val[2]=strtod(tp,NULL);
 			if(Command->val[2]>=1)Command->val[2]=JPOSMAG;
 			else Command->val[2]=JPOSMAG * -1.0;
+			if(Option.fixroll){
+				Command->val[0]=0;
+				Command->val[1]=0;
+				Command->val[2]=0;
+			}
 		}
 		/*else if(strcmp(command,"BMSCROLL")==0)Command->knd=COMMAND_BMSCROLL;
 		else if(strcmp(command,"HBSCROLL")==0)Command->knd=COMMAND_HBSCROLL;*/
