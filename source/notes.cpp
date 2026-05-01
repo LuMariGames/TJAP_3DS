@@ -9,7 +9,7 @@
 #include "option.h"
 
 struct {
-	float time;
+	int time;
 	float move;
 } judgedata;
 
@@ -57,7 +57,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time;
-	if(cnt>=0)CurrentTimeNotes=get_current_time(TIME_NOTES)+Measure[stme].create_time;
+	if(cnt>=0)CurrentTimeNotes=get_current_time(TIME_NOTES)+OffSetTime;
 	if(cnt==0)Branch.course=Measure[stme].branch;
 	//snprintf(get_buffer(),BUFFER_SIZE,"fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f",get_FirstMeasureTime(),CurrentTimeNotes,CurrentTimeNotes-Measure[0].create_time,Measure[stme].create_time);
 	//draw_debug(0,185,get_buffer());
@@ -113,12 +113,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						break;
 					case COMMAND_JPOSSCROLL:
 						judgedata.time=Command.val[0]*1000;
-						if(judgedata.time>0)judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
-						else {
-							judgedata.move=Command.val[1]*Command.val[2];
-							judgedata.time=1;
+						if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
+							judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
+							judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
 						}
-						judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
+						else NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
@@ -815,7 +814,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 		if(Notes[i].flag){
 
-			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll *(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
+			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll*(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
 			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
 			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
 
