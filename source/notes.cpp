@@ -882,7 +882,11 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				break;
 			}
 		}
-		if(Notes[i].flag&&(Notes[i].judge_time<=(currentTime-Option.judge_range_bad))&&
+	}
+
+	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
+
+		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
 			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
