@@ -44,8 +44,8 @@ double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 void change_judge(void *arg){
 	float *movx=new float;
 	int *movt=new int;
-	movx=judgedata.move;
-	movt=judgedata.time;
+	movx=&judgedata.move;
+	movt=&judgedata.time;
 	for(int i=0;i<movt;++i){
 		NOTES_JUDGE_X+=movx;
 		svcSleepThread(1000000);
