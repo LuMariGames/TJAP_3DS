@@ -8,10 +8,10 @@
 #include "vorbis.h"
 #include "option.h"
 
-struct {
+struct judgedata {
 	int time;
 	float move;
-} judgedata;
+};
 
 Thread judgemove;
 int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;
@@ -42,9 +42,9 @@ bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLev
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
-	judgedata *data = (judgedata*)arg;
-	movx=data->move;
-	movt=data->time;
+	judgedata *judata = (judgedata*)arg;
+	movx=judata->move;
+	movt=judata->time;
 	delete data;
 	for(int i=0;i<movt;++i){
 		NOTES_JUDGE_X+=movx;
