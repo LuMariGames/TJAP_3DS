@@ -11,7 +11,7 @@
 struct judgedata {
 	int time;
 	float move;
-};
+} judgedata;
 
 Thread judgemove;
 int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;
@@ -43,15 +43,13 @@ double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
 	judgedata *judata = (judgedata*)arg;
-	movx=judata->move;
-	movt=judata->time;
-	delete data;
+	float movx=judata->move;
+	int movt=judata->time;
+	delete judata;
 	for(int i=0;i<movt;++i){
 		NOTES_JUDGE_X+=movx;
 		svcSleepThread(1000000);
 	}
-	delete movx;
-	delete movt;
 	return;
 }
 
