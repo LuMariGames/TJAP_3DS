@@ -8,7 +8,7 @@
 #include "vorbis.h"
 #include "option.h"
 
-struct judgedata {
+struct {
 	int time;
 	float move;
 } judgedata;
@@ -42,11 +42,8 @@ bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLev
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
-	judgedata *judata = (judgedata*)arg;
-	float movx=judata->move;
-	int movt=judata->time;
-	delete judata;
-	for(int i=0;i<movt;++i){
+	float movx=judgedata.move;
+	for(int i=0,j=judgedata.time;i<j;++i){
 		NOTES_JUDGE_X+=movx;
 		svcSleepThread(1000000);
 	}
@@ -118,10 +115,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						judgedata.time=Command.val[0]*1000;
 						if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
 							judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
-							judgedata *args = new judgedata;
-							args->move = judgedata.move;
-							args->time = judgedata.time;
-							judgemove=threadCreate(change_judge,args,8192,0x3e,0,true);
+							judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
 						}
 						else NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
 						break;
