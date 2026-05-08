@@ -941,16 +941,18 @@ void load_tja_notes(int course,LIST_T Song){
 
 			switch(Measure[i].command){
 			case COMMAND_END:
-			case COMMAND_JPOSSCROLL:
 			case COMMAND_LEVELHOLD:
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
+			case COMMAND_JPOSSCROLL:
+				Measure[i].create_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*(NOTES_AREA*fabs(Measure[i].scroll))))-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
+				break;
 			case COMMAND_BRANCHSTART:
-				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*(NOTES_AREA*fabs(Measure[i].scroll))))-((240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*(NOTES_AREA*fabs(Measure[i].scroll))))*Measure[i].measure;
+			case COMMAND_SECTION:
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*(NOTES_AREA*fabs(Measure[i].scroll))))-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
 				break;
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
-			case COMMAND_SECTION:
 				n=Measure[i].notes+1;
 				while(n<=tja_cnt&&(tja_notes[n][0]=='#'||tja_notes[n][0]=='\r'))++n;
 				while(n<tja_cnt&&n!=Measure[j].notes)++j;
