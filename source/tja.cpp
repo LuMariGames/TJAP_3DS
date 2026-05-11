@@ -771,6 +771,8 @@ void load_tja_notes(int course,LIST_T Song){
 						//movetime=sudntime-Command.val[1];
 						isSudden=true;
 						break;
+					case COMMAND_JPOSSCROLL:
+						NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
 					case COMMAND_LYRIC:
 						ly=Command.value_s;
 						break;
