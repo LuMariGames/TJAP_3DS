@@ -32,7 +32,7 @@
 #define MEASURE_MAX 8192
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
 extern float NOTES_JUDGE_X;	//判定枠の中心のX座標
-#define JPOSMAG 257.0/750.0
+#define JPOSMAG 338.0/948.0
 #define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
 
 #define TOP_WIDTH  400
