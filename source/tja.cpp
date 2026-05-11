@@ -669,7 +669,7 @@ void load_tja_notes(int course,LIST_T Song){
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm=Current_Header.bpm,NextBpm=bpm,measure=1,scroll=1,NextMeasure=1,delay=0,percent=1,sudntime=0,//movetime=0,
+	double bpm=Current_Header.bpm,NextBpm=bpm,measure=1,scroll=1,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,//movetime=0,
 		BeforeBranchJudgeTime=0,BeforeBranchCreateTime=0,BeforeBranchPopTime=0,BeforeBranchPreJudge=0,BeforeBranchBpm=0,//BeforeBranchMoveTime=0,
 		BeforeBranchDelay=0,BeforeBranchMeasure=0,BeforeBranchScroll=1,BeforeBranchNextBpm=0,BeforeBranchNextMeasure=0,BeforeBranchPercent=1;
 	std::string ly="",Beforely="";
@@ -772,7 +772,8 @@ void load_tja_notes(int course,LIST_T Song){
 						isSudden=true;
 						break;
 					case COMMAND_JPOSSCROLL:
-						NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
+						jpostime=Command.val[0];
+						jposmove=Command.val[1]*Command.val[2];
 						break;
 					case COMMAND_LYRIC:
 						ly=Command.value_s;
@@ -897,6 +898,15 @@ void load_tja_notes(int course,LIST_T Song){
 					}
 				}
 				else {
+					if(Beforejpostime>0.0&&jpostime>Measure[MeasureCount].judge_time-PreJudge){
+						NOTES_JUDGE_X+=jposmove*((Measure[MeasureCount].judge_time-PreJudge)/Beforejpostime);
+						jpostime-=Measure[MeasureCount].judge_time-PreJudge;
+					}
+					else if(Beforejpostime>0.0&&jpostime<=Measure[MeasureCount].judge_time-PreJudge){
+						NOTES_JUDGE_X+=jposmove*(jpostime/Beforejpostime);
+						jpostime=0;
+						Beforejpostime=-1;
+					}
 					if(!isNoComma)PreJudge=Measure[MeasureCount].judge_time;
 					bpm=NextBpm;
 					measure=NextMeasure;
