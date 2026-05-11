@@ -773,6 +773,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_JPOSSCROLL:
 						NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
+						break;
 					case COMMAND_LYRIC:
 						ly=Command.value_s;
 						break;
