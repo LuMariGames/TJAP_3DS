@@ -658,6 +658,7 @@ int main(){
 			}
 			else {
 				init_tja();
+				NOTES_JUDGE_X = 93.0f;
 				istjaloaded = load_tja_head(course,SelectedSong);
 				//init_main_music();
 				if (istjaloaded){
