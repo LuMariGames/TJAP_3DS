@@ -772,7 +772,7 @@ void load_tja_notes(int course,LIST_T Song){
 						isSudden=true;
 						break;
 					case COMMAND_JPOSSCROLL:
-						jpostime=Command.val[0];
+						Beforejpostime=jpostime=Command.val[0];
 						jposmove=Command.val[1]*Command.val[2];
 						break;
 					case COMMAND_LYRIC:
@@ -817,7 +817,7 @@ void load_tja_notes(int course,LIST_T Song){
 				}
 				else {
 
-					if(isNoComma==true || NotesCount!=0){	//複数小節
+					if(isNoComma || NotesCount!=0){	//複数小節
 
 						Measure[MeasureCount].start_measure_count=NotesCount;
 						int i=0;
@@ -898,11 +898,11 @@ void load_tja_notes(int course,LIST_T Song){
 					}
 				}
 				else {
-					if(Beforejpostime>0.0&&jpostime>Measure[MeasureCount].judge_time-PreJudge){
+					if(!isNoComma&&Beforejpostime>0.0&&jpostime>Measure[MeasureCount].judge_time-PreJudge){
 						NOTES_JUDGE_X+=jposmove*((Measure[MeasureCount].judge_time-PreJudge)/Beforejpostime);
 						jpostime-=Measure[MeasureCount].judge_time-PreJudge;
 					}
-					else if(Beforejpostime>0.0&&jpostime<=Measure[MeasureCount].judge_time-PreJudge){
+					else if(!isNoComma&&Beforejpostime>0.0&&jpostime<=Measure[MeasureCount].judge_time-PreJudge){
 						NOTES_JUDGE_X+=jposmove*(jpostime/Beforejpostime);
 						jpostime=0;
 						Beforejpostime=-1;
@@ -950,7 +950,7 @@ void load_tja_notes(int course,LIST_T Song){
 		}
 
 		MeasureMaxNumber=MeasureCount;
-		for(int i=0,n=0,j=0;i<MeasureMaxNumber+1;++i){	//次の小節の判定時に発動する命令の調整
+		for(int i=0,j=MeasureMaxNumber+1;i<j;++i){	//次の小節の判定時に発動する命令の調整
 
 			switch(Measure[i].command){
 			case COMMAND_END:
