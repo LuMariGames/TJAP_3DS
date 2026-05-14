@@ -38,7 +38,7 @@ void load_file_main(void *arg) {
 
 	load_combo();
 	PTMSYSM_CheckNew3DS(&New);
-	if(New)newfont();
+	newfont();
 	load_file_list(DEFAULT_DIR);
 	set_genres();
 	SongNumber=SongCount;
