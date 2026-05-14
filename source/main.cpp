@@ -20,7 +20,7 @@
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
-C2D_Sprite sprites[168];	//画像用
+C2D_Sprite sprites[SPRITES_NUMER];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
 C2D_Text dynText;
@@ -240,7 +240,7 @@ inline static void load_sprites(){
 	}
 	if (!spriteSheet)svcBreak(USERBREAK_PANIC);
 
-	for (int i = 0,j = SPRITES_NUMER; i<j; ++i){
+	for (int i = 0,j = 91; i<j; ++i){
 		C2D_SpriteFromSheet(&sprites[i],spriteSheet,i);
 		C2D_SpriteSetCenter(&sprites[i],0.5f,0.5f);
 	}

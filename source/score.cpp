@@ -258,7 +258,7 @@ void update_score(int knd){
 	else CurrentPrecision=0;
 }
 
-void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]){
+void draw_score(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	//スコア
 	for(int i=0;i<10;++i){
@@ -329,7 +329,7 @@ void draw_score(C2D_Sprite  sprites[SPRITES_NUMER]){
 	}
 }
 
-void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]){
+void draw_gauge(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
 	courselife=Gauge.score;
 	if(Gauge.score>Gauge.soul)Gauge.score=Gauge.soul;
@@ -357,7 +357,7 @@ void draw_gauge(C2D_Sprite  sprites[SPRITES_NUMER]){
 	else C2D_DrawImage(sprites[SPRITE_SOUL_OFF].image,&sprites[SPRITE_SOUL_OFF].params,NULL);
 }
 
-void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]){
+void draw_gauge_result(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	int diff=50,scores=(int)Gauge.score;
 	double x_start=123-diff,x_end=250-diff;
@@ -385,7 +385,7 @@ void draw_gauge_result(C2D_Sprite  sprites[SPRITES_NUMER]){
 	else C2D_DrawImage(sprites[SPRITE_SOUL_OFF].image,&sprites[SPRITE_SOUL_OFF].params,NULL);
 }
 
-void draw_lane(C2D_Sprite sprites[SPRITES_NUMER],int kcnt,int dcnt){
+void draw_lane(C2D_Sprite (&sprites)[SPRITES_NUMER],int kcnt,int dcnt){
 
 
 	if(get_isBranch()==true){
@@ -847,7 +847,7 @@ void update_balloon_count(int arg){
 	CurrentBalloonCount=arg;
 }
 
-void draw_emblem(C2D_Sprite  sprites[SPRITES_NUMER]){
+void draw_emblem(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
 	switch(TJA_Header.course){
 	case COURSE_EASY:

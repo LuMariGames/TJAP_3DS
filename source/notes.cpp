@@ -24,9 +24,9 @@ C2D_Font font;
 
 int find_notes_id(),find_line_id(),make_roll_start(int NotesId),make_roll_end(int NotesId),
 make_balloon_start(int NotesId),sign(double A),make_balloon_end(int NotesId);
-void init_notes(TJA_HEADER_T TJA_Header),draw_judge(double CurrentTimeNotes,C2D_Sprite sprites[SPRITES_NUMER]),notes_sort(),delete_roll(int i),
-notes_draw(C2D_Sprite sprites[SPRITES_NUMER]),make_balloon_break(int notesid,int count),delete_notes(int i),draw_lyric_text(const char *text),
-notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt,C2D_Sprite sprites[SPRITES_NUMER]);
+void init_notes(TJA_HEADER_T TJA_Header),draw_judge(double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]),notes_sort(),delete_roll(int i),
+notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]),make_balloon_break(int notesid,int count),delete_notes(int i),draw_lyric_text(const char *text),
+notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt,C2D_Sprite (&sprites)[SPRITES_NUMER]);
 
 std::vector<NOTES_T> Notes;
 COMMAND_T Command;
@@ -50,7 +50,7 @@ void change_judge(void *arg){
 	return;
 }
 
-void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASURE_MAX],MEASURE_T (&Measure)[MEASURE_MAX],int cnt,C2D_Sprite sprites[SPRITES_NUMER]){
+void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASURE_MAX],MEASURE_T (&Measure)[MEASURE_MAX],int cnt,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -448,7 +448,7 @@ void make_judge(int knd,const float CurrentTimeNotes){
 	JudgeEffectCnt=0;
 }
 
-void draw_judge(double CurrentTimeNotes,C2D_Sprite sprites[SPRITES_NUMER]){
+void draw_judge(double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	if(isJudgeDisp){
 
@@ -804,7 +804,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 	}
 }
 
-void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt,C2D_Sprite sprites[SPRITES_NUMER]){
+void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	OPTION_T Option;
 	get_option(&Option);
@@ -909,7 +909,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	notes_judge(currentTime,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
 }
 
-inline void notes_draw(C2D_Sprite sprites[SPRITES_NUMER]){
+inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	int notes_y=109;
 	C2D_ImageTint DummyTint;

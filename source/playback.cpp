@@ -12,7 +12,7 @@
 	free((void*) ptr); ptr = NULL
 
 static int Decode_CoreID = 1;
-static bool stop = true,New = false;
+static bool stop = true;
 extern float mix[12];
 
 bool togglePlayback(void){
@@ -256,7 +256,6 @@ inline int changeFile(const char* ep_file,struct playbackInfo_t* playbackInfo,bo
 void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
 	char abs_path[512];
-	PTMSYSM_CheckNew3DS(&New);
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",Song.path,Song.wave);
 	changeFile(abs_path,&playbackInfo,p_isPlayMain);
 }

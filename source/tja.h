@@ -27,7 +27,7 @@ typedef struct {
 
 typedef struct {
 	double judge_time,create_time,pop_time, //sudn_time,
-		bpm,speed,measure,scroll;
+		bpm,measure,scroll;
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
 	bool flag,isDispBarLine,isDummy;
@@ -36,7 +36,7 @@ typedef struct {
 } MEASURE_T;
 
 void init_tja(),load_tja_notes(int course, LIST_T Song),white_tja(LIST_T Song),
-tja_to_notes(int isDon, int isKatsu, int count, C2D_Sprite sprites[SPRITES_NUMER]),
+tja_to_notes(int isDon, int isKatsu, int count, C2D_Sprite (&sprites)[SPRITES_NUMER]),
 load_tja_head_simple(LIST_T *List),get_tja_header(TJA_HEADER_T *TJA_Header),
 get_command_value(char* buf, COMMAND_T *Command),conv_tja(LIST_T Song);
 double get_FirstMeasureTime(),get_StartTime();

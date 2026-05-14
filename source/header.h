@@ -29,9 +29,10 @@
 #define DEFAULT_JUDGE_RANGE_BAD		0.120
 
 #define NOTES_MEASURE_MAX 512	//一小節の最大ノーツ数+1
-#define MEASURE_MAX 8192
+#define MEASURE_MAX 16384
 #define NOTES_AREA 338.0	//ノーツ表示エリアの長さ
 extern float NOTES_JUDGE_X;	//判定枠の中心のX座標
+extern bool New;
 #define JPOSMAG 338.0/948.0
 #define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
 
@@ -40,7 +41,7 @@ extern float NOTES_JUDGE_X;	//判定枠の中心のX座標
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
 
-#define SPRITES_NUMER 91
+#define SPRITES_NUMER 168
 
 #define NOTES_MAX 2048
 #define BARLINE_MAX 256
