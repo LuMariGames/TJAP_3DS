@@ -1143,7 +1143,7 @@ int ctoi(char c){
 }
 
 inline void notes_sort(){	//ノーツを出現順にソート
-	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.judge_time > b.judge_time;});
+	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.num > b.num;});
 }
 
 void delete_roll(int i){
@@ -1313,7 +1313,7 @@ void delete_notes(int i){
 
 	if(i>=0&&i<(int)Notes.size()){
 		Notes[i].flag=false;
-		Notes[i].num=0;
+		Notes[i].num=-1;
 		Notes[i].knd=0;
 		Notes[i].notes_max=0;
 		Notes[i].x_ini=0;
