@@ -411,7 +411,7 @@ bool load_tja_head(int course,LIST_T Song){
 			if(strstr(buf,"GAME:")==buf){ //ゲームモードを指定するタグ、ドンキーコンガにも出来る
 				if(buf[5]!='\n' && buf[5]!='\r'){
 					strlcpy(temp,buf+5,strlen(buf)-6);
-					if(strcmp(temp,"Konga")==0||strcmp(temp,"Bongo")==0)Current_Header.gamemode=3;	//文字表記
+					if(strcmp(temp,"Donkey")==0||strcmp(temp,"DONKEY")==0||strcmp(temp,"donkey")==0)Current_Header.gamemode=3;	//文字表記
 					else Current_Header.gamemode=0;
 				}
 				free(temp);
