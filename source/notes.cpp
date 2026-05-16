@@ -583,10 +583,14 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 
 			if(cnt%Option.rollspeed<=0){
 
-				if(JudgeRollState==NOTES_ROLL)update_score(ROLL);
-				else if(JudgeRollState==NOTES_BIGROLL)update_score(BIG_ROLL);
-
-				play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
+				if(JudgeRollState==NOTES_ROLL){
+					update_score(ROLL);
+					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
+				}
+				else if(JudgeRollState==NOTES_BIGROLL){
+					update_score(BIG_ROLL);
+					play_sound(((isgamemode==0)?SOUND_DON:SOUND_CLAP));
+				}
 			}
 		}
 
@@ -742,8 +746,8 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 		if(JudgeRollState!=-1){	//連打
 
 			for(int i=0,j=(isDon+isKatsu);i<j;++i){
-				if(JudgeRollState==NOTES_ROLL)update_score(ROLL);
-				else if(JudgeRollState==NOTES_BIGROLL)update_score(BIG_ROLL);
+				if(JudgeRollState==NOTES_ROLL&&((isgamemode==3&&i<isDon)||isgamemode==0))update_score(ROLL);
+				else if(JudgeRollState==NOTES_BIGROLL&&((isgamemode==3&&i<isKatsu)||isgamemode==0))update_score(BIG_ROLL);
 			}
 		}
 
@@ -964,9 +968,18 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image,&sprites[SPRITE_ROLL_INT].params,&DummyTint);
 						}
 					}
-					sprites[SPRITE_ROLL_START].params.pos.x=Notes[i].x;
-					sprites[SPRITE_ROLL_START].params.pos.y=notes_y;
-					C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
+					switch (isgamemode){
+					case 0:	//taiko
+						sprites[SPRITE_ROLL_START].params.pos.x=Notes[i].x;
+						sprites[SPRITE_ROLL_START].params.pos.y=notes_y;
+						C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
+						break;
+					case 3:	//konga
+						sprites[SPRITE_DON].params.pos.x=Notes[i].x;
+						sprites[SPRITE_DON].params.pos.y=notes_y;
+						C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
+						break;
+					}
 				}
 				break;
 			case NOTES_BIGROLL:
@@ -990,11 +1003,20 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image,&sprites[SPRITE_BIG_ROLL_INT].params,&DummyTint);
 						}
 					}
-					sprites[SPRITE_BIG_ROLL_START].params.pos.x=Notes[i].x;
-					sprites[SPRITE_BIG_ROLL_START].params.pos.y=notes_y;
-					C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
-					break;
+					switch (isgamemode){
+					case 0:	//taiko
+						sprites[SPRITE_BIG_ROLL_START].params.pos.x=Notes[i].x;
+						sprites[SPRITE_BIG_ROLL_START].params.pos.y=notes_y;
+						C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
+						break;
+					case 3:	//konga
+						sprites[SPRITE_BIG_KATSU].params.pos.x=Notes[i].x;
+						sprites[SPRITE_BIG_KATSU].params.pos.y=notes_y;
+						C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
+						break;
+					}
 				}
+				break;
 			case NOTES_BALLOON:
 				if(BalloonNotes[Notes[i].roll_id].current_hit==0){
 
