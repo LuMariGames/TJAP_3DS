@@ -77,9 +77,8 @@ bool load_tja_head(int course,LIST_T Song){
 	Current_Header.course=course;
 	Current_Header.style=1;
 	Current_Header.life=-1;
+	Current_Header.gamemode=0;
 	Current_Header.bg=(char*)"bg.png";
-	Current_Header.bgfps=0;
-	//Current_Header.Bgoffst
 	//Current_Header.demostart=0;
 	//Current_Header.side=3;
 	Current_Header.scoremode=3;
@@ -404,6 +403,16 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+5,strlen(buf)-6);
 					Current_Header.life=atoi(temp);
 					gaugelife=Current_Header.life;
+				}
+				free(temp);
+				continue;
+			}
+
+			if(strstr(buf,"GAME:")==buf){ //ゲームモードを指定するタグ、ドンキーコンガにも出来る
+				if(buf[5]!='\n' && buf[5]!='\r'){
+					strlcpy(temp,buf+5,strlen(buf)-6);
+					if(strcmp(temp,"Konga")==0||strcmp(temp,"Bongo")==0)Current_Header.gamemode=3;	//文字表記
+					else Current_Header.gamemode=0;
 				}
 				free(temp);
 				continue;

@@ -13,8 +13,7 @@ typedef struct {
 
 	char *title,*subtitle,*wave,*bg;
 	int level,balloon[4][256],songvol,sevol,scoreinit,scorediff,
-		course,style,life,scoremode,subtitle_state; //total,side;
-	float bgfps;
+		course,style,life,scoremode,subtitle_state,gamemode; //total,side;
 	double bpm,offset; //demostart;
 
 }TJA_HEADER_T;

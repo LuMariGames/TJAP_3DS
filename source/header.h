@@ -177,6 +177,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_DENDEN,			//でんでん音符の画像
 	SPRITE_RAINBOW,
 	SPRITE_BACKGROUND,		//上画面の下背景固定用
+	SPRITE_BOTTOM_2,		//タッチコンガ
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
