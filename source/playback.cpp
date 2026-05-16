@@ -137,8 +137,8 @@ void playFile(void* infoIn){
 	buffer[0] = (int16_t*)linearAlloc(decoder.buffSize * sizeof(int16_t));
 	buffer[1] = (int16_t*)linearAlloc(decoder.buffSize * sizeof(int16_t));
 
-	ndspChnReset(CHANNEL);
 	ndspChnWaveBufClear(CHANNEL);
+	ndspChnReset(CHANNEL);
 	ndspChnSetInterp(CHANNEL,NDSP_INTERP_LINEAR);
 	ndspChnSetRate(CHANNEL,(*decoder.rate)() * mspeed());
 	ndspChnSetFormat(CHANNEL,(*decoder.channels)() == 2 ? NDSP_FORMAT_STEREO_PCM16 : NDSP_FORMAT_MONO_PCM16);
@@ -199,6 +199,7 @@ out:
 	if(isNdspInit == true)
 	{
 		ndspChnWaveBufClear(CHANNEL);
+		ndspChnReset(CHANNEL);
 		ndspExit();
 	}
 

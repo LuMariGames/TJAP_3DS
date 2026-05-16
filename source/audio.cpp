@@ -9,7 +9,7 @@
 #define AUDIO_BUFFER_SIZE 4096
 #define STACKSIZE (4 * 1024)
 #define SOUND_NUMBER 5
-#define SNUM 39
+#define SNUM 41
 
 typedef struct {
 	float rate;
@@ -195,7 +195,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[34][30] = {
+	char sound_address[36][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
@@ -230,6 +230,8 @@ void load_combo() {
 		"romfs:/combo/mekaover.ogg",
 		"romfs:/combo/fullcombo.ogg",
 		"romfs:/combo/fullmeka.ogg",
+		"romfs:/konga.ogg"
+		"romfs:/clap.ogg"
 	};
 
 	for (int i = SOUND_NUMBER; i < SNUM; ++i) {
@@ -294,6 +296,12 @@ void load_combo() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
+	sound[39].mix[0] = 0.8f;
+	sound[39].mix[1] = 0.8f;
+	sound[39].audiochannel = 0;
+	sound[40].mix[0] = 0.8f;
+	sound[40].mix[1] = 0.8f;
+	sound[40].audiochannel = 1;
 }
 
 int play_sound(int id) {

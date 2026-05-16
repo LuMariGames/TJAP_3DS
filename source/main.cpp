@@ -754,15 +754,31 @@ int main(){
 				touch_x = 0,touch_y = 0,touch_cnt = 0,PreTouch_x = 0,PreTouch_y = 0;
 			}
 			button_game(&isDon,&isKatsu,Option,key);
-			if (isKatsu>0){
-				katsu_cnt = 30;
-				don_cnt = 0;
-				play_sound(SOUND_KATSU);		//カツ
-			}
-			if (isDon>0){
-				katsu_cnt = 0;
-				don_cnt = 30;
-				play_sound(SOUND_DON);		//ドン
+			switch(TJA_Header.gamemode){
+			case 0:	//taiko
+				if (isKatsu>0){
+					katsu_cnt = 30;
+					don_cnt = 0;
+					play_sound(SOUND_KATSU);		//カツ
+				}
+				if (isDon>0){
+					katsu_cnt = 0;
+					don_cnt = 30;
+					play_sound(SOUND_DON);		//ドン
+				}
+				break;
+			case 3:	//konga
+				if (isKatsu>0){
+					katsu_cnt = 30;
+					don_cnt = 0;
+					play_sound(SOUND_CLAP);		//カツ
+				}
+				if (isDon>0){
+					katsu_cnt = 0;
+					don_cnt = 30;
+					play_sound(SOUND_KONGA);		//ドン
+				}
+				break;
 			}
 
 			//下画面
@@ -839,15 +855,31 @@ int main(){
 					touch_x = 0,touch_y = 0,touch_cnt = 0,PreTouch_x = 0,PreTouch_y = 0;
 				}
 				button_game(&isDon,&isKatsu,Option,key);
-				if (isKatsu>0){
-					katsu_cnt = 30;
-					don_cnt = 0;
-					play_sound(SOUND_KATSU);		//カツ
-				}
-				if (isDon>0){
-					katsu_cnt = 0;
-					don_cnt = 30;
-					play_sound(SOUND_DON);		//ドン
+				switch(TJA_Header.gamemode){
+				case 0:	//taiko
+					if (isKatsu>0){
+						katsu_cnt = 30;
+						don_cnt = 0;
+						play_sound(SOUND_KATSU);		//カツ
+					}
+					if (isDon>0){
+						katsu_cnt = 0;
+						don_cnt = 30;
+						play_sound(SOUND_DON);		//ドン
+					}
+					break;
+				case 3:	//konga
+					if (isKatsu>0){
+						katsu_cnt = 30;
+						don_cnt = 0;
+						play_sound(SOUND_CLAP);		//カツ
+					}
+					if (isDon>0){
+						katsu_cnt = 0;
+						don_cnt = 30;
+						play_sound(SOUND_KONGA);		//ドン
+					}
+					break;
 				}
 			}
 

@@ -14,7 +14,7 @@ struct {
 } judgedata;
 
 Thread judgemove;
-int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1;
+int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1,isgamemode=0;
 double bpm,offset;
 constexpr double conbpm=1.0/240.0;
 float NowBPM=120.0f;
@@ -557,19 +557,19 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 
 				switch(Notes[i].knd){
 				case NOTES_DON:
-					play_sound(SOUND_DON);
+					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
 					make_judge(PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_BIGDON:
-					play_sound(SOUND_DON);
+					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
 					make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_KATSU:
-					play_sound(SOUND_KATSU);
+					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
 					make_judge(PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_BIGKATSU:
-					play_sound(SOUND_KATSU);
+					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
 					make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 					break;
 				}
@@ -586,7 +586,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				if(JudgeRollState==NOTES_ROLL)update_score(ROLL);
 				else if(JudgeRollState==NOTES_BIGROLL)update_score(BIG_ROLL);
 
-				play_sound(SOUND_DON);
+				play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
 			}
 		}
 
@@ -596,11 +596,11 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 
 				if(Notes[BalloonNotes[JudgeBalloonState].start_id].knd==NOTES_DENDEN &&
 					isDendenCH==1){
-					play_sound(SOUND_KATSU);
+					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
 					isDendenCH=0;
 				}
 				else {
-					play_sound(SOUND_DON);
+					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
 					isDendenCH=1;
 				}
 
@@ -1143,7 +1143,7 @@ int ctoi(char c){
 }
 
 inline void notes_sort(){	//ノーツを出現順にソート
-	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.num > b.num;});
+	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.judge_time>b.judge_time;});
 }
 
 void delete_roll(int i){
@@ -1433,6 +1433,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	Command.val[0]=0;
 	Command.val[1]=0;
 	Command.val[2]=0;
+	isgamemode=TJA_Header.gamemode;
 	bpm=TJA_Header.bpm;
 	offset=TJA_Header.offset+Option.offset;
 	NowBPM=bpm;
