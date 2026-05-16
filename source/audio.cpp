@@ -230,8 +230,8 @@ void load_combo() {
 		"romfs:/combo/mekaover.ogg",
 		"romfs:/combo/fullcombo.ogg",
 		"romfs:/combo/fullmeka.ogg",
-		"romfs:/konga.ogg"
-		"romfs:/clap.ogg"
+		"romfs:/konga.ogg",
+		"romfs:/clap.ogg",
 	};
 
 	for (int i = SOUND_NUMBER; i < SNUM; ++i) {
