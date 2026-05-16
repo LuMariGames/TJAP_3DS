@@ -776,7 +776,7 @@ int main(){
 				if (don_cnt>0)C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7,0x4A,0x21,0x7F));
 				break;
 			case 3:	//konga
-				C2D_DrawImage(sprites[SPRITE_BOTTOM].image,&sprites[SPRITE_BOTTOM_2].params,NULL);
+				C2D_DrawImage(sprites[SPRITE_BOTTOM_2].image,&sprites[SPRITE_BOTTOM_2].params,NULL);
 				if (don_cnt>0){
 					C2D_DrawEllipseSolid(-85,30,0,210,210,C2D_Color32(0xF7,0x4A,0x21,0x7F));
 					C2D_DrawEllipseSolid(195,30,0,210,210,C2D_Color32(0xF7,0x4A,0x21,0x7F));
@@ -804,7 +804,7 @@ int main(){
 
 					if ((key&KEY_TOUCH || 
 						pow((touch_x-PreTouch_x)*(touch_x-PreTouch_x)+(touch_y-PreTouch_y)*(touch_y-PreTouch_y),0.5)> 20.0)&&
-						(touch_x-160)*(touch_x-160)+(touch_y-135)*(touch_y-135)<= 105 * 105&&touch_cnt<2){
+						(touch_x-160)*(touch_x-160)+(touch_y-135)*(touch_y-135)<= 105*105&&TJA_Header.gamemode==0&&touch_cnt<2){
 						++isDon;
 						tch_cnt = 6;
 						memtch_x = touch_x,memtch_y = touch_y;
@@ -900,7 +900,7 @@ int main(){
 				if (don_cnt>0)C2D_DrawEllipseSolid(55,30,0,210,210,C2D_Color32(0xF7,0x4A,0x21,0x7F));
 				break;
 			case 3:	//konga
-				C2D_DrawImage(sprites[SPRITE_BOTTOM].image,&sprites[SPRITE_BOTTOM_2].params,NULL);
+				C2D_DrawImage(sprites[SPRITE_BOTTOM_2].image,&sprites[SPRITE_BOTTOM_2].params,NULL);
 				if (don_cnt>0){
 					C2D_DrawEllipseSolid(-85,30,0,210,210,C2D_Color32(0xF7,0x4A,0x21,0x7F));
 					C2D_DrawEllipseSolid(195,30,0,210,210,C2D_Color32(0xF7,0x4A,0x21,0x7F));
