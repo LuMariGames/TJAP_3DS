@@ -443,7 +443,9 @@ int main(){
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
 		if (loadend<3)aptSetHomeAllowed(false);
 		else aptSetHomeAllowed(true);
-		C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
+
+		usleep(8333-(uint64_t)(get_current_time(3)*1000000)%8333);
+		C3D_FrameBegin(!Option.dispFps);
 
 		//上画面
 		C2D_TargetClear(top,C2D_Color32(0x42,0x42,0x42,0xFF));
