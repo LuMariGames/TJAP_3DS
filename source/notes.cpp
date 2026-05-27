@@ -44,6 +44,7 @@ double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 void change_judge(void *arg){
 	float movx=judgedata.move;
 	for(int i=0,j=judgedata.time;i<j;++i){
+		while(get_isPause())svcSleepThread(100000);
 		NOTES_JUDGE_X+=movx;
 		svcSleepThread(1000000);
 	}
@@ -209,7 +210,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					Notes[id].x_ini=NOTES_JUDGE_RANGE*Notes[id].scroll;
 					Notes[id].bpm=Measure[MeasureCount].bpm;
 					Notes[id].knd=knd;
-					Notes[id].x=Notes[id].x_ini;
+					Notes[id].x=512.f;
 					Notes[id].isDummy=Measure[MeasureCount].isDummy;
 					Notes[id].roll_id=-1;
 					Notes[id].isThrough=false;
