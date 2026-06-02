@@ -30,6 +30,7 @@ void init_measure_structure(){
 		Measure[i].pop_time=INT_MAX;
 		Measure[i].bpm=0;
 		Measure[i].scroll=0;
+		Measure[i].yscroll=0;
 		Measure[i].notes=0;
 		Measure[i].flag=false;
 		Measure[i].isDispBarLine=true;
@@ -678,7 +679,7 @@ void load_tja_notes(int course,LIST_T Song){
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm=Current_Header.bpm,NextBpm=bpm,measure=1,scroll=1,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,//movetime=0,
+	double bpm=Current_Header.bpm,NextBpm=bpm,measure=1,scroll=1,yscroll=0,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,//movetime=0,
 		BeforeBranchJudgeTime=0,BeforeBranchCreateTime=0,BeforeBranchPopTime=0,BeforeBranchPreJudge=0,BeforeBranchBpm=0,//BeforeBranchMoveTime=0,
 		BeforeBranchDelay=0,BeforeBranchMeasure=0,BeforeBranchScroll=1,BeforeBranchNextBpm=0,BeforeBranchNextMeasure=0,BeforeBranchPercent=1;
 	std::string ly="",Beforely="";
@@ -771,6 +772,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_SCROLL:
 						scroll=Command.val[0];
+						yscroll=Command.val[1];
 						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
@@ -844,6 +846,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].bpm=NextBpm;
 				Measure[MeasureCount].measure=NextMeasure;
 				Measure[MeasureCount].scroll=scroll;
+				Measure[MeasureCount].yscroll=yscroll;
 				//Measure[MeasureCount].sudn_time=movetime;
 				Measure[MeasureCount].isDummy=isDummy;
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
@@ -1089,8 +1092,15 @@ void get_command_value(char* buf,COMMAND_T *Command){
 		}
 		else if(strcmp(command,"SCROLL")==0){
 			Command->knd=COMMAND_SCROLL;
-			if(Option.fixroll)Command->val[0]=1;
-			else if(!Option.fixroll)Command->val[0]=strtod(value,NULL);
+			if(Option.fixroll){
+				Command->val[0]=1;
+				Command->val[1]=0;
+			}
+			else if(!Option.fixroll){
+				char* nextPtr;
+				Command->val[0]=strtod(value,&nextPtr);
+				Command->val[1]=strtod(nextPtr,NULL);
+			}
 		}
 		else if(strcmp(command,"DELAY")==0){
 			Command->knd=COMMAND_DELAY;
