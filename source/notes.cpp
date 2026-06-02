@@ -823,7 +823,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 		if(Notes[i].flag){
 
 			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll*(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
-			Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
+			Notes[i].y=109.f-NOTES_AREA*Notes[i].yscroll*(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
 			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
 			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
 			if(Notes[i].y<=-128.f)Notes[i].y=-128.f;
