@@ -966,26 +966,26 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 					if(Notes[i].scroll>0){
 						for(int n=0,m=(end_x-RollNotes[Notes[i].roll_id].start_x)/8.0;n<m;++n){
 							sprites[SPRITE_ROLL_INT].params.pos.x=(int)Notes[i].x+8*n;
-							sprites[SPRITE_ROLL_INT].params.pos.y=notes_y;
+							sprites[SPRITE_ROLL_INT].params.pos.y=Notes[i].y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image,&sprites[SPRITE_ROLL_INT].params,&DummyTint);
 						}
 					}
 					else if(Notes[i].scroll<0){
 						for(int n=0,m=(RollNotes[Notes[i].roll_id].start_x-end_x)/8.0;n<m;++n){
 							sprites[SPRITE_ROLL_INT].params.pos.x=(int)Notes[i].x+8*(n*-1);
-							sprites[SPRITE_ROLL_INT].params.pos.y=notes_y;
+							sprites[SPRITE_ROLL_INT].params.pos.y=Notes[i].y;
 							C2D_DrawImage(sprites[SPRITE_ROLL_INT].image,&sprites[SPRITE_ROLL_INT].params,&DummyTint);
 						}
 					}
 					switch (isgamemode){
 					case 0:	//taiko
 						sprites[SPRITE_ROLL_START].params.pos.x=Notes[i].x;
-						sprites[SPRITE_ROLL_START].params.pos.y=notes_y;
+						sprites[SPRITE_ROLL_START].params.pos.y=Notes[i].y;
 						C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
 						break;
 					case 3:	//konga
 						sprites[SPRITE_DON].params.pos.x=Notes[i].x;
-						sprites[SPRITE_DON].params.pos.y=notes_y;
+						sprites[SPRITE_DON].params.pos.y=Notes[i].y;
 						C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
 						break;
 					}
@@ -1001,26 +1001,26 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 					if(Notes[i].scroll>0){
 						for(int n=0,m=(end_x-RollNotes[Notes[i].roll_id].start_x)/8.0;n<m;++n){
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x=(int)Notes[i].x+8*n;
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.y=notes_y;
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.y=Notes[i].y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image,&sprites[SPRITE_BIG_ROLL_INT].params,&DummyTint);
 						}
 					}
 					else if(Notes[i].scroll<0){
 						for(int n=0,m=(RollNotes[Notes[i].roll_id].start_x-end_x)/8.0;n<m;++n){
 							sprites[SPRITE_BIG_ROLL_INT].params.pos.x=(int)Notes[i].x+8*(n*-1);
-							sprites[SPRITE_BIG_ROLL_INT].params.pos.y=notes_y;
+							sprites[SPRITE_BIG_ROLL_INT].params.pos.y=Notes[i].y;
 							C2D_DrawImage(sprites[SPRITE_BIG_ROLL_INT].image,&sprites[SPRITE_BIG_ROLL_INT].params,&DummyTint);
 						}
 					}
 					switch (isgamemode){
 					case 0:	//taiko
 						sprites[SPRITE_BIG_ROLL_START].params.pos.x=Notes[i].x;
-						sprites[SPRITE_BIG_ROLL_START].params.pos.y=notes_y;
+						sprites[SPRITE_BIG_ROLL_START].params.pos.y=Notes[i].y;
 						C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
 						break;
 					case 3:	//konga
 						sprites[SPRITE_BIG_KATSU].params.pos.x=Notes[i].x;
-						sprites[SPRITE_BIG_KATSU].params.pos.y=notes_y;
+						sprites[SPRITE_BIG_KATSU].params.pos.y=Notes[i].y;
 						C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
 						break;
 					}
@@ -1094,13 +1094,13 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				break;
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x=Notes[i].x;
-				sprites[SPRITE_ROLL_END].params.pos.y=notes_y;
+				sprites[SPRITE_ROLL_END].params.pos.y=Notes[RollNotes[Notes[i].roll_id].start_id].y;
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END],sign(Notes[i].scroll),1);
 				C2D_DrawImage(sprites[SPRITE_ROLL_END].image,&sprites[SPRITE_ROLL_END].params,&DummyTint);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x=Notes[i].x;
-				sprites[SPRITE_BIG_ROLL_END].params.pos.y=notes_y;
+				sprites[SPRITE_BIG_ROLL_END].params.pos.y=Notes[RollNotes[Notes[i].roll_id].start_id].y;
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END],sign(Notes[i].scroll),1);
 				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image,&sprites[SPRITE_BIG_ROLL_END].params,&DummyTint);
 				break;
