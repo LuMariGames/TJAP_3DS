@@ -207,10 +207,13 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					Notes[id].notes_max=NotesCount;
 					Notes[id].num=NotesNumber;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
+					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
 					Notes[id].x_ini=NOTES_JUDGE_RANGE*Notes[id].scroll;
+					Notes[id].y_ini=NOTES_JUDGE_RANGE*Notes[id].yscroll;
 					Notes[id].bpm=Measure[MeasureCount].bpm;
 					Notes[id].knd=knd;
 					Notes[id].x=512.f;
+					Notes[id].y=109.f;
 					Notes[id].isDummy=Measure[MeasureCount].isDummy;
 					Notes[id].roll_id=-1;
 					Notes[id].isThrough=false;
@@ -820,8 +823,11 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 		if(Notes[i].flag){
 
 			Notes[i].x=(Notes[i].x_ini+NOTES_JUDGE_X)-NOTES_AREA*Notes[i].scroll*(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
+			Notes[i].y=(Notes[i].x_ini+109.f)-NOTES_AREA*Notes[i].yscroll*(currentTime-Notes[i].pop_time)*(Notes[i].bpm*conbpm);
 			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
 			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
+			if(Notes[i].y<=-128.f)Notes[i].y=-128.f;
+			else if(Notes[i].y>=512.f)Notes[i].y=512.f;
 
 			switch(Notes[i].knd){
 
@@ -847,7 +853,10 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			case NOTES_POTATO:
 			case NOTES_DENDEN:
 			case NOTES_TIMEBOMB:
-				if(Notes[i].judge_time<=currentTime)Notes[i].x=NOTES_JUDGE_X;
+				if(Notes[i].judge_time<=currentTime){
+					Notes[i].x=NOTES_JUDGE_X;
+					Notes[i].y=109.f;
+				}
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
 				}
@@ -930,22 +939,22 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 			switch(Notes[i].knd){
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x=Notes[i].x;
-				sprites[SPRITE_DON].params.pos.y=notes_y;
+				sprites[SPRITE_DON].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x=Notes[i].x;
-				sprites[SPRITE_KATSU].params.pos.y=notes_y;
+				sprites[SPRITE_KATSU].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_KATSU].image,&sprites[SPRITE_KATSU].params,&DummyTint);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x=Notes[i].x;
-				sprites[SPRITE_BIG_DON].params.pos.y=notes_y;
+				sprites[SPRITE_BIG_DON].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_BIG_DON].image,&sprites[SPRITE_BIG_DON].params,&DummyTint);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x=Notes[i].x;
-				sprites[SPRITE_BIG_KATSU].params.pos.y=notes_y;
+				sprites[SPRITE_BIG_KATSU].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
 				break;
 			case NOTES_ROLL:
@@ -1022,7 +1031,7 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				if(BalloonNotes[Notes[i].roll_id].current_hit==0){
 
 					sprites[SPRITE_BALLOON].params.pos.x=Notes[i].x;
-					sprites[SPRITE_BALLOON].params.pos.y=notes_y;
+					sprites[SPRITE_BALLOON].params.pos.y=Notes[i].y;
 					C2D_DrawImage(sprites[SPRITE_BALLOON].image,&sprites[SPRITE_BALLOON].params,&DummyTint);
 				}
 				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.2f){
@@ -1061,7 +1070,7 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				if(Notes[i].x!=NOTES_JUDGE_X){
 
 					sprites[SPRITE_POTATO].params.pos.x=Notes[i].x;
-					sprites[SPRITE_POTATO].params.pos.y=notes_y;
+					sprites[SPRITE_POTATO].params.pos.y=Notes[i].y;
 					C2D_DrawImage(sprites[SPRITE_POTATO].image,&sprites[SPRITE_POTATO].params,&DummyTint);
 				}
 				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit){
@@ -1074,13 +1083,13 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				break;
 			case NOTES_DENDEN:
 				sprites[SPRITE_DENDEN].params.pos.x=Notes[i].x;
-				sprites[SPRITE_DENDEN].params.pos.y=notes_y;
+				sprites[SPRITE_DENDEN].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_DENDEN].image,&sprites[SPRITE_DENDEN].params,&DummyTint);
 				if(Notes[i].x==NOTES_JUDGE_X)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 			case NOTES_TIMEBOMB:
 				sprites[SPRITE_TIMEBOMB].params.pos.x=Notes[i].x;
-				sprites[SPRITE_TIMEBOMB].params.pos.y=notes_y;
+				sprites[SPRITE_TIMEBOMB].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_TIMEBOMB].image,&sprites[SPRITE_TIMEBOMB].params,&DummyTint);
 				if(BalloonNotes[Notes[i].roll_id].current_hit>=1)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
@@ -1098,7 +1107,7 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				break;
 			case NOTES_BOMB:
 				sprites[SPRITE_BOMB].params.pos.x=Notes[i].x;
-				sprites[SPRITE_BOMB].params.pos.y=notes_y;
+				sprites[SPRITE_BOMB].params.pos.y=Notes[i].y;
 				C2D_DrawImage(sprites[SPRITE_BOMB].image,&sprites[SPRITE_BOMB].params,&DummyTint);
 				break;
 			}
@@ -1340,7 +1349,9 @@ void delete_notes(int i){
 		Notes[i].knd=0;
 		Notes[i].notes_max=0;
 		Notes[i].x_ini=0;
+		Notes[i].y_ini=0;
 		Notes[i].x=0;
+		Notes[i].y=0;
 		Notes[i].create_time=0;
 		Notes[i].judge_time=0;
 		Notes[i].pop_time=0;
