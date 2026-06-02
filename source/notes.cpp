@@ -1094,13 +1094,13 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				break;
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x=Notes[i].x;
-				sprites[SPRITE_ROLL_END].params.pos.y=Notes[RollNotes[Notes[i].roll_id].start_id].y;
+				sprites[SPRITE_ROLL_END].params.pos.y=Notes[i].y;
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END],sign(Notes[i].scroll),1);
 				C2D_DrawImage(sprites[SPRITE_ROLL_END].image,&sprites[SPRITE_ROLL_END].params,&DummyTint);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x=Notes[i].x;
-				sprites[SPRITE_BIG_ROLL_END].params.pos.y=Notes[RollNotes[Notes[i].roll_id].start_id].y;
+				sprites[SPRITE_BIG_ROLL_END].params.pos.y=Notes[i].y;
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END],sign(Notes[i].scroll),1);
 				C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image,&sprites[SPRITE_BIG_ROLL_END].params,&DummyTint);
 				break;
