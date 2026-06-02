@@ -1097,7 +1097,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 				Command->val[1]=0;
 			}
 			else if(!Option.fixroll){
-				char* nextPtr,endPtr;
+				char *nextPtr,*endPtr;
 				Command->val[0]=strtod(value,&nextPtr);
 				Command->val[1]=strtod(nextPtr,&endPtr);
 				if(nextPtr == endPtr)Command->val[1]=0
