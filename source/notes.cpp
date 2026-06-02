@@ -209,7 +209,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
 					Notes[id].x_ini=NOTES_JUDGE_RANGE*Notes[id].scroll;
-					Notes[id].y_ini=NOTES_JUDGE_RANGE*Notes[id].yscroll;
 					Notes[id].bpm=Measure[MeasureCount].bpm;
 					Notes[id].knd=knd;
 					Notes[id].x=512.f;
@@ -341,7 +340,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x-10,133,buf_notes);
 			}
-			if((BarLine[i].x<62&&BarLine[i].scroll>0)||(BarLine[i].x>400&&BarLine[i].scroll<0))BarLine[i].flag=false;
+			if((BarLine[i].x<62&&BarLine[i].scroll>0)||(BarLine[i].x>400&&BarLine[i].scroll<0)||(BarLine[i].scroll==0&&Measure[i].flag))BarLine[i].flag=false;
 		}
 	}
 
@@ -1349,7 +1348,6 @@ void delete_notes(int i){
 		Notes[i].knd=0;
 		Notes[i].notes_max=0;
 		Notes[i].x_ini=0;
-		Notes[i].y_ini=0;
 		Notes[i].x=0;
 		Notes[i].y=0;
 		Notes[i].create_time=0;
