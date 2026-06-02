@@ -900,7 +900,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
 		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
-			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0.f&&Notes[i].yscroll==0.f))&&
+			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0&&Notes[i].yscroll==0))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
 			if(Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
