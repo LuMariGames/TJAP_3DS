@@ -340,7 +340,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x-10,133,buf_notes);
 			}
-			if((BarLine[i].x<62&&BarLine[i].scroll>0)||(BarLine[i].x>400&&BarLine[i].scroll<0)||(BarLine[i].scroll==0&&Measure[i].flag))BarLine[i].flag=false;
+			if((BarLine[i].x<62&&BarLine[i].scroll>0)||(BarLine[i].x>400&&BarLine[i].scroll<0)||(BarLine[i].scroll==0&&Measure[BarLine[i].measure].flag))BarLine[i].flag=false;
 		}
 	}
 
