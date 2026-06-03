@@ -70,7 +70,7 @@ An attack from the DS series! "Den-Den Note" (Summoned with 'P')
 
 |命令文 / commands|Supported?|Comment|
 |---|---|---|
-|`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`|✅||
+|`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`|✅|v2.2.3にて複素数スクロールに対応|
 |`SECTION`, `BRANCHSTART`, `BRANCHEND`|⚠️|譜面分岐開始時の挙動がまだ不安定|
 |`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`, `DELAY`, `MEASURE`|✅||
 |`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌||
