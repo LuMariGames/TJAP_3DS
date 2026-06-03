@@ -349,6 +349,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	draw_judge(CurrentTimeNotes,sprites);
 	
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
+	double MaxJudgeTime=0.0;
+	int NowMeasure=0;
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
 
@@ -384,12 +386,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 			if(NotFalse==false&&Measure[i].judge_time<=CurrentTimeNotes)Measure[i].flag=false;
 		}
-	}
-	send_gogotime(isGOGOTime);
-	double MaxJudgeTime=0.0;
-	int NowMeasure=0;
-
-	for(int i=0,j=MaxMeasureCount;i<j;++i){
 		if(Measure[i].command==-1 &&
 			MaxJudgeTime<Measure[i].judge_time&&Measure[i].judge_time<=CurrentTimeNotes){
 			NowBPM=Measure[i].bpm;
@@ -397,6 +393,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			NowMeasure=i;
 		}
 	}
+	send_gogotime(isGOGOTime);
 
 	draw_lyric_text(Measure[NowMeasure].lyric.data());
 	if(course==COURSE_DAN)dcd=dan_condition();
@@ -900,7 +897,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
 		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
-			((Notes[i].x<=20.f&&Notes[i].scroll>0)||(Notes[i].x>=420.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0&&Notes[i].yscroll==0))&&
+			((Notes[i].x<=-64.f&&Notes[i].scroll>0)||(Notes[i].x>=464.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0&&Notes[i].yscroll==0))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
 			if(Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
