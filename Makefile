@@ -317,7 +317,7 @@ endef
 %.bcfnt :		%.ttf
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
-	@mkbcfnt -o $*.bcfnt $<
+	@$(TOPDIR)/resource/mkbcfnt -o $*.bcfnt $<
 
 -include $(DEPSDIR)/*.d
 
