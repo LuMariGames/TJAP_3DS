@@ -412,7 +412,7 @@ void update_cursor(int knd) {
 C2D_TextBuf g_SelectText=C2D_TextBufNew(4096);
 C2D_Text SelectText;
 
-void draw_select_text(float x,float y,const char* text,int color,bool isfont = false) {	//color省略可(0xffffff)
+void draw_select_text(float x,float y,const char* text,int color,bool isfont) {	//color省略可(0xffffff)
 
 	C2D_TextBufClear(g_SelectText);
 	if (isfont) C2D_TextFontParse(&SelectText,font,g_SelectText,text);
@@ -424,7 +424,7 @@ void draw_select_text(float x,float y,const char* text,int color,bool isfont = f
 	C2D_DrawText(&SelectText,C2D_WithColor,x,y,1.0f,0.5f,0.5f,C2D_Color32f(r,g,b,1.0f));
 }
 
-void draw_result_text(float x,float y,float size,const char* text,int color,bool isfont = false) {
+void draw_result_text(float x,float y,float size,const char* text,int color,bool isfont) {
 
 	C2D_TextBufClear(g_SelectText);
 	if (isfont) C2D_TextFontParse(&SelectText,font,g_SelectText,text);
