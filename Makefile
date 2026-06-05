@@ -69,7 +69,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++17
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lcitro2d $(TOPDIR)/resource/libcitro3d.a -lctru -lm -lvorbisidec -logg -lmpg123 -ljansson
+LIBS	:= $(TOPDIR)/resource/libcitro2d.a $(TOPDIR)/resource/libcitro3d.a -lctru -lm -lvorbisidec -logg -lmpg123 -ljansson
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -317,7 +317,7 @@ endef
 %.bcfnt :		%.ttf
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
-	@$(TOPDIR)/resource/mkbcfnt -o $*.bcfnt $<
+	@mkbcfnt -o $*.bcfnt $<
 
 -include $(DEPSDIR)/*.d
 
