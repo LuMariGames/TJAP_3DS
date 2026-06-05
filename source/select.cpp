@@ -16,7 +16,7 @@ static void set_genres();
 
 LIST_T List[LIST_MAX];
 GENRE_T Genre[GENRE_MAX];
-extern C2D_Text NotesText;
+extern C2D_Font font;
 char buf_select[256];
 int SongNumber=0;		//曲の総数
 int GenreNumber=0;		//ジャンルの総数
