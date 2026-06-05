@@ -213,7 +213,7 @@ void disp_file_list() {
 
 				snprintf(buf_select,sizeof(buf_select),"%s",List[i].title);
 				int x=(List[i].genre!=GENRE_MAX+1) * 25+30;
-				draw_select_text(x,(n+g+cursor) * 20+60,buf_select,true);
+				draw_select_text(x,(n+g+cursor) * 20+60,buf_select,0xffffff,true);
 
 				if (i+g!=(cursor * -1)) {
 					snprintf(buf_select,sizeof(buf_select),"★x%d",List[i].level[COURSE_ONI]);
