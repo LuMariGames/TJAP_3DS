@@ -15,8 +15,8 @@ void draw_result() {
 	
 	float size = 0.7,width,height;
 
-	draw_result_text(50,10,0.6,Tja.title);
-	draw_result_text(50,30,0.48,Tja.subtitle);
+	draw_result_text(50,10,0.6,Tja.title,0xffffff,true);
+	draw_result_text(50,30,0.48,Tja.subtitle,0xffffff,true);
 	if (Tja.course != 6) draw_result_text(0,0,1,"\0",0xffffff);
 	else if (result.dcon < 0) draw_result_text(50,48,0.8,"合格",0xfad132);
 	else if (result.dcon == 0) draw_result_text(50,48,0.8,"合格",0xfd3104);
