@@ -16,6 +16,7 @@ static void set_genres();
 
 LIST_T List[LIST_MAX];
 GENRE_T Genre[GENRE_MAX];
+extern C2D_Text NotesText;
 char buf_select[256];
 int SongNumber=0;		//曲の総数
 int GenreNumber=0;		//ジャンルの総数
@@ -212,7 +213,7 @@ void disp_file_list() {
 
 				snprintf(buf_select,sizeof(buf_select),"%s",List[i].title);
 				int x=(List[i].genre!=GENRE_MAX+1) * 25+30;
-				draw_select_text(x,(n+g+cursor) * 20+60,buf_select);
+				draw_select_text(x,(n+g+cursor) * 20+60,buf_select,true);
 
 				if (i+g!=(cursor * -1)) {
 					snprintf(buf_select,sizeof(buf_select),"★x%d",List[i].level[COURSE_ONI]);
@@ -411,10 +412,11 @@ void update_cursor(int knd) {
 C2D_TextBuf g_SelectText=C2D_TextBufNew(4096);
 C2D_Text SelectText;
 
-void draw_select_text(float x,float y,const char* text,int color) {	//color省略可(0xffffff)
+void draw_select_text(float x,float y,const char* text,int color,bool font = false) {	//color省略可(0xffffff)
 
 	C2D_TextBufClear(g_SelectText);
-	C2D_TextParse(&SelectText,g_SelectText,text);
+	if (font) C2D_TextFontParse(&SelectText,font,g_SelectText,text);
+	else C2D_TextFontParse(&SelectText,NULL,g_SelectText,text);
 	C2D_TextOptimize(&SelectText);
 	float r=((color >> 16) & 0xFF)/255.0;
 	float g=((color >> 8) & 0xFF)/255.0;
@@ -422,10 +424,11 @@ void draw_select_text(float x,float y,const char* text,int color) {	//color省�
 	C2D_DrawText(&SelectText,C2D_WithColor,x,y,1.0f,0.5f,0.5f,C2D_Color32f(r,g,b,1.0f));
 }
 
-void draw_result_text(float x,float y,float size,const char* text,int color) {
+void draw_result_text(float x,float y,float size,const char* text,int color,bool font = false) {
 
 	C2D_TextBufClear(g_SelectText);
-	C2D_TextParse(&SelectText,g_SelectText,text);
+	if (font) C2D_TextFontParse(&SelectText,font,g_SelectText,text);
+	else C2D_TextFontParse(&SelectText,NULL,g_SelectText,text);
 	C2D_TextOptimize(&SelectText);
 	float r=((color >> 16) & 0xFF)/255.0;
 	float g=((color >> 8) & 0xFF)/255.0;
