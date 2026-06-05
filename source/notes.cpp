@@ -1372,7 +1372,7 @@ C2D_Text NotesText;
 
 void draw_notes_text(float x,float y,const char *text,float *width,float *height){
 
-	float size=0.6;
+	float size=2.4;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText,font,g_NotesText,text);
 	C2D_TextOptimize(&NotesText);
