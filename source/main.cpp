@@ -445,7 +445,6 @@ int main(){
 		else aptSetHomeAllowed(true);
 
 		if(Option.dispFps){
-			usleep(8333-(uint64_t)(get_current_time(3)*1000000)%8333);
 			gspWaitForEvent(GSPGPU_EVENT_VBlank0,false);
 		}
 		C3D_FrameBegin(!Option.dispFps);
