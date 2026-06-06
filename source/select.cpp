@@ -421,13 +421,11 @@ void draw_select_text(float x,float y,const char* text,int color,bool isfont) {	
 	float r=((color >> 16) & 0xFF)/255.0;
 	float g=((color >> 8) & 0xFF)/255.0;
 	float b=((color >> 0) & 0xFF)/255.0;
-	if (isfont) C2D_DrawText(&SelectText,C2D_WithColor,x,y,1.0f,2.f,2.f,C2D_Color32f(r,g,b,1.0f));
-	else C2D_DrawText(&SelectText,C2D_WithColor,x,y,1.0f,0.5f,0.5f,C2D_Color32f(r,g,b,1.0f));
+	C2D_DrawText(&SelectText,C2D_WithColor,x,y,1.0f,0.5f,0.5f,C2D_Color32f(r,g,b,1.0f));
 }
 
 void draw_result_text(float x,float y,float size,const char* text,int color,bool isfont) {
 
-	float font_size = size*4;
 	C2D_TextBufClear(g_SelectText);
 	if (isfont) C2D_TextFontParse(&SelectText,font,g_SelectText,text);
 	else C2D_TextFontParse(&SelectText,NULL,g_SelectText,text);
@@ -435,8 +433,7 @@ void draw_result_text(float x,float y,float size,const char* text,int color,bool
 	float r=((color >> 16) & 0xFF)/255.0;
 	float g=((color >> 8) & 0xFF)/255.0;
 	float b=((color >> 0) & 0xFF)/255.0;
-	if (isfont) C2D_DrawText(&SelectText,C2D_WithColor,x,y,0.5f,font_size,font_size,C2D_Color32f(r,g,b,1.0f));
-	else C2D_DrawText(&SelectText,C2D_WithColor,x,y,0.5f,size,size,C2D_Color32f(r,g,b,1.0f));
+	C2D_DrawText(&SelectText,C2D_WithColor,x,y,0.5f,size,size,C2D_Color32f(r,g,b,1.0f));
 }
 
 void calc_result_text(const char* text,float* width,float* height) {

@@ -3,14 +3,14 @@
 
 typedef struct {
 	bool flag,isThrough,isDummy = false;
-	float create_time,judge_time,pop_time,x,y,bpm,scroll,yscroll,x_ini;
+	float create_time,judge_time,pop_time,x,y,bpm,scroll,yscroll;
 	int num,notes_max,knd,roll_id;
 
 } NOTES_T;
 
 typedef struct {
 	bool flag,isDisp;
-	float create_time,scroll,x_ini,x;
+	float create_time,scroll,x;
 	int measure;
 
 } BARLINE_T;

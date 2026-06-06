@@ -140,7 +140,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				BarLine[BarLineId].flag=true;
 				BarLine[BarLineId].scroll=Measure[MeasureCount].scroll*Option.speed;
 				BarLine[BarLineId].measure=MeasureCount;
-				BarLine[BarLineId].x_ini=NOTES_JUDGE_RANGE*BarLine[BarLineId].scroll;
 				BarLine[BarLineId].create_time=CurrentTimeNotes;
 				BarLine[BarLineId].isDisp=Measure[MeasureCount].isDispBarLine;
 				if(Measure[MeasureCount].judge_time<Measure[MinMeasureCount].judge_time)BarLine[BarLineId].flag=false;
@@ -208,7 +207,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					Notes[id].num=NotesNumber;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
-					Notes[id].x_ini=NOTES_JUDGE_RANGE*Notes[id].scroll;
 					Notes[id].bpm=Measure[MeasureCount].bpm;
 					Notes[id].knd=knd;
 					Notes[id].x=512.f;
@@ -331,8 +329,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 		if(BarLine[i].flag){
 
-			BarLine[i].x=(BarLine[i].x_ini+NOTES_JUDGE_X)-
-				NOTES_AREA*BarLine[i].scroll *(CurrentTimeNotes-Measure[BarLine[i].measure].pop_time)*(Measure[BarLine[i].measure].bpm*conbpm);
+			BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
 
 			if(BarLine[i].isDisp){
 				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
@@ -1344,7 +1341,6 @@ void delete_notes(int i){
 		Notes[i].num=-1;
 		Notes[i].knd=0;
 		Notes[i].notes_max=0;
-		Notes[i].x_ini=0;
 		Notes[i].x=0;
 		Notes[i].y=0;
 		Notes[i].create_time=0;
@@ -1372,7 +1368,7 @@ C2D_Text NotesText;
 
 void draw_notes_text(float x,float y,const char *text,float *width,float *height){
 
-	float size=2.4;
+	float size=0.6;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText,font,g_NotesText,text);
 	C2D_TextOptimize(&NotesText);
@@ -1508,7 +1504,6 @@ void init_notes(TJA_HEADER_T TJA_Header){
 		BarLine[i].flag=false;
 		BarLine[i].scroll=0;
 		BarLine[i].measure=0;
-		BarLine[i].x_ini=0;
 		BarLine[i].create_time=0;
 		BarLine[i].isDisp=false;
 	}
