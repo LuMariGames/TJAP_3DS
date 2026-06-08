@@ -444,9 +444,6 @@ int main(){
 		if (loadend<3)aptSetHomeAllowed(false);
 		else aptSetHomeAllowed(true);
 
-		if(Option.dispFps){
-			gspWaitForEvent(GSPGPU_EVENT_VBlank0,false);
-		}
 		C3D_FrameBegin(!Option.dispFps);
 
 		//上画面

@@ -22,7 +22,7 @@ extern int isBranch,course,stme;
 extern double black;
 C2D_Font font;
 
-int find_notes_id(),find_line_id(),make_roll_start(int NotesId),make_roll_end(int NotesId),
+int find_notes_id(int id),find_line_id(),make_roll_start(int NotesId),make_roll_end(int NotesId),
 make_balloon_start(int NotesId),sign(double A),make_balloon_end(int NotesId);
 void init_notes(TJA_HEADER_T TJA_Header),draw_judge(double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]),notes_sort(),delete_roll(int i),
 notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]),make_balloon_break(int notesid,int count),delete_notes(int i),draw_lyric_text(const char *text),
@@ -38,7 +38,7 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
 isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isLoadLoop=false;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
@@ -55,6 +55,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 	OPTION_T Option;
 	get_option(&Option);
+	bool isLoadLoop=false;
+	int id=0;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time;
@@ -76,7 +78,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			Branch.next=false;
 		}
 
-		isLoadLoop=false;
 		while(Measure[MeasureCount].create_time<=CurrentTimeNotes&&!Branch.wait){
 
 			NotesCount=0;
@@ -159,8 +160,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			double NoteTime=0.0;
 			for(int i=0;i<NotesCount;++i){
 
-				int id=find_notes_id();
-				if(id!=-1&&ctoi(tja_notes[Measure[MeasureCount].notes][i])!= 0&&Measure[MeasureCount].branch==Branch.course){
+				id=find_notes_id(id);
+				if(id!=-1&&ctoi(tja_notes[Measure[MeasureCount].notes][i])!=0&&Measure[MeasureCount].branch==Branch.course){
 
 					int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
 
@@ -201,7 +202,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 
 					//Notes[id].create_time=CurrentTimeNotes;
-					Notes[id].pop_time=Measure[MeasureCount].pop_time+NoteTime;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].notes_max=NotesCount;
 					Notes[id].num=NotesNumber;
@@ -329,7 +329,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 		if(BarLine[i].flag){
 
-			BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
+			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
 
 			if(BarLine[i].isDisp){
 				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
@@ -351,8 +351,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
 
-		if((Measure[i].branch==Branch.course||Measure[i].branch==-1)&& Measure[i].flag){
-
+		if((Measure[i].branch==Branch.course||Measure[i].branch==-1)&&Measure[i].flag){
 			bool NotFalse=false;
 
 			if(Measure[i].command!=-1&&Measure[i].judge_time<=CurrentTimeNotes){
@@ -403,7 +402,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	draw_debug(100,0,get_buffer());
 	snprintf(get_buffer(),BUFFER_SIZE,"Bpm:%.1f Measure:%.1f Scroll:%.1f",Measure[MeasureCount].bpm,Measure[MeasureCount].measure,Measure[MeasureCount].scroll);
 	draw_debug(0,20,get_buffer());
-	snprintf(get_buffer(),BUFFER_SIZE,"Judge:%.3f Create:%.3f Pop:%.3f",Measure[MeasureCount].judge_time,Measure[MeasureCount].create_time,Measure[MeasureCount].pop_time);
+	snprintf(get_buffer(),BUFFER_SIZE,"Judge:%.3f Create:%.3f",Measure[MeasureCount].judge_time,Measure[MeasureCount].create_time);
 	draw_debug(0,40,get_buffer());
 	snprintf(get_buffer(),BUFFER_SIZE,"%d:%s",MeasureCount,tja_notes[MeasureCount]);
 	draw_debug(0,50,get_buffer());
@@ -411,9 +410,9 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	draw_debug(250,40,get_buffer());*/
 }
 
-inline int find_notes_id(){
+inline int find_notes_id(id){
 
-	for(int i=0,j=Notes.size()-1;i<j;++i){
+	for(int i=id,j=Notes.size()-1;i<j;++i){
 		if(!Notes[i].flag)return i;
 	}
 	int i=Notes.size()-1;
@@ -894,7 +893,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
 		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
-			((Notes[i].x<=-64.f&&Notes[i].scroll>0)||(Notes[i].x>=464.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0&&Notes[i].yscroll==0))&&
+			((Notes[i].x<=-64.f&&Notes[i].scroll>0)||(Notes[i].x>=464.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0.f&&Notes[i].yscroll==0.f))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
 			if(Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
@@ -1345,7 +1344,6 @@ void delete_notes(int i){
 		Notes[i].y=0;
 		Notes[i].create_time=0;
 		Notes[i].judge_time=0;
-		Notes[i].pop_time=0;
 		Notes[i].bpm=0;
 		Notes[i].scroll=0;
 		Notes[i].roll_id=-1;
