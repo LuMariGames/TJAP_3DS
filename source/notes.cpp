@@ -14,7 +14,7 @@ struct {
 } judgedata;
 
 Thread judgemove;
-int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1,isgamemode=0;
+int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1,isgamemode=0,id=0;
 double bpm,offset;
 constexpr double conbpm=1.0/240.0;
 float NowBPM=120.0f;
@@ -56,7 +56,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	OPTION_T Option;
 	get_option(&Option);
 	bool isLoadLoop=false;
-	int id=0;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
 	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time;
@@ -160,10 +159,10 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			double NoteTime=0.0;
 			for(int i=0;i<NotesCount;++i){
 
-				id=find_notes_id(id);
-				if(id!=-1&&ctoi(tja_notes[Measure[MeasureCount].notes][i])!=0&&Measure[MeasureCount].branch==Branch.course){
+				int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
+				if(knd!=0&&Measure[MeasureCount].branch==Branch.course){
 
-					int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
+					id=find_notes_id(id);
 
 					if(Measure[MeasureCount].judge_time<Measure[MinMeasureCount].judge_time &&
 						(knd==NOTES_BALLOON||knd==NOTES_POTATO||knd==NOTES_DENDEN||knd==NOTES_TIMEBOMB)&& Measure[MeasureCount].branch==-1)++BalloonCount[0];
@@ -1349,6 +1348,7 @@ void delete_notes(int i){
 		Notes[i].roll_id=-1;
 		Notes[i].isThrough=false;
 		Notes[i].isDummy=false;
+		id=i;
 	}
 }
 bool get_notes_finish(){
@@ -1508,6 +1508,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	dcd=0;
 	Notes.clear();
 	Notes.resize(64);
+	id=0;
 }
 int sign(double A){	//正か負かの判別
 	return(A>=0)-(A<0);
