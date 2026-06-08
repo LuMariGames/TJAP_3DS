@@ -410,7 +410,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	draw_debug(250,40,get_buffer());*/
 }
 
-inline int find_notes_id(id){
+inline int find_notes_id(int id){
 
 	for(int i=id,j=Notes.size()-1;i<j;++i){
 		if(!Notes[i].flag)return i;
