@@ -331,7 +331,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
 
-			if((BarLine[i].x<62&&BarLine[i].scroll>0)||(BarLine[i].x>400&&BarLine[i].scroll<0)||(BarLine[i].scroll==0&&Measure[BarLine[i].measure].flag))BarLine[i].flag=false;
+			if((BarLine[i].x<62&&BarLine[i].scroll>0)||(BarLine[i].x>400&&BarLine[i].scroll<0)||(BarLine[i].scroll==0&&Measure[BarLine[i].measure].flag))BarLine[i].flag=BarLine[i].isDisp=false;
 			if(BarLine[i].isDisp){
 				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
 
