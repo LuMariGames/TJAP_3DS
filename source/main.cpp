@@ -724,11 +724,11 @@ int main(){
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
-					if(!Option.isAuto&&Option.player!=3&&Option.random==0){
+					if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
 						fp_write = fopen(abs_path,"wb");
 						fp_read=NULL;
 					}
-					else if (Option.random==0) {
+					else if (measure==0){
 						fp_write=NULL;
 						fp_read = fopen(abs_path,"rb");
 						read_data.count = -59;
@@ -1036,8 +1036,8 @@ int main(){
 				else if (keyhold&KEY_DRIGHT)++khdcnt;
 				else khdcnt = 0;
 				if (key&KEY_DUP)toggle_auto();
-				if (key&KEY_DLEFT || khdcnt<-60)min_measure();
-				if ((key&KEY_DRIGHT || khdcnt>60)&& (Option.measure<get_edme()))plus_measure();
+				if ((key&KEY_DLEFT || khdcnt<-60)&&Option.player!=3)min_measure();
+				if ((key&KEY_DRIGHT || khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3)plus_measure();
 			}
 
 			if(cnt == 0){
