@@ -644,6 +644,10 @@ int main(){
 				if (key&KEY_LEFT)		update_cursor(KEY_LEFT);
 				if (key&KEY_A)		update_cursor(KEY_A);
 				if (key&KEY_B)		update_cursor(KEY_B);
+				if (keyhold&KEY_SELECT&&key&KEY_X){
+					snprintf(abs_path,sizeof(abs_path),"%s/ghostdata.bin",SelectedSong.path);
+					if(exist_file(abs_path))remove(abs_path);
+				}
 
 				if (get_isGameStart()){
 					scene_state = SCENE_MAINLOAD;
