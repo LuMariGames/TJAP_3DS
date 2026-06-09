@@ -444,7 +444,6 @@ int main(){
 		if (loadend<3)aptSetHomeAllowed(false);
 		else aptSetHomeAllowed(true);
 		C3D_FrameBegin(!Option.dispFps);
-		key |= hidKeysDown(),keyhold = hidKeysHeld();
 
 		//上画面
 		C2D_TargetClear(top,C2D_Color32(0x42,0x42,0x42,0xFF));
