@@ -13,6 +13,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 
 #define C3D_CMDBUF_SIZE 0x40000
 #define VERSION "2.2.3"
