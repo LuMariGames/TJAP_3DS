@@ -64,6 +64,7 @@ const char Text[3][64][128] = {
 		"EDIT",
 		"CONV",
 		"LとRボタン同時押しで戻る",
+		"PLAY",
 	},
 	{
 		"ON",
@@ -128,6 +129,7 @@ const char Text[3][64][128] = {
 		"EDIT",
 		"CONV",
 		"Press the L and R buttons to return.",
+		"PLAY",
 	},
 	{
 		"Sí",
@@ -192,6 +194,7 @@ const char Text[3][64][128] = {
 		"EDIT",
 		"CONV",
 		"Presione los botones L y R para regresar.",
+		"PLAY",
 	}
 };
 
@@ -282,6 +285,7 @@ enum Text_knd {
 	TEXT_EDITOR,
 	TEXT_CONV,
 	TEXT_LANDR,
+	TEXT_PLAY,
 };
 
 int get_lang();
