@@ -20,6 +20,13 @@
 extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
+typedef struct {
+	int32_t connt;
+	uint8_t don;
+	uint8_t katsu;
+	uint16_t padding;
+} ghostdata;
+
 C2D_Sprite sprites[SPRITES_NUMER];	//画像用
 static C2D_SpriteSheet spriteSheet,otherspsh,dancerspsh;
 C2D_TextBuf g_dynamicBuf;
@@ -419,6 +426,7 @@ int main(){
 	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 	bool bottaikoview = false;
+	FILE *fp_write, *fp_read;
 
 	load_option();
 	get_option(&Option);
@@ -429,6 +437,8 @@ int main(){
 	else if (Option.exse)sd_load_sound();
 	load_sprites();
 	chartload = threadCreate(load_file_main,(void*)(""),8192,0x3f,-2,true);
+	ghostdata read_data;
+
 
 	while (aptMainLoop()){
 
@@ -697,6 +707,17 @@ int main(){
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
+					snprintf(abs_path,sizeof(abs_path),"%s/ghostdata.bin",SelectedSong.path);
+					if(Option.player==0){
+						fp_write = fopen(abs_path,"wb");
+						fp_read=NULL;
+					}
+					else {
+						fp_write=NULL;
+						fp_read = fopen(abs_path,"rb");
+						memset(read_data,0,sizeof(ghostdata));
+						read_data.count = -59;
+					}
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
 					aptSetSleepAllowed(false);
@@ -855,6 +876,12 @@ int main(){
 					touch_x = 0,touch_y = 0,touch_cnt = 0,PreTouch_x = 0,PreTouch_y = 0;
 				}
 				button_game(&isDon,&isKatsu,Option,key);
+
+				if(read_data.count==cnt){
+					isDon=read_data.don,isKatsu=read_data.katsu;
+					if(fp_read!=NULL)fread(&read_data,sizeof(ghostdata),1,fp_read);
+				}
+
 				switch(TJA_Header.gamemode){
 				case 0:	//taiko
 					if (isKatsu>0){
@@ -990,10 +1017,12 @@ int main(){
 				if ((key&KEY_DRIGHT || khdcnt>60)&& (Option.measure<get_edme()))plus_measure();
 			}
 
-			if (cnt == 0){
+			if(cnt == 0){
 				FirstMeasureTime = get_FirstMeasureTime();
 			}
-			if (cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
+			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
+			ghostdata write_data={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
+			if(fp_write!=NULL&&Option.player==0&&(isDon!=0||isKatsu!=0))fwrite(&write_data,sizeof(ghostdata),1,fp_write);
 
 			//譜面が先
 			if (offset>0&&(!isNotesStart || !isMusicStart)&& measure<=0){
@@ -1039,6 +1068,8 @@ int main(){
 			}
 			if ((get_notes_finish()&& !ndspChnIsPlaying(CHANNEL))|| (courselife == 0&&course == COURSE_TOWER)){
 				scene_state = SCENE_RESULT;
+				if(fp_write!=NULL)fclose(fp_write);
+				if(fp_read!=NULL)fclose(fp_write);
 				cnt = -1;
 			}
 
