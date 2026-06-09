@@ -21,7 +21,7 @@ extern int course,courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
 typedef struct {
-	int32_t connt;
+	int32_t count;
 	uint8_t don;
 	uint8_t katsu;
 	uint16_t padding;
@@ -437,8 +437,7 @@ int main(){
 	else if (Option.exse)sd_load_sound();
 	load_sprites();
 	chartload = threadCreate(load_file_main,(void*)(""),8192,0x3f,-2,true);
-	ghostdata read_data;
-
+	ghostdata read_data,write_data;
 
 	while (aptMainLoop()){
 
@@ -715,7 +714,6 @@ int main(){
 					else {
 						fp_write=NULL;
 						fp_read = fopen(abs_path,"rb");
-						memset(read_data,0,sizeof(ghostdata));
 						read_data.count = -59;
 					}
 					notes_cnt = 0;
@@ -1021,7 +1019,7 @@ int main(){
 				FirstMeasureTime = get_FirstMeasureTime();
 			}
 			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
-			ghostdata write_data={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
+			write_data={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
 			if(fp_write!=NULL&&Option.player==0&&(isDon!=0||isKatsu!=0))fwrite(&write_data,sizeof(ghostdata),1,fp_write);
 
 			//譜面が先
