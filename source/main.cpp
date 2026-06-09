@@ -645,6 +645,7 @@ int main(){
 				if (key&KEY_A)		update_cursor(KEY_A);
 				if (key&KEY_B)		update_cursor(KEY_B);
 				if (keyhold&KEY_SELECT&&key&KEY_X){
+					char abs_path[512];
 					snprintf(abs_path,sizeof(abs_path),"%s/ghostdata.bin",SelectedSong.path);
 					if(exist_file(abs_path))remove(abs_path);
 				}
