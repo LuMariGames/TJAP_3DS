@@ -437,7 +437,7 @@ int main(){
 	else if (Option.exse)sd_load_sound();
 	load_sprites();
 	chartload = threadCreate(load_file_main,(void*)(""),8192,0x3f,-2,true);
-	ghostdata read_data,write_data[65536];
+	ghostdata read_data,write_data[32768];
 
 	while (aptMainLoop()){
 
