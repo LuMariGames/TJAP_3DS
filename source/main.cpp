@@ -1100,6 +1100,7 @@ int main(){
 				if(fp_write!=NULL){
 					for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
 					fclose(fp_write);
+				}
 				if(fp_read!=NULL)fclose(fp_write);
 				cnt = -1;
 			}
