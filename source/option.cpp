@@ -565,7 +565,7 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		else if (Option.player == 3)draw_option_text(x,y,Text[Option.lang][TEXT_PLAY],true,&width,&height);
 		else draw_option_text(x,y,Text[Option.lang][TEXT_OFF],true,&width,&height);
 		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
-			opv = ++Option.player % 3;
+			opv = ++Option.player % 4;
 			Option.player = opv;
 		}
 		XCnt = 0,++YCnt;
@@ -783,7 +783,7 @@ void get_option(OPTION_T *TMP){
 	TMP->blacktext = Option.blacktext;
 	TMP->special = Option.special;
 	TMP->exse = Option.exse;
-	if (Option.player < 0 || Option.player > 2)Option.player = 0;
+	if (Option.player < 0 || Option.player > 3)Option.player = 0;
 	TMP->player = Option.player;
 	TMP->measure = Option.measure;
 	TMP->edit = Option.edit;
