@@ -162,7 +162,10 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.isAuto = false;
 		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
 		draw_option_text(x,y,Text[Option.lang][TEXT_ON],Option.isAuto == true,&width,&height);
-		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.isAuto = true;
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
+			Option.isAuto = true;
+			if(Option.player==3)Option.player=0;
+		}
 		XCnt = 0,++YCnt;
 
 		//はやさ
@@ -562,7 +565,10 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
 		if (Option.player == 1)draw_option_text(x,y,Text[Option.lang][TEXT_1P],true,&width,&height);
 		else if (Option.player == 2)draw_option_text(x,y,Text[Option.lang][TEXT_2P],true,&width,&height);
-		else if (Option.player == 3)draw_option_text(x,y,Text[Option.lang][TEXT_PLAY],true,&width,&height);
+		else if (Option.player == 3){
+			draw_option_text(x,y,Text[Option.lang][TEXT_PLAY],true,&width,&height);
+			Option.isAuto = false;
+		}
 		else draw_option_text(x,y,Text[Option.lang][TEXT_OFF],true,&width,&height);
 		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
 			opv = ++Option.player % 4;
