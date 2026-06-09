@@ -878,8 +878,10 @@ int main(){
 
 				if(Option.player==3){
 					isDon=0,isKatsu=0;
-					if(read_data.count==cnt)isDon=read_data.don,isKatsu=read_data.katsu;
-					if(fp_read!=NULL)fread(&read_data,sizeof(ghostdata),1,fp_read);
+					if(read_data.count<=cnt&&fp_read!=NULL){
+						isDon=read_data.don,isKatsu=read_data.katsu;
+						fread(&read_data,sizeof(ghostdata),1,fp_read);
+					}
 				}
 
 				switch(TJA_Header.gamemode){
