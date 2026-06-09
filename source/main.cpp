@@ -24,7 +24,6 @@ typedef struct {
 	int32_t count;
 	uint8_t don;
 	uint8_t katsu;
-	uint16_t padding;
 } ghostdata;
 
 C2D_Sprite sprites[SPRITES_NUMER];	//画像用
@@ -37,7 +36,7 @@ char buffer[BUFFER_SIZE];
 int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
 bool dance = false,plusimg_player = false;	//拡張スキン用
 unsigned int dancnt = 0;		//拡張スキン用
-ghostdata read_data,write_data[65536];
+ghostdata read_data,write_data[81920];
 
 void draw_debug(float x,float y,const char *text){
 
@@ -1051,8 +1050,8 @@ int main(){
 			}
 			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
-				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
-				if(ghostnum<65536)++ghostnum;
+				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu};
+				if(ghostnum<81920)++ghostnum;
 			}
 
 			//譜面が先
