@@ -646,7 +646,19 @@ int main(){
 				if (key&KEY_B)		update_cursor(KEY_B);
 				if (keyhold&KEY_SELECT&&key&KEY_X){
 					char abs_path[512];
-					snprintf(abs_path,sizeof(abs_path),"%s/ghostdata.bin",SelectedSong.path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_0_gd.bin",SelectedSong.path,SelectedSong.tja);
+					if(exist_file(abs_path))remove(abs_path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_1_gd.bin",SelectedSong.path,SelectedSong.tja);
+					if(exist_file(abs_path))remove(abs_path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_2_gd.bin",SelectedSong.path,SelectedSong.tja);
+					if(exist_file(abs_path))remove(abs_path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_3_gd.bin",SelectedSong.path,SelectedSong.tja);
+					if(exist_file(abs_path))remove(abs_path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_4_gd.bin",SelectedSong.path,SelectedSong.tja);
+					if(exist_file(abs_path))remove(abs_path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_5_gd.bin",SelectedSong.path,SelectedSong.tja);
+					if(exist_file(abs_path))remove(abs_path);
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_6_gd.bin",SelectedSong.path,SelectedSong.tja);
 					if(exist_file(abs_path))remove(abs_path);
 				}
 
@@ -711,12 +723,12 @@ int main(){
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
-					snprintf(abs_path,sizeof(abs_path),"%s/ghostdata.bin",SelectedSong.path);
-					if(!Option.isAuto&&Option.player!=3){
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
+					if(!Option.isAuto&&Option.player!=3&&Option.random==0){
 						fp_write = fopen(abs_path,"wb");
 						fp_read=NULL;
 					}
-					else {
+					else if (Option.random==0) {
 						fp_write=NULL;
 						fp_read = fopen(abs_path,"rb");
 						read_data.count = -59;
