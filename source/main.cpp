@@ -707,7 +707,7 @@ int main(){
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					snprintf(abs_path,sizeof(abs_path),"%s/ghostdata.bin",SelectedSong.path);
-					if(Option.player==0){
+					if(Option.player!=3){
 						fp_write = fopen(abs_path,"wb");
 						fp_read=NULL;
 					}
