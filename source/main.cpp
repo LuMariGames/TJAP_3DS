@@ -423,7 +423,7 @@ int main(){
 	SKIN_T Skin;
 
 	int ComboCnt = 0,cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
-	mintime1 = 0,mintime2 = 0,mintime3 = 0,BeforeCombo = -1,don_cnt = 0,katsu_cnt = 0,tch_cnt = 0;
+	mintime1=0,mintime2=0,mintime3=0,BeforeCombo=-1,don_cnt=0,katsu_cnt=0,tch_cnt=0,ghostnum=0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 	bool bottaikoview = false;
 	FILE *fp_write, *fp_read;
@@ -437,7 +437,7 @@ int main(){
 	else if (Option.exse)sd_load_sound();
 	load_sprites();
 	chartload = threadCreate(load_file_main,(void*)(""),8192,0x3f,-2,true);
-	ghostdata read_data,write_data;
+	ghostdata read_data,write_data[65536];
 
 	while (aptMainLoop()){
 
@@ -700,7 +700,7 @@ int main(){
 					offset = TJA_Header.offset+Option.offset;
 					notes_cnt = -1,BeforeCombo = -1,measure = Option.measure;
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
-					FirstMeasureTime = INT_MAX,CurrentTimeMain = -2147483640;
+					FirstMeasureTime = INT_MAX,CurrentTimeMain = -2147483640,ghostnum = 0;
 				}
 
 				tmp = check_wave(SelectedSong);
@@ -1044,8 +1044,10 @@ int main(){
 				FirstMeasureTime = get_FirstMeasureTime();
 			}
 			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
-			write_data={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
-			if(fp_write!=NULL&&Option.player==0&&(isDon!=0||isKatsu!=0))fwrite(&write_data,sizeof(ghostdata),1,fp_write);
+			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
+				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
+				++ghostnum;
+			}
 
 			//譜面が先
 			if (offset>0&&(!isNotesStart || !isMusicStart)&& measure<=0){
@@ -1095,7 +1097,9 @@ int main(){
 			}
 			if ((get_notes_finish()&& !ndspChnIsPlaying(CHANNEL))|| (courselife == 0&&course == COURSE_TOWER)){
 				scene_state = SCENE_RESULT;
-				if(fp_write!=NULL)fclose(fp_write);
+				if(fp_write!=NULL){
+					for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
+					fclose(fp_write);
 				if(fp_read!=NULL)fclose(fp_write);
 				cnt = -1;
 			}
