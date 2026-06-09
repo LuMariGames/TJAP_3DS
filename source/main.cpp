@@ -993,12 +993,16 @@ int main(){
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
+					if(fp_write!=NULL)fclose(fp_write);
+					if(fp_read!=NULL)fclose(fp_write);
 					break;
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
 					cnt = -1;
 					scene_state = SCENE_SELECTSONG;
+					if(fp_write!=NULL)fclose(fp_write);
+					if(fp_read!=NULL)fclose(fp_write);
 					break;
 				}
 
@@ -1057,12 +1061,16 @@ int main(){
 				case 1:
 					scene_state = SCENE_RESULT;
 					cnt = -1;
+					if(fp_write!=NULL)fclose(fp_write);
+					if(fp_read!=NULL)fclose(fp_write);
 					break;
 
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
+					if(fp_write!=NULL)fclose(fp_write);
+					if(fp_read!=NULL)fclose(fp_write);
 					break;
 				}
 			}
