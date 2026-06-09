@@ -715,6 +715,7 @@ int main(){
 						fp_write=NULL;
 						fp_read = fopen(abs_path,"rb");
 						read_data.count = -59;
+						read_data.don=0,read_data.katsu=0;
 					}
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
@@ -875,8 +876,9 @@ int main(){
 				}
 				button_game(&isDon,&isKatsu,Option,key);
 
-				if(read_data.count==cnt){
-					isDon=read_data.don,isKatsu=read_data.katsu;
+				if(Option.player==3){
+					isDon=0,isKatsu=0;
+					if(read_data.count==cnt)isDon=read_data.don,isKatsu=read_data.katsu;
 					if(fp_read!=NULL)fread(&read_data,sizeof(ghostdata),1,fp_read);
 				}
 
