@@ -1012,16 +1012,22 @@ int main(){
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
-					if(fp_write!=NULL)fclose(fp_write);
-					if(fp_read!=NULL)fclose(fp_write);
+					if(fp_write!=NULL){
+						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
+						fclose(fp_write);
+					}
+					if(fp_read!=NULL)fclose(fp_read);
 					break;
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
 					cnt = -1;
 					scene_state = SCENE_SELECTSONG;
-					if(fp_write!=NULL)fclose(fp_write);
-					if(fp_read!=NULL)fclose(fp_write);
+					if(fp_write!=NULL){
+						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
+						fclose(fp_write);
+					}
+					if(fp_read!=NULL)fclose(fp_read);
 					break;
 				}
 
@@ -1046,7 +1052,7 @@ int main(){
 			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
 				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0};
-				++ghostnum;
+				if(ghostnum<65536)++ghostnum;
 			}
 
 			//譜面が先
@@ -1082,16 +1088,22 @@ int main(){
 				case 1:
 					scene_state = SCENE_RESULT;
 					cnt = -1;
-					if(fp_write!=NULL)fclose(fp_write);
-					if(fp_read!=NULL)fclose(fp_write);
+					if(fp_write!=NULL){
+						for(int i=0;i<ghostnum;i++)(&write_data[i],sizeof(ghostdata),1,fp_write);
+						fclose(fp_write);
+					}
+					if(fp_read!=NULL)fclose(fp_read);
 					break;
 
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
-					if(fp_write!=NULL)fclose(fp_write);
-					if(fp_read!=NULL)fclose(fp_write);
+					if(fp_write!=NULL){
+						for(int i=0;i<ghostnum;i++)(&write_data[i],sizeof(ghostdata),1,fp_write);
+						fclose(fp_write);
+					}
+					if(fp_read!=NULL)fclose(fp_read);
 					break;
 				}
 			}
@@ -1101,7 +1113,7 @@ int main(){
 					for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
 					fclose(fp_write);
 				}
-				if(fp_read!=NULL)fclose(fp_write);
+				if(fp_read!=NULL)fclose(fp_read);
 				cnt = -1;
 			}
 
