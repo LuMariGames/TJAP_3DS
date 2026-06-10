@@ -756,7 +756,7 @@ void exit_option(){
 	json_decref(json);
 }
 
-viod set_option(OPTION_T *TMP){
+void set_option(OPTION_T *TMP){
 	Option = *TMP;
 }
 
