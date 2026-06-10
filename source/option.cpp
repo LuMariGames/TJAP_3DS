@@ -757,7 +757,7 @@ void exit_option(){
 }
 
 viod set_option(OPTION_T *TMP){
-	Option = TMP;
+	Option = *TMP;
 }
 
 void get_option(OPTION_T *TMP){
