@@ -1043,6 +1043,8 @@ int main(){
 					if(fp_write!=NULL){
 						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
+						write_data[ghostnum]={0,0,0};
+						fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 						fclose(fp_write);
 					}
 					if(fp_read!=NULL){
@@ -1074,7 +1076,7 @@ int main(){
 			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
 				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu};
-				if(ghostnum<81920)++ghostnum;
+				if(ghostnum<81919)++ghostnum;
 			}
 
 			//譜面が先
@@ -1119,6 +1121,8 @@ int main(){
 					if(fp_write!=NULL){
 						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
+						write_data[ghostnum]={0,0,0};
+						fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 						fclose(fp_write);
 					}
 					if(fp_read!=NULL){
@@ -1146,6 +1150,8 @@ int main(){
 				if(fp_write!=NULL){
 					fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 					for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
+					write_data[ghostnum]={0,0,0};
+					fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 					fclose(fp_write);
 				}
 				if(fp_read!=NULL){
