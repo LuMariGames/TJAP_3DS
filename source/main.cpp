@@ -696,9 +696,6 @@ int main(){
 					read_data.don=0,read_data.katsu=0;
 					befOption = Option;
 					if(fp_read!=NULL)fread(&Option,sizeof(OPTION_T),1,fp_read);
-					else {
-						break;
-					}
 					Option.player=3;
 					set_option(&Option);
 				}
@@ -718,6 +715,7 @@ int main(){
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
 					FirstMeasureTime = INT_MAX,CurrentTimeMain = -2147483640,ghostnum = 0;
 				}
+				if(fp_read==NULL)istjaloaded=false;
 
 				tmp = check_wave(SelectedSong);
 				if (!istjaloaded){
