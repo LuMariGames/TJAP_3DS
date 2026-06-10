@@ -694,6 +694,7 @@ int main(){
 					read_data.don=0,read_data.katsu=0;
 					befOption = Option;
 					fread(&Option,sizeof(OPTION_T),1,fp_read);
+					Option.player=3;
 					set_option(&Option);
 				}
 				init_tja();
