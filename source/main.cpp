@@ -644,7 +644,7 @@ int main(){
 				if (key&KEY_A)		update_cursor(KEY_A);
 				if (key&KEY_B)		update_cursor(KEY_B);
 				if (keyhold&KEY_SELECT&&key&KEY_X){
-					char abs_path[512];
+					char abs_path[521];
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_0_gd.bin",SelectedSong.path,SelectedSong.wave);
 					if(exist_file(abs_path))remove(abs_path);
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_1_gd.bin",SelectedSong.path,SelectedSong.wave);
@@ -685,7 +685,7 @@ int main(){
 				scene_state = SCENE_SELECTSONG;
 			}
 			else {
-				char abs_path[512];
+				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
 				if (Option.player==3&&measure==0){
 					fp_write=NULL;
@@ -1015,7 +1015,7 @@ int main(){
 
 				tmp = pause_window(tp,key);
 
-				char abs_path[512];
+				char abs_path[521];
 				switch (tmp){
 				case 1:
 					isPlayMain = true;
@@ -1098,7 +1098,7 @@ int main(){
 			}
 
 			if (TotalBadCount>0){
-				char abs_path[512];
+				char abs_path[521];
 				switch (Option.special){
 				case 1:
 					scene_state = SCENE_RESULT;
@@ -1129,7 +1129,7 @@ int main(){
 			}
 			if ((get_notes_finish()&& !ndspChnIsPlaying(CHANNEL))|| (courselife == 0&&course == COURSE_TOWER)){
 				scene_state = SCENE_RESULT;
-				char abs_path[512];
+				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
 				if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
 					fp_write = fopen(abs_path,"wb");
