@@ -688,8 +688,9 @@ int main(){
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
 				befOption = Option;
-				if (Option.player==3&&measure==0){
-					fp_write=NULL;
+				fp_write=NULL;
+				fp_read=NULL;
+				if (Option.player==3){
 					fp_read = fopen(abs_path,"rb");
 					read_data.count = -59;
 					read_data.don=0,read_data.katsu=0;
@@ -1035,7 +1036,7 @@ int main(){
 					cnt = -1;
 					scene_state = SCENE_SELECTSONG;
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
-					if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
+					if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0){
 						fp_write = fopen(abs_path,"wb");
 						fp_read=NULL;
 					}
@@ -1111,7 +1112,7 @@ int main(){
 					scene_state = SCENE_RESULT;
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
 					cnt = -1;
-					if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
+					if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0){
 						fp_write = fopen(abs_path,"wb");
 						fp_read=NULL;
 					}
@@ -1138,7 +1139,7 @@ int main(){
 				scene_state = SCENE_RESULT;
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
-				if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
+				if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0){
 					fp_write = fopen(abs_path,"wb");
 					fp_read=NULL;
 				}
