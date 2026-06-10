@@ -113,7 +113,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						Branch.course=-1;
 						break;
 					case COMMAND_JPOSSCROLL:
-						judgedata.time=Command.val[0]*1000;
+						judgedata.time=Command.val[0]*1000*(1.0/Option.musicspeed);
 						if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
 							judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
 							judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
