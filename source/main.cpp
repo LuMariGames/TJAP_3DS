@@ -419,7 +419,7 @@ int main(){
 
 	TJA_HEADER_T TJA_Header;
 	LIST_T SelectedSong;
-	OPTION_T Option;
+	OPTION_T Option, befOption;
 	SKIN_T Skin;
 
 	int ComboCnt = 0,cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
@@ -685,6 +685,17 @@ int main(){
 				scene_state = SCENE_SELECTSONG;
 			}
 			else {
+				char abs_path[512];
+				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
+				if (Option.player==3&&measure==0){
+					fp_write=NULL;
+					fp_read = fopen(abs_path,"rb");
+					read_data.count = -59;
+					read_data.don=0,read_data.katsu=0;
+					befOption = Option;
+					fread(&Option,sizeof(OPTION_T),1,fp_read);
+					set_option(&Option);
+				}
 				init_tja();
 				NOTES_JUDGE_X = 93.0f;
 				istjaloaded = load_tja_head(course,SelectedSong);
@@ -707,11 +718,15 @@ int main(){
 					warning = WARNING_TJA_NOT_EXIST;
 					scene_state = SCENE_WARNING;
 					select_ini();
+					if(fp_read!=NULL){
+						Option = befOption;
+						set_option(&befOption);
+						fclose(fp_read);
+					}
 				}
 				else if (tmp == -1){
 					cnt = -150;
 					NOTES_JUDGE_X = 93.0f;
-					char abs_path[512];
 					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
 					if (!isAniBg&&exist_file(abs_path)){
 						isAniBg = true;
@@ -722,17 +737,6 @@ int main(){
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
-					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
-					if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
-						fp_write = fopen(abs_path,"wb");
-						fp_read=NULL;
-					}
-					else if (measure==0){
-						fp_write=NULL;
-						fp_read = fopen(abs_path,"rb");
-						read_data.count = -59;
-						read_data.don=0,read_data.katsu=0;
-					}
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
 					aptSetSleepAllowed(false);
@@ -741,6 +745,11 @@ int main(){
 					warning = tmp;
 					scene_state = SCENE_WARNING;
 					select_ini();
+					if(fp_read!=NULL){
+						Option = befOption;
+						set_option(&befOption);
+						fclose(fp_read);
+					}
 				}
 			}
 			break;
@@ -1006,27 +1015,33 @@ int main(){
 
 				tmp = pause_window(tp,key);
 
+				char abs_path[512];
 				switch (tmp){
 				case 1:
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
-					if(fp_write!=NULL){
-						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
-						fclose(fp_write);
-					}
-					if(fp_read!=NULL)fclose(fp_read);
 					break;
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
 					cnt = -1;
 					scene_state = SCENE_SELECTSONG;
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
+					if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
+						fp_write = fopen(abs_path,"wb");
+						fp_read=NULL;
+					}
 					if(fp_write!=NULL){
+						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
 						fclose(fp_write);
 					}
-					if(fp_read!=NULL)fclose(fp_read);
+					if(fp_read!=NULL){
+						Option = befOption;
+						set_option(&befOption);
+						fclose(fp_read);
+					}
 					break;
 				}
 
@@ -1083,36 +1098,53 @@ int main(){
 			}
 
 			if (TotalBadCount>0){
+				char abs_path[512];
 				switch (Option.special){
 				case 1:
 					scene_state = SCENE_RESULT;
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
 					cnt = -1;
+					if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
+						fp_write = fopen(abs_path,"wb");
+						fp_read=NULL;
+					}
 					if(fp_write!=NULL){
-						for(int i=0;i<ghostnum;i++)(&write_data[i],sizeof(ghostdata),1,fp_write);
+						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
+						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
 						fclose(fp_write);
 					}
-					if(fp_read!=NULL)fclose(fp_read);
+					if(fp_read!=NULL){
+						Option = befOption;
+						set_option(&befOption);
+						fclose(fp_read);
+					}
 					break;
 
 				case 2:
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
-					if(fp_write!=NULL){
-						for(int i=0;i<ghostnum;i++)(&write_data[i],sizeof(ghostdata),1,fp_write);
-						fclose(fp_write);
-					}
-					if(fp_read!=NULL)fclose(fp_read);
 					break;
 				}
 			}
 			if ((get_notes_finish()&& !ndspChnIsPlaying(CHANNEL))|| (courselife == 0&&course == COURSE_TOWER)){
 				scene_state = SCENE_RESULT;
+				char abs_path[512];
+				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
+				if(!Option.isAuto&&Option.player!=3&&Option.random==0&&measure==0){
+					fp_write = fopen(abs_path,"wb");
+					fp_read=NULL;
+				}
 				if(fp_write!=NULL){
+					fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 					for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
 					fclose(fp_write);
 				}
-				if(fp_read!=NULL)fclose(fp_read);
+				if(fp_read!=NULL){
+					Option = befOption;
+					set_option(&befOption);
+					fclose(fp_read);
+				}
 				cnt = -1;
 			}
 
