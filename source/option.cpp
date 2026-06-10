@@ -804,6 +804,7 @@ void get_option(OPTION_T *TMP){
 	TMP->player = Option.player;
 	TMP->measure = Option.measure;
 	TMP->edit = Option.edit;
+	TMP->musicspeed = Option.musicspeed;
 	strcpy(TMP->SongTitle,Option.SongTitle);
 	black = Option.blacktext;
 }
