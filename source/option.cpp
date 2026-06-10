@@ -756,6 +756,10 @@ void exit_option(){
 	json_decref(json);
 }
 
+viod set_option(OPTION_T *TMP){
+	Option = TMP;
+}
+
 void get_option(OPTION_T *TMP){
 
 	TMP->isAuto = Option.isAuto;
