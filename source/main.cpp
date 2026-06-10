@@ -687,6 +687,7 @@ int main(){
 			else {
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
+				befOption = Option;
 				if (Option.player==3&&measure==0){
 					fp_write=NULL;
 					fp_read = fopen(abs_path,"rb");
@@ -1022,6 +1023,11 @@ int main(){
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
+					if(fp_read!=NULL){
+						Option = befOption;
+						set_option(&befOption);
+						fclose(fp_read);
+					}
 					break;
 				case 2:
 					isPlayMain = true;
