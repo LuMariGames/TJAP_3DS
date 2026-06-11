@@ -276,4 +276,5 @@ enum WARNING_KND {
 	WARNING_WAVE_NO_EXIST,		//音楽ファイルが存在しない
 	WARNING_WAVE_NOT_OGG,		//音楽ファイルがOGG(またはMP3)ファイルじゃない
 	WARNING_TJA_NOT_EXIST,		//TJAファイルが存在しない
+	WARNING_GHOST_NOT_EXIST,	//プレイデータが存在しない
 };
