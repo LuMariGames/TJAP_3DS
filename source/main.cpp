@@ -703,6 +703,7 @@ int main(){
 				NOTES_JUDGE_X = 93.0f;
 				istjaloaded = load_tja_head(course,SelectedSong);
 				//init_main_music();
+				if(fp_read==NULL)istjaloaded=false;
 				if (istjaloaded){
 					get_tja_header(&TJA_Header);
 					init_score();
@@ -715,7 +716,6 @@ int main(){
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
 					FirstMeasureTime = INT_MAX,CurrentTimeMain = -2147483640,ghostnum = 0;
 				}
-				if(fp_read==NULL)istjaloaded=false;
 
 				tmp = check_wave(SelectedSong);
 				if (!istjaloaded){
