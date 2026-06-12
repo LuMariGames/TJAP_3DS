@@ -53,7 +53,7 @@ void draw_debug(float x,float y,const char *text){
 void init_main(){
 
 	romfsInit();
-	gfxInitDefault();
+	gfxInit(GSP_BGR8_OES,GSP_BGR8_OES,true);
 	C3D_Init(C3D_CMDBUF_SIZE);
 	C2D_Init(C2D_DEFAULT_MAX_OBJECTS);
 	C2D_Prepare();
