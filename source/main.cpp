@@ -225,7 +225,7 @@ bool loadPNGAsC2DImage(C2D_Image *texture,const char* filename,bool rgba,unsigne
 	C3D_TexFlush(tex);
 	tex->border = 0x00000000;
 	C3D_TexSetWrap(tex,GPU_CLAMP_TO_BORDER,GPU_CLAMP_TO_BORDER);
-	if(subtex->left<=1.0f||subtex->top>=0.0f){
+	if(subtex->left<1.0f&&subtex->top>0.0f){
 		texture->tex = tex;
 		texture->subtex = subtex;
 		free(image);
