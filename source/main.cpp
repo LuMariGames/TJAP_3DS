@@ -410,7 +410,6 @@ memtch_x,memtch_y;
 int main(){
 
 	init_main();
-
 	touchPosition tp;	//下画面タッチした座標
 
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP,GFX_LEFT);
@@ -436,6 +435,7 @@ int main(){
 	else if (Option.exse)sd_load_sound();
 	load_sprites();
 	chartload = threadCreate(load_file_main,(void*)(""),8192,0x3f,-2,true);
+	GSPGPU_SetLcdForceBlack(0x0);
 
 	while (aptMainLoop()){
 
