@@ -251,7 +251,7 @@ inline static void load_sprites(){
 		C2D_SpriteFromSheet(&sprites[i],spriteSheet,i);
 		C2D_SpriteSetCenter(&sprites[i],0.5f,0.5f);
 	}
-	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON],13,13);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.203125f,0.5f);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_1],9,12);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_2],9,26);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_3],9,31);
@@ -312,8 +312,7 @@ inline static void load_sprites(){
 	if(exist_file("sdmc:/tjafiles/theme/def/balloon.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_BALLOON].image,"sdmc:/tjafiles/theme/def/balloon.png",true,64,64,0,0);
 		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 64;
-		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.5f,0.5f);
-		C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON],13,33);
+		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.203125f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/donchan.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,0,0);
