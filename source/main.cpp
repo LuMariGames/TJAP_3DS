@@ -449,10 +449,6 @@ int main(){
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
 		if (loadend<3)aptSetHomeAllowed(false);
 		else aptSetHomeAllowed(true);
-		if(cnt==-299){
-			GSPGPU_SetLcdForceBlack(0x0);
-			cnt=1;
-		}
 		C3D_FrameBegin(!Option.dispFps);
 
 		//上画面
@@ -1196,6 +1192,10 @@ int main(){
 			if (don_cnt>0)--don_cnt; 
 			if (katsu_cnt>0)--katsu_cnt;
 			if (tch_cnt>0)--tch_cnt;
+		}
+		if(cnt==-298){
+			GSPGPU_SetLcdForceBlack(0x0);
+			cnt=1;
 		}
 	}
 	exit_main();
