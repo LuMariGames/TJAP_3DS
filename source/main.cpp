@@ -420,7 +420,7 @@ int main(){
 	OPTION_T Option, befOption;
 	SKIN_T Skin;
 
-	int ComboCnt = 0,cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
+	int ComboCnt = 0,cnt = -300,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1=0,mintime2=0,mintime3=0,BeforeCombo=-1,don_cnt=0,katsu_cnt=0,tch_cnt=0,ghostnum=0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 	bool bottaikoview = false;
@@ -435,7 +435,6 @@ int main(){
 	else if (Option.exse)sd_load_sound();
 	load_sprites();
 	chartload = threadCreate(load_file_main,(void*)(""),8192,0x3f,-2,true);
-	GSPGPU_SetLcdForceBlack(0x0);
 
 	while (aptMainLoop()){
 
@@ -450,6 +449,10 @@ int main(){
 		//描画開始(値を「C3D_FRAME_SYNCDRAW」にしないとクラッシュ)
 		if (loadend<3)aptSetHomeAllowed(false);
 		else aptSetHomeAllowed(true);
+		if(cnt==-299){
+			GSPGPU_SetLcdForceBlack(0x0);
+			cnt=1;
+		}
 		C3D_FrameBegin(!Option.dispFps);
 
 		//上画面
