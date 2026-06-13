@@ -3,7 +3,7 @@
 
 typedef struct {
 	bool flag,isThrough,isDummy = false;
-	float create_time,judge_time,hb_time,x,y,bpm,scroll,yscroll;
+	float create_time,judge_time,x,y,bpm,scroll,yscroll;
 	int num,notes_max,knd,roll_id;
 
 } NOTES_T;

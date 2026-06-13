@@ -38,7 +38,7 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
 isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=true;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
@@ -809,21 +809,12 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	get_option(&Option);
 	const float currentTime = (float)CurrentTimeNotes;
 
-	for(int i=Notes.size()-1,j=0;i>=j;--i){	//計算
+	for(int i=0,j=Notes.size()-1;i<j;++i){	//計算
 
 		if(Notes[i].flag){
 
-			if(currentTime < Notes[i].judge_time)Notes[i].hb_time = ((Notes[i].judge_time-Notes[i+1].judge_time) * (Notes[i].bpm / NowBPM)) + Notes[i+1].hb_time;
-			else Notes[i].hb_time = Notes[i].judge_time;
-
-			if(isHBSCROLL){
-				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
-				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
-			}
-			else {
-				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
-				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
-			}
+			Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
+			Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 			if(Notes[i].x<=-512.f)Notes[i].x=-512.f;
 			else if(Notes[i].x>=1024.f)Notes[i].x=1024.f;
 			if(Notes[i].y<=-128.f)Notes[i].y=-128.f;
@@ -1352,7 +1343,6 @@ void delete_notes(int i){
 		Notes[i].y=0;
 		Notes[i].create_time=0;
 		Notes[i].judge_time=0;
-		Notes[i].hb_time=0;
 		Notes[i].bpm=0;
 		Notes[i].scroll=0;
 		Notes[i].roll_id=-1;
