@@ -23,7 +23,7 @@ double input_number_keyboard(int max_digits,bool isDot,bool isMinus){	//最大�
 	if (isDot == false && isMinus)swkbdSetNumpadKeys(&swkbd,L'-',0);
 	if (isDot && isMinus)swkbdSetNumpadKeys(&swkbd,L'.',L'-');
 	swkbdInputText(&swkbd,get_buffer(),BUFFER_SIZE);
-	return atof(get_buffer());
+	return atod(get_buffer());
 }
 char* input_normal_keyboard(){
 
