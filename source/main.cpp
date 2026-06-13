@@ -420,7 +420,7 @@ int main(){
 	OPTION_T Option, befOption;
 	SKIN_T Skin;
 
-	int ComboCnt = 0,cnt = -300,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
+	int ComboCnt = 0,cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1=0,mintime2=0,mintime3=0,BeforeCombo=-1,don_cnt=0,katsu_cnt=0,tch_cnt=0,ghostnum=0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 	bool bottaikoview = false;
@@ -1192,10 +1192,6 @@ int main(){
 			if (don_cnt>0)--don_cnt; 
 			if (katsu_cnt>0)--katsu_cnt;
 			if (tch_cnt>0)--tch_cnt;
-		}
-		if(cnt==-298){
-			GSPGPU_SetLcdForceBlack(0x0);
-			cnt=2;
 		}
 	}
 	exit_main();
