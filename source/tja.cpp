@@ -8,7 +8,7 @@
 #include "conv.h"
 #include <stdio.h>
 
-char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],*exam[4][4];
+char tja_notes[MEASURE_MAX][NOTES_MEASURE_MAX],tja_text[65536],*exam[4][4];
 int tja_cnt=0,MeasureMaxNumber=0,stme,edme=0,gaugelife;
 uint64_t Cdn[2][4];
 double MainFirstMeasureTime;	//最初に"到達"する小節の到達所要時間　最初に"生成"はMeasure[0]で取得;
@@ -532,7 +532,7 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 void white_tja(LIST_T Song){
 
 	FILE *fp;
-	char abs_path[512],tja_text[16384];
+	char abs_path[512];
 	memset(tja_text,0,sizeof(tja_text));
 	int text_byte=0;
 
@@ -588,7 +588,7 @@ void white_tja(LIST_T Song){
 void conv_tja(LIST_T Song){
 
 	FILE *fp;
-	char abs_path[512],tja_text[16384];
+	char abs_path[512];
 	memset(tja_text,0,sizeof(tja_text));
 	int text_byte=0;
 
