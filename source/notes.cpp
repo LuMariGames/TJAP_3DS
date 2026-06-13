@@ -38,7 +38,7 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
 isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=false;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=true;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
