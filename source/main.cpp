@@ -259,60 +259,150 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5],9,51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6],9,59);
 
-	if(exist_file("sdmc:/tjafiles/theme/def/don.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/don.png",true,64,64,0,0);
-		sprites[SPRITE_DON].params.pos.w = 64; sprites[SPRITE_DON].params.pos.h = 64;
+	if(exist_file("sdmc:/tjafiles/theme/def/notes.png")){
+		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,0,0);
+		sprites[SPRITE_DON].params.pos.w = 32; sprites[SPRITE_DON].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DON],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/katsu.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_KATSU].image,"sdmc:/tjafiles/theme/def/katsu.png",true,64,64,0,0);
-		sprites[SPRITE_KATSU].params.pos.w = 64; sprites[SPRITE_KATSU].params.pos.h = 64;
+
+		sprites[SPRITE_KATSU].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_KATSU].image.subtex.width = 32;
+		sprites[SPRITE_KATSU].image.subtex.height = 32;
+		sprites[SPRITE_KATSU].image.subtex.left = (32.f/256.f);
+		sprites[SPRITE_KATSU].image.subtex.top = 1.f-(0.f/256.f);
+		sprites[SPRITE_KATSU].image.subtex.right = (float)(32.f+32.f)/256.f;
+		sprites[SPRITE_KATSU].image.subtex.bottom = 1.f-((float)(32.f+0.f)/256.f);
+		sprites[SPRITE_KATSU].params.pos.w = 32; sprites[SPRITE_KATSU].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_KATSU],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/big_don.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_DON].image,"sdmc:/tjafiles/theme/def/big_don.png",true,64,64,0,0);
+
+		sprites[SPRITE_ROLL_START].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_ROLL_START].image.subtex.width = 32;
+		sprites[SPRITE_ROLL_START].image.subtex.height = 32;
+		sprites[SPRITE_ROLL_START].image.subtex.left = (64.f/256.f);
+		sprites[SPRITE_ROLL_START].image.subtex.top = 1.f-(0.f/256.f);
+		sprites[SPRITE_ROLL_START].image.subtex.right = (float)(32.f+64.f)/256.f;
+		sprites[SPRITE_ROLL_START].image.subtex.bottom = 1.f-((float)(32.f+0.f)/256.f);
+		sprites[SPRITE_ROLL_START].params.pos.w = 32; sprites[SPRITE_ROLL_START].params.pos.h = 32;
+		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_START],0.5f,0.5f);
+
+		sprites[SPRITE_BALLOON].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BALLOON].image.subtex.width = 64;
+		sprites[SPRITE_BALLOON].image.subtex.height = 32;
+		sprites[SPRITE_BALLOON].image.subtex.left = (0.f/256.f);
+		sprites[SPRITE_BALLOON].image.subtex.top = 1.f-(32.f/256.f);
+		sprites[SPRITE_BALLOON].image.subtex.right = (float)(64.f+0.f)/256.f;
+		sprites[SPRITE_BALLOON].image.subtex.bottom = 1.f-((float)(32.f+32.f)/256.f);
+		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 32;
+		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.203125f,0.5f);
+
+		sprites[SPRITE_ROLL_INT].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_ROLL_INT].image.subtex.width = 16;
+		sprites[SPRITE_ROLL_INT].image.subtex.height = 32;
+		sprites[SPRITE_ROLL_INT].image.subtex.left = (72.f/256.f);
+		sprites[SPRITE_ROLL_INT].image.subtex.top = 1.f-(32.f/256.f);
+		sprites[SPRITE_ROLL_INT].image.subtex.right = (float)(16.f+72.f)/256.f;
+		sprites[SPRITE_ROLL_INT].image.subtex.bottom = 1.f-((float)(32.f+32.f)/256.f);
+		sprites[SPRITE_ROLL_INT].params.pos.w = 16; sprites[SPRITE_ROLL_INT].params.pos.h = 32;
+		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_INT],0.5f,0.5f);
+
+		sprites[SPRITE_ROLL_END].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_ROLL_END].image.subtex.width = 32;
+		sprites[SPRITE_ROLL_END].image.subtex.height = 32;
+		sprites[SPRITE_ROLL_END].image.subtex.left = (128.f/256.f);
+		sprites[SPRITE_ROLL_END].image.subtex.top = 1.f-(0.f/256.f);
+		sprites[SPRITE_ROLL_END].image.subtex.right = (float)(32.f+128.f)/256.f;
+		sprites[SPRITE_ROLL_END].image.subtex.bottom = 1.f-((float)(32.f+0.f)/256.f);
+		sprites[SPRITE_ROLL_END].params.pos.w = 32; sprites[SPRITE_ROLL_END].params.pos.h = 32;
+		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_END],0.5f,0.5f);
+
+		sprites[SPRITE_BIG_ROLL_INT].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BIG_ROLL_INT].image.subtex.width = 16;
+		sprites[SPRITE_BIG_ROLL_INT].image.subtex.height = 64;
+		sprites[SPRITE_BIG_ROLL_INT].image.subtex.left = (104.f/256.f);
+		sprites[SPRITE_BIG_ROLL_INT].image.subtex.top = 1.f-(0.f/256.f);
+		sprites[SPRITE_BIG_ROLL_INT].image.subtex.right = (float)(16.f+104.f)/256.f;
+		sprites[SPRITE_BIG_ROLL_INT].image.subtex.bottom = 1.f-((float)(64.f+0.f)/256.f);
+		sprites[SPRITE_BIG_ROLL_INT].params.pos.w = 16; sprites[SPRITE_BIG_ROLL_INT].params.pos.h = 64;
+		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_INT],0.5f,0.5f);
+
+		sprites[SPRITE_BIG_DON].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BIG_DON].image.subtex.width = 64;
+		sprites[SPRITE_BIG_DON].image.subtex.height = 64;
+		sprites[SPRITE_BIG_DON].image.subtex.left = (192.f/256.f);
+		sprites[SPRITE_BIG_DON].image.subtex.top = 1.f-(0.f/256.f);
+		sprites[SPRITE_BIG_DON].image.subtex.right = (float)(64.f+192.f)/256.f;
+		sprites[SPRITE_BIG_DON].image.subtex.bottom = 1.f-((float)(64.f+0.f)/256.f);
 		sprites[SPRITE_BIG_DON].params.pos.w = 64; sprites[SPRITE_BIG_DON].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_DON],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/big_katsu.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_KATSU].image,"sdmc:/tjafiles/theme/def/big_katsu.png",true,64,64,0,0);
+
+		sprites[SPRITE_BIG_KATSU].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BIG_KATSU].image.subtex.width = 64;
+		sprites[SPRITE_BIG_KATSU].image.subtex.height = 64;
+		sprites[SPRITE_BIG_KATSU].image.subtex.left = (128.f/256.f);
+		sprites[SPRITE_BIG_KATSU].image.subtex.top = 1.f-(64.f/256.f);
+		sprites[SPRITE_BIG_KATSU].image.subtex.right = (float)(64.f+128.f)/256.f;
+		sprites[SPRITE_BIG_KATSU].image.subtex.bottom = 1.f-((float)(64.f+64.f)/256.f);
 		sprites[SPRITE_BIG_KATSU].params.pos.w = 64; sprites[SPRITE_BIG_KATSU].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_KATSU],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/roll_start.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_START].image,"sdmc:/tjafiles/theme/def/roll_start.png",true,64,64,0,0);
-		sprites[SPRITE_ROLL_START].params.pos.w = 64; sprites[SPRITE_ROLL_START].params.pos.h = 64;
-		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_START],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/roll_int.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_INT].image,"sdmc:/tjafiles/theme/def/roll_int.png",true,64,64,0,0);
-		sprites[SPRITE_ROLL_INT].params.pos.w = 64; sprites[SPRITE_ROLL_INT].params.pos.h = 64;
-		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_INT],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/roll_end.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_END].image,"sdmc:/tjafiles/theme/def/roll_end.png",true,64,64,0,0);
-		sprites[SPRITE_ROLL_END].params.pos.w = 64; sprites[SPRITE_ROLL_END].params.pos.h = 64;
-		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_END],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/big_roll_start.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_START].image,"sdmc:/tjafiles/theme/def/big_roll_start.png",true,64,64,0,0);
+
+		sprites[SPRITE_BIG_ROLL_START].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BIG_ROLL_START].image.subtex.width = 64;
+		sprites[SPRITE_BIG_ROLL_START].image.subtex.height = 64;
+		sprites[SPRITE_BIG_ROLL_START].image.subtex.left = (192.f/256.f);
+		sprites[SPRITE_BIG_ROLL_START].image.subtex.top = 1.f-(64.f/256.f);
+		sprites[SPRITE_BIG_ROLL_START].image.subtex.right = (float)(64.f+192.f)/256.f;
+		sprites[SPRITE_BIG_ROLL_START].image.subtex.bottom = 1.f-((float)(64.f+64.f)/256.f);
 		sprites[SPRITE_BIG_ROLL_START].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_START].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_START],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/big_roll_int.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_INT].image,"sdmc:/tjafiles/theme/def/big_roll_int.png",true,64,64,0,0);
-		sprites[SPRITE_BIG_ROLL_INT].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_INT].params.pos.h = 64;
-		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_INT],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/big_roll_end.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_END].image,"sdmc:/tjafiles/theme/def/big_roll_end.png",true,64,64,0,0);
+
+		sprites[SPRITE_BIG_ROLL_END].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BIG_ROLL_END].image.subtex.width = 64;
+		sprites[SPRITE_BIG_ROLL_END].image.subtex.height = 64;
+		sprites[SPRITE_BIG_ROLL_END].image.subtex.left = (64.f/256.f);
+		sprites[SPRITE_BIG_ROLL_END].image.subtex.top = 1.f-(64.f/256.f);
+		sprites[SPRITE_BIG_ROLL_END].image.subtex.right = (float)(64.f+64.f)/256.f;
+		sprites[SPRITE_BIG_ROLL_END].image.subtex.bottom = 1.f-((float)(64.f+64.f)/256.f);
 		sprites[SPRITE_BIG_ROLL_END].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_END].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_END],0.5f,0.5f);
-	}
-	if(exist_file("sdmc:/tjafiles/theme/def/balloon.png")){
-		loadPNGAsC2DImage(&sprites[SPRITE_BALLOON].image,"sdmc:/tjafiles/theme/def/balloon.png",true,64,64,0,0);
-		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 64;
-		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.203125f,0.5f);
+
+		sprites[SPRITE_BOMB].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_BOMB].image.subtex.width = 64;
+		sprites[SPRITE_BOMB].image.subtex.height = 64;
+		sprites[SPRITE_BOMB].image.subtex.left = (0.f/256.f);
+		sprites[SPRITE_BOMB].image.subtex.top = 1.f-(64.f/256.f);
+		sprites[SPRITE_BOMB].image.subtex.right = (float)(64.f+0.f)/256.f;
+		sprites[SPRITE_BOMB].image.subtex.bottom = 1.f-((float)(64.f+64.f)/256.f);
+		sprites[SPRITE_BOMB].params.pos.w = 64; sprites[SPRITE_BOMB].params.pos.h = 64;
+		C2D_SpriteSetCenter(&sprites[SPRITE_BOMB],0.5f,0.5f);
+
+		sprites[SPRITE_POTATO].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_POTATO].image.subtex.width = 64;
+		sprites[SPRITE_POTATO].image.subtex.height = 64;
+		sprites[SPRITE_POTATO].image.subtex.left = (0.f/256.f);
+		sprites[SPRITE_POTATO].image.subtex.top = 1.f-(128.f/256.f);
+		sprites[SPRITE_POTATO].image.subtex.right = (float)(64.f+0.f)/256.f;
+		sprites[SPRITE_POTATO].image.subtex.bottom = 1.f-((float)(64.f+128.f)/256.f);
+		sprites[SPRITE_POTATO].params.pos.w = 64; sprites[SPRITE_POTATO].params.pos.h = 64;
+		C2D_SpriteSetCenter(&sprites[SPRITE_POTATO],0.5f,0.5f);
+
+		sprites[SPRITE_TIMEBOMB].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_TIMEBOMB].image.subtex.width = 64;
+		sprites[SPRITE_TIMEBOMB].image.subtex.height = 64;
+		sprites[SPRITE_TIMEBOMB].image.subtex.left = (64.f/256.f);
+		sprites[SPRITE_TIMEBOMB].image.subtex.top = 1.f-(128.f/256.f);
+		sprites[SPRITE_TIMEBOMB].image.subtex.right = (float)(64.f+64.f)/256.f;
+		sprites[SPRITE_TIMEBOMB].image.subtex.bottom = 1.f-((float)(64.f+128.f)/256.f);
+		sprites[SPRITE_TIMEBOMB].params.pos.w = 64; sprites[SPRITE_TIMEBOMB].params.pos.h = 64;
+		C2D_SpriteSetCenter(&sprites[SPRITE_TIMEBOMB],0.5f,0.5f);
+
+		sprites[SPRITE_DENDEN].image.tex = sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_DENDEN].image.subtex.width = 64;
+		sprites[SPRITE_DENDEN].image.subtex.height = 128;
+		sprites[SPRITE_DENDEN].image.subtex.left = (192.f/256.f);
+		sprites[SPRITE_DENDEN].image.subtex.top = 1.f-(128.f/256.f);
+		sprites[SPRITE_DENDEN].image.subtex.right = (float)(64.f+192.f)/256.f;
+		sprites[SPRITE_DENDEN].image.subtex.bottom = 1.f-((float)(128.f+128.f)/256.f);
+		sprites[SPRITE_DENDEN].params.pos.w = 64; sprites[SPRITE_DENDEN].params.pos.h = 128;
+		C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/donchan.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,0,0);
