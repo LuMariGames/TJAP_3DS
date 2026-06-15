@@ -259,6 +259,28 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5],9,51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6],9,59);
 
+	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
+	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BOMB],otherspsh,1);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BOMB],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO],otherspsh,2);
+	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_1],otherspsh,3);
+	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_1],0.5f,0.0f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_2],otherspsh,4);
+	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_2],0.5f,0.0f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_DENDEN],otherspsh,5);
+	C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_RAINBOW],otherspsh,6);
+	C2D_SpriteSetCenter(&sprites[SPRITE_RAINBOW],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_TIMEBOMB],otherspsh,7);
+	C2D_SpriteSetCenter(&sprites[SPRITE_TIMEBOMB],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND],otherspsh,8);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BACKGROUND],0.5f,0.5f);
+	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND],TOP_WIDTH * 0.5,192);
+	C2D_SpriteFromSheet(&sprites[SPRITE_BOTTOM_2],otherspsh,9);
+	C2D_SpriteSetCenter(&sprites[SPRITE_BOTTOM_2],0.5f,0.5f);
+
 	if(exist_file("sdmc:/tjafiles/theme/def/notes.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,0,0);
 		sprites[SPRITE_DON].params.pos.w = 32; sprites[SPRITE_DON].params.pos.h = 32;
@@ -331,28 +353,6 @@ inline static void load_sprites(){
 		sprites[SPRITE_TOP_3].params.pos.w = 400; sprites[SPRITE_TOP_3].params.pos.h = 96;
 		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_3],0.5f,0.5f);
 	}
-
-	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
-	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_BOMB],otherspsh,1);
-	C2D_SpriteSetCenter(&sprites[SPRITE_BOMB],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO],otherspsh,2);
-	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_1],otherspsh,3);
-	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_1],0.5f,0.0f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_POTATO_2],otherspsh,4);
-	C2D_SpriteSetCenter(&sprites[SPRITE_POTATO_2],0.5f,0.0f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_DENDEN],otherspsh,5);
-	C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_RAINBOW],otherspsh,6);
-	C2D_SpriteSetCenter(&sprites[SPRITE_RAINBOW],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_TIMEBOMB],otherspsh,7);
-	C2D_SpriteSetCenter(&sprites[SPRITE_TIMEBOMB],0.5f,0.5f);
-	C2D_SpriteFromSheet(&sprites[SPRITE_BACKGROUND],otherspsh,8);
-	C2D_SpriteSetCenter(&sprites[SPRITE_BACKGROUND],0.5f,0.5f);
-	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND],TOP_WIDTH * 0.5,192);
-	C2D_SpriteFromSheet(&sprites[SPRITE_BOTTOM_2],otherspsh,9);
-	C2D_SpriteSetCenter(&sprites[SPRITE_BOTTOM_2],0.5f,0.5f);
 
 	if (dance){
 		for (int i = 0,j = dancnt; i<j; ++i){
