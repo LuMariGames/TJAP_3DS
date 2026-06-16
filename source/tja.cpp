@@ -1086,7 +1086,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 			Command->knd=COMMAND_SUDDEN;
 			char* tp;
 			tp=strtok(value," ");
-			Command->val[0]=strtod(tp,NULL);
+			Command->val[0]=strtod(tp,NULL)*(NOTES_JUDGE_RANGE/NOTES_AREA);
 			tp=strtok(NULL," ");
 			Command->val[1]=strtod(tp,NULL);
 		}
