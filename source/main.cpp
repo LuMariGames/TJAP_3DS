@@ -1009,7 +1009,6 @@ int main(){
 
 				tmp = pause_window(tp,key);
 
-				char abs_path[521];
 				switch (tmp){
 				case 1:
 					isPlayMain = true;
@@ -1026,18 +1025,6 @@ int main(){
 					stopPlayback();
 					cnt = -1;
 					scene_state = SCENE_SELECTSONG;
-					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
-					if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0){
-						fp_write = fopen(abs_path,"wb");
-						fp_read=NULL;
-					}
-					if(fp_write!=NULL){
-						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
-						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
-						write_data[ghostnum]={0,0,0};
-						fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
-						fclose(fp_write);
-					}
 					if(fp_read!=NULL){
 						Option = befOption;
 						set_option(&befOption);
@@ -1105,14 +1092,15 @@ int main(){
 					scene_state = SCENE_RESULT;
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
 					cnt = -1;
-					if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0){
+					fp_write=NULL;
+					if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0&&ghostnum>0){
 						fp_write = fopen(abs_path,"wb");
 						fp_read=NULL;
 					}
 					if(fp_write!=NULL){
 						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
-						for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
-						write_data[ghostnum]={0,0,0};
+						fwrite(write_data,sizeof(ghostdata),ghostnum,fp_write);
+						write_data[ghostnum]={2147483647,0,0};
 						fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 						fclose(fp_write);
 					}
@@ -1134,14 +1122,15 @@ int main(){
 				scene_state = SCENE_RESULT;
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
-				if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0){
+				fp_write=NULL;
+				if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0&&ghostnum>0){
 					fp_write = fopen(abs_path,"wb");
 					fp_read=NULL;
 				}
 				if(fp_write!=NULL){
 					fwrite(&Option,sizeof(OPTION_T),1,fp_write);
-					for(int i=0;i<ghostnum;i++)fwrite(&write_data[i],sizeof(ghostdata),1,fp_write);
-					write_data[ghostnum]={0,0,0};
+					fwrite(write_data,sizeof(ghostdata),ghostnum,fp_write);
+					write_data[ghostnum]={2147483647,0,0};
 					fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 					fclose(fp_write);
 				}
