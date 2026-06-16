@@ -1416,8 +1416,8 @@ void draw_condition(){
 		if(strcmp(exam[j][0],"jb")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_BAD],&width,&height);
 		else if(strcmp(exam[j][0],"jg")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_NICE],&width,&height);
 		else if(strcmp(exam[j][0],"jp")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_PERFECT],&width,&height);
-		else if(strcmp(exam[j][0],"s")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_SCORE],&width,&height);
-		else if(strcmp(exam[j][0],"r")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_ROLL],&width,&height);
+		else if(strcmp(exam[j][0],"s")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_SCORE],&width,&height);
+		else if(strcmp(exam[j][0],"r")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_ROLLCOUNT],&width,&height);
 		else if(strcmp(exam[j][0],"h")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_HIT],&width,&height);
 		else if(strcmp(exam[j][0],"c")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_MAXCOMBO],&width,&height);
 		else if(strcmp(exam[j][0],"g")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_GAUGE],&width,&height);
