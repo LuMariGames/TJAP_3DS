@@ -1466,6 +1466,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	Command.val[0]=0;
 	Command.val[1]=0;
 	Command.val[2]=0;
+	isHBSCROLL=TJA_Header.isHBS;
 	isgamemode=TJA_Header.gamemode;
 	bpm=TJA_Header.bpm;
 	offset=TJA_Header.offset+Option.offset;
