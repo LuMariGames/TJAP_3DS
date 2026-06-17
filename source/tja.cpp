@@ -80,6 +80,7 @@ bool load_tja_head(int course,LIST_T Song){
 	Current_Header.life=-1;
 	Current_Header.gamemode=0;
 	Current_Header.bg=(char*)"bg.png";
+	Current_Header.isHBS=false;
 	//Current_Header.demostart=0;
 	//Current_Header.side=3;
 	Current_Header.scoremode=3;
@@ -113,6 +114,12 @@ bool load_tja_head(int course,LIST_T Song){
 			temp=(char *)malloc((strlen(buf)+1));
 			mix[0]=Current_Header.songvol/100.0;
 			mix[1]=Current_Header.songvol/100.0;
+
+			if(isCourseMatch&&strstr(buf,"#HBSCROLL")==buf){
+				Current_Header.isHBS=true;
+				continue;
+			}
+
 			if(isCourseMatch && Current_Header.style==1 && strstr(buf,"#START")==buf){
 				isSTART=true;
 				free(temp);
