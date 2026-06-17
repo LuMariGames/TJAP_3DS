@@ -15,6 +15,7 @@ typedef struct {
 	int level,balloon[4][256],songvol,sevol,scoreinit,scorediff,
 		course,style,life,scoremode,subtitle_state,gamemode; //total,side;
 	double bpm,offset; //demostart;
+	bool isHBS;
 
 }TJA_HEADER_T;
 
