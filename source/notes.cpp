@@ -813,7 +813,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 		if(Notes[i].flag){
 
-			if(currentTime < Notes[i].judge_time)Notes[i].hb_time = ((Notes[i].judge_time-Notes[i+1].judge_time) * (Notes[i+1].bpm / NowBPM)) + Notes[i+1].hb_time;
+			if(currentTime<Notes[i].judge_time&&Notes[i+1].flag)Notes[i].hb_time = ((Notes[i].judge_time-Notes[i+1].judge_time) * (Notes[i+1].bpm / NowBPM)) + Notes[i+1].hb_time;
 			else Notes[i].hb_time = Notes[i].judge_time;
 
 			if(isHBSCROLL){
