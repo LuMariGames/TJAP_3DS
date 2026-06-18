@@ -686,7 +686,7 @@ void load_tja_notes(int course,LIST_T Song){
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm=Current_Header.bpm,NextBpm=bpm,measure=1,scroll=1,yscroll=0,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,//movetime=0,
+	double bpm=fabs(Current_Header.bpm),NextBpm=Current_Header.bpm,measure=1,scroll=1,yscroll=0,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,//movetime=0,
 		BeforeBranchJudgeTime=0,BeforeBranchCreateTime=0,BeforeBranchPopTime=0,BeforeBranchPreJudge=0,BeforeBranchBpm=0,//BeforeBranchMoveTime=0,
 		BeforeBranchDelay=0,BeforeBranchMeasure=0,BeforeBranchScroll=1,BeforeBranchNextBpm=0,BeforeBranchNextMeasure=0,BeforeBranchPercent=1;
 	std::string ly="",Beforely="";
@@ -857,8 +857,8 @@ void load_tja_notes(int course,LIST_T Song){
 				//Measure[MeasureCount].sudn_time=movetime;
 				Measure[MeasureCount].isDummy=isDummy;
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
-				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*NOTES_AREA);
-				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/NextBpm-sudntime):0)-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
+				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*NOTES_AREA);
+				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/fabs(NextBpm)-sudntime):0)-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
 				Measure[MeasureCount].lyric=ly;
@@ -927,7 +927,7 @@ void load_tja_notes(int course,LIST_T Song){
 						Beforejpostime=-1;
 					}
 					if(!isNoComma)PreJudge=Measure[MeasureCount].judge_time;
-					bpm=NextBpm;
+					bpm=fabs(NextBpm);
 					measure=NextMeasure;
 					delay=0;
 				}
@@ -944,11 +944,11 @@ void load_tja_notes(int course,LIST_T Song){
 
 							Measure[Measure[MeasureCount].firstmeasure+i].judge_time =
 								Measure[Measure[MeasureCount].firstmeasure+i-1].judge_time +
-								(240.0/Measure[Measure[MeasureCount].firstmeasure+i-1].bpm * Measure[Measure[MeasureCount].firstmeasure+i-1].measure)
+								(240.0/fabs(Measure[Measure[MeasureCount].firstmeasure+i-1].bpm) * Measure[Measure[MeasureCount].firstmeasure+i-1].measure)
 								* Measure[Measure[MeasureCount].firstmeasure+i-1].notes_count/Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
-							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(240.0 * NOTES_JUDGE_RANGE)/(Measure[Measure[MeasureCount].firstmeasure+i].bpm * NOTES_AREA);
-							Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time+(isSudden ?(240.0/NextBpm-sudntime): 0)-(240.0*NOTES_JUDGE_RANGE)/(Measure[Measure[MeasureCount].firstmeasure+i].bpm *(NOTES_AREA * ((fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll)>fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))?fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll):fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))));
+							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(240.0 * NOTES_JUDGE_RANGE)/(fabs(Measure[Measure[MeasureCount].firstmeasure+i].bpm) * NOTES_AREA);
+							Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time+(isSudden ?(240.0/NextBpm-sudntime): 0)-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[Measure[MeasureCount].firstmeasure+i].bpm) *(NOTES_AREA * ((fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll)>fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))?fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll):fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))));
 							percent=(double)Measure[Measure[MeasureCount].firstmeasure+i].notes_count/(double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 
 							Measure[Measure[MeasureCount].firstmeasure+i].isDispBarLine=false;	//最初の小節は小節線をオフにしない
@@ -977,15 +977,15 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_JPOSSCROLL:
-				Measure[i].create_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*NOTES_AREA));
+				Measure[i].create_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA));
 				break;
 			case COMMAND_BRANCHSTART:
-				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*NOTES_AREA))-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA))-(240.0/(fabs(Measure[i].bpm)*fabs(Measure[i].scroll)))*Measure[i].measure;
 				break;
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
-				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(Measure[i].bpm*NOTES_AREA));
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA));
 				break;
 			}
 		}
