@@ -146,6 +146,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 
 			int NotesCountMax;
+			isLoadLoop=true;
 
 			if(Measure[MeasureCount].firstmeasure!=-1&&get_MeasureId_From_OriginalId(Measure[MeasureCount].firstmeasure)!= -1){
 
@@ -157,6 +158,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
 			double NoteTime=0.0;
+			bool isRest=true;
 			for(int i=0;i<NotesCount;++i){
 
 				int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -179,7 +181,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					else if(knd==NOTES_POTATO&&PreNotesKnd==knd)knd=NOTES_PTTBORDER;
 
-					isLoadLoop=true;
+					isRest=false;
 
 					if(Option.random>0){		//ランダム(きまぐれ,でたらめ)
 						if(rand()%100<Option.random*100){
@@ -317,6 +319,23 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					++NotesNumber;
 				}
 				NoteTime+=MeasureTime*(1.0/NotesCountMax);
+			}
+			if(isRest){
+				id=find_notes_id(id);
+				Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
+				Notes[id].notes_max=NotesCount;
+				Notes[id].num=NotesNumber;
+				Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
+				Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
+				Notes[id].bpm=Measure[MeasureCount].bpm;
+				Notes[id].knd=NOTES_REST;
+				Notes[id].x=512.f;
+				Notes[id].y=109.f;
+				Notes[id].isDummy=Measure[MeasureCount].isDummy;
+				Notes[id].roll_id=-1;
+				Notes[id].isThrough=false;
+				Notes[id].flag=true;
+				++NotesNumber;
 			}
 			++MeasureCount;
 		}
