@@ -866,7 +866,6 @@ void load_tja_notes(int course,LIST_T Song){
 				if(tja_notes[tja_cnt][0]=='#'){
 
 					if(MeasureCount>0){
-						Measure[MeasureCount].bpm=Measure[MeasureCount-1].bpm;
 						Measure[MeasureCount].judge_time=Measure[MeasureCount-1].judge_time;
 						Measure[MeasureCount].create_time=Measure[MeasureCount-1].create_time;
 						//Measure[MeasureCount].isDispBarLine=false;
