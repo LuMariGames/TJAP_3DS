@@ -858,7 +858,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].isDummy=isDummy;
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
 				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*NOTES_AREA);
-				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/NextBpm-sudntime): 0)-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
+				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/NextBpm-sudntime):0)-(240.0*NOTES_JUDGE_RANGE)/(Measure[MeasureCount].bpm*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
 				Measure[MeasureCount].lyric=ly;
@@ -866,6 +866,7 @@ void load_tja_notes(int course,LIST_T Song){
 				if(tja_notes[tja_cnt][0]=='#'){
 
 					if(MeasureCount>0){
+						Measure[MeasureCount].bpm=Measure[MeasureCount-1].bpm;
 						Measure[MeasureCount].judge_time=Measure[MeasureCount-1].judge_time;
 						Measure[MeasureCount].create_time=Measure[MeasureCount-1].create_time;
 						//Measure[MeasureCount].isDispBarLine=false;

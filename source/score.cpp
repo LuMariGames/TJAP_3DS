@@ -333,17 +333,17 @@ void draw_gauge(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
 	courselife=Gauge.score;
 	if(Gauge.score>Gauge.soul)Gauge.score=Gauge.soul;
-	double gauge=1.0 *((int)Gauge.score/200)* 200/Gauge.soul;
+	double gauge=1.0 *(Gauge.score/200)* 200/Gauge.soul;
 	if(gauge>1.0)gauge=1.0;
 
 	//赤
-	C2D_DrawRectSolid(123,76,0,250.0*Gauge.norma/Gauge.soul,8,C2D_Color32f(102.0/255,0,0,1));
+	C2D_DrawRectSolid(123,76,0,250.0*(float)(Gauge.norma/Gauge.soul),8,C2D_Color32f(102.0/255,0,0,1));
 	C2D_DrawRectSolid(123,76,0,250.0*gauge,8,C2D_Color32f(1,0,0,1));
 
 	//黄
-	C2D_DrawRectSolid(123+250.0*Gauge.norma/Gauge.soul,76,0,250-250.0*Gauge.norma/Gauge.soul,8,C2D_Color32f(102.0/255,68.0/255,0,1));
+	C2D_DrawRectSolid(123+250.0*(float)(Gauge.norma/Gauge.soul),76,0,250-250.0*(float)(Gauge.norma/Gauge.soul),8,C2D_Color32f(102.0/255,68.0/255,0,1));
 	if(250*gauge-(250.0*Gauge.norma/Gauge.soul)>= 0)
-		C2D_DrawRectSolid(123+250.0*Gauge.norma/Gauge.soul,76,0,250*gauge-(250.0*Gauge.norma/Gauge.soul),8,C2D_Color32f(1,1,12.0/255,1));
+		C2D_DrawRectSolid(123+250.0*(float)(Gauge.norma/Gauge.soul),76,0,250*gauge-(250.0*(float)(Gauge.norma/Gauge.soul)),8,C2D_Color32f(1,1,12.0/255,1));
 
 	//魂
 	for(int i=0;i<2;++i)C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON+i],385,75);
@@ -359,19 +359,19 @@ void draw_gauge(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
 void draw_gauge_result(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
-	int diff=50,scores=(int)Gauge.score;
+	int diff=50,scores=Gauge.score;
 	double x_start=123-diff,x_end=250-diff;
 	double gauge=1.0 *(scores/200)* 200/Gauge.soul;
 	if(gauge>1.0)gauge=1.0;
 
 	//赤
-	C2D_DrawRectSolid(x_start,76,0,x_end*Gauge.norma/Gauge.soul,8,C2D_Color32f(102.0/255,0,0,1));
+	C2D_DrawRectSolid(x_start,76,0,x_end*(float)(Gauge.norma/Gauge.soul),8,C2D_Color32f(102.0/255,0,0,1));
 	C2D_DrawRectSolid(x_start,76,0,x_end*gauge,8,C2D_Color32f(1,0,0,1));
 
 	//黄
-	C2D_DrawRectSolid(x_start+x_end*Gauge.norma/Gauge.soul,67,0,x_end-x_end*Gauge.norma/Gauge.soul,17,C2D_Color32f(102.0/255,68.0/255,0,1));
+	C2D_DrawRectSolid(x_start+x_end*(float)(Gauge.norma/Gauge.soul),76,0,x_end-x_end*(float)(Gauge.norma/Gauge.soul),8,C2D_Color32f(102.0/255,68.0/255,0,1));
 	if(x_end*gauge-(x_end*Gauge.norma/Gauge.soul)>= 0)
-		C2D_DrawRectSolid(x_start+x_end*Gauge.norma/Gauge.soul,67,0,x_end*gauge-(x_end*Gauge.norma/Gauge.soul),17,C2D_Color32f(1,1,12.0/255,1));
+		C2D_DrawRectSolid(x_start+x_end*(float)(Gauge.norma/Gauge.soul),76,0,x_end*gauge-(x_end*(float)(Gauge.norma/Gauge.soul)),8,C2D_Color32f(1,1,12.0/255,1));
 
 	//魂
 	for(int i=0;i<2;++i)C2D_SpriteSetPos(&sprites[SPRITE_SOUL_ON+i],385-diff*2,75);
