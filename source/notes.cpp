@@ -322,7 +322,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 			if(isRest){
 				id=find_notes_id(id);
-				Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
+				Notes[id].judge_time=Measure[MeasureCount].judge_time;
 				Notes[id].notes_max=NotesCount;
 				Notes[id].num=NotesNumber;
 				Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
