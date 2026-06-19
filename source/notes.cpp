@@ -156,7 +156,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				NotesCountMax=NotesCount;
 			}
 
-			const double MeasureTime=240.0/fabs(Measure[MeasureCount].bpm*Measure[MeasureCount].measure);
+			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
 			double NoteTime=0.0;
 			bool isRest=true;
 			for(int i=0;i<NotesCount;++i){
