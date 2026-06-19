@@ -927,8 +927,8 @@ void load_tja_notes(int course,LIST_T Song){
 						Beforejpostime=-1;
 					}
 					if(!isNoComma)PreJudge=Measure[MeasureCount].judge_time;
-					bpm=NextBpm;
-					measure=NextMeasure;
+					bpm=fabs(NextBpm);
+					measure=fabs(NextMeasure);
 					delay=0;
 				}
 
@@ -944,7 +944,7 @@ void load_tja_notes(int course,LIST_T Song){
 
 							Measure[Measure[MeasureCount].firstmeasure+i].judge_time =
 								Measure[Measure[MeasureCount].firstmeasure+i-1].judge_time +
-								(240.0/Measure[Measure[MeasureCount].firstmeasure+i-1].bpm * Measure[Measure[MeasureCount].firstmeasure+i-1].measure)
+								(240.0/fabs(Measure[Measure[MeasureCount].firstmeasure+i-1].bpm*Measure[Measure[MeasureCount].firstmeasure+i-1].measure))
 								* Measure[Measure[MeasureCount].firstmeasure+i-1].notes_count/Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
 							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(240.0 * NOTES_JUDGE_RANGE)/(fabs(Measure[Measure[MeasureCount].firstmeasure+i].bpm) * NOTES_AREA);
@@ -980,7 +980,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA));
 				break;
 			case COMMAND_BRANCHSTART:
-				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA))-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA))-(240.0/(fabs(Measure[i].bpm)*fabs(Measure[i].scroll)))*fabs(Measure[i].measure);
 				break;
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
