@@ -378,7 +378,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		C2D_DrawImage(sprites[SPRITE_RAINBOW].image,&sprites[SPRITE_RAINBOW].params,&Tint);
 		break;
 	default:
-		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
+		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,109.f);
 		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
 		break;
 	}
