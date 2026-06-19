@@ -348,11 +348,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		if(BarLine[i].flag){
 
 			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
-
-			if((BarLine[i].x<62&&(BarLine[i].scroll>0||Measure[BarLine[i].measure].bpm>0))||(BarLine[i].x>400&&(BarLine[i].scroll<0||Measure[BarLine[i].measure].bpm<0))||((BarLine[i].scroll==0||Measure[BarLine[i].measure].bpm==0)&&Measure[BarLine[i].measure].flag))BarLine[i].flag=BarLine[i].isDisp=false;
+			if(((BarLine[i].x<62||BarLine[i].x>400)||(BarLine[i].scroll==0.f||Measure[BarLine[i].measure].bpm==0))&&
+				Measure[BarLine[i].measure].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))BarLine[i].flag=BarLine[i].isDisp=false;
+			else if(BarLine[i].x<62||BarLine[i].x>400)BarLine[i].x=0.f;
 			if(BarLine[i].isDisp){
 				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
-
 				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x-10,133,buf_notes);
 			}
@@ -361,6 +361,28 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
 	if(!Option.isStelth)notes_draw(sprites);
+
+	//割れた風船
+	draw_emblem(sprites);
+	C2D_ImageTint Tint;
+	BalloonBreakCount--;
+	C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
+	switch(isBalloonBreakDisp){
+	case NOTES_POTATO:
+		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
+		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
+		break;
+	case NOTES_DENDEN:
+		C2D_SpriteSetScale(&sprites[SPRITE_RAINBOW],2-(BalloonBreakCount/20.0),1);
+		C2D_SpriteSetPos(&sprites[SPRITE_RAINBOW],200,120);
+		C2D_DrawImage(sprites[SPRITE_RAINBOW].image,&sprites[SPRITE_RAINBOW].params,&Tint);
+		break;
+	default:
+		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
+		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
+		break;
+	}
+	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
 	draw_judge(CurrentTimeNotes,sprites);
 	
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
@@ -920,7 +942,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
 		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
-			((Notes[i].x<=-64.f&&Notes[i].scroll>0)||(Notes[i].x>=464.f&&Notes[i].scroll<0)||(Notes[i].y>=304.f&&Notes[i].yscroll>0)||(Notes[i].y<=-64.f&&Notes[i].yscroll<0)||(Notes[i].scroll==0.f&&Notes[i].yscroll==0.f))&&
+			((Notes[i].x<=-64.f)||(Notes[i].x>=464.f)||(Notes[i].y>=304.f)||(Notes[i].y<=-64.f)||(Notes[i].scroll==0.f&&Notes[i].yscroll==0.f))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
 			if(Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
@@ -1132,32 +1154,6 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 			}
 		}
 	}
-	draw_emblem(sprites);
-
-	//割れた風船
-	C2D_ImageTint Tint;
-	switch(isBalloonBreakDisp){
-	case NOTES_POTATO:
-		BalloonBreakCount--;
-		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
-		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
-		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
-		break;
-	case NOTES_DENDEN:
-		BalloonBreakCount--;
-		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
-		C2D_SpriteSetScale(&sprites[SPRITE_RAINBOW],2-(BalloonBreakCount/20.0),1);
-		C2D_SpriteSetPos(&sprites[SPRITE_RAINBOW],200,120);
-		C2D_DrawImage(sprites[SPRITE_RAINBOW].image,&sprites[SPRITE_RAINBOW].params,&Tint);
-		break;
-	default:
-		BalloonBreakCount--;
-		C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
-		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,notes_y);
-		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
-		break;
-	}
-	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
 }
 
 int get_branch_course(){
