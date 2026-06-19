@@ -107,9 +107,9 @@ bool check_dsp1(){ //DSP1を起動しているか確認
 inline int time_count(double TIME)noexcept {
 	if (TIME<0)return 0;
 	u8 tc;
-	if(plusimg_player&&isGOGO)tc=((int)floor(TIME*(NowBPM/10.0))%12);
+	if(plusimg_player&&isGOGO)tc=((int)floor(TIME*(fabs(NowBPM)/10.0))%12);
 	else {
-		return(int)floor(TIME*(NowBPM/60.0*(2-isGOGO)))%2+(isGOGO*2);
+		return(int)floor(TIME*(fabs(NowBPM)/60.0*(2-isGOGO)))%2+(isGOGO*2);
 	}
 	switch(tc){
 	case 0:return 0+(isGOGO*2);
@@ -130,7 +130,7 @@ inline int time_count(double TIME)noexcept {
 
 inline int dancer_time_count(double TIME,int NUM)noexcept {
 	if (TIME<0)return 0;
-	return(int)floor(TIME*(NowBPM/(960.0/NUM)))%NUM;
+	return(int)floor(TIME*(fabs(NowBPM)/(960.0/NUM)))%NUM;
 }
 
 static u32 GetNextPowerOf2(u32 v) {
