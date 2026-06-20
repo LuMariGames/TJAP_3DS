@@ -17,7 +17,7 @@ jobs:
     - name: make all
       run: make all
     - name: Upload binary
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: Build
         path: |
