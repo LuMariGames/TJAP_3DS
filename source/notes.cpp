@@ -343,59 +343,14 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	}
 
 	if(cnt<0)return;
-	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
-
-		if(BarLine[i].flag){
-
-			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
-			if(((BarLine[i].x<62||BarLine[i].x>400)||(BarLine[i].scroll==0.f||Measure[BarLine[i].measure].bpm==0))&&
-				Measure[BarLine[i].measure].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))BarLine[i].flag=BarLine[i].isDisp=false;
-			else if(BarLine[i].x<62||BarLine[i].x>400)BarLine[i].x=0.f;
-			if(BarLine[i].isDisp){
-				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
-				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
-				//draw_debug(BarLine[i].x-10,133,buf_notes);
-			}
-		}
-	}
-
-	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
-	if(!Option.isStelth)notes_draw(sprites);
-
-	//割れた風船
-	draw_emblem(sprites);
-	C2D_ImageTint Tint;
-	BalloonBreakCount--;
-	C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
-	switch(isBalloonBreakDisp){
-	case NOTES_POTATO:
-		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
-		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
-		break;
-	case NOTES_DENDEN:
-		C2D_SpriteSetScale(&sprites[SPRITE_RAINBOW],2-(BalloonBreakCount/20.0),1);
-		C2D_SpriteSetPos(&sprites[SPRITE_RAINBOW],200,120);
-		C2D_DrawImage(sprites[SPRITE_RAINBOW].image,&sprites[SPRITE_RAINBOW].params,&Tint);
-		break;
-	default:
-		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,109.f);
-		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
-		break;
-	}
-	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
-	draw_judge(CurrentTimeNotes,sprites);
-	
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
 	double MaxJudgeTime=0.0;
 	int NowMeasure=0;
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
-
 		if((Measure[i].branch==Branch.course||Measure[i].branch==-1)&&Measure[i].flag){
 			bool NotFalse=false;
-
 			if(Measure[i].command!=-1&&Measure[i].judge_time<=CurrentTimeNotes){
-
 				switch(Measure[i].command){
 				case COMMAND_GOGOSTART:
 					isGOGOTime=true;
@@ -407,9 +362,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					init_branch_section();
 					break;
 				case COMMAND_BRANCHSTART:
-
 					if(isLevelHold==false&&(Branch.knd!=0||JudgeRollState==-1)){	//連打分岐の時は連打が無くなってから分岐
-
 						Branch.course=start_branch(Branch.knd,Branch.x,Branch.y);
 						Branch.next=true;
 						Branch.wait=false;
@@ -430,7 +383,44 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		}
 	}
 	send_gogotime(isGOGOTime);
+	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
+		if(BarLine[i].flag){
+			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
+			if(((BarLine[i].x<62||BarLine[i].x>400)||(BarLine[i].scroll==0.f||Measure[BarLine[i].measure].bpm==0))&&
+				Measure[BarLine[i].measure].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))BarLine[i].flag=BarLine[i].isDisp=false;
+			else if(BarLine[i].x<62||BarLine[i].x>400)BarLine[i].x=0.f;
+			if(BarLine[i].isDisp){
+				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
+				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
+				//draw_debug(BarLine[i].x-10,133,buf_notes);
+			}
+		}
+	}
+	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
+	if(!Option.isStelth)notes_draw(sprites);
+	draw_emblem(sprites);
 
+	//割れた風船
+	C2D_ImageTint Tint;
+	BalloonBreakCount--;
+	C2D_AlphaImageTint(&Tint,BalloonBreakCount/40.0);
+	switch(isBalloonBreakDisp){
+	case NOTES_POTATO:
+		C2D_SpriteSetPos(&sprites[SPRITE_POTATO_2],200,0);
+		C2D_DrawImage(sprites[SPRITE_POTATO_2].image,&sprites[SPRITE_POTATO_2].params,&Tint);
+		break;
+	case NOTES_DENDEN:
+		C2D_SpriteSetScale(&sprites[SPRITE_RAINBOW],2-(BalloonBreakCount/20.0),1);
+		C2D_SpriteSetPos(&sprites[SPRITE_RAINBOW],200,120);
+		C2D_DrawImage(sprites[SPRITE_RAINBOW].image,&sprites[SPRITE_RAINBOW].params,&Tint);
+		break;
+	default:
+		C2D_SpriteSetPos(&sprites[SPRITE_BALLOON_6],93.0f,109.f);
+		C2D_DrawImage(sprites[SPRITE_BALLOON_6].image,&sprites[SPRITE_BALLOON_6].params,&Tint);
+		break;
+	}
+	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
+	draw_judge(CurrentTimeNotes,sprites);
 	draw_lyric_text(Measure[NowMeasure].lyric.data());
 	if(course==COURSE_DAN)dcd=dan_condition();
 	if(TotalFailedCount!=dcd&&0<dcd){
@@ -851,11 +841,9 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 	const float currentTime = (float)CurrentTimeNotes;
 
 	for(int i=Notes.size()-1,j=0;i>=j;--i){	//計算
-
 		if(Notes[i].flag){
-
-			if(currentTime<Notes[i].judge_time&&Notes[i+1].flag)Notes[i].hb_time = ((Notes[i].judge_time-Notes[i+1].judge_time) * (Notes[i+1].bpm / NowBPM)) + Notes[i+1].hb_time;
-			else Notes[i].hb_time = Notes[i].judge_time;
+			if(currentTime<Notes[i].judge_time&&Notes[i+1].flag)Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
+			else Notes[i].hb_time=Notes[i].judge_time;
 
 			if(isHBSCROLL){
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
@@ -871,7 +859,6 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			else if(Notes[i].y>=512.f)Notes[i].y=512.f;
 
 			switch(Notes[i].knd){
-
 			case NOTES_ROLL:
 			case NOTES_BIGROLL:
 				if(Notes[i].roll_id!=-1&&RollNotes[Notes[i].roll_id].flag){
@@ -946,7 +933,6 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
 			if(Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
-
 				if(!Option.isAuto){
 					update_score(THROUGH);
 					Notes[i].isThrough=true;
@@ -970,7 +956,6 @@ inline void notes_draw(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 	C2D_ImageTint DummyTint;
 
 	for(int i=0,j=Notes.size();i<j;++i){	//描画
-
 		if(Notes[i].flag){
 
 			//ダミーノーツは半透明にする
