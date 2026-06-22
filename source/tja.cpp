@@ -859,6 +859,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
 				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*NOTES_AREA);
 				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/fabs(NextBpm)-sudntime):0)-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
+				if(Current_Header.isHBS)Measure[MeasureCount].create_time=0;
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
 				Measure[MeasureCount].lyric=ly;
