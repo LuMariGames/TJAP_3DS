@@ -73,8 +73,8 @@ An attack from the DS series! "Den-Den Note" (Summoned with 'P')
 |`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`|✅|v2.2.3にて複素数スクロールに対応|
 |`SECTION`, `BRANCHSTART`, `BRANCHEND`|⚠️|譜面分岐開始時の挙動がまだ不安定|
 |`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`, `DELAY`, `MEASURE`|✅||
-|`BMSCROLL`, `HBSCROLL`, `NEXTSONG`|❌||
-|`SUDDEN`|⚠️|一部動作が無効|
+|`BMSCROLL`, `NEXTSONG`|❌||
+|`HBSCROLL`, `SUDDEN`|⚠️|一部動作が無効|
 
 |metadata|Supported?|Comment|
 |---|---|---|
