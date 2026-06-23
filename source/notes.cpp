@@ -136,7 +136,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			//小節線
 			int BarLineId=find_line_id();
-			if(BarLineId!=-1&&Measure[MeasureCount].branch==Branch.course){
+			if(BarLineId!=-1&&Measure[MeasureCount].isDispBarLine&&Measure[MeasureCount].branch==Branch.course){
 				BarLine[BarLineId].flag=true;
 				BarLine[BarLineId].scroll=Measure[MeasureCount].scroll*Option.speed;
 				BarLine[BarLineId].measure=MeasureCount;
