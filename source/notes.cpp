@@ -174,14 +174,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						++BalloonCount[2];
 						++BalloonCount[3];
 					}
-
 					if(Measure[MeasureCount].judge_time<Measure[MinMeasureCount].judge_time)continue;
 					if((knd==NOTES_ROLL||knd==NOTES_BIGROLL||knd==NOTES_BALLOON||knd==NOTES_DENDEN||knd==NOTES_TIMEBOMB)&&(PreNotesKnd==knd)){	//55558のような表記に対応
 						continue;
 					}
 					else if(knd==NOTES_POTATO&&PreNotesKnd==knd)knd=NOTES_PTTBORDER;
-
-					isRest=false;
 
 					if(Option.random>0){		//ランダム(きまぐれ,でたらめ)
 						if(rand()%100<Option.random*100){
@@ -317,6 +314,24 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						break;
 					}
 					++NotesNumber;
+				}
+				if(isRest){
+					id=find_notes_id(id);
+					Notes[id].judge_time=Measure[MeasureCount].judge_time;
+					Notes[id].notes_max=NotesCount;
+					Notes[id].num=NotesNumber;
+					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
+					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
+					Notes[id].bpm=Measure[MeasureCount].bpm;
+					Notes[id].knd=NOTES_REST;
+					Notes[id].x=512.f;
+					Notes[id].y=109.f;
+					Notes[id].isDummy=Measure[MeasureCount].isDummy;
+					Notes[id].roll_id=-1;
+					Notes[id].isThrough=false;
+					Notes[id].flag=true;
+					++NotesNumber;
+					isRest=false;
 				}
 				NoteTime+=MeasureTime*(1.0/NotesCountMax);
 			}
