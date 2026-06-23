@@ -851,7 +851,6 @@ int main(){
 		case SCENE_MAINGAME:		//演奏画面
 
 			if (!isPause){
-
 				if (tp.px != 0&&tp.py != 0){
 
 					PreTouch_x = touch_x,PreTouch_y = touch_y;
@@ -1044,8 +1043,8 @@ int main(){
 				else if (keyhold&KEY_DRIGHT)++khdcnt;
 				else khdcnt = 0;
 				if (key&KEY_DUP)toggle_auto();
-				if ((key&KEY_DLEFT || khdcnt<-60)&&Option.player!=3)min_measure();
-				if ((key&KEY_DRIGHT || khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3)plus_measure();
+				if ((key&KEY_DLEFT || khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS)min_measure();
+				if ((key&KEY_DRIGHT || khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS)plus_measure();
 			}
 
 			if(cnt == 0){
