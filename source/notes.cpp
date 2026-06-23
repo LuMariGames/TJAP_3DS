@@ -158,7 +158,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
 			double NoteTime=0.0;
-			bool isRest=true;
+			bool isRest=false;
+			if(isHBSCROLL)isRest=true;
 			for(int i=0;i<NotesCount;++i){
 
 				int knd=ctoi(tja_notes[Measure[MeasureCount].notes][i]);
@@ -180,6 +181,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					else if(knd==NOTES_POTATO&&PreNotesKnd==knd)knd=NOTES_PTTBORDER;
 
+					isRest=false;
 					if(Option.random>0){		//ランダム(きまぐれ,でたらめ)
 						if(rand()%100<Option.random*100){
 							switch(knd){
