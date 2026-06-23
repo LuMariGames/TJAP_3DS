@@ -115,7 +115,7 @@ bool load_tja_head(int course,LIST_T Song){
 			mix[0]=Current_Header.songvol/100.0;
 			mix[1]=Current_Header.songvol/100.0;
 
-			if(isCourseMatch&&strstr(buf,"#HBSCROLL")==buf){
+			if(isCourseMatch&&(strstr(buf,"#HBSCROLL")==buf||strstr(buf,"#BMSCROLL")==buf)){
 				Current_Header.isHBS=true;
 				continue;
 			}
