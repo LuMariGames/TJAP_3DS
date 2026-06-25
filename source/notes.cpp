@@ -860,7 +860,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	for(int i=Notes.size()-1,j=0;i>=j;--i){	//計算
 		if(Notes[i].flag){
-			if(currentTime<Notes[i].judge_time)Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
+			if(currentTime<Notes[i].judge_time&&Notes[i+1].flag)Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
 			else Notes[i].hb_time=Notes[i].judge_time;
 
 			if(isHBSCROLL){
@@ -1366,11 +1366,9 @@ void delete_notes(int i){
 		Notes[i].x=0;
 		Notes[i].y=0;
 		Notes[i].create_time=0;
-		if(!isHBSCROLL){
-			Notes[i].judge_time=0;
-			Notes[i].hb_time=0;
-			Notes[i].bpm=0;
-		}
+		Notes[i].judge_time=0;
+		Notes[i].hb_time=0;
+		Notes[i].bpm=0;
 		Notes[i].scroll=0;
 		Notes[i].roll_id=-1;
 		Notes[i].isThrough=false;
@@ -1474,7 +1472,6 @@ void init_notes(TJA_HEADER_T TJA_Header){
 
 	OPTION_T Option;
 	get_option(&Option);
-	isHBSCROLL=false;
 
 	init_notes_structure();
 	init_roll__notes();
