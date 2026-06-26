@@ -645,9 +645,8 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 				}
 				else if(knd==NOTES_BALLOON||knd==NOTES_POTATO||knd==NOTES_DENDEN){	//風船
 
-					if(scoremode != 3)TmpBaseCeilingPoint-=(TJA_Header.balloon[((Measure[i].branch==-1)? 0:Measure[i].branch-11)][BalloonCnt]*300+5000)* gogo;
-					if(scoremode==3)TmpBaseCeilingPoint-=(TJA_Header.balloon[((Measure[i].branch==-1)? 0:Measure[i].branch-11)][BalloonCnt]*100);
-					++BalloonCnt;
+					roll_start_time=Measure[i].judge_time+240.0/Measure[i].bpm*Measure[i].measure*j/NotesCountMax;
+					RollKnd=NOTES_BALLOON;
 				}
 				else if(knd==NOTES_ROLL){			//連打
 
@@ -661,40 +660,39 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 				}
 				else if(knd==NOTES_ROLLEND){
 
-					if(roll_start_time != 0){
+					if(RollKnd!=0){
 
 						roll_end_time=Measure[i].judge_time+240.0/Measure[i].bpm*Measure[i].measure*j/NotesCountMax;
-						if(RollKnd==NOTES_ROLL){
-							if(scoremode==1){
-								RollCnt=(int)((roll_end_time-roll_start_time)* 15.0);
-								TmpBaseCeilingPoint-=RollCnt*300*gogo;
+						switch(RollKnd){
+						case NOTES_ROLL:
+							RollCnt=(int)((roll_end_time-roll_start_time)*15.0);
+							if(scoremode==1)TmpBaseCeilingPoint-=RollCnt*300*gogo;
+							else if(scoremode==2)TmpBaseCeilingPoint-=RollCnt*100*gogo;
+							else if(scoremode==3){TmpBaseCeilingPoint-=RollCnt*100;
+							break;
+						case NOTES_BIGROLL:
+							RollCnt=(int)((roll_end_time-roll_start_time)*15.0);
+							if(scoremode==1)TmpBaseCeilingPoint-=RollCnt*360*gogo;
+							else if(scoremode==2)TmpBaseCeilingPoint-=RollCnt*200*gogo;
+							else if(scoremode==3)TmpBaseCeilingPoint-=RollCnt*100;
+							break;
+						case NOTES_BALLOON:
+							RollCnt=(int)((roll_end_time-roll_start_time)*30.0);
+							if(scoremode==1||scoremode==2){
+								if(RollCnt<TJA_Header.balloon[((Measure[i].branch==-1)?0:Measure[i].branch-11)][BalloonCnt])TmpBaseCeilingPoint-=RollCnt*300;
+								else TmpBaseCeilingPoint-=(TJA_Header.balloon[((Measure[i].branch==-1)?0:Measure[i].branch-11)][BalloonCnt]*300+5000)*gogo;
 							}
-							if(scoremode==2){
-								RollCnt=(int)((roll_end_time-roll_start_time)* 15.0);
-								TmpBaseCeilingPoint-=RollCnt*100*gogo;
+							else if(scoremode==3){
+								if(RollCnt<TJA_Header.balloon[((Measure[i].branch==-1)?0:Measure[i].branch-11)][BalloonCnt])TmpBaseCeilingPoint-=RollCnt*100;
+								else TmpBaseCeilingPoint-=(TJA_Header.balloon[((Measure[i].branch==-1)?0:Measure[i].branch-11)][BalloonCnt]*100);
 							}
-							if(scoremode==3){
-								RollCnt=(int)((roll_end_time-roll_start_time)* 15.0);
-								TmpBaseCeilingPoint-=RollCnt*100;
-							}
-						}
-						else if(RollKnd==NOTES_BIGROLL){
-							if(scoremode==1){
-								RollCnt=(int)((roll_end_time-roll_start_time)* 15.0);
-								TmpBaseCeilingPoint-=RollCnt*360*gogo;
-							}
-							if(scoremode==2){
-								RollCnt=(int)((roll_end_time-roll_start_time)* 15.0);
-								TmpBaseCeilingPoint-=RollCnt*200*gogo;
-							}
-							if(scoremode==3){
-								RollCnt=(int)((roll_end_time-roll_start_time)* 15.0);
-								TmpBaseCeilingPoint-=RollCnt*100;
-							}
+							++BalloonCnt;
+							break;
 						}
 						roll_start_time=0;
 						roll_end_time=0;
 						RollCnt=0;
+						RollKnd=0;
 					}
 				}
 			}
