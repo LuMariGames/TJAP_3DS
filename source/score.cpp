@@ -668,7 +668,7 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 							RollCnt=(int)((roll_end_time-roll_start_time)*15.0);
 							if(scoremode==1)TmpBaseCeilingPoint-=RollCnt*300*gogo;
 							else if(scoremode==2)TmpBaseCeilingPoint-=RollCnt*100*gogo;
-							else if(scoremode==3){TmpBaseCeilingPoint-=RollCnt*100;
+							else if(scoremode==3)TmpBaseCeilingPoint-=RollCnt*100;
 							break;
 						case NOTES_BIGROLL:
 							RollCnt=(int)((roll_end_time-roll_start_time)*15.0);
