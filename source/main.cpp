@@ -1117,7 +1117,7 @@ int main(){
 					break;
 				}
 			}
-			if ((get_notes_finish()&& !ndspChnIsPlaying(CHANNEL))|| (courselife == 0&&course == COURSE_TOWER)){
+			if (((TJA_Header.isHBS||get_notes_finish())&&!ndspChnIsPlaying(CHANNEL))||(courselife==0&&course==COURSE_TOWER)){
 				scene_state = SCENE_RESULT;
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
