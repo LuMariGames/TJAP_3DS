@@ -78,6 +78,7 @@ bool load_tja_head(int course,LIST_T Song){
 	Current_Header.course=course;
 	Current_Header.style=1;
 	Current_Header.life=-1;
+	Current_Header.total=0;
 	Current_Header.gamemode=0;
 	Current_Header.bg=(char*)"bg.png";
 	Current_Header.isHBS=false;
@@ -441,6 +442,15 @@ bool load_tja_head(int course,LIST_T Song){
 				}
 				continue;
 			}*/
+
+			if(strstr(buf,"TOTAL:")==buf){ //魂ゲージの調節タグ、HBSCROLL譜面で主に使われる
+				if(buf[6]!='\n' && buf[6]!='\r'){
+					strlcpy(temp,buf+6,strlen(buf)-7);
+					Current_Header.total=atoi(temp);
+				}
+				free(temp);
+				continue;
+			}
 
 			if(strstr(buf,"SCOREMODE:")==buf){ //スコアの計算方法を変えるタグ、デフォルトではアーケード版に似た配点方法
 				if(buf[10]!='\n' && buf[10]!='\r'){
