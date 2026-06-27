@@ -78,7 +78,7 @@ bool load_tja_head(int course,LIST_T Song){
 	Current_Header.course=course;
 	Current_Header.style=1;
 	Current_Header.life=-1;
-	Current_Header.total=0;
+	Current_Header.total=-1;
 	Current_Header.gamemode=0;
 	Current_Header.bg=(char*)"bg.png";
 	Current_Header.isHBS=false;
