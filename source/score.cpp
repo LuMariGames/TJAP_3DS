@@ -415,8 +415,8 @@ void draw_lane(C2D_Sprite (&sprites)[SPRITES_NUMER],int kcnt,int dcnt){
 		}
 	}
 
-	C2D_DrawRectangle(62,86,0,338,46,C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00),C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00));
-	C2D_DrawRectangle(62,86,0,338,46,C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00),C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00));
+	C2D_DrawRectangle(64,86,0,336,46,C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00),C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00));
+	C2D_DrawRectangle(64,86,0,336,46,C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00),C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00));
 	C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_CIRCLE],NOTES_JUDGE_X,109);
 	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO],NOTES_JUDGE_X,92);
 	C2D_DrawImage(sprites[SPRITE_JUDGE_CIRCLE].image,&sprites[SPRITE_JUDGE_CIRCLE].params,NULL);
@@ -733,6 +733,11 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 			Gauge.norma=4400;
 			Gauge.soul=7333;
 		}
+		if(TJA_Header.total>=0){
+			Gauge.perfect=(Gauge.soul*TJA_Header.total)/PerfectNotesCount;
+			Gauge.nice=Gauge.perfect*3.0/4.0;
+			Gauge.bad=Gauge.perfect/2.0;
+		}
 		break;
 
 	case 1:		//ふつう
@@ -756,6 +761,13 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 			Gauge.bad=Gauge.perfect;
 			Gauge.norma=5250;
 			Gauge.soul=7500;
+		}
+		if(TJA_Header.total>=0){
+			Gauge.perfect=(Gauge.soul*TJA_Header.total)/PerfectNotesCount;
+			Gauge.nice=Gauge.perfect*3.0/4.0;
+			if(level<=3)Gauge.bad=Gauge.perfect/2.0;
+			else if(level==4)Gauge.bad=Gauge.perfect*3.0/4.0;
+			else if(level>=5)Gauge.bad=Gauge.perfect;
 		}
 		break;
 
@@ -786,6 +798,14 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 			Gauge.norma=4812;
 			Gauge.soul=6875;
 		}
+		if(TJA_Header.total>=0){
+			Gauge.perfect=(Gauge.soul*TJA_Header.total)/PerfectNotesCount;
+			Gauge.nice=Gauge.perfect*3.0/4.0;
+			if(level<=2)Gauge.bad=Gauge.perfect/2.0;
+			else if(level==3)Gauge.bad=Gauge.perfect;
+			else if(level<=4)Gauge.bad=Gauge.perfect*7.0/6.0;
+			else if(level>=5)Gauge.bad=Gauge.perfect*5.0/4.0;
+		}
 		break;
 
 	case 3:		//おに
@@ -806,11 +826,17 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 			Gauge.norma=6000;
 			Gauge.soul=7500;
 		}
+		if(TJA_Header.total>=0){
+			Gauge.perfect=(Gauge.soul*TJA_Header.total)/PerfectNotesCount;
+			Gauge.nice=Gauge.perfect/2.0;
+			if(level<=7)Gauge.bad=Gauge.perfect*8.0/5.0;
+			else if(level>=8)Gauge.bad=Gauge.perfect*2.0;
+		}
 		break;
 
 	case 5:		//太鼓タワー
 		Gauge.perfect=0;
-		Gauge.nice=Gauge.perfect/2.0;
+		Gauge.nice=0;
 		Gauge.bad=1000;
 		Gauge.norma=gaugelife*1000;
 		Gauge.soul=gaugelife*1000;
@@ -831,6 +857,12 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 			Gauge.bad=Gauge.perfect*2.0;
 			Gauge.soul=7500;
 		}
+		if(TJA_Header.total>=0){
+			Gauge.perfect=(Gauge.soul*TJA_Header.total)/PerfectNotesCount;
+			Gauge.nice=Gauge.perfect/2.0;
+			if(level<=7)Gauge.bad=Gauge.perfect*8.0/5.0;
+			else if(level>=8)Gauge.bad=Gauge.perfect*2.0;
+		}
 		Gauge.norma=Gauge.soul;
 		if(strcmp(exam[0][0],"g")==0&&strcmp(exam[0][3],"m")==0 )Gauge.norma=Gauge.soul *(Cdn[0][0]/100.00);
 		else if(strcmp(exam[1][0],"g")==0&&strcmp(exam[1][3],"m")==0 )Gauge.norma=Gauge.soul *(Cdn[0][1]/100.00);
@@ -847,6 +879,7 @@ void update_balloon_count(int arg){
 
 void draw_emblem(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
+	C2D_DrawRectSolid(62,86,0,2,58,C2D_Color32f(0,0,0,1));
 	switch(TJA_Header.course){
 	case COURSE_EASY:
 		C2D_DrawRectSolid(0,86,0,62,58,C2D_Color32f(1,51.0/255.0,0,1));
