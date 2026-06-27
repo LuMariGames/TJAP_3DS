@@ -13,7 +13,7 @@ typedef struct {
 
 	char *title,*subtitle,*wave,*bg;
 	int level,balloon[4][256],songvol,sevol,scoreinit,scorediff,
-		course,style,life,scoremode,subtitle_state,gamemode; //total,side;
+		course,style,life,scoremode,subtitle_state,gamemode,total; //side;
 	double bpm,offset; //demostart;
 	bool isHBS;
 
