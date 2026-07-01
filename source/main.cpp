@@ -666,13 +666,13 @@ int main(){
 			C3D_FrameEnd(0);
 			if (Option.edit == 1){
 				white_tja(SelectedSong);
-				load_tja_head_simple(&SelectedSong);
+				set_SelectedId();
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
 			else if (Option.edit == 2){
 				conv_tja(SelectedSong);
-				load_tja_head_simple(&SelectedSong);
+				set_SelectedId();
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
