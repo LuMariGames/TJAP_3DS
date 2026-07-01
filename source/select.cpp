@@ -477,6 +477,10 @@ void get_SelectedId(LIST_T* TMP,int* arg) {
 	*arg=course;
 }
 
+void set_SelectedId() {
+	load_tja_head_simple(&List[SelectedId]);
+}
+
 bool get_isGameStart() {
 	return isGameStart;
 }
