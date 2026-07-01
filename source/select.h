@@ -17,7 +17,7 @@ typedef struct {
 
 void load_file_main(void *arg), get_SelectedId(LIST_T *TMP, int *arg), get_result(RESULT_T *Result), disp_file_list();
 void draw_result_text(float x, float y, float size, const char *text, int color = 0xffffff, bool isfont = false), select_ini(), update_cursor(int knd);
-void calc_result_text(const char *text, float *width, float *height);
+void calc_result_text(const char *text, float *width, float *height), set_SelectedId();
 void draw_select_text(float x, float y, const char* text, int color = 0xffffff, bool isfont = false);
 void draw_option_text(float x, float y, const char *text, bool state, float *width, float *height, float sizex = 0.7, float sizey = 0.7);
 bool get_isGameStart();
