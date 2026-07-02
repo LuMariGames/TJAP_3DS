@@ -395,13 +395,15 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 			if(NotFalse==false&&Measure[i].judge_time<=CurrentTimeNotes)Measure[i].flag=false;
 		}
-		if(Measure[i].command==-1&&
+		if(!isHBSCROLL&&Measure[i].command==-1&&
 			MaxJudgeTime<Measure[i].judge_time&&Measure[i].judge_time<=CurrentTimeNotes){
 			NowBPM=Measure[i].bpm;
 			MaxJudgeTime=Measure[i].judge_time;
 			NowMeasure=i;
 		}
+		else if(isHBSCROLL&&Measure[NowMeasure].pop_time<=CurrentTimeNotes)++NowMeasure;
 	}
+	if(isHBSCROLL&&NowMeasure!=0)NowBPM=Measure[NowMeasure-1].bpm;
 	send_gogotime(isGOGOTime);
 	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
 		if(BarLine[i].flag){
