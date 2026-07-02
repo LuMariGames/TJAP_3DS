@@ -991,12 +991,12 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA));
 				break;
 			case COMMAND_BRANCHSTART:
-				Measure[i].judge_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA))-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
 				break;
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
-				Measure[i].judge_time=Measure[i].pop_time;
+				Measure[i].judge_time=(Measure[i].pop_time+(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[i].bpm)*NOTES_AREA));
 				break;
 			}
 		}
