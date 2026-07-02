@@ -133,7 +133,7 @@ inline int dancer_time_count(double TIME,int NUM)noexcept {
 	return(int)floor(TIME*(fabs(NowBPM)/(960.0/NUM)))%NUM;
 }
 
-static u32 GetNextPowerOf2(u32 v) {
+u32 GetNextPowerOf2(u32 v) {
 	v--;
 	v |= v >> 1;
 	v |= v >> 2;

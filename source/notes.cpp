@@ -356,7 +356,10 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 			++MeasureCount;
 		}
-		if(isLoadLoop)notes_sort();	//ソート
+		if(isLoadLoop){
+			Notes.resize((size_t)GetNextPowerOf2(id));
+			notes_sort();	//ソート
+		}
 	}
 
 	if(cnt<0)return;
@@ -417,6 +420,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
 	if(!Option.isStelth)notes_draw(sprites);
 	draw_emblem(sprites);
+	draw_judge(CurrentTimeNotes,sprites);
 
 	//割れた風船
 	C2D_ImageTint Tint;
@@ -438,7 +442,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		break;
 	}
 	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
-	draw_judge(CurrentTimeNotes,sprites);
 	draw_lyric_text(Measure[NowMeasure].lyric.data());
 	if(course==COURSE_DAN)dcd=dan_condition();
 	if(TotalFailedCount!=dcd&&0<dcd){
@@ -594,7 +597,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 
 	if(Option.isAuto){	//オート
 
-		for(int i=0,j=Notes.size()-1;i<j;++i){
+		for(int i=Notes.size()-1,j=0;i>=j;--i){
 
 			if(Notes[i].flag&&!Notes[i].isDummy&&Notes[i].judge_time<=CurrentTimeNotes &&
 				Notes[i].isThrough==false&&Notes[i].knd<NOTES_ROLL){
@@ -671,7 +674,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 		for(int j=0,sd=0,sk=0,gn=((isDon>=isKatsu)?isDon:isKatsu);j<gn;++j){
 
 			//判定すべきノーツを検索
-			for(int i=0,j=Notes.size();i<j;++i){
+			for(int i=Notes.size()-1,j=0;i>=j;--i){
 	
 				if(!Notes[i].isDummy&&Notes[i].flag){
 	
