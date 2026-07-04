@@ -670,12 +670,12 @@ int main(){
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
-			else if (Option.edit == 2){
+			/*else if (Option.edit == 2){
 				conv_tja(SelectedSong);
 				set_SelectedId();
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
-			}
+			}*/
 			else {
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.wave,course);
