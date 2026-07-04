@@ -588,10 +588,10 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		draw_option_text(x,y,Text[Option.lang][TEXT_EDITOR_MODE],true,&width,&height);
 		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
 		if (Option.edit == 1)draw_option_text(x,y,Text[Option.lang][TEXT_EDITOR],true,&width,&height);
-		else if (Option.edit == 2)draw_option_text(x,y,Text[Option.lang][TEXT_CONV],true,&width,&height);
+		//else if (Option.edit == 2)draw_option_text(x,y,Text[Option.lang][TEXT_CONV],true,&width,&height); //v2.3.0から自動でSJIS解読するのでコメント行き
 		else draw_option_text(x,y,Text[Option.lang][TEXT_OFF],true,&width,&height);
 		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
-			opv = ++Option.edit % 3;
+			opv = ++Option.edit % 2;
 			Option.edit = opv;
 		}
 		XCnt = 0,++YCnt;
