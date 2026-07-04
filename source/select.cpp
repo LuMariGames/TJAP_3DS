@@ -109,7 +109,10 @@ inline void load_file_list(const char* path) {
 						strlcpy(List[SongCount].tja,dp->d_name,sizeof(List[0].tja));
 						strlcpy(List[SongCount].path,path,sizeof(List[0].path));
 						List[SongCount].genre=GENRE_MAX+1;
-						load_tja_head_simple(&List[SongCount]);
+						if(!load_tja_head_simple(&List[SongCount])){
+							conv_tja(List[SongCount]);
+							load_tja_head_simple(&List[SongCount]);
+						}
 						loadend=1;
 						++SongCount;
 					}
