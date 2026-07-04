@@ -471,7 +471,7 @@ bool load_tja_head(int course,LIST_T Song){
 	return false;
 }
 
-void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
+bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 
 	snprintf(List->title,sizeof(List->title),"No Title");
 	snprintf(List->wave,sizeof(List->wave),"audio.ogg");
@@ -483,6 +483,7 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 	FILE *fp;
 	char buf[128],*temp=NULL;
 	int course=COURSE_ONI,cnt=0;
+	bool comp=true;
 	char abs_path[512];
 
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",List->path,List->tja);
@@ -493,6 +494,7 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 			temp=(char *)malloc((strlen(buf)+1));
 
 			if(!isUTF8(buf)){
+				comp=false;
 				break;
 			}
 			if(strstr(buf,"TITLE:")==buf){
@@ -546,6 +548,7 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 	}
 	free(temp);
 	fclose(fp);
+	return comp;
 }
 
 void white_tja(LIST_T Song){
