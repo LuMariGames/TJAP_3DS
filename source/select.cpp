@@ -38,6 +38,7 @@ void sort_list() {	//曲をジャンル順にソート
 void load_file_main(void *arg) {
 
 	load_combo();
+	PTMSYSM_CheckNew3DS(&New);
 	newfont();
 	load_file_list(DEFAULT_DIR);
 	set_genres();
