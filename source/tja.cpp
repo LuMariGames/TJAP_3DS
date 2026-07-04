@@ -493,6 +493,11 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 
 			temp=(char *)malloc((strlen(buf)+1));
 
+			if(!isUTF8(buf)){
+				conv_tja(abs_path);
+				load_tja_head_simple(List);
+				break;
+			}
 			if(strstr(buf,"TITLE:")==buf){
 				if(buf[6]!='\n' && buf[6]!='\r'){
 					strlcpy(List->title,buf+6,strlen(buf)-7);
