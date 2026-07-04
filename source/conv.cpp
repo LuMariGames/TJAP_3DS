@@ -6896,7 +6896,7 @@ bool isUTF8(const char* str) {
 
 	const unsigned char* p = reinterpret_cast<const unsigned char*>(str);
 	
-	while (*p != '\0') {
+	while (*p != '\0' && *p != '\r') {
 		// 1バイト文字 (ASCII: 0x00 - 0x7F)
 		if (*p <= 0x7F) {
 			p++;
