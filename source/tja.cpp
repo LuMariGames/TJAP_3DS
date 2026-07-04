@@ -473,7 +473,6 @@ bool load_tja_head(int course,LIST_T Song){
 
 void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 
-
 	snprintf(List->title,sizeof(List->title),"No Title");
 	snprintf(List->wave,sizeof(List->wave),"audio.ogg");
 	for(int i=0;i<5;++i){
@@ -494,8 +493,6 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 			temp=(char *)malloc((strlen(buf)+1));
 
 			if(!isUTF8(buf)){
-				conv_tja(List);
-				load_tja_head_simple(List);
 				break;
 			}
 			if(strstr(buf,"TITLE:")==buf){
