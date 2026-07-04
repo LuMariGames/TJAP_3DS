@@ -494,7 +494,7 @@ void load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 			temp=(char *)malloc((strlen(buf)+1));
 
 			if(!isUTF8(buf)){
-				conv_tja(abs_path);
+				conv_tja(List);
 				load_tja_head_simple(List);
 				break;
 			}
