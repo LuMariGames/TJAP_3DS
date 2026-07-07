@@ -481,7 +481,7 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 	}
 
 	FILE *fp;
-	char buf[128],*temp=NULL;
+	char buf[512],*temp=NULL;
 	int course=COURSE_ONI,cnt=0,UTF8=1;
 	bool comp=true;
 	char abs_path[512];
@@ -489,7 +489,7 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",List->path,List->tja);
 	if((fp=fopen(abs_path,"r"))!=NULL){
 
-		while(fgets(buf,128,fp)!=NULL){
+		while(fgets(buf,512,fp)!=NULL){
 
 			temp=(char *)malloc((strlen(buf)+1));
 
