@@ -482,7 +482,7 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 
 	FILE *fp;
 	char buf[128],*temp=NULL;
-	int course=COURSE_ONI,cnt=0;
+	int course=COURSE_ONI,cnt=0,UTF8=1;
 	bool comp=true;
 	char abs_path[512];
 
@@ -493,7 +493,8 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 
 			temp=(char *)malloc((strlen(buf)+1));
 
-			if(!isUTF8(buf)){
+			if(UTF8!=2)UTF8=isUTF8(buf);
+			if(UTF8==0){
 				comp=false;
 				break;
 			}
@@ -503,9 +504,18 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 				}
 				continue;
 			}
+
 			if(strstr(buf,"SUBTITLE:")==buf){
 				if(buf[9]!='\n' && buf[9]!='\r'){
 					strlcpy(List->subtitle,buf+9,strlen(buf)-10);
+				}
+				continue;
+			}
+
+			//BOM付き対策
+			if(strstr(buf,"TITLE:")==buf+3&&strstr(buf,"SUBTITLE:")==0){
+				if(buf[9]!='\n' && buf[9]!='\r'){
+					strlcpy(List->title,buf+9,strlen(buf)-10);
 				}
 				continue;
 			}
@@ -632,6 +642,9 @@ void conv_tja(LIST_T Song){
 		fclose(fp);
 		fp=fopen(abs_path,"w");
 		char* dst=tja_text;
+		fputc(0xEF,fp);
+		fputc(0xBB,fp);
+		fputc(0xBF,fp);
 		while(*dst){
 			if(strncmp(sijs2u8(dst[0],dst[1]),"-10",3)==0){
 				fputc(*dst++,fp);

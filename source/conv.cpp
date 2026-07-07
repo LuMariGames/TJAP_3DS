@@ -6891,12 +6891,12 @@ const char* sijs2u8(char text0, char text1){
 	}
 }
 
-bool isUTF8(const char* str) {
+u8 isUTF8(const char* str) {
 	const unsigned char* p = reinterpret_cast<const unsigned char*>(str);
 	
 	// BOM (Byte Order Mark) がある場合はスキップする
 	if (p[0] == 0xEF && p[1] == 0xBB && p[2] == 0xBF) {
-		p += 3;
+		return 2;
 	}
 
 	while (*p != '\0') {
@@ -6907,29 +6907,29 @@ bool isUTF8(const char* str) {
 		// 2バイト文字 (110xxxxx 10xxxxxx)
 		// 0xC0, 0xC1は不正 (過剰長)
 		else if ((*p & 0xE0) == 0xC0) {
-			if ((*p < 0xC2) || (*(p + 1) & 0xC0) != 0x80) return false;
+			if ((*p < 0xC2) || (*(p + 1) & 0xC0) != 0x80) return 0;
 			p += 2;
 		}
 		// 3バイト文字 (1110xxxx 10xxxxxx 10xxxxxx)
 		// 0xED 0xA0-BF (サロゲートペア) は不正
 		else if ((*p & 0xF0) == 0xE0) {
-			if (*p == 0xE0 && *(p + 1) < 0xA0) return false;
-			if (*p == 0xED && *(p + 1) >= 0xA0) return false;
-			if ((*(p + 1) & 0xC0) != 0x80 || (*(p + 2) & 0xC0) != 0x80) return false;
+			if (*p == 0xE0 && *(p + 1) < 0xA0) return 0;
+			if (*p == 0xED && *(p + 1) >= 0xA0) return 0;
+			if ((*(p + 1) & 0xC0) != 0x80 || (*(p + 2) & 0xC0) != 0x80) return 0;
 			p += 3;
 		}
 		// 4バイト文字 (11110xxx 10xxxxxx 10xxxxxx 10xxxxxx)
 		// 0xF4より大きい、または 0xF4 0x90以降は不正 (Unicode範囲外)
 		else if ((*p & 0xF8) == 0xF0) {
-			if (*p == 0xF0 && *(p + 1) < 0x90) return false;
-			if (*p == 0xF4 && *(p + 1) >= 0x90) return false;
-			if (*p > 0xF4) return false;
-			if ((*(p + 1) & 0xC0) != 0x80 || (*(p + 2) & 0xC0) != 0x80 || (*(p + 3) & 0xC0) != 0x80) return false;
+			if (*p == 0xF0 && *(p + 1) < 0x90) return 0;
+			if (*p == 0xF4 && *(p + 1) >= 0x90) return 0;
+			if (*p > 0xF4) return 0;
+			if ((*(p + 1) & 0xC0) != 0x80 || (*(p + 2) & 0xC0) != 0x80 || (*(p + 3) & 0xC0) != 0x80) return 0;
 			p += 4;
 		}
 		else {
-			return false;
+			return 0;
 		}
 	}
-	return true;
+	return 1;
 }
