@@ -261,6 +261,11 @@ void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 	changeFile(abs_path,&playbackInfo,p_isPlayMain);
 }
 
+void path_play_main_music(bool *p_isPlayMain,char abs_path[512]) {
+
+	changeFile(abs_path,&playbackInfo,p_isPlayMain);
+}
+
 void pasue_main_music() {
 
 	if (isPlaying() == true) {

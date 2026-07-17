@@ -28,7 +28,7 @@ struct playbackInfo_t{
 };
 
 bool togglePlayback(void), isPlaying(void);
-void stopPlayback(void), playFile(void* infoIn);
+void stopPlayback(void), playFile(void* infoIn), path_play_main_music(bool *p_isPlayMain,char abs_path[512]);
 int getFileType(const char *file), check_wave(LIST_T Song);
 int changeFile(const char* ep_file, struct playbackInfo_t* playbackInfo,bool *p_isPlayMain);
 void play_main_music(bool *p_isPlayMain, LIST_T Song), pasue_main_music(), stop_main_music(), init_main_music();
