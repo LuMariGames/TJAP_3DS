@@ -17,7 +17,7 @@ void setVorbis(struct decoder_fn* decoder){
 	decoder->init = &initVorbis;
 	decoder->rate = &rateVorbis;
 	decoder->channels = &channelVorbis;
-	decoder->buffSize = vorbis_buffer_size;
+	decoder->buffSize = vorbis_buffer_size = (vi->bitrate_upper*0.001)*vi->rate*vi->channels;
 	decoder->decode = &decodeVorbis;
 	decoder->exit = &exitVorbis;
 }
