@@ -1172,6 +1172,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 		else if(strcmp(command,"BARLINEON")==0)Command->knd=COMMAND_BARLINEON;
 		else if(strcmp(command,"DUMMYEND")==0)Command->knd=COMMAND_DUMMYOFF;
 		else if(strcmp(command,"DUMMYSTART")==0)Command->knd=COMMAND_DUMMYON;
+		else if(strcmp(command,"NEXTSONG")==0)Command->knd=COMMAND_NEXTSONG;
 		else if(strcmp(command,"LYRIC")==0){
 			Command->knd=COMMAND_LYRIC;
 			strlcpy(value,buf+7,length-8);
