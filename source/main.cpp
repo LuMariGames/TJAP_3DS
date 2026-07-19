@@ -398,6 +398,7 @@ inline static void load_sprites(){
 
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
 memtch_x,memtch_y;
+LIST_T SelectedSong;
 
 int main(){
 
@@ -408,7 +409,6 @@ int main(){
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM,GFX_LEFT);
 
 	TJA_HEADER_T TJA_Header;
-	LIST_T SelectedSong;
 	OPTION_T Option, befOption;
 	SKIN_T Skin;
 
@@ -1183,6 +1183,17 @@ int main(){
 	exit(0);
 }
 
+void play_songs(char* ptr) {
+	char wavepath[256],abs_path[512];
+	int ptrcnt=0;
+	while(*ptr!='\0'){
+		wavepath[ptrcnt]= *ptr; // ここで1文字ずつ処理する
+		ptr++;
+		++ptrcnt;
+	}
+	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
+	path_play_main_music(&isPlayMain,abs_path);
+}
 bool get_isPause(){
 	return isPause;
 }
