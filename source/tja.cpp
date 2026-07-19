@@ -811,8 +811,9 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_NEXTSONG:
 						delay=3.006;
+						break;
 					case COMMAND_DELAY:
-						delay+=Command.val[0];
+						delay=Command.val[0];
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
