@@ -1009,7 +1009,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_NEXTSONG:
-				Measure[i].create_time=(Measure[i].pop_time-3.006);
+				Measure[i].create_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure*4;
 				break;
 			case COMMAND_JPOSSCROLL:
 				Measure[i].create_time=Measure[i].pop_time;
