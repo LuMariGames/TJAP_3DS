@@ -1184,6 +1184,7 @@ int main(){
 }
 
 void play_songs(char* ptr) {
+	stopPlayback();
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
 	while(*ptr!='\0'){
