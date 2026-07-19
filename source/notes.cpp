@@ -125,7 +125,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						isLevelHold=true;
 						break;
 					case COMMAND_NEXTSONG:
-						tp=strtok(Command.value_s, ",");
+						tp=strtok(Command.value_s.data(), ",");
 						int count=1;
 						while(tp!=NULL){
 							if(count==4){
