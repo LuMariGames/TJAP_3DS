@@ -1188,6 +1188,7 @@ int main(){
 }
 
 void play_songs(char* ptr) {
+	stopPlayback();
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
 	playcnt=cnt+180;
@@ -1197,7 +1198,6 @@ void play_songs(char* ptr) {
 		++ptrcnt;
 	}
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
-	stopPlayback();
 	isPlayMain=false;
 	path_play_main_music(&isPlayMain,abs_path);
 }
