@@ -33,7 +33,7 @@ C2D_Text dynText;
 Thread chartload;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
-int scene_state = SCENE_SELECTLOAD,bgcnt = -1,dn_x,dn_y,dg_x,dg_y;
+int scene_state = SCENE_SELECTLOAD,bgcnt = -1,cnt = 0,playcnt = 0,dn_x,dn_y,dg_x,dg_y;
 bool dance = false,plusimg_player = false;	//拡張スキン用
 unsigned int dancnt = 0;		//拡張スキン用
 ghostdata read_data,write_data[81920];
@@ -412,7 +412,7 @@ int main(){
 	OPTION_T Option, befOption;
 	SKIN_T Skin;
 
-	int ComboCnt = 0,cnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
+	int ComboCnt = 0,notes_cnt = 0,warning = -1,course = COURSE_ONI,tmp = 0,measure = 0,khdcnt = 0,
 	mintime1=0,mintime2=0,mintime3=0,BeforeCombo=-1,don_cnt=0,katsu_cnt=0,tch_cnt=0,ghostnum=0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 	bool bottaikoview = false;
@@ -705,7 +705,7 @@ int main(){
 					offset = TJA_Header.offset+Option.offset;
 					notes_cnt = -1,BeforeCombo = -1,measure = Option.measure;
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
-					FirstMeasureTime = INT_MAX,CurrentTimeMain = -2147483640,ghostnum = 0;
+					FirstMeasureTime=INT_MAX,playcnt=INT_MAX,CurrentTimeMain=-2147483640,ghostnum = 0;
 				}
 
 				tmp = check_wave(SelectedSong);
@@ -1080,13 +1080,17 @@ int main(){
 				}
 				if (CurrentTimeMain>=(-1.0)* offset&&!isNotesStart)isNotesStart = true;
 			}
-			else if (measure>0){
+			else if (measure>0&&(!isNotesStart || !isMusicStart)){
 
 				if (CurrentTimeMain>=(starttime()* -1.0)&& !isPlayMain){
 					isPlayMain = true;
 					isMusicStart = true;
 				}
 				if (CurrentTimeMain>=0&&!isNotesStart)isNotesStart = true;
+			}
+			else if (playcnt==cnt&&isPlayMain==false){
+				isPlayMain = true;
+				playcnt=INT_MAX;
 			}
 
 			if (TotalBadCount>0){
@@ -1186,12 +1190,15 @@ int main(){
 void play_songs(char* ptr) {
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
+	playcnt=cnt+180;
 	while(*ptr!='\0'){
 		wavepath[ptrcnt]= *ptr; // ここで1文字ずつ処理する
 		ptr++;
 		++ptrcnt;
 	}
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
+	stopPlayback();
+	isPlayMain=false;
 	path_play_main_music(&isPlayMain,abs_path);
 }
 bool get_isPause(){
