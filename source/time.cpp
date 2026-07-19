@@ -15,8 +15,8 @@ enum msec_status {
 #define TIME_NUM 4
 
 struct timespec tv;
-int cnt[TIME_NUM],msec[TIME_NUM][4],sec[TIME_NUM];
-int isStop[TIME_NUM];
+static int cnt[TIME_NUM];
+int msec[TIME_NUM][4],sec[TIME_NUM],isStop[TIME_NUM];
 double PreTime[TIME_NUM],Time[TIME_NUM],CurrentTime[TIME_NUM],IniVorbisTime[TIME_NUM],OffTime[TIME_NUM];
 
 double get_current_time(int id) {
