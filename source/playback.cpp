@@ -11,6 +11,7 @@
 #define delete(ptr) \
 	free((void*) ptr); ptr = NULL
 
+int CHANNEL = 6;
 static int Decode_CoreID = 1;
 static bool stop = true;
 extern float mix[12];
@@ -137,6 +138,8 @@ void playFile(void* infoIn){
 	buffer[0] = (int16_t*)linearAlloc(decoder.buffSize * sizeof(int16_t));
 	buffer[1] = (int16_t*)linearAlloc(decoder.buffSize * sizeof(int16_t));
 
+	if(ndspChnIsPlaying(6)==true)CHANNEL=7;
+	else CHANNEL=6;
 	ndspChnWaveBufClear(CHANNEL);
 	ndspChnReset(CHANNEL);
 	ndspChnSetInterp(CHANNEL,NDSP_INTERP_LINEAR);
