@@ -1088,10 +1088,6 @@ int main(){
 				}
 				if (CurrentTimeMain>=0&&!isNotesStart)isNotesStart = true;
 			}
-			else if (playcnt==cnt&&isPlayMain==false){
-				isPlayMain = true;
-				playcnt=INT_MAX;
-			}
 
 			if (TotalBadCount>0){
 				char abs_path[521];
@@ -1188,8 +1184,6 @@ int main(){
 }
 
 void play_songs(char* ptr) {
-	stopPlayback();
-	playcnt=cnt+150;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
 	while(*ptr!='\0'){
@@ -1198,7 +1192,6 @@ void play_songs(char* ptr) {
 		++ptrcnt;
 	}
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
-	isPlayMain=false;
 	path_play_main_music(&isPlayMain,abs_path);
 }
 bool get_isPause(){
