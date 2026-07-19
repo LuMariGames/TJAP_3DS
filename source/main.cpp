@@ -1189,9 +1189,9 @@ int main(){
 
 void play_songs(char* ptr) {
 	stopPlayback();
+	playcnt=cnt;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
-	playcnt=cnt+150;
 	while(*ptr!='\0'){
 		wavepath[ptrcnt]= *ptr; // ここで1文字ずつ処理する
 		ptr++;
