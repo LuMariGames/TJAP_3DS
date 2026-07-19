@@ -1,7 +1,7 @@
 #pragma once
 #include "select.h"
 
-#define CHANNEL 6
+extern int CHANNEL;
 
 enum file_types{
 	FILE_TYPE_ERROR = -1,
