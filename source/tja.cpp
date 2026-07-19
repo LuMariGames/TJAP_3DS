@@ -809,9 +809,6 @@ void load_tja_notes(int course,LIST_T Song){
 						scroll=Command.val[0];
 						yscroll=Command.val[1];
 						break;
-					case COMMAND_NEXTSONG:
-						PreJudge+=3.006;
-						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
 						break;
@@ -946,6 +943,9 @@ void load_tja_notes(int course,LIST_T Song){
 						isDummy=BeforeBranchIsDummy;
 						ly=Beforely;
 						break;
+					case COMMAND_NEXTSONG:
+						PreJudge+=3.006;
+						break;
 					}
 				}
 				else {
@@ -1009,7 +1009,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_NEXTSONG:
-				Measure[i].create_time=Measure[i].judge_time+3.006;
+				Measure[i].create_time=Measure[i].pop_time;
 				break;
 			case COMMAND_JPOSSCROLL:
 				Measure[i].create_time=Measure[i].pop_time;
