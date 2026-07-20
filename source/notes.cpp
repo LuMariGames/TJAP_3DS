@@ -136,7 +136,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 							tp=strtok(NULL,",");
 							count++;
 						}
-						play_songs(tp);
+						if(tp!=NULL)play_songs(tp);
 						break;
 					}
 					NotesCount=0;
