@@ -1009,13 +1009,13 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_NEXTSONG:
-				n=Measure[i].notes+1;
+				/*n=Measure[i].notes+1;
 				while(n<=tja_cnt&&(tja_notes[n][0]=='#'||tja_notes[n][0]=='\r'))++n;
-				while(n<tja_cnt&&n!=Measure[j].notes)++j;
-				Measure[i].create_time=Measure[j].pop_time-3.0;
+				while(n<tja_cnt&&n!=Measure[j].notes)++j;*/
+				Measure[i].create_time=Measure[i].pop_time-3.0;
 				break;
 			case COMMAND_JPOSSCROLL:
-				Measure[i].create_time=Measure[i].pop_time;
+				Measure[i].create_time=Measure[i].pop_time-3.0;
 				break;
 			case COMMAND_BRANCHSTART:
 				Measure[i].judge_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
