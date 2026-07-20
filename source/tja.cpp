@@ -810,7 +810,7 @@ void load_tja_notes(int course,LIST_T Song){
 						yscroll=Command.val[1];
 						break;
 					case COMMAND_NEXTSONG:
-						PreJudge+=3.006;
+						PreJudge+=(240.0/bpm)*measure;
 						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
@@ -1012,7 +1012,7 @@ void load_tja_notes(int course,LIST_T Song){
 				/*n=Measure[i].notes+1;
 				while(n<=tja_cnt&&(tja_notes[n][0]=='#'||tja_notes[n][0]=='\r'))++n;
 				while(n<tja_cnt&&n!=Measure[j].notes)++j;*/
-				Measure[i].create_time=Measure[i].pop_time-3.0;
+				Measure[i].create_time=Measure[i].pop_time;
 				break;
 			case COMMAND_JPOSSCROLL:
 				Measure[i].create_time=Measure[i].pop_time;
