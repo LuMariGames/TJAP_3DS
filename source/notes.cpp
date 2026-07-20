@@ -94,7 +94,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 					get_command_value(tja_notes[Measure[MeasureCount].notes],&Command);
 					Command.notes=tja_notes[Measure[MeasureCount].notes];
-					char* tp;
 
 					switch(Command.knd){
 					case COMMAND_END:
@@ -123,20 +122,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
-						break;
-					case COMMAND_NEXTSONG:
-						tp=strtok(Command.value_s.data(), ",");
-						int count=1;
-						while(tp!=NULL){
-							if(count==4){
-								break;          // 目的のものが取れたのでループを抜ける
-							}
-
-							// 2回目以降の呼び出しは、第一引数に NULL を指定します
-							tp=strtok(NULL,",");
-							count++;
-						}
-						if(tp!=NULL)play_songs(tp);
 						break;
 					}
 					NotesCount=0;
@@ -381,6 +366,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
 	double MaxJudgeTime=0.0;
 	int NowMeasure=0;
+	char* tp;
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
 		if((Measure[i].branch==Branch.course||Measure[i].branch==-1)&&Measure[i].flag){
@@ -403,6 +389,21 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						Branch.wait=false;
 					}
 					else NotFalse=true;
+					break;
+				case COMMAND_NEXTSONG:
+					get_command_value(tja_notes[Measure[MeasureCount].notes],&Command);
+					tp=strtok(Command.value_s.data(), ",");
+					int count=1;
+					while(tp!=NULL){
+						if(count==4){
+							break;          // 目的のものが取れたのでループを抜ける
+						}
+
+						// 2回目以降の呼び出しは、第一引数に NULL を指定します
+						tp=strtok(NULL,",");
+						count++;
+					}
+					if(tp!=NULL)play_songs(tp);
 					break;
 				default:
 					break;
