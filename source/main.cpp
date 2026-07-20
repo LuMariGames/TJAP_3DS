@@ -1199,7 +1199,6 @@ void play_songs(char* ptr) {
 	}
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
 	path_play_main_music(&isPlayMain,abs_path);
-	isPlayMain=false;
 }
 bool get_isPause(){
 	return isPause;
