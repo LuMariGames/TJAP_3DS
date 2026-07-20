@@ -365,7 +365,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	if(cnt<0)return;
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
 	double MaxJudgeTime=0.0;
-	int NowMeasure=0;
+	int NowMeasure=0,count=1;
 	char* tp;
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
@@ -393,7 +393,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				case COMMAND_NEXTSONG:
 					get_command_value(tja_notes[Measure[MeasureCount].notes],&Command);
 					tp=strtok(Command.value_s.data(), ",");
-					int count=1;
+					count=1;
 					while(tp!=NULL){
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
