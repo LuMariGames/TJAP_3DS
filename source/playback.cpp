@@ -266,6 +266,8 @@ void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
 void path_play_main_music(bool *p_isPlayMain,char abs_path[512]) {
 
+	stopPlayback();
+	ndspChnSetPaused(CHANNEL,true);
 	changeFile(abs_path,&playbackInfo,p_isPlayMain);
 }
 
@@ -279,7 +281,7 @@ void pasue_main_music() {
 void stop_main_music() {
 
 	stopPlayback();
-	changeFile(NULL,&playbackInfo ,NULL);
+	changeFile(NULL,&playbackInfo,NULL);
 }
 
 void init_main_music() {
