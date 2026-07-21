@@ -1188,7 +1188,6 @@ int main(){
 }
 
 void play_songs(char* ptr) {
-	stop_main_music();
 	playcnt=cnt+180;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
