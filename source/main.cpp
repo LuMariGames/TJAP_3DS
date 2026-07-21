@@ -1048,8 +1048,8 @@ int main(){
 				else if (keyhold&KEY_DRIGHT)++khdcnt;
 				else khdcnt = 0;
 				if (key&KEY_DUP)toggle_auto();
-				if ((key&KEY_DLEFT || khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS)min_measure();
-				if ((key&KEY_DRIGHT || khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS)plus_measure();
+				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS&&TJA_Header.course!=COURSE_DAN)min_measure();
+				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS&&TJA_Header.course!=COURSE_DAN)plus_measure();
 			}
 
 			if(cnt == 0){
