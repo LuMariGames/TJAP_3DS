@@ -998,7 +998,7 @@ int main(){
 				C2D_DrawImage(sprites[SPRITE_TOUCH].image,&sprites[SPRITE_TOUCH].params,NULL);
 			}
 
-			if (key&KEY_SELECT || key&KEY_START){
+			if ((key&KEY_SELECT||key&KEY_START)&&(!isPlayMain||ndspChnIsPlaying(CHANNEL))){
 				togglePlayback();
 				toggle_time(0);
 				toggle_time(1);
@@ -1188,7 +1188,7 @@ int main(){
 }
 
 void play_songs(char* ptr) {
-	stopPlayback();
+	stop_main_music();
 	playcnt=cnt+180;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;

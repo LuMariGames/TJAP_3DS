@@ -1001,7 +1001,7 @@ void load_tja_notes(int course,LIST_T Song){
 		}
 
 		MeasureMaxNumber=MeasureCount;
-		for(int i=0,n=0,j=0;i<MeasureMaxNumber+1;++i){	//次の小節の判定時に発動する命令の調整
+		for(int i=0,j=MeasureMaxNumber+1;i<j;++i){	//次の小節の判定時に発動する命令の調整
 
 			switch(Measure[i].command){
 			case COMMAND_END:
@@ -1009,10 +1009,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_NEXTSONG:
-				n=Measure[i].notes+1;
-				while(n<=tja_cnt&&(tja_notes[n][0]=='#'||tja_notes[n][0]=='\r'))++n;
-				while(n<tja_cnt&&n!=Measure[j].notes)++j;
-				Measure[i].create_time=Measure[i].pop_time-(240.0/Measure[j].bpm)*Measure[j].measure;
+				Measure[i].create_time=Measure[i].pop_time-(240.0/Measure[i].bpm)*Measure[i].measure;
 				Measure[i].judge_time=Measure[i].pop_time;
 				break;
 			case COMMAND_JPOSSCROLL:
