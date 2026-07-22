@@ -158,7 +158,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
 			double NoteTime=0.0;
-			int OriginalMeasure=get_MeasureId_From_OriginalId(Measure[MeasureCount].firstmeasure);
+			int OriginalMeasure=get_MeasureId_From_OriginalId(MeasureCount);
 			bool isRest=false;
 			if(isHBSCROLL)isRest=true;
 			for(int i=0;i<NotesCount;++i){
