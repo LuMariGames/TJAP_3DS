@@ -14,7 +14,7 @@ struct {
 } judgedata;
 
 Thread judgemove;
-int balloon[4][256],BalloonCount[4],TotalFailedCount,NowMeCount,dcd,JBS=-1,JRS=-1,isgamemode=0,id=0;
+int balloon[4][256],BalloonCount[4],NowMeCount,JBS=-1,JRS=-1,isgamemode=0,id=0;
 double bpm,offset;
 constexpr double conbpm=1.0/240.0;
 float NowBPM=120.0f;
@@ -362,7 +362,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		}
 	}
 
-	if(cnt<0)return;
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
 	double MaxJudgeTime=0.0;
 	int NowMeasure=0,count=1;
@@ -391,7 +390,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					else NotFalse=true;
 					break;
 				case COMMAND_NEXTSONG:
-					get_command_value(tja_notes[Measure[MeasureCount].notes],&Command);
+					get_command_value(tja_notes[Measure[i].notes],&Command);
 					tp=strtok(Command.value_s.data(), ",");
 					count=1;
 					while(tp!=NULL){
@@ -419,6 +418,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		}
 	}
 	send_gogotime(isGOGOTime);
+	if(cnt<0)return;
+
 	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
 		if(BarLine[i].flag){
 			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
@@ -459,11 +460,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	}
 	if(BalloonBreakCount<=0)isBalloonBreakDisp=0;
 	draw_lyric_text(Measure[NowMeasure].lyric.data());
-	if(course==COURSE_DAN)dcd=dan_condition();
-	if(TotalFailedCount!=dcd&&0<dcd){
-		play_sound(SOUND_FAILED);
-		TotalFailedCount=dcd;
-	}
 
 	/*snprintf(get_buffer(),BUFFER_SIZE,"cnt:%d NotesNum:%d",cnt,NotesNumber);
 	draw_debug(100,0,get_buffer());
@@ -1549,7 +1545,6 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	Branch.wait=false;
 	isLevelHold=false;
 	PreNotesKnd=0;
-	TotalFailedCount=0;
 	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
 		BarLine[i].flag=false;
 		BarLine[i].scroll=0;
@@ -1557,7 +1552,6 @@ void init_notes(TJA_HEADER_T TJA_Header){
 		BarLine[i].create_time=0;
 		BarLine[i].isDisp=false;
 	}
-	dcd=0;
 	Notes.clear();
 	Notes.resize(64);
 	id=0;

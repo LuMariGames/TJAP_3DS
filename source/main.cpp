@@ -33,7 +33,7 @@ C2D_Text dynText;
 Thread chartload;
 bool isPause = false,isNotesStart = false,isMusicStart = false,isPlayMain = false,isExit = false,isAniBg = false;
 char buffer[BUFFER_SIZE];
-int scene_state = SCENE_SELECTLOAD,bgcnt = -1,cnt = 0,playcnt = 0,dn_x,dn_y,dg_x,dg_y;
+int scene_state = SCENE_SELECTLOAD,bgcnt = -1,cnt = 0,playcnt = 0,TotalFailedCount,dcd,dn_x,dn_y,dg_x,dg_y;
 bool dance = false,plusimg_player = false;	//拡張スキン用
 unsigned int dancnt = 0;		//拡張スキン用
 ghostdata read_data,write_data[81920];
@@ -449,8 +449,7 @@ int main(){
 		C2D_SceneTarget(top);
 
 		switch (scene_state){
-
-		case SCENE_SELECTLOAD:	//ロード画面
+		case SCENE_SELECTLOAD: {	//ロード画面
 
 			snprintf(get_buffer(),BUFFER_SIZE,"TJAPlayer for 3DS v%s",VERSION);
 			draw_select_text(120,70,get_buffer());
@@ -516,8 +515,8 @@ int main(){
 				}
 			}
 			break;
-
-		case SCENE_WARNING:		//警告画面
+		}
+		case SCENE_WARNING: {		//警告画面
 
 			//下画面
 			C2D_TargetClear(bottom,C2D_Color32(0x42,0x42,0x42,0xFF));
@@ -546,8 +545,8 @@ int main(){
 				warning = -1;
 			}
 			break;
-
-		case SCENE_SELECTSONG:	//選曲
+		}
+		case SCENE_SELECTSONG: {	//選曲
 
 			if (cnt == 0){
 				select_ini();
@@ -659,8 +658,8 @@ int main(){
 			isPause = false;
 			if (loadend == 3&&key&KEY_START)isExit = true;
 			break;
-
-		case SCENE_MAINLOAD:	 //ロード中
+		}
+		case SCENE_MAINLOAD: {	 //ロード中
 
 			draw_select_text(0,225,"Chart Loading...");
 			C3D_FrameEnd(0);
@@ -703,7 +702,7 @@ int main(){
 					init_notes(TJA_Header);
 					time_ini();
 					offset = TJA_Header.offset+Option.offset;
-					notes_cnt = -1,BeforeCombo = -1,measure = Option.measure;
+					TotalFailedCount=0,dcd=0,notes_cnt=-1,BeforeCombo=-1,measure=Option.measure;
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
 					FirstMeasureTime=INT_MAX,playcnt=INT_MAX,CurrentTimeMain=-2147483640,ghostnum = 0;
 				}
@@ -730,8 +729,8 @@ int main(){
 						bgcnt = 0;
 					}
 					else if (exist_file(abs_path)==0)isAniBg = false;
-					play_main_music(&isPlayMain,SelectedSong);
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
+					if(playcnt==INT_MAX)play_main_music(&isPlayMain,SelectedSong);
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
 					aptSetSleepAllowed(false);
@@ -752,8 +751,8 @@ int main(){
 				}
 			}
 			break;
-
-		case SCENE_LOADSCRE:
+		}
+		case SCENE_LOADSCRE: {
 
 			draw_select_text(0,225,"Loading completed.");
 			if (tp.px != 0&&tp.py != 0){	//タッチ位置の取得
@@ -852,8 +851,8 @@ int main(){
 
 			if (cnt == -60)scene_state = SCENE_MAINGAME;
 			break;
-
-		case SCENE_MAINGAME:		//演奏画面
+		}
+		case SCENE_MAINGAME: {		//演奏画面
 
 			if (!isPause){
 				if (tp.px != 0&&tp.py != 0){
@@ -1060,6 +1059,11 @@ int main(){
 				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu};
 				if(ghostnum<81919)++ghostnum;
 			}
+			if(course==COURSE_DAN)dcd=dan_condition();
+			if(TotalFailedCount!=dcd&&0<dcd){
+				play_sound(SOUND_FAILED);
+				TotalFailedCount=dcd;
+			}
 
 			//譜面が先
 			if (offset>0&&(!isNotesStart || !isMusicStart)&& measure<=0){
@@ -1160,8 +1164,8 @@ int main(){
 				BeforeCombo = -1;
 			}
 			break;
-
-		case SCENE_RESULT:
+		}
+		case SCENE_RESULT: {
 
 			if (cnt<=0&&TotalBadCount<=0)play_sound((get_isauto()? 38 : 37));
 			stopPlayback();
@@ -1173,7 +1177,9 @@ int main(){
 			}
 			break;
 		}
-
+		default:
+			break;
+		}
 		//描画終了
 		C3D_FrameEnd(0);
 		if (!isPause){
@@ -1188,7 +1194,14 @@ int main(){
 }
 
 void play_songs(char* ptr) {
-	playcnt=cnt+180;
+	if(course!=COURSE_DAN){
+		return;
+	}
+	else if(0<dcd){
+		scene_state = SCENE_RESULT;
+		return;
+	}
+	playcnt=cnt+150;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
 	while(*ptr!='\0'){
