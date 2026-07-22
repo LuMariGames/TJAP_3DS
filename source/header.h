@@ -13,6 +13,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <tuple>
 
 #define C3D_CMDBUF_SIZE 0x40000
 #define VERSION "2.3.1"
