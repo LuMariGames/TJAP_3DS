@@ -158,6 +158,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
 			double NoteTime=0.0;
+			int OriginalMeasure=get_MeasureId_From_OriginalId(Measure[MeasureCount].firstmeasure);
 			bool isRest=false;
 			if(isHBSCROLL)isRest=true;
 			for(int i=0;i<NotesCount;++i){
@@ -204,7 +205,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					//Notes[id].create_time=CurrentTimeNotes;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].notes_max=NotesCount;
-					Notes[id].num=NotesNumber;
+					Notes[id].num=OriginalMeasure;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
 					Notes[id].bpm=Measure[MeasureCount].bpm;
@@ -1212,7 +1213,7 @@ int ctoi(char c){
 }
 
 inline void notes_sort(){	//ノーツを出現順にソート
-	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.judge_time>b.judge_time;});
+	std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return std::tie(b.num,b.judge_time)<std::tie(a.num,a.judge_time);});
 }
 
 void delete_roll(int i){
