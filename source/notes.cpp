@@ -158,7 +158,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
 			double NoteTime=0.0;
-			int OriginalMeasure=get_MeasureId_From_OriginalId(MeasureCount);
 			bool isRest=false;
 			if(isHBSCROLL)isRest=true;
 			for(int i=0;i<NotesCount;++i){
@@ -205,7 +204,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					//Notes[id].create_time=CurrentTimeNotes;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].notes_max=NotesCount;
-					Notes[id].num=OriginalMeasure;
+					Notes[id].num=Measure[MeasureCount].notes;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
 					Notes[id].bpm=Measure[MeasureCount].bpm;
