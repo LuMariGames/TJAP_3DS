@@ -1204,10 +1204,6 @@ void play_songs(char* ptr) {
 		scene_state = SCENE_RESULT;
 		return;
 	}
-	if(playcnt!=INT_MAX){
-		stopPlayback();
-		ndspChnSetPaused(CHANNEL,true);
-	}
 	playcnt=cnt+150;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
@@ -1216,7 +1212,8 @@ void play_songs(char* ptr) {
 		ptr++;
 		++ptrcnt;
 	}
-	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
+	//snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
+	snprintf(abs_path,sizeof(abs_path),"%s/1.ogg",SelectedSong.path);
 	path_play_main_music(&isPlayMain,abs_path);
 	isPlayMain=false;
 }
