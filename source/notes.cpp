@@ -394,12 +394,9 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					break;
 				}
 				case COMMAND_NEXTSONG: {
-					TJA_HEADER_T Header;
-					get_tja_header(&Header);
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					tp=strtok(Command.value_s.data(), ",");
 					count=1;
-					strlcpy(Header.title,tp,512);
 					while(tp!=NULL){
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
@@ -410,6 +407,9 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						count++;
 					}
 					if(tp!=NULL)play_songs(tp);
+					TJA_HEADER_T Header;
+					get_tja_header(&Header);
+					strlcpy(Header.title,Command.value_s.data(),512);
 					set_tja_header(&Header);
 					break;
 				}
