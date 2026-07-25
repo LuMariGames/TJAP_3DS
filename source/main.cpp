@@ -1204,6 +1204,10 @@ void play_songs(char* ptr) {
 		scene_state = SCENE_RESULT;
 		return;
 	}
+	if(playcnt!=INT_MAX){
+		stopPlayback();
+		ndspChnSetPaused(CHANNEL,true);
+	}
 	playcnt=cnt+150;
 	char wavepath[256],abs_path[512];
 	int ptrcnt=0;
