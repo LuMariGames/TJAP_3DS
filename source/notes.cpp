@@ -393,13 +393,13 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					tp=strtok(Command.value_s.data(), ",");
 					count=1;
-					strlcpy(Header.title,tp+10,512);
+					strlcpy(&Header.title,tp+10,512);
 					while(tp!=NULL){
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
 						}
 						else if(count==2){
-							strlcpy(Header.subtitle,tp,512);
+							strlcpy(&Header.subtitle,tp,512);
 							Header.subtitle_state=0;
 						}
 
