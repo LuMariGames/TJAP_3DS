@@ -404,10 +404,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
 						}
-						else if(count==2){
-							strlcpy(Header.subtitle,tp,512);
-							Header.subtitle_state=0;
-						}
 
 						// 2回目以降の呼び出しは、第一引数に NULL を指定します
 						tp=strtok(NULL,",");
