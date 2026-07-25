@@ -1043,7 +1043,6 @@ void get_tja_header(TJA_HEADER_T *TJA_Header){
 void set_tja_header(TJA_HEADER_T *TJA_Header){
 
 	Current_Header.title=TJA_Header->title;
-	Current_Header.subtitle=TJA_Header->subtitle;
 }
 
 void tja_to_notes(int isDon,int isKatsu,int count,C2D_Sprite (&sprites)[SPRITES_NUMER]){
