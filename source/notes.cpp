@@ -372,16 +372,19 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			bool NotFalse=false;
 			if(Measure[i].command!=-1&&Measure[i].judge_time<=CurrentTimeNotes){
 				switch(Measure[i].command){
-				case COMMAND_GOGOSTART:
+				case COMMAND_GOGOSTART: {
 					isGOGOTime=true;
 					break;
-				case COMMAND_GOGOEND:
+				}
+				case COMMAND_GOGOEND: {
 					isGOGOTime=false;
 					break;
-				case COMMAND_SECTION:
+				}
+				case COMMAND_SECTION: {
 					init_branch_section();
 					break;
-				case COMMAND_BRANCHSTART:
+				}
+				case COMMAND_BRANCHSTART: {
 					if(isLevelHold==false&&(Branch.knd!=0||JudgeRollState==-1)){	//連打分岐の時は連打が無くなってから分岐
 						Branch.course=start_branch(Branch.knd,Branch.x,Branch.y);
 						Branch.next=true;
@@ -389,7 +392,10 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					else NotFalse=true;
 					break;
-				case COMMAND_NEXTSONG:
+				}
+				case COMMAND_NEXTSONG: {
+					TJA_HEADER_T Header;
+					get_tja_header(&Header);
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					tp=strtok(Command.value_s.data(), ",");
 					count=1;
@@ -407,8 +413,10 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						tp=strtok(NULL,",");
 						count++;
 					}
+					set_tja_header(&Header);
 					if(tp!=NULL)play_songs(tp);
 					break;
+				}
 				default:
 					break;
 				}
