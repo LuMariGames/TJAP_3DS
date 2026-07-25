@@ -409,8 +409,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						tp=strtok(NULL,",");
 						count++;
 					}
-					set_tja_header(&Header);
 					if(tp!=NULL)play_songs(tp);
+					set_tja_header(&Header);
 					break;
 				}
 				default:
