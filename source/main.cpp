@@ -1206,12 +1206,7 @@ void play_songs(char* ptr) {
 	}
 	playcnt=cnt+150;
 	char wavepath[256],abs_path[512];
-	int ptrcnt=0;
-	while(*ptr!='\0'){
-		wavepath[ptrcnt]= *ptr; // ここで1文字ずつ処理する
-		ptr++;
-		++ptrcnt;
-	}
+	strlcpy(wavepath,ptr,sizeof(wavepath));
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
 	path_play_main_music(&isPlayMain,abs_path);
 	isPlayMain=false;
