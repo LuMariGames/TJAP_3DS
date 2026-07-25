@@ -54,7 +54,10 @@ void change_judge(void *arg){
 void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASURE_MAX],MEASURE_T (&Measure)[MEASURE_MAX],int cnt,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	OPTION_T Option;
+	TJA_HEADER_T Header;
 	get_option(&Option);
+	get_tja_header(&Header);
+	
 	bool isLoadLoop=false;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
@@ -406,11 +409,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						tp=strtok(NULL,",");
 						count++;
 					}
-					if(tp!=NULL)play_songs(tp);
-					TJA_HEADER_T Header;
-					get_tja_header(&Header);
-					strlcpy(Header.title,Command.value_s.data(),512);
-					set_tja_header(&Header);
+					if(tp!=NULL){
+						play_songs(tp);
+						strlcpy(Header.title,Command.value_s.data(),512);
+						set_tja_header(&Header);
+					}
 					break;
 				}
 				default:
