@@ -1212,8 +1212,7 @@ void play_songs(char* ptr) {
 		ptr++;
 		++ptrcnt;
 	}
-	//snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
-	snprintf(abs_path,sizeof(abs_path),"%s/1.ogg",SelectedSong.path);
+	snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,wavepath);
 	path_play_main_music(&isPlayMain,abs_path);
 	isPlayMain=false;
 }
