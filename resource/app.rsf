@@ -73,7 +73,7 @@ AccessControlInfo:
   IdealProcessor                : 0
   AffinityMask                  : 1
   Priority                      : 16
-  MaxCpu                        : 0
+  MaxCpu                        : 0xFF
   HandleTableSize               : 0x200
   DisableDebug                  : true
   EnableForceDebug              : false
