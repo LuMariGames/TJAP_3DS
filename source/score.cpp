@@ -529,7 +529,7 @@ int round_down(int arg){
 
 void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX][NOTES_MEASURE_MAX]){	//初項と公差を計算　魂ゲージの伸びも
 
-	int NotesCount=0,i=0,DiffTmp=0,BalloonCnt=0,combo=0,
+	int NotesCount=0,i=0,DiffTmp=0,BalloonCnt=0,combo=0,NextCount=0,
 	TmpBaseCeilingPoint=0,NotesCountMax=0,RollKnd=0,RollCnt=0;
 	bool isEND=false,isDummy=false;
 	double init_cnt=0,diff_cnt=0,gogo=1,special=1,
@@ -596,6 +596,9 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 				break;
 			case COMMAND_END:
 				isEND=true;
+				break;
+			case COMMAND_NEXTSONG:
+				if(TJA_Header.course==6)++NextCount;
 				break;
 			default:
 				break;
@@ -700,6 +703,8 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 		++i;
 	}
 
+	if(0<NextCount)TmpBaseCeilingPoint-=2000000;
+	TmpBaseCeilingPoint+=1000000*(NextCount-1);
 	if((TJA_Header.scoreinit==-1||TJA_Header.scorediff==-1)&&(scoremode==1||scoremode==2)){	//新配点と旧配点
 		diff=(TmpBaseCeilingPoint-(int)(combo/100)* 10000)/(init_cnt*4+diff_cnt);
 		init=diff*4;
