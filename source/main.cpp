@@ -734,6 +734,7 @@ int main(){
 					notes_cnt = 0;
 					scene_state = SCENE_LOADSCRE;
 					aptSetSleepAllowed(false);
+					time_ini();
 				}
 				else {
 					warning = tmp;
@@ -1166,6 +1167,7 @@ int main(){
 			if (combo<50){
 				BeforeCombo = -1;
 			}
+			aptSetSleepAllowed(isPause);
 			break;
 		}
 		case SCENE_RESULT: {
