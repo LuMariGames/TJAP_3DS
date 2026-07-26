@@ -397,6 +397,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					break;
 				}
 				case COMMAND_NEXTSONG: {
+					stop_time(TIME_NOTES);
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					tp=strtok(Command.value_s.data(), ",");
 					count=1;
@@ -414,6 +415,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						strlcpy(Header.title,Command.value_s.data(),512);
 						set_tja_header(&Header);
 					}
+					restart_time(TIME_NOTES);
 					break;
 				}
 				default:
