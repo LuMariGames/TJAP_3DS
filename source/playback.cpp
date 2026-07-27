@@ -240,6 +240,7 @@ inline int changeFile(const char* ep_file,struct playbackInfo_t* playbackInfo,bo
 		APT_SetAppCpuTimeLimit(5);
 	}
 	if (thread != NULL) {
+		ndspChnSetPaused(CHANNEL,true);
 		stopPlayback();
 
 		threadJoin(thread,U64_MAX);
@@ -267,8 +268,6 @@ void play_main_music(bool *p_isPlayMain,LIST_T Song) {
 
 void path_play_main_music(bool *p_isPlayMain,char abs_path[512]) {
 
-	stopPlayback();
-	ndspChnSetPaused(CHANNEL,true);
 	changeFile(abs_path,&playbackInfo,p_isPlayMain);
 }
 
