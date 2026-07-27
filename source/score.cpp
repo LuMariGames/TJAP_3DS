@@ -703,8 +703,10 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 		++i;
 	}
 
-	if(0<NextCount)TmpBaseCeilingPoint-=2000000;
-	TmpBaseCeilingPoint+=1000000*(NextCount-1);
+	if(0<NextCount){
+		TmpBaseCeilingPoint-=2000000;
+		TmpBaseCeilingPoint+=1000000*(NextCount-1);
+	}
 	if((TJA_Header.scoreinit==-1||TJA_Header.scorediff==-1)&&(scoremode==1||scoremode==2)){	//新配点と旧配点
 		diff=(TmpBaseCeilingPoint-(int)(combo/100)* 10000)/(init_cnt*4+diff_cnt);
 		init=diff*4;
