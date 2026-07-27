@@ -222,10 +222,10 @@ struct playbackInfo_t playbackInfo;
 
 inline int changeFile(const char* ep_file,struct playbackInfo_t* playbackInfo,bool *p_isPlayMain){
 
+	if (ep_file != NULL && getFileType(ep_file) == FILE_TYPE_ERROR) return -1;
+
 	s32 prio;
 	static Thread thread = NULL;
-
-	if (ep_file != NULL && getFileType(ep_file) == FILE_TYPE_ERROR) return -1;
 
 	if (New) {
 		Decode_CoreID = 2;
