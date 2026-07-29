@@ -552,7 +552,7 @@ int main(){
 				select_ini();
 				set_measure();
 				bgcnt = -1;
-				if (isAniBg)C3D_TexDelete(sprites[163].image.tex);
+				if (isAniBg)C3D_TexDelete(sprites[SPRITES_NUMER-1].image.tex);
 				isAniBg = false;
 				aptSetSleepAllowed(true);
 			}
@@ -724,8 +724,8 @@ int main(){
 					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
 					if (!isAniBg&&exist_file(abs_path)){
 						isAniBg = true;
-						loadPNGAsC2DImage(&sprites[163].image,abs_path,false,400,96,0,0);
-						C2D_SpriteSetCenter(&sprites[163],0.5f,0.5f);
+						loadPNGAsC2DImage(&sprites[SPRITES_NUMER-1].image,abs_path,false,400,96,0,0);
+						C2D_SpriteSetCenter(&sprites[SPRITES_NUMER-1],0.5f,0.5f);
 						bgcnt = 0;
 					}
 					else if (exist_file(abs_path)==0)isAniBg = false;
@@ -937,7 +937,7 @@ int main(){
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image,&sprites[SPRITE_TOP_2].params,NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0+time_count(CurrentTimeMain)]);
-			if (isAniBg&&bgcnt == 0)C2D_DrawImage(sprites[163].image,&sprites[SPRITE_BACKGROUND].params,NULL);
+			if (isAniBg&&bgcnt == 0)C2D_DrawImage(sprites[SPRITES_NUMER-1].image,&sprites[SPRITE_BACKGROUND].params,NULL);
 			else C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image,&sprites[SPRITE_TOP].params,NULL);
 
