@@ -40,7 +40,7 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
-	Time[id] += 0.0178;
+	Time[id] += 3ds_clocktime+(0.0178-3ds_clocktime)*mspeed();
 	cnt[id] = 0;
 }
 void home_time(int id) {
