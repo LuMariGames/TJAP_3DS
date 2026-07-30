@@ -944,7 +944,7 @@ void load_tja_notes(int course,LIST_T Song){
 						ly=Beforely;
 						break;
 					case COMMAND_NEXTSONG:
-						PreJudge+=2.526272628*Option.musicspeed;
+						PreJudge+=2.52397982728522*Option.musicspeed;
 						break;
 					}
 				}
