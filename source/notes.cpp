@@ -72,11 +72,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		//分岐
 		if(Branch.next){
 
-			while(MeasureCount<MEASURE_MAX){
-
-				++MeasureCount;
-				break;
-			}
+			if(MeasureCount<MEASURE_MAX) ++MeasureCount;
 			Branch.next=false;
 		}
 
@@ -699,7 +695,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 		for(int j=0,sd=0,sk=0,gn=((isDon>=isKatsu)?isDon:isKatsu);j<gn;++j){
 
 			//判定すべきノーツを検索
-			for(int i=Notes.size()-1,j=0;i>=j;--i){
+			for(int i=Notes.size()-1;i>=0;--i){
 	
 				if(!Notes[i].isDummy&&Notes[i].flag){
 	
@@ -914,7 +910,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					RollNotes[Notes[i].roll_id].start_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].start_id=i;
 				}
-				if(Notes[i].judge_time<=currentTime&&Notes[i].isThrough)Notes[i].isThrough=true;
+				if(Notes[i].judge_time<=currentTime&&!Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_ROLLEND:
@@ -923,7 +919,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					RollNotes[Notes[i].roll_id].end_x=Notes[i].x;
 					RollNotes[Notes[i].roll_id].end_id=i;
 				}
-				if(Notes[i].judge_time<=currentTime&&Notes[i].isThrough)Notes[i].isThrough=true;
+				if(Notes[i].judge_time<=currentTime&&!Notes[i].isThrough)Notes[i].isThrough=true;
 				break;
 
 			case NOTES_BALLOON:
