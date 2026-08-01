@@ -184,7 +184,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					else if(knd==NOTES_POTATO&&PreNotesKnd==knd)knd=NOTES_PTTBORDER;
 
-					isRest=false;
 					if(Option.random>0){		//ランダム(きまぐれ,でたらめ)
 						if(rand()%100<Option.random*100){
 							switch(knd){
@@ -1227,7 +1226,9 @@ int ctoi(char c){
 
 inline void notes_sort(){	//ノーツを出現順にソート
 	if(!isHBSCROLL)std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return std::tie(b.num,b.judge_time)<std::tie(a.num,a.judge_time);});
-	else std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {return a.judge_time>b.judge_time;});
+	else std::sort(Notes.begin(), Notes.end(), [](const NOTES_T& a, const NOTES_T& b) {
+		bool a_is_rest = (a.knd == NOTES_REST);bool b_is_rest = (b.knd == NOTES_REST);
+		return std::tie(b.judge_time,b_is_rest)<std::tie(a.judge_time,a_is_rest);});
 }
 
 void delete_roll(int i){
