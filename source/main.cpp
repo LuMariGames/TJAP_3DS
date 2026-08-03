@@ -24,6 +24,8 @@ typedef struct {
 	int32_t count;
 	uint8_t don;
 	uint8_t katsu;
+	uint8_t px;
+	uint8_t py;
 } ghostdata;
 
 C2D_Sprite sprites[SPRITES_NUMER];	//画像用
@@ -856,7 +858,7 @@ int main(){
 		case SCENE_MAINGAME: {		//演奏画面
 
 			if (!isPause){
-				if (tp.px != 0&&tp.py != 0){
+				if (Option.player!=3&&tp.px!=0&&tp.py!=0){
 
 					PreTouch_x = touch_x,PreTouch_y = touch_y;
 					touch_x = tp.px,touch_y = tp.py;
@@ -902,7 +904,8 @@ int main(){
 				if(Option.player==3){
 					isDon=0,isKatsu=0;
 					if(read_data.count<=cnt&&fp_read!=NULL){
-						isDon=read_data.don,isKatsu=read_data.katsu;
+						isDon=read_data.don,isKatsu=read_data.katsu,memtch_x=read_data.px,memtch_y=read_data.py;
+						if(read_data.px!=0||read_data.py!=0)tch_cnt=6;
 						fread(&read_data,sizeof(ghostdata),1,fp_read);
 					}
 				}
@@ -1047,7 +1050,7 @@ int main(){
 				if (keyhold&KEY_DLEFT)--khdcnt;
 				else if (keyhold&KEY_DRIGHT)++khdcnt;
 				else khdcnt = 0;
-				if (key&KEY_DUP)toggle_auto();
+				if (Option.player!=3&&key&KEY_DUP)toggle_auto();
 				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS&&TJA_Header.course!=COURSE_DAN)min_measure();
 				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS&&TJA_Header.course!=COURSE_DAN)plus_measure();
 			}
@@ -1057,7 +1060,7 @@ int main(){
 			}
 			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
-				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu};
+				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,(uint8_t)(memtch_x/2),(uint8_t)(memtch_y/2)};
 				if(ghostnum<81919)++ghostnum;
 			}
 			if(course==COURSE_DAN)dcd=dan_condition();
