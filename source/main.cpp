@@ -904,7 +904,7 @@ int main(){
 				if(Option.player==3){
 					isDon=0,isKatsu=0;
 					if(read_data.count<=cnt&&fp_read!=NULL){
-						isDon=read_data.don,isKatsu=read_data.katsu,memtch_x=read_data.px,memtch_y=read_data.py;
+						isDon=read_data.don,isKatsu=read_data.katsu,memtch_x=read_data.px*2,memtch_y=read_data.py*2;
 						if(read_data.px!=0||read_data.py!=0)tch_cnt=6;
 						fread(&read_data,sizeof(ghostdata),1,fp_read);
 					}
