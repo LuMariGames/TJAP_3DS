@@ -2,29 +2,29 @@
 #include "tja.h"
 
 typedef struct {
-	bool flag,isThrough,isDummy = false;
 	float create_time,judge_time,hb_time,x,y,bpm,scroll,yscroll;
-	int num,notes_max,knd,roll_id;
+	int num,knd,roll_id;
+	bool flag,isThrough,isDummy = false;
 
 } NOTES_T;
 
 typedef struct {
-	bool flag,isDisp;
 	float create_time,scroll,x;
 	int measure;
+	bool flag,isDisp;
 
 } BARLINE_T;
 
 typedef struct {
-	bool flag;
 	int id,start_id,end_id,knd;
 	float start_x,end_x;
+	bool flag;
 
 }ROLL_T;
 
 typedef struct {
-	bool flag;
 	int id,start_id,end_id,need_hit,current_hit;
+	bool flag;
 
 }BALLOON_T;
 
