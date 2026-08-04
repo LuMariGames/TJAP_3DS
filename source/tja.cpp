@@ -28,6 +28,7 @@ void init_measure_structure(){
 		Measure[i].create_time=INT_MAX;
 		Measure[i].judge_time=INT_MAX;
 		Measure[i].pop_time=INT_MAX;
+		Measure[i].move_time=-1;
 		Measure[i].bpm=0;
 		Measure[i].scroll=0;
 		Measure[i].yscroll=0;
@@ -708,14 +709,14 @@ void load_tja_notes(int course,LIST_T Song){
 		NotesCount=0,BranchCourse=-1,
 		BeforeBranchFirstMultiMeasure=-1,BeforeBranchNotesCount=0;
 	bool isStart=false,isEnd=false,isDispBarLine=true,isNoComma=false,isCourseMatch=false,isSudden=false,
-		BeforeBranchIsDispBarLine=true,BeforeBranchIsNoComma=false,BeforeBranchIsDummy=false,isDummy=false;
+		BeforeBranchIsDispBarLine=true,BeforeBranchIsNoComma=false,BeforeBranchIsDummy=false,isDummy=false,BeforeBranchIsSudden=false;
 	FILE *fp;
 	COMMAND_T Command;
 	OPTION_T Option;
 	get_option(&Option);
 
-	double bpm=fabs(Current_Header.bpm),NextBpm=Current_Header.bpm,measure=1,scroll=1,yscroll=0,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,//movetime=0,
-		BeforeBranchJudgeTime=0,BeforeBranchCreateTime=0,BeforeBranchPopTime=0,BeforeBranchPreJudge=0,BeforeBranchBpm=0,//BeforeBranchMoveTime=0,
+	double bpm=fabs(Current_Header.bpm),NextBpm=Current_Header.bpm,measure=1,scroll=1,yscroll=0,NextMeasure=1,delay=0,percent=1,sudntime=0,Beforejpostime=0,jpostime=0,jposmove=0,movetime=0,
+		BeforeBranchJudgeTime=0,BeforeBranchCreateTime=0,BeforeBranchPopTime=0,BeforeBranchPreJudge=0,BeforeBranchBpm=0,BeforeBranchSudnTime=0,BeforeBranchMoveTime=0,
 		BeforeBranchDelay=0,BeforeBranchMeasure=0,BeforeBranchScroll=1,BeforeBranchNextBpm=0,BeforeBranchNextMeasure=0,BeforeBranchPercent=1;
 	std::string ly="",Beforely="";
 
@@ -814,7 +815,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
-						//movetime=sudntime-Command.val[1];
+						movetime=sudntime-Command.val[1];
 						isSudden=true;
 						break;
 					case COMMAND_JPOSSCROLL:
@@ -887,6 +888,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
 				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time;
 				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/fabs(NextBpm)-sudntime):0)-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
+				if(isSudden)Measure[MeasureCount].move_time=movetime;
 				if(Current_Header.isHBS)Measure[MeasureCount].create_time=0;
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
@@ -916,7 +918,9 @@ void load_tja_notes(int course,LIST_T Song){
 						BeforeBranchIsNoComma=isNoComma;
 						BeforeBranchNotesCount=NotesCount;
 						BeforeBranchPercent=percent;
-						//BeforeBranchMoveTime=movetime;
+						BeforeBranchSudnTime=sudntime;
+						BeforeBranchMoveTime=movetime;
+						BeforeBranchIsSudden=isSudden;
 						BeforeBranchIsDummy=isDummy;
 						Beforely=ly;
 						if(tja_cnt==0)Measure[MeasureCount].judge_time=0;	//ノーツの前に分岐はすぐに判定
@@ -939,7 +943,9 @@ void load_tja_notes(int course,LIST_T Song){
 						isNoComma=BeforeBranchIsNoComma;
 						NotesCount=BeforeBranchNotesCount;
 						percent=BeforeBranchPercent;
-						//movetime=BeforeBranchMoveTime;
+						sudntime=BeforeBranchSudnTime;
+						movetime=BeforeBranchMoveTime;
+						isSudden=BeforeBranchIsSudden;
 						isDummy=BeforeBranchIsDummy;
 						ly=Beforely;
 						break;
