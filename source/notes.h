@@ -2,7 +2,7 @@
 #include "tja.h"
 
 typedef struct {
-	float create_time,judge_time,hb_time,x,y,bpm,scroll,yscroll;
+	float judge_time,hb_time,move_time,create_time,x,y,bpm,scroll,yscroll;
 	int num,knd,roll_id;
 	bool flag,isThrough,isDummy = false;
 
