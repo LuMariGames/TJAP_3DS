@@ -815,7 +815,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
-						movetime=sudntime-Command.val[1];
+						movetime=Command.val[1];
 						isSudden=true;
 						break;
 					case COMMAND_JPOSSCROLL:
