@@ -887,7 +887,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].isDummy=isDummy;
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
 				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time;
-				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time+(isSudden ?(240.0/fabs(NextBpm)-sudntime):0)-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll))));
+				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time-(isSudden?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll)))));
 				if(isSudden)Measure[MeasureCount].move_time=movetime;
 				if(Current_Header.isHBS)Measure[MeasureCount].create_time=0;
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
@@ -986,7 +986,7 @@ void load_tja_notes(int course,LIST_T Song){
 								* Measure[Measure[MeasureCount].firstmeasure+i-1].notes_count/Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
 							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time;
-							if(!Current_Header.isHBS)Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time+(isSudden ?(240.0/NextBpm-sudntime): 0)-(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[Measure[MeasureCount].firstmeasure+i].bpm) *(NOTES_AREA * ((fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll)>fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))?fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll):fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))));
+							if(!Current_Header.isHBS)Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(isSudden?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll)))));
 							percent=(double)Measure[Measure[MeasureCount].firstmeasure+i].notes_count/(double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 
 							Measure[Measure[MeasureCount].firstmeasure+i].isDispBarLine=false;	//最初の小節は小節線をオフにしない
@@ -1142,7 +1142,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 			tp=strtok(value," ");
 			Command->val[0]=strtod(tp,NULL)*(NOTES_JUDGE_RANGE/NOTES_AREA);
 			tp=strtok(NULL," ");
-			Command->val[1]=strtod(tp,NULL);
+			Command->val[1]=strtod(tp,NULL)*(NOTES_JUDGE_RANGE/NOTES_AREA);
 		}
 		else if(strcmp(command,"SCROLL")==0){
 			Command->knd=COMMAND_SCROLL;
