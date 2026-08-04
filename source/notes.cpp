@@ -442,7 +442,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		}
 	}
 	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
-	if(!Option.isStelth)notes_draw(sprites);
+	if(!Option.isStelth)notes_draw(CurrentTimeNotes,sprites);
 	draw_emblem(sprites);
 	draw_judge(CurrentTimeNotes,sprites);
 
