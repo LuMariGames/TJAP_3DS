@@ -201,7 +201,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 					Notes[id].create_time=Measure[MeasureCount].create_time+NoteTime;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
-					if(Measure[MeasureCount].move_time!=-1)Notes[id].move_time=Measure[MeasureCount].move_time;
+					if(Measure[MeasureCount].move_time!=-1)Notes[id].move_time=MeasureTime-Measure[MeasureCount].move_time;
 					Notes[id].num=Measure[MeasureCount].notes;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
@@ -893,7 +893,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
 			}
 			else {
-				if((Notes[i].judge_time-Notes[i].move_time)<=currentTime){
+				if(Notes[i].move_time!=-1&&(Notes[i].judge_time-Notes[i].move_time)<=currentTime){
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 					Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 				}
@@ -1405,7 +1405,7 @@ void delete_notes(int i){
 		Notes[i].create_time=0;
 		Notes[i].judge_time=0;
 		Notes[i].hb_time=0;
-		Notes[i].move_time=INT_MAX;
+		Notes[i].move_time=-1;
 		Notes[i].bpm=0;
 		Notes[i].scroll=0;
 		Notes[i].roll_id=-1;
