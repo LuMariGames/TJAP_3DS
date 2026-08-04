@@ -986,7 +986,7 @@ void load_tja_notes(int course,LIST_T Song){
 								* Measure[Measure[MeasureCount].firstmeasure+i-1].notes_count/Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
 							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time;
-							if(!Current_Header.isHBS)Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(isSudden?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll)))));
+							if(!Current_Header.isHBS)Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(isSudden?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[Measure[MeasureCount].firstmeasure+i].bpm) *(NOTES_AREA * ((fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll)>fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))?fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll):fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll)))));
 							percent=(double)Measure[Measure[MeasureCount].firstmeasure+i].notes_count/(double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 
 							Measure[Measure[MeasureCount].firstmeasure+i].isDispBarLine=false;	//最初の小節は小節線をオフにしない
