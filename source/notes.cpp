@@ -156,7 +156,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 
 			const double MeasureTime=240.0/Measure[MeasureCount].bpm*Measure[MeasureCount].measure;
-			const double createtime=(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(Measure[MeasureCount].scroll)>fabs(Measure[MeasureCount].yscroll))?fabs(Measure[MeasureCount].scroll):fabs(Measure[MeasureCount].yscroll))));
 			double NoteTime=0.0;
 			bool isRest=false;
 			if(isHBSCROLL)isRest=true;
@@ -200,7 +199,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						}
 					}
 
-					Notes[id].create_time=Measure[MeasureCount].judge_time-createtime+NoteTime;
+					Notes[id].create_time=Measure[MeasureCount].create_time+NoteTime;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
 					if(Measure[MeasureCount].move_time!=-1)Notes[id].move_time=Measure[MeasureCount].move_time;
 					Notes[id].num=Measure[MeasureCount].notes;
