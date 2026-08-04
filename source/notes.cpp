@@ -893,7 +893,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
 			}
 			else {
-				if(Notes[id].move_time<=currentTime){
+				if(Notes[i].move_time<=currentTime){
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 					Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 				}
