@@ -113,28 +113,29 @@ bool load_tja_head(int course,LIST_T Song){
 		while(fgets(buf,512,fp)!=NULL){
 
 			++cnt;
-			temp=(char *)malloc((strlen(buf)+1));
+			temp= new char[512];
 			mix[0]=Current_Header.songvol/100.0;
 			mix[1]=Current_Header.songvol/100.0;
 
 			if(isCourseMatch&&(strstr(buf,"#HBSCROLL")==buf||strstr(buf,"#BMSCROLL")==buf)){
 				Current_Header.isHBS=true;
+				delete[] temp;
 				continue;
 			}
 
 			if(isCourseMatch && Current_Header.style==1 && strstr(buf,"#START")==buf){
 				isSTART=true;
-				free(temp);
+				delete[] temp;
 				break;
 			}
 			else if(isCourseMatch && Option.player==1 && Current_Header.style==2 && strstr(buf,"#START P1")==buf){
 				isSTART=true;
-				free(temp);
+				delete[] temp;
 				break;
 			}
 			else if(isCourseMatch && Option.player==2 && Current_Header.style==2 && strstr(buf,"#START P2")==buf){
 				isSTART=true;
-				free(temp);
+				delete[] temp;
 				break;
 			}
 
@@ -177,7 +178,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+6,strlen(buf)-7);
 					Current_Header.level=atoi(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -186,7 +187,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+4,strlen(buf)-5);
 					Current_Header.bpm=atof(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -195,7 +196,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+5,strlen(buf)-6);
 					Current_Header.wave=temp;
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -212,7 +213,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+7,strlen(buf)-8);
 					Current_Header.offset=atof(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -227,7 +228,7 @@ bool load_tja_head(int course,LIST_T Song){
 						++cnt;
 					}
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -242,7 +243,7 @@ bool load_tja_head(int course,LIST_T Song){
 						++cnt;
 					}
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -257,7 +258,7 @@ bool load_tja_head(int course,LIST_T Song){
 						++cnt;
 					}
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -272,7 +273,7 @@ bool load_tja_head(int course,LIST_T Song){
 						++cnt;
 					}
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -281,7 +282,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+8,strlen(buf)-9);
 					Current_Header.songvol=atoi(temp)* 0.8;
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -298,7 +299,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+10,strlen(buf)-11);
 					Current_Header.scoreinit=atoi(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -307,7 +308,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+10,strlen(buf)-11);
 					Current_Header.scorediff=atoi(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -329,7 +330,7 @@ bool load_tja_head(int course,LIST_T Song){
 					}
 					else isCourseMatch=false;
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -404,7 +405,7 @@ bool load_tja_head(int course,LIST_T Song){
 					else if(strcmp(temp,"Single")==0 || strcmp(temp,"single")==0)Current_Header.style=1;	//文字表記
 					else if(strcmp(temp,"Double")==0 || strcmp(temp,"double")==0)Current_Header.style=2;
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -414,7 +415,7 @@ bool load_tja_head(int course,LIST_T Song){
 					Current_Header.life=atoi(temp);
 					gaugelife=Current_Header.life;
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -424,7 +425,7 @@ bool load_tja_head(int course,LIST_T Song){
 					if(strcmp(temp,"Donkey")==0||strcmp(temp,"DONKEY")==0||strcmp(temp,"donkey")==0)Current_Header.gamemode=3;	//文字表記
 					else Current_Header.gamemode=0;
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -449,7 +450,7 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+6,strlen(buf)-7);
 					Current_Header.total=atoi(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
 
@@ -458,10 +459,10 @@ bool load_tja_head(int course,LIST_T Song){
 					strlcpy(temp,buf+10,strlen(buf)-11);
 					Current_Header.scoremode=atoi(temp);
 				}
-				free(temp);
+				delete[] temp;
 				continue;
 			}
-			free(temp);
+			delete[] temp;
 		}
 		fclose(fp);
 		return isSTART;
@@ -1046,7 +1047,7 @@ void get_tja_header(TJA_HEADER_T *TJA_Header){
 	*TJA_Header=Current_Header;
 }
 
-void set_tja_header(TJA_HEADER_T *TJA_Header){
+void set_tja_header(const TJA_HEADER_T *TJA_Header){
 
 	Current_Header.title=TJA_Header->title;
 }
