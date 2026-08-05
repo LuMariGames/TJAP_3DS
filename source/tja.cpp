@@ -1047,7 +1047,7 @@ void get_tja_header(TJA_HEADER_T *TJA_Header){
 	*TJA_Header=Current_Header;
 }
 
-void set_tja_header(const TJA_HEADER_T *TJA_Header){
+void set_tja_header(TJA_HEADER_T *TJA_Header){
 
 	Current_Header.title=TJA_Header->title;
 }
