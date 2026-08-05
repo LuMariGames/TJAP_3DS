@@ -405,7 +405,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					if(tp!=NULL){
 						play_songs(tp);
-						Header.title=Command.value_s.c_str();
+						strlcpy(Header.title,Command.value_s.data(),strlen(Command.value_s.data())+1);
 						set_tja_header(&Header);
 					}
 					restart_time(TIME_NOTES);
