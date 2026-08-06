@@ -1163,7 +1163,7 @@ int main(){
 
 			//コンボボイス
 			ComboCnt = ((combo<1500)? combo : 1500);
-			if ((int)(combo*0.01)!= BeforeCombo&&combo>=50){
+			if (Option.buffer_size>=0&&(int)(combo*0.01)!=BeforeCombo&&combo>=50){
 				play_sound(ComboCnt*0.01+(get_isauto()? 21 : 5));
 				BeforeCombo = combo*0.01;
 			}
@@ -1175,7 +1175,7 @@ int main(){
 		}
 		case SCENE_RESULT: {
 
-			if (cnt<=0&&TotalBadCount<=0)play_sound((get_isauto()? 38 : 37));
+			if (cnt<=0&&Option.buffer_size>=0&&TotalBadCount<=0)play_sound((get_isauto()? 38 : 37));
 			stopPlayback();
 			draw_gauge_result(sprites);
 			draw_result();
