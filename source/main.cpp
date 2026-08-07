@@ -720,14 +720,6 @@ int main(){
 				else if (tmp == -1){
 					cnt = -150;
 					NOTES_JUDGE_X = 93.0f;
-					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
-					if (!isAniBg&&exist_file(abs_path)){
-						isAniBg = true;
-						loadPNGAsC2DImage(&sprites[SPRITES_NUMER-1].image,abs_path,false,400,96,0,0);
-						C2D_SpriteSetCenter(&sprites[SPRITES_NUMER-1],0.5f,0.5f);
-						bgcnt = 0;
-					}
-					else if (exist_file(abs_path)==0)isAniBg = false;
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					if(playcnt==INT_MAX)play_main_music(&isPlayMain,SelectedSong);
 					notes_cnt = 0;
