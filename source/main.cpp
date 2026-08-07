@@ -552,7 +552,6 @@ int main(){
 				select_ini();
 				set_measure();
 				bgcnt = -1;
-				if (isAniBg)C3D_TexDelete(sprites[SPRITES_NUMER-1].image.tex);
 				isAniBg = false;
 				aptSetSleepAllowed(true);
 			}
@@ -927,8 +926,7 @@ int main(){
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image,&sprites[SPRITE_TOP_2].params,NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0+time_count(CurrentTimeMain)]);
-			if (isAniBg&&bgcnt == 0)C2D_DrawImage(sprites[SPRITES_NUMER-1].image,&sprites[SPRITE_BACKGROUND].params,NULL);
-			else C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
+			C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image,&sprites[SPRITE_TOP].params,NULL);
 
 			//ダンサー表示
