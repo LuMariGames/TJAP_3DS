@@ -451,7 +451,7 @@ int main(){
 		C2D_SceneTarget(top);
 
 		switch (scene_state){
-		case SCENE_SELECTLOAD: {	//ロード画面
+		case SCENE_SELECTLOAD:	//ロード画面
 
 			snprintf(get_buffer(),BUFFER_SIZE,"TJAPlayer for 3DS v%s",VERSION);
 			draw_select_text(120,70,get_buffer());
@@ -517,8 +517,7 @@ int main(){
 				}
 			}
 			break;
-		}
-		case SCENE_WARNING: {		//警告画面
+		case SCENE_WARNING:		//警告画面
 
 			//下画面
 			C2D_TargetClear(bottom,C2D_Color32(0x42,0x42,0x42,0xFF));
@@ -547,8 +546,7 @@ int main(){
 				warning = -1;
 			}
 			break;
-		}
-		case SCENE_SELECTSONG: {	//選曲
+		case SCENE_SELECTSONG:	//選曲
 
 			if (cnt == 0){
 				select_ini();
@@ -660,8 +658,7 @@ int main(){
 			isPause = false;
 			if (loadend == 3&&key&KEY_START)isExit = true;
 			break;
-		}
-		case SCENE_MAINLOAD: {	 //ロード中
+		case SCENE_MAINLOAD:	 //ロード中
 
 			draw_select_text(0,225,"Chart Loading...");
 			C3D_FrameEnd(0);
@@ -754,8 +751,7 @@ int main(){
 				}
 			}
 			break;
-		}
-		case SCENE_LOADSCRE: {
+		case SCENE_LOADSCRE:
 
 			draw_select_text(0,225,"Loading completed.");
 			if (tp.px != 0&&tp.py != 0){	//タッチ位置の取得
@@ -854,8 +850,7 @@ int main(){
 
 			if (cnt == -60)scene_state = SCENE_MAINGAME;
 			break;
-		}
-		case SCENE_MAINGAME: {		//演奏画面
+		case SCENE_MAINGAME:		//演奏画面
 
 			if (!isPause){
 				if (Option.player!=3&&tp.px!=0&&tp.py!=0){
@@ -1170,8 +1165,7 @@ int main(){
 			}
 			aptSetSleepAllowed(isPause);
 			break;
-		}
-		case SCENE_RESULT: {
+		case SCENE_RESULT:
 
 			if (cnt<=0&&!Option.dispFps&&TotalBadCount<=0)play_sound((get_isauto()? 38 : 37));
 			stopPlayback();
@@ -1181,9 +1175,6 @@ int main(){
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
 			}
-			break;
-		}
-		default:
 			break;
 		}
 		//描画終了
