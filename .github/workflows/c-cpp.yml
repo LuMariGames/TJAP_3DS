@@ -10,7 +10,7 @@ jobs:
   build:
 
     runs-on: ubuntu-24.04
-    container: devkitpro/devkitarm:20260221
+    container: devkitpro/devkitarm:20251231
 
     steps:
     - uses: actions/checkout@v5
