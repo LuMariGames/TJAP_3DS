@@ -1007,7 +1007,7 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 	C2D_ImageTint DummyTint;
 
 	for(int i=0,j=Notes.size();i<j;++i){	//描画
-		if(Notes[i].flag){
+		if(Notes[i].flag&&Notes[i].create_time<=CurrentTimeNotes){
 
 			//ダミーノーツは半透明にする
 			if(Notes[i].isDummy)C2D_AlphaImageTint(&DummyTint,0.5);
@@ -1017,22 +1017,22 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 			case NOTES_DON:
 				sprites[SPRITE_DON].params.pos.x=Notes[i].x;
 				sprites[SPRITE_DON].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
 				break;
 			case NOTES_KATSU:
 				sprites[SPRITE_KATSU].params.pos.x=Notes[i].x;
 				sprites[SPRITE_KATSU].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_KATSU].image,&sprites[SPRITE_KATSU].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_KATSU].image,&sprites[SPRITE_KATSU].params,&DummyTint);
 				break;
 			case NOTES_BIGDON:
 				sprites[SPRITE_BIG_DON].params.pos.x=Notes[i].x;
 				sprites[SPRITE_BIG_DON].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BIG_DON].image,&sprites[SPRITE_BIG_DON].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BIG_DON].image,&sprites[SPRITE_BIG_DON].params,&DummyTint);
 				break;
 			case NOTES_BIGKATSU:
 				sprites[SPRITE_BIG_KATSU].params.pos.x=Notes[i].x;
 				sprites[SPRITE_BIG_KATSU].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
 				break;
 			case NOTES_ROLL:
 				if(RollNotes[Notes[i].roll_id].flag){
@@ -1059,12 +1059,12 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 					case 0:	//taiko
 						sprites[SPRITE_ROLL_START].params.pos.x=Notes[i].x;
 						sprites[SPRITE_ROLL_START].params.pos.y=Notes[i].y;
-						if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
+						if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_ROLL_START].image,&sprites[SPRITE_ROLL_START].params,&DummyTint);
 						break;
 					case 3:	//konga
 						sprites[SPRITE_DON].params.pos.x=Notes[i].x;
 						sprites[SPRITE_DON].params.pos.y=Notes[i].y;
-						if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
+						if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_DON].image,&sprites[SPRITE_DON].params,&DummyTint);
 						break;
 					}
 				}
@@ -1094,12 +1094,12 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 					case 0:	//taiko
 						sprites[SPRITE_BIG_ROLL_START].params.pos.x=Notes[i].x;
 						sprites[SPRITE_BIG_ROLL_START].params.pos.y=Notes[i].y;
-						if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
+						if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BIG_ROLL_START].image,&sprites[SPRITE_BIG_ROLL_START].params,&DummyTint);
 						break;
 					case 3:	//konga
 						sprites[SPRITE_BIG_KATSU].params.pos.x=Notes[i].x;
 						sprites[SPRITE_BIG_KATSU].params.pos.y=Notes[i].y;
-						if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
+						if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BIG_KATSU].image,&sprites[SPRITE_BIG_KATSU].params,&DummyTint);
 						break;
 					}
 				}
@@ -1109,7 +1109,7 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 
 					sprites[SPRITE_BALLOON].params.pos.x=Notes[i].x;
 					sprites[SPRITE_BALLOON].params.pos.y=Notes[i].y;
-					if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BALLOON].image,&sprites[SPRITE_BALLOON].params,&DummyTint);
+					if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BALLOON].image,&sprites[SPRITE_BALLOON].params,&DummyTint);
 				}
 				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit*0.2f){
 
@@ -1148,7 +1148,7 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 
 					sprites[SPRITE_POTATO].params.pos.x=Notes[i].x;
 					sprites[SPRITE_POTATO].params.pos.y=Notes[i].y;
-					if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_POTATO].image,&sprites[SPRITE_POTATO].params,&DummyTint);
+					if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_POTATO].image,&sprites[SPRITE_POTATO].params,&DummyTint);
 				}
 				else if(BalloonNotes[Notes[i].roll_id].current_hit<=BalloonNotes[Notes[i].roll_id].need_hit){
 
@@ -1161,31 +1161,31 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 			case NOTES_DENDEN:
 				sprites[SPRITE_DENDEN].params.pos.x=Notes[i].x;
 				sprites[SPRITE_DENDEN].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_DENDEN].image,&sprites[SPRITE_DENDEN].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_DENDEN].image,&sprites[SPRITE_DENDEN].params,&DummyTint);
 				if(Notes[i].x==NOTES_JUDGE_X)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 			case NOTES_TIMEBOMB:
 				sprites[SPRITE_TIMEBOMB].params.pos.x=Notes[i].x;
 				sprites[SPRITE_TIMEBOMB].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_TIMEBOMB].image,&sprites[SPRITE_TIMEBOMB].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_TIMEBOMB].image,&sprites[SPRITE_TIMEBOMB].params,&DummyTint);
 				if(BalloonNotes[Notes[i].roll_id].current_hit>=1)update_balloon_count(BalloonNotes[Notes[i].roll_id].need_hit-BalloonNotes[Notes[i].roll_id].current_hit);
 				break;
 			case NOTES_ROLLEND:
 				sprites[SPRITE_ROLL_END].params.pos.x=Notes[i].x;
 				sprites[SPRITE_ROLL_END].params.pos.y=Notes[RollNotes[Notes[i].roll_id].start_id].y;
 				C2D_SpriteSetScale(&sprites[SPRITE_ROLL_END],sign(Notes[i].scroll),1);
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_ROLL_END].image,&sprites[SPRITE_ROLL_END].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_ROLL_END].image,&sprites[SPRITE_ROLL_END].params,&DummyTint);
 				break;
 			case NOTES_BIGROLLEND:
 				sprites[SPRITE_BIG_ROLL_END].params.pos.x=Notes[i].x;
 				sprites[SPRITE_BIG_ROLL_END].params.pos.y=Notes[RollNotes[Notes[i].roll_id].start_id].y;
 				C2D_SpriteSetScale(&sprites[SPRITE_BIG_ROLL_END],sign(Notes[i].scroll),1);
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image,&sprites[SPRITE_BIG_ROLL_END].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BIG_ROLL_END].image,&sprites[SPRITE_BIG_ROLL_END].params,&DummyTint);
 				break;
 			case NOTES_BOMB:
 				sprites[SPRITE_BOMB].params.pos.x=Notes[i].x;
 				sprites[SPRITE_BOMB].params.pos.y=Notes[i].y;
-				if(Notes[i].create_time<=CurrentTimeNotes)C2D_DrawImage(sprites[SPRITE_BOMB].image,&sprites[SPRITE_BOMB].params,&DummyTint);
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BOMB].image,&sprites[SPRITE_BOMB].params,&DummyTint);
 				break;
 			}
 		}
@@ -1403,7 +1403,7 @@ void delete_notes(int i){
 		Notes[i].knd=0;
 		Notes[i].x=0;
 		Notes[i].y=0;
-		Notes[i].create_time=0;
+		Notes[i].create_time=-INT_MAX;
 		Notes[i].judge_time=0;
 		Notes[i].hb_time=0;
 		Notes[i].move_time=-1;
