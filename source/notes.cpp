@@ -201,7 +201,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
-					if(Measure[MeasureCount].move_time!=-1){
+					if(Measure[MeasureCount].move_time!=0.0){
 						Notes[id].move_time=Measure[MeasureCount].move_time;
 						Notes[id].create_time=Notes[id].judge_time-createtime;
 					}
