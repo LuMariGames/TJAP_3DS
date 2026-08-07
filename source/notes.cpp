@@ -896,7 +896,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
 			}
 			else {
-				if(Notes[i].move_time==-1||(Notes[i].judge_time-Notes[i].move_time)<=currentTime){
+				if(Notes[i].move_time==0||(Notes[i].judge_time-Notes[i].move_time)<=currentTime){
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 					Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 				}
@@ -1408,7 +1408,7 @@ void delete_notes(int i){
 		Notes[i].create_time=-INT_MAX;
 		Notes[i].judge_time=0;
 		Notes[i].hb_time=0;
-		Notes[i].move_time=-1;
+		Notes[i].move_time=0;
 		Notes[i].bpm=0;
 		Notes[i].scroll=0;
 		Notes[i].roll_id=-1;
@@ -1515,8 +1515,9 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	get_option(&Option);
 
 	Notes.clear();
-	Notes.resize(64);
+	Notes.resize(2048);
 	init_notes_structure();
+	Notes.resize(64);
 	init_roll__notes();
 	init_balloon_notes();
 	Command.data[0]=0;Command.data[1]=0;Command.data[2]=0;
