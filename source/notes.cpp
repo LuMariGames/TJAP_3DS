@@ -38,7 +38,7 @@ BRANCH_T Branch;
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
 isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
-bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=true;
+bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
@@ -201,7 +201,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
-					if(Measure[MeasureCount].move_time!=0.0){
+					if(Measure[MeasureCount].move_time>0.0){
 						Notes[id].move_time=Measure[MeasureCount].move_time;
 						Notes[id].create_time=Notes[id].judge_time-createtime;
 					}
