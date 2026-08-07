@@ -28,7 +28,7 @@ void init_measure_structure(){
 		Measure[i].create_time=INT_MAX;
 		Measure[i].judge_time=INT_MAX;
 		Measure[i].pop_time=INT_MAX;
-		Measure[i].move_time=-1;
+		Measure[i].move_time=0;
 		Measure[i].bpm=0;
 		Measure[i].scroll=0;
 		Measure[i].yscroll=0;
