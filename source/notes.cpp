@@ -200,9 +200,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						}
 					}
 
-					Notes[id].create_time=Measure[MeasureCount].judge_time-createtime+NoteTime;
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
-					if(Measure[MeasureCount].move_time!=-1)Notes[id].move_time=Measure[MeasureCount].move_time;
+					if(Measure[MeasureCount].move_time!=-1){
+						Notes[id].move_time=Measure[MeasureCount].move_time;
+						Notes[id].create_time=Notes[id].judge_time-createtime;
+					}
 					Notes[id].num=Measure[MeasureCount].notes;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
