@@ -717,7 +717,17 @@ void conv_tja(LIST_T Song){
 		fputc(0xBF,fp);
 		while(*dst){
 			if(strncmp(sijs2u8(dst[0],dst[1]),"-10",3)==0){
-				fputc(*dst++,fp);
+				if (*dst == '\r' && *(dst + 1) == '\n') {
+					fputc(*dst++, fp); // \r
+					fputc(*dst++, fp); // \n
+				} 
+				else if (*dst == '\n') {
+					fputc('\r', fp);
+					fputc(*dst++, fp); // \n
+				} 
+				else {
+					fputc(*dst++, fp);
+				}
 			}
 			else {
 				fprintf(fp,"%s",sijs2u8(dst[0],dst[1]));
