@@ -146,7 +146,21 @@ bool load_tja_head(int course,LIST_T Song){
 				}
 				continue;
 			}
-			if(cnt==0){
+			if(Option.lang==0&&strstr(buf,"TITLEJA:")==buf){
+				if(buf[8]!='\n' && buf[8]!='\r'){
+					strlcpy(temp,buf+8,strlen(buf)-9);
+					Current_Header.title=temp;
+				}
+				continue;
+			}
+			if(Option.lang==2&&strstr(buf,"TITLEES:")==buf){
+				if(buf[8]!='\n' && buf[8]!='\r'){
+					strlcpy(temp,buf+8,strlen(buf)-9);
+					Current_Header.title=temp;
+				}
+				continue;
+			}
+			if(cnt==0&&isUTF8(buf)==2){
 				if(strstr(buf,"TITLE:")==buf+3 && strstr(buf,"SUBTITLE:")==0){
 					if(buf[9]!='\n' && buf[9]!='\r'){
 						strlcpy(temp,buf+9,strlen(buf)-10);
@@ -167,6 +181,40 @@ bool load_tja_head(int course,LIST_T Song){
 
 					if(Current_Header.subtitle_state!=0){
 						strlcpy(temp,buf+9+2,strlen(buf)-10-2);
+					}
+					Current_Header.subtitle=temp;
+				}
+				continue;
+			}
+
+			if(Option.lang==0&&strstr(buf,"SUBTITLEJA:")==buf){
+				if(buf[11]!='\n' && buf[11]!='\r'){
+
+					strlcpy(temp,buf+11,strlen(buf)-12);
+
+					if(strstr(temp,"--")==temp)Current_Header.subtitle_state=1;
+					else if(strstr(temp,"++")==temp)Current_Header.subtitle_state=2;
+					else Current_Header.subtitle_state=0;
+
+					if(Current_Header.subtitle_state!=0){
+						strlcpy(temp,buf+11+2,strlen(buf)-12-2);
+					}
+					Current_Header.subtitle=temp;
+				}
+				continue;
+			}
+
+			if(Option.lang==2&&strstr(buf,"SUBTITLEES:")==buf){
+				if(buf[11]!='\n' && buf[11]!='\r'){
+
+					strlcpy(temp,buf+11,strlen(buf)-12);
+
+					if(strstr(temp,"--")==temp)Current_Header.subtitle_state=1;
+					else if(strstr(temp,"++")==temp)Current_Header.subtitle_state=2;
+					else Current_Header.subtitle_state=0;
+
+					if(Current_Header.subtitle_state!=0){
+						strlcpy(temp,buf+11+2,strlen(buf)-12-2);
 					}
 					Current_Header.subtitle=temp;
 				}
