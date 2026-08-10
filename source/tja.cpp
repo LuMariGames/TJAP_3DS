@@ -524,12 +524,13 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 		List->level[i]=0;
 		List->course[i]=false;
 	}
-
 	FILE *fp;
 	char buf[512],*temp=NULL;
 	int course=COURSE_ONI,cnt=0,UTF8=1;
 	bool comp=true;
 	char abs_path[512];
+	OPTION_T Option;
+	get_option(&Option);
 
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",List->path,List->tja);
 	if((fp=fopen(abs_path,"r"))!=NULL){
