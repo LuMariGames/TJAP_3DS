@@ -174,7 +174,6 @@ bool load_tja_head(int course,LIST_T Song){
 				if(buf[9]!='\n' && buf[9]!='\r'){
 
 					strlcpy(temp,buf+9,strlen(buf)-10);
-
 					if(strstr(temp,"--")==temp)Current_Header.subtitle_state=1;
 					else if(strstr(temp,"++")==temp)Current_Header.subtitle_state=2;
 					else Current_Header.subtitle_state=0;
@@ -186,12 +185,10 @@ bool load_tja_head(int course,LIST_T Song){
 				}
 				continue;
 			}
-
 			if(Option.lang==0&&strstr(buf,"SUBTITLEJA:")==buf){
 				if(buf[11]!='\n' && buf[11]!='\r'){
 
 					strlcpy(temp,buf+11,strlen(buf)-12);
-
 					if(strstr(temp,"--")==temp)Current_Header.subtitle_state=1;
 					else if(strstr(temp,"++")==temp)Current_Header.subtitle_state=2;
 					else Current_Header.subtitle_state=0;
@@ -203,12 +200,10 @@ bool load_tja_head(int course,LIST_T Song){
 				}
 				continue;
 			}
-
 			if(Option.lang==2&&strstr(buf,"SUBTITLEES:")==buf){
 				if(buf[11]!='\n' && buf[11]!='\r'){
 
 					strlcpy(temp,buf+11,strlen(buf)-12);
-
 					if(strstr(temp,"--")==temp)Current_Header.subtitle_state=1;
 					else if(strstr(temp,"++")==temp)Current_Header.subtitle_state=2;
 					else Current_Header.subtitle_state=0;
@@ -566,6 +561,31 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 			if(strstr(buf,"TITLE:")==buf+3&&strstr(buf,"SUBTITLE:")==0){
 				if(buf[9]!='\n' && buf[9]!='\r'){
 					strlcpy(List->title,buf+9,strlen(buf)-10);
+				}
+				continue;
+			}
+
+			if(Option.lang==0&&strstr(buf,"TITLEJA:")==buf){
+				if(buf[8]!='\n' && buf[8]!='\r'){
+					strlcpy(List->title,buf+8,strlen(buf)-9);
+				}
+				continue;
+			}
+			if(Option.lang==2&&strstr(buf,"TITLEES:")==buf){
+				if(buf[8]!='\n' && buf[8]!='\r'){
+					strlcpy(List->title,buf+8,strlen(buf)-9);
+				}
+				continue;
+			}
+			if(Option.lang==0&&strstr(buf,"SUBTITLEJA:")==buf){
+				if(buf[11]!='\n' && buf[11]!='\r'){
+					strlcpy(List->subtitle,buf+11,strlen(buf)-12);
+				}
+				continue;
+			}
+			if(Option.lang==2&&strstr(buf,"SUBTITLEES:")==buf){
+				if(buf[11]!='\n' && buf[11]!='\r'){
+					strlcpy(List->subtitle,buf+11,strlen(buf)-12);
 				}
 				continue;
 			}
