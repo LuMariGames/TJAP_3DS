@@ -586,6 +586,7 @@ int main(){
 				select_ini();
 				set_measure();
 				bgcnt = -1;
+				if (isAniBg)C3D_TexDelete(sprites[SPRITES_NUMER-1].image.tex);
 				isAniBg = false;
 				aptSetSleepAllowed(true);
 			}
@@ -753,6 +754,14 @@ int main(){
 				else if (tmp == -1){
 					cnt = -150;
 					NOTES_JUDGE_X = 93.0f;
+					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
+					if (!isAniBg&&exist_file(abs_path)){
+						isAniBg = true;
+						loadPNGAsC2DImage(&sprites[SPRITES_NUMER-1].image,abs_path,false,400,96,0,0);
+						C2D_SpriteSetCenter(&sprites[SPRITES_NUMER-1],0.5f,0.5f);
+						bgcnt = 0;
+					}
+					else if (exist_file(abs_path)==0)isAniBg = false;
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					if(playcnt==INT_MAX)play_main_music(&isPlayMain,SelectedSong);
 					notes_cnt = 0;
@@ -960,7 +969,12 @@ int main(){
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image,&sprites[SPRITE_TOP_2].params,NULL);
 			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0+time_count(CurrentTimeMain)]);
-			C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
+			if (isAniBg&&bgcnt == 0){
+				C2D_DrawImage(sprites[SPRITES_NUMER-1].image,&sprites[SPRITE_BACKGROUND].params,NULL);
+			}
+			else {
+				C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
+			}
 			C2D_DrawImage(sprites[SPRITE_TOP].image,&sprites[SPRITE_TOP].params,NULL);
 
 			//ダンサー表示
