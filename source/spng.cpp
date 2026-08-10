@@ -1343,7 +1343,7 @@ static int spng__inflate_stream(spng_ctx *ctx, char **out, size_t *len, size_t e
 
 	(void)increase_cache_usage(ctx, size, 0);
 
-	*out = buf;
+	*out = (char*)buf;
 	*len = size;
 
 	return 0;
@@ -1686,7 +1686,7 @@ static unsigned get_best_filter(const unsigned char *prev_scanline, const unsign
 
 	for(i=0; i < 5; i++)
 	{
-		flag = 1 << (i + 3);
+		flag = (spng_filter_choice)(1 << (i + 3));
 
 		if(choices & flag) sum = filter_sum(prev_scanline, scanline, scanline_width, bytes_per_pixel, i);
 		else continue;
@@ -2703,7 +2703,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 
 				exif.length = chunk.length;
 
-				exif.data = spng__malloc(ctx, chunk.length);
+				exif.data = (char*)spng__malloc(ctx, chunk.length);
 				if(exif.data == NULL) return SPNG_EMEM;
 
 				ret = read_chunk_bytes2(ctx, exif.data, chunk.length);
@@ -2737,7 +2737,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 				ret = read_chunk_bytes(ctx, peek_bytes);
 				if(ret) return ret;
 
-				unsigned char *keyword_nul = memchr(ctx->data, '\0', peek_bytes);
+				unsigned char *keyword_nul = (unsigned char*)memchr(ctx->data, '\0', peek_bytes);
 				if(keyword_nul == NULL) return SPNG_EICCP_NAME;
 
 				uint32_t keyword_len = keyword_nul - ctx->data;
@@ -2776,7 +2776,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 
 				void *buf = spng__realloc(ctx, ctx->text_list, ctx->n_text * sizeof(struct spng_text2));
 				if(buf == NULL) return SPNG_EMEM;
-				ctx->text_list = buf;
+				ctx->text_list = (spng_text2*)buf;
 
 				struct spng_text2 *text = &ctx->text_list[ctx->n_text - 1];
 				memset(text, 0, sizeof(struct spng_text2));
@@ -2796,7 +2796,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 
 				const unsigned char *zlib_stream = NULL;
 				const unsigned char *peek_end = data + peek_bytes;
-				const unsigned char *keyword_nul = memchr(data, 0, chunk.length > 80 ? 80 : chunk.length);
+				const unsigned char *keyword_nul = (const unsigned char*)memchr(data, 0, chunk.length > 80 ? 80 : chunk.length);
 
 				if(keyword_nul == NULL) return SPNG_ETEXT_KEYWORD;
 
@@ -2841,14 +2841,14 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 					language_tag_offset = keyword_len + 3;
 
 					const unsigned char *term;
-					term = memchr(data + language_tag_offset, 0, peek_bytes - language_tag_offset);
+					term = (const unsigned char*)memchr(data + language_tag_offset, 0, peek_bytes - language_tag_offset);
 					if(term == NULL) return SPNG_EITXT_LANG_TAG;
 
 					if((peek_end - term) < 2) return SPNG_EITXT;
 
 					translated_keyword_offset = term - data + 1;
 
-					zlib_stream = memchr(data + translated_keyword_offset, 0, peek_bytes - translated_keyword_offset);
+					zlib_stream = (const unsigned char*)memchr(data + translated_keyword_offset, 0, peek_bytes - translated_keyword_offset);
 					if(zlib_stream == NULL) return SPNG_EITXT;
 					if(zlib_stream == peek_end) return SPNG_EITXT;
 
@@ -2863,7 +2863,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 					/* cache usage = peek_bytes + decompressed text size + nul */
 					if(increase_cache_usage(ctx, peek_bytes, 0)) return SPNG_ECHUNK_LIMITS;
 
-					text->keyword = spng__calloc(ctx, 1, peek_bytes);
+					text->keyword = (char*)spng__calloc(ctx, 1, peek_bytes);
 					if(text->keyword == NULL) return SPNG_EMEM;
 
 					memcpy(text->keyword, data, peek_bytes);
@@ -2881,7 +2881,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 				{
 					if(increase_cache_usage(ctx, chunk.length + 1, 0)) return SPNG_ECHUNK_LIMITS;
 
-					text->keyword = spng__malloc(ctx, chunk.length + 1);
+					text->keyword = (char*)spng__malloc(ctx, chunk.length + 1);
 					if(text->keyword == NULL) return SPNG_EMEM;
 
 					memcpy(text->keyword, data, peek_bytes);
@@ -2938,7 +2938,7 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 
 				void *buf = spng__realloc(ctx, ctx->splt_list, ctx->n_splt * sizeof(struct spng_splt));
 				if(buf == NULL) return SPNG_EMEM;
-				ctx->splt_list = buf;
+				ctx->splt_list = (spng_splt*)buf;
 
 				struct spng_splt *splt = &ctx->splt_list[ctx->n_splt - 1];
 
@@ -2949,8 +2949,8 @@ static int read_non_idat_chunks(spng_ctx *ctx)
 				void *t = spng__malloc(ctx, chunk.length);
 				if(t == NULL) return SPNG_EMEM;
 
-				splt->entries = t; /* simplifies error handling */
-				data = t;
+				splt->entries = (spng_splt_entry*)t; /* simplifies error handling */
+				data = (const unsigned char*)t;
 
 				ret = read_chunk_bytes2(ctx, t, chunk.length);
 				if(ret) return ret;
@@ -4515,7 +4515,7 @@ static int write_idat_bytes(spng_ctx *ctx, const void *scanline, size_t len, int
 
 	}while(zstream->avail_in);
 
-	if(ret != Z_OK) return SPtNG_EZLIB;
+	if(ret != Z_OK) return SPNG_EZLIB;
 
 	return 0;
 }
