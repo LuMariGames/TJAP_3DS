@@ -147,9 +147,11 @@ u32 GetNextPowerOf2(u32 v) {
 }
 
 bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsigned int width, unsigned int height, float img_x, float img_y) {
+	// 1. ファイルオープン
 	FILE *f = fopen(filename, "rb");
 	if (!f) return false;
 
+	// 2. spng コンテキストの作成
 	spng_ctx *ctx = spng_ctx_new(0);
 	if (!ctx) {
 		fclose(f);
@@ -158,6 +160,7 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 
 	spng_set_png_file(ctx, f);
 
+	// 3. PNGヘッダー情報の取得 (幅・高さ)
 	struct spng_ihdr ihdr;
 	if (spng_get_ihdr(ctx, &ihdr) != 0) {
 		spng_ctx_free(ctx);
@@ -168,8 +171,8 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 	u32 w = ihdr.width;
 	u32 h = ihdr.height;
 
-	// 常に RGBA8 としてデコードする
-	int fmt = SPNG_FMT_RGBA8;
+	// 4. フォーマット設定およびバッファサイズ計算
+	int fmt = rgba ? SPNG_FMT_RGBA8 : SPNG_FMT_RGB8;
 	size_t image_size = 0;
 	if (spng_decoded_image_size(ctx, fmt, &image_size) != 0) {
 		spng_ctx_free(ctx);
@@ -177,6 +180,7 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 		return false;
 	}
 
+	// 5. デコード用メモリの確保と実行
 	unsigned char* image = (unsigned char*)malloc(image_size);
 	if (!image) {
 		spng_ctx_free(ctx);
@@ -191,33 +195,55 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 		return false;
 	}
 
+	// spngのリソースとファイルハンドルを解放
 	spng_ctx_free(ctx);
 	fclose(f);
 
+	// 6. C3D テクスチャ構造体の確保
 	C3D_Tex *tex = new C3D_Tex;
 	Tex3DS_SubTexture *subtex = new Tex3DS_SubTexture;
 
 	u32 w_pow2 = GetNextPowerOf2(w);
 	u32 h_pow2 = GetNextPowerOf2(h);
 
-	// 常に GPU_RGBA8 を使用
-	C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGBA8);
-	memset(tex->data, 0, tex->size);
-	
-	for (u32 x = 0; x < w; x++) {
-		for (u32 y = 0; y < h; y++) {
-			u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 4;
-			u32 src_pos = (y * w + x) * 4;
-			
-			u8 r = image[src_pos + 0];
-			u8 g = image[src_pos + 1];
-			u8 b = image[src_pos + 2];
-			u8 a = image[src_pos + 3];
+	if (rgba) {
+		C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGBA8);
+		memset(tex->data, 0, tex->size);
+		
+		for (u32 x = 0; x < w; x++) {
+			for (u32 y = 0; y < h; y++) {
+				u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 4;
+				u32 src_pos = (y * w + x) * 4;
+				
+				u8 r = image[src_pos + 0];
+				u8 g = image[src_pos + 1];
+				u8 b = image[src_pos + 2];
+				u8 a = image[src_pos + 3];
 
-			((u8*)tex->data)[dst_pos + 0] = a;
-			((u8*)tex->data)[dst_pos + 1] = b;
-			((u8*)tex->data)[dst_pos + 2] = g;
-			((u8*)tex->data)[dst_pos + 3] = r;
+				((u8*)tex->data)[dst_pos + 0] = a;
+				((u8*)tex->data)[dst_pos + 1] = b;
+				((u8*)tex->data)[dst_pos + 2] = g;
+				((u8*)tex->data)[dst_pos + 3] = r;
+			}
+		}
+	}
+	else {
+		C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGB8);
+		memset(tex->data, 0, tex->size);
+
+		for (u32 x = 0; x < w; x++) {
+			for (u32 y = 0; y < h; y++) {
+				u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 3;
+				u32 src_pos = (y * w + x) * 3;
+				
+				u8 r = image[src_pos + 0];
+				u8 g = image[src_pos + 1];
+				u8 b = image[src_pos + 2];
+				
+				((u8*)tex->data)[dst_pos + 0] = b;
+				((u8*)tex->data)[dst_pos + 1] = g;
+				((u8*)tex->data)[dst_pos + 2] = r;
+			}
 		}
 	}
 		
@@ -239,6 +265,7 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 		return true;
 	}
 
+	// 条件を満たさない場合はメモリを破棄して失敗を返す
 	delete tex;
 	delete subtex;
 	return false;
