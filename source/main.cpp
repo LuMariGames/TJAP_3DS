@@ -695,7 +695,6 @@ int main(){
 		case SCENE_MAINLOAD:	 //ロード中
 
 			draw_select_text(0,225,"Chart Loading...");
-			C3D_FrameEnd(0);
 			if (Option.edit == 1){
 				white_tja(SelectedSong);
 				set_SelectedId();
