@@ -397,12 +397,18 @@ inline static void load_sprites(){
 		sprites[SPRITE_DONCHAN_0].params.pos.w = 256; sprites[SPRITE_DONCHAN_0].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_0],0.5f,0.5f);
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_1].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,256,0);
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_1].image.tex);
+		sprites[SPRITE_DONCHAN_1].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_1].params.pos.w = 256; sprites[SPRITE_DONCHAN_1].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_1],0.5f,0.5f);
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_2].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,0,128);
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_2].image.tex);
+		sprites[SPRITE_DONCHAN_2].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_2].params.pos.w = 256; sprites[SPRITE_DONCHAN_2].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_2],0.5f,0.5f);
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_3].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,256,128);
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_3].image.tex);
+		sprites[SPRITE_DONCHAN_3].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
 
@@ -414,6 +420,8 @@ inline static void load_sprites(){
 		sprites[SPRITE_TOP_2].params.pos.w = 400; sprites[SPRITE_TOP_2].params.pos.h = 86;
 		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_2],0.5f,0.5f);
 		loadPNGAsC2DImage(&sprites[SPRITE_TOP_3].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,96,0,144);
+		C3D_TexDelete(sprites[SPRITE_TOP_3].image.tex);
+		sprites[SPRITE_TOP_3].image.tex=sprites[SPRITE_TOP_2].image.tex;
 		sprites[SPRITE_TOP_3].params.pos.w = 400; sprites[SPRITE_TOP_3].params.pos.h = 96;
 		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_3],0.5f,0.5f);
 	}
@@ -439,6 +447,10 @@ inline static void load_sprites(){
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2],dg_x,dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3],dg_x,dg_y);
 	if(plusimg_player){
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_4].image.tex);
+		sprites[SPRITE_DONCHAN_4].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_5].image.tex);
+		sprites[SPRITE_DONCHAN_5].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_4].params.pos.w = 256; sprites[SPRITE_DONCHAN_4].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_4],0.5f,0.5f);
 		C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_4],dg_x,dg_y);
