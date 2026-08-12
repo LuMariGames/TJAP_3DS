@@ -122,7 +122,6 @@ inline void load_file_list(const char* path) {
 			else {
 				load_file_list(filename);
 			}
-			closedir(db);
 		}
 	}
 	closedir(dir);
