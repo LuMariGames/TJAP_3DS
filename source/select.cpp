@@ -98,7 +98,7 @@ inline void load_file_list(const char* path) {
 
 			if (dp->d_type!=DT_DIR) {
 
-				if (strstr(dp->d_name,".tja\0")!=NULL) {
+				if (strstr(dp->d_name,".tja")!=NULL&&strstr(dp->d_name,".bin")!=NULL) {
 
 					strlcpy(List[SongCount].tja,dp->d_name,sizeof(List[0].tja));
 					strlcpy(List[SongCount].path,path,sizeof(List[0].path));
