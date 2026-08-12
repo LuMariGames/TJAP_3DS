@@ -82,46 +82,47 @@ void load_genre_file(int id) {
 	json_decref(json);
 }
 
-void load_file_list(const char* path){
-	DIR* dir=opendir(path);
-	if(!dir)return;
-	struct dirent* dp;
-	char filename[512];
+inline void load_file_list(const char* path) {
 
-	while((dp=readdir(dir))!= NULL){
-		snprintf(filename,sizeof(filename),"%s/%s",path,dp->d_name);
-		bool is_dir=false;
-		if(dp->d_type==DT_DIR){
-			is_dir=true;
-		}
-		else if(dp->d_type==DT_UNKNOWN){
-			struct stat st;
-			if(stat(filename,&st)==0&&S_ISDIR(st.st_mode)){
-				is_dir=true;
-			}
-		}
-		if(is_dir){
-			load_file_list(filename);
-		}
-		else {
-			if(strstr(dp->d_name,".tja\0")!= NULL){
-				strlcpy(List[SongCount].tja,dp->d_name,sizeof(List[0].tja));
-				strlcpy(List[SongCount].path,path,sizeof(List[0].path));
-				List[SongCount].genre=GENRE_MAX + 1;
-				if(!load_tja_head_simple(&List[SongCount])){
-					conv_tja(List[SongCount]);
-					load_tja_head_simple(&List[SongCount]);
+	DIR* dir;
+	struct dirent* dp;
+
+	if ((dir=opendir(path))!=NULL) {
+
+		char filename[512];
+		while ((dp=readdir(dir))!=NULL) {
+
+			strlcpy(filename,path,sizeof(filename));
+			strcat(filename,"/");
+			strcat(filename,dp->d_name);
+
+			if (dp->d_type!=DT_DIR) {
+
+				if (strstr(dp->d_name,".tja\0")!=NULL) {
+
+					strlcpy(List[SongCount].tja,dp->d_name,sizeof(List[0].tja));
+					strlcpy(List[SongCount].path,path,sizeof(List[0].path));
+					List[SongCount].genre=GENRE_MAX+1;
+					if(!load_tja_head_simple(&List[SongCount])){
+						conv_tja(List[SongCount]);
+						load_tja_head_simple(&List[SongCount]);
+					}
+					loadend=1;
+					++SongCount;
 				}
-				loadend=1;
-				++SongCount;
+				if (strstr(dp->d_name,GENRE_FILE)!=NULL) {
+
+					strlcpy(Genre[GenreCount].path,path,sizeof(Genre[0].path));
+					load_genre_file(GenreCount);
+					++GenreCount;
+					set_genres();
+					SongNumber=SongCount;
+				}
 			}
-			if(strstr(dp->d_name,GENRE_FILE)!= NULL){
-				strlcpy(Genre[GenreCount].path,path,sizeof(Genre[0].path));
-				load_genre_file(GenreCount);
-				++GenreCount;
-				set_genres();
-				SongNumber=SongCount;
+			else {
+				load_file_list(filename);
 			}
+			closedir(db);
 		}
 	}
 	closedir(dir);
