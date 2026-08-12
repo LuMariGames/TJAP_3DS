@@ -1432,16 +1432,18 @@ C2D_Text NotesText;
 
 void draw_notes_text(float x,float y,const char *text,float *width,float *height){
 
-	float size=0.6;
+	float iw,ih,size=0.6f;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextFontParse(&NotesText,font,g_NotesText,text);
 	C2D_TextOptimize(&NotesText);
+	C2D_TextGetDimensions(&NotesText,0.6f,0.6f,&iw,&ih);
+	if(iw>395.0f)size*=(395.0f/iw);
 	C2D_DrawText(&NotesText,C2D_WithColor | C2D_AlignRight,x,y,1.0f,size,size,C2D_Color32f(black,black,black,1.0f));
 }
 
 inline void draw_lyric_text(const char *text){
 
-	float size=0.6;
+	float size=0.6f;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText,g_NotesText,text);
 	C2D_TextOptimize(&NotesText);
@@ -1450,7 +1452,7 @@ inline void draw_lyric_text(const char *text){
 
 void draw_condition_text(float x,float y,const char *text,float *width,float *height){
 
-	float size=0.55;
+	float size=0.55f;
 	C2D_TextBufClear(g_NotesText);
 	C2D_TextParse(&NotesText,g_NotesText,text);
 	C2D_TextOptimize(&NotesText);
@@ -1464,7 +1466,7 @@ void draw_title(){
 	get_tja_header(&Header);
 	float width=0,height=0;
 
-	if(Header.subtitle_state!=-1&&Header.subtitle_state!=1)draw_notes_text(TOP_WIDTH,20,Header.subtitle,&width,&height);
+	if(Header.subtitle_state!=-1&&Header.subtitle_state!=1)draw_notes_text(TOP_WIDTH-5,20,Header.subtitle,&width,&height);
 	draw_notes_text(TOP_WIDTH-5,5,Header.title,&width,&height);
 }
 
