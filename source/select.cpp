@@ -82,7 +82,7 @@ void load_genre_file(int id) {
 	json_decref(json);
 }
 
-inline void load_file_list(const char* path){
+void load_file_list(const char* path){
 	DIR* dir=opendir(path);
 	if(!dir)return;
 	struct dirent* dp;
@@ -96,7 +96,8 @@ inline void load_file_list(const char* path){
 		bool is_dir=false;
 		if(dp->d_type==DT_DIR){
 			is_dir=true;
-		} else if(dp->d_type=-DT_UNKNOWN){
+		}
+		else if(dp->d_type=-DT_UNKNOWN){
 			struct stat st;
 			if(stat(filename,&st)==0&&S_ISDIR(st.st_mode)){
 				is_dir=true;
@@ -104,7 +105,8 @@ inline void load_file_list(const char* path){
 		}
 		if(is_dir){
 			load_file_list(filename);
-		} else {
+		}
+		else {
 			if(strstr(dp->d_name,".tja\0")!= NULL){
 				strlcpy(List[SongCount].tja,dp->d_name,sizeof(List[0].tja));
 				strlcpy(List[SongCount].path,path,sizeof(List[0].path));
