@@ -89,9 +89,6 @@ void load_file_list(const char* path){
 	char filename[512];
 
 	while((dp=readdir(dir))!= NULL){
-		if(strcmp(dp->d_name,".")==0||strcmp(dp->d_name,"..")==0){
-			continue;
-		}
 		snprintf(filename,sizeof(filename),"%s/%s",path,dp->d_name);
 		bool is_dir=false;
 		if(dp->d_type==DT_DIR){
