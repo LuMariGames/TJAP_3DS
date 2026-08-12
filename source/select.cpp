@@ -97,7 +97,7 @@ void load_file_list(const char* path){
 		if(dp->d_type==DT_DIR){
 			is_dir=true;
 		}
-		else if(dp->d_type=-DT_UNKNOWN){
+		else if(dp->d_type==DT_UNKNOWN){
 			struct stat st;
 			if(stat(filename,&st)==0&&S_ISDIR(st.st_mode)){
 				is_dir=true;
