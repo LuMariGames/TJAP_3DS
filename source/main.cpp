@@ -109,7 +109,7 @@ bool check_dsp1(){ //DSP1を起動しているか確認
 double DonMeasure = 0.0;
 
 inline int time_count() {
-	if(!isMusicStart||!isNotesStart)return 0;
+	if(!isMusicStart&&!isNotesStart)return 0;
 	if(!isPause)DonMeasure+=clocktime*(NowBPM/240.0);
 	u8 tc;
 	if(plusimg_player&&isGOGO)tc=((int)floor(DonMeasure*24)%12);
@@ -134,7 +134,7 @@ inline int time_count() {
 }
 
 inline int dancer_time_count(int NUM) {
-	if (!isMusicStart||!isNotesStart)return 0;
+	if (!isMusicStart&&!isNotesStart)return 0;
 	return(int)floor(DonMeasure*0.25*NUM)%NUM;
 }
 
