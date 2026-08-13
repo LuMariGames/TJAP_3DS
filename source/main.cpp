@@ -807,10 +807,9 @@ int main(){
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					if(playcnt==INT_MAX)play_main_music(&isPlayMain,SelectedSong);
-					notes_cnt = 0;
-					scene_state = SCENE_LOADSCRE;
-					aptSetSleepAllowed(false);
+					notes_cnt = 0,scene_state = SCENE_LOADSCRE,DonMeasure = 0.0;
 					time_ini();
+					aptSetSleepAllowed(false);
 				}
 				else {
 					warning = tmp;
