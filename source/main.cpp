@@ -106,12 +106,15 @@ bool check_dsp1(){ //DSP1を起動しているか確認
 	return true;
 }
 
-inline int time_count(double TIME)noexcept {
-	if (TIME<0)return 0;
+double DonMeasure = 0.0;
+
+inline int time_count() {
+	if (isMusicStart||isNotesStart)return 0;
+	DonMeasure+=clocktime*(NowBPM/240.0);
 	u8 tc;
-	if(plusimg_player&&isGOGO)tc=((int)floor(TIME*(fabs(NowBPM)/10.0))%12);
+	if(plusimg_player&&isGOGO)tc=((int)floor(DonMeasure*24)%12);
 	else {
-		return(int)floor(TIME*(fabs(NowBPM)/60.0*(2-isGOGO)))%2+(isGOGO*2);
+		return(int)floor(DonMeasure*(8-(isGOGO*4)))%2+(isGOGO*2);
 	}
 	switch(tc){
 	case 0:return 0+(isGOGO*2);
@@ -130,9 +133,9 @@ inline int time_count(double TIME)noexcept {
 	}
 }
 
-inline int dancer_time_count(double TIME,int NUM)noexcept {
-	if (TIME<0)return 0;
-	return(int)floor(TIME*(fabs(NowBPM)/(960.0/NUM)))%NUM;
+inline int dancer_time_count(int NUM) {
+	if (isMusicStart||isNotesStart)return 0;
+	return(int)floor(DonMeasure*0.25*NUM)%NUM;
 }
 
 u32 GetNextPowerOf2(u32 v) {
@@ -1008,21 +1011,17 @@ int main(){
 			}
 
 			C2D_DrawImage(sprites[SPRITE_TOP_2].image,&sprites[SPRITE_TOP_2].params,NULL);
-			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0+time_count(CurrentTimeMain)]);
-			if (isAniBg&&bgcnt == 0){
-				C2D_DrawImage(sprites[SPRITES_NUMER-1].image,&sprites[SPRITE_BACKGROUND].params,NULL);
-			}
-			else {
-				C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
-			}
+			C2D_DrawSprite(&sprites[SPRITE_DONCHAN_0+time_count()]);
+			if (isAniBg&&bgcnt == 0)C2D_DrawImage(sprites[SPRITES_NUMER-1].image,&sprites[SPRITE_BACKGROUND].params,NULL);
+			else C2D_DrawImage(sprites[SPRITE_TOP_3].image,&sprites[SPRITE_TOP_3].params,NULL);
 			C2D_DrawImage(sprites[SPRITE_TOP].image,&sprites[SPRITE_TOP].params,NULL);
 
 			//ダンサー表示
 			if (!isAniBg&&dance&&course != COURSE_DAN){
 				//ダンサーのコマ数調整
-				mintime1 = SPRITE_DANCER_0+Skin.d1anime[dancer_time_count(CurrentTimeMain,Skin.d1total)];
-				mintime2 = SPRITE_DANCER_0+Skin.d2anime[dancer_time_count(CurrentTimeMain,Skin.d2total)]+Skin.d1num;
-				mintime3 = SPRITE_DANCER_0+Skin.d3anime[dancer_time_count(CurrentTimeMain,Skin.d3total)]+Skin.d1num+Skin.d2num;
+				mintime1 = SPRITE_DANCER_0+Skin.d1anime[dancer_time_count(Skin.d1total)];
+				mintime2 = SPRITE_DANCER_0+Skin.d2anime[dancer_time_count(Skin.d2total)]+Skin.d1num;
+				mintime3 = SPRITE_DANCER_0+Skin.d3anime[dancer_time_count(Skin.d3total)]+Skin.d1num+Skin.d2num;
 
 				//1体目
 				C2D_SpriteSetPos(&sprites[mintime1],200,192);
