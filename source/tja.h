@@ -4,17 +4,17 @@
 
 typedef struct {
 
-	int knd,data[3],test;
 	double val[3];
+	int knd,data[3],test;
 	std::string command_s,notes,value_s;
 } COMMAND_T;
 
 typedef struct {
 
-	char *title,*subtitle,*wave,*bg;
+	double bpm,offset; //demostart;
 	int level,balloon[4][256],songvol,sevol,scoreinit,scorediff,
 		course,style,life,scoremode,subtitle_state,gamemode,total; //side;
-	double bpm,offset; //demostart;
+	char *title,*subtitle,*wave,*bg;
 	bool isHBS;
 
 }TJA_HEADER_T;
@@ -26,8 +26,8 @@ typedef struct {
 }HEADER_T;
 
 typedef struct {
-	double judge_time,create_time,pop_time,move_time,
-		bpm,measure,scroll,yscroll;
+	double judge_time,pop_time,bpm,measure;
+	float create_time,move_time,scroll,yscroll;
 	int notes,firstmeasure,start_measure_count,max_notes,notes_count,command,branch,
 		original_id;	//ソート前のid
 	bool flag,isDispBarLine,isDummy;
