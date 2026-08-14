@@ -401,8 +401,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
 						}
-
-						// 2回目以降の呼び出しは、第一引数に NULL を指定します
 						tp=strtok(NULL,",");
 						count++;
 					}
@@ -420,7 +418,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 			if(NotFalse==false&&Measure[i].judge_time<=CurrentTimeNotes)Measure[i].flag=false;
 		}
-		if(Measure[i].command==-1&&Measure[i].branch==Branch.course&&
+		if(Measure[i].command==-1&&(Measure[i].branch==Branch.course||Measure[i].branch==-1)&&
 			MaxJudgeTime<Measure[i].judge_time&&Measure[i].judge_time<=CurrentTimeNotes){
 			NowBPM=Measure[i].bpm;
 			MaxJudgeTime=Measure[i].judge_time;
@@ -1561,7 +1559,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	isBalloonBreakDisp=0;
 	isPttBorder=false;
 	isGOGOTime=false;
-	Branch.knd=-1;
+	Branch.knd=0;
 	Branch.x=0;
 	Branch.y=0;
 	Branch.course=-1;
