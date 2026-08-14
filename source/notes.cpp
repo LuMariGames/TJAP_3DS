@@ -420,7 +420,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			}
 			if(NotFalse==false&&Measure[i].judge_time<=CurrentTimeNotes)Measure[i].flag=false;
 		}
-		if(Measure[i].command==-1&&
+		if(Measure[i].command==-1&&Measure[i].branch==Branch.course&&
 			MaxJudgeTime<Measure[i].judge_time&&Measure[i].judge_time<=CurrentTimeNotes){
 			NowBPM=Measure[i].bpm;
 			MaxJudgeTime=Measure[i].judge_time;
