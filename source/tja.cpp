@@ -35,6 +35,7 @@ void init_measure_structure(){
 		Measure[i].notes=0;
 		Measure[i].flag=false;
 		Measure[i].isDispBarLine=true;
+		Measure[i].branch=-1;
 		Measure[i].firstmeasure=-1;
 		Measure[i].start_measure_count=0;
 		Measure[i].max_notes=0;
