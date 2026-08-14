@@ -14,7 +14,7 @@
 void load_file_list(const char* path);
 static void set_genres();
 
-LIST_T List[LIST_MAX];
+std::vector<LIST_T> List;
 GENRE_T Genre[GENRE_MAX];
 extern C2D_Font font;
 char buf_select[256];
@@ -23,16 +23,10 @@ int GenreNumber=0;		//ジャンルの総数
 int ClosedSongNumber=0;	//閉じたジャンル内の曲数
 int GenreCount=0,SongCount=0,cursor=0,course_cursor=0,course_count=0,SelectedId=0,SelectedGenreId=0,course=COURSE_ONI,loadend=0;
 bool isSelectCourse=false,isCursorGenre=false,isGameStart=false;
-int cmp_list(const void* p,const void* q) {	//比較用
-
-	int pp=((LIST_T*)p)->genre;
-	int qq=((LIST_T*)q)->genre;
-	return pp-qq;
-}
 
 void sort_list() {	//曲をジャンル順にソート
 
-	qsort(List,SongCount,sizeof(LIST_T),cmp_list);
+	std::sort(List.begin(), List.end(), [](const LIST_T& a, const LIST_T& b) {return a.genre < b.genre;});
 }
 
 void load_file_main(void *arg) {
@@ -100,13 +94,15 @@ inline void load_file_list(const char* path) {
 
 				if (strstr(dp->d_name,".tja")!=NULL&&strstr(dp->d_name,"_gd.bin")==NULL) {
 
-					strlcpy(List[SongCount].tja,dp->d_name,sizeof(List[0].tja));
-					strlcpy(List[SongCount].path,path,sizeof(List[0].path));
-					List[SongCount].genre=GENRE_MAX+1;
-					if(!load_tja_head_simple(&List[SongCount])){
-						conv_tja(List[SongCount]);
-						load_tja_head_simple(&List[SongCount]);
+					LIST_T item{};
+					strlcpy(item.tja,dp->d_name,sizeof(item.tja));
+					strlcpy(item.path,path,sizeof(item.path));
+					item.genre=GENRE_MAX+1;
+					if(!load_tja_head_simple(&item)){
+						conv_tja(item);
+						load_tja_head_simple(&item);
 					}
+					List.push_back(item);
 					loadend=1;
 					++SongCount;
 				}
