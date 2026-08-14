@@ -32,8 +32,6 @@ void sort_list() {	//曲をジャンル順にソート
 void load_file_main(void *arg) {
 
 	PTMSYSM_CheckNew3DS(&New);
-	if(New)List.reserve(LIST_MAX);
-	else List.reserve(4096);
 	load_combo();
 	newfont();
 	load_file_list(DEFAULT_DIR);
