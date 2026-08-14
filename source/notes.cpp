@@ -1561,7 +1561,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	isBalloonBreakDisp=0;
 	isPttBorder=false;
 	isGOGOTime=false;
-	Branch.knd=0;
+	Branch.knd=-1;
 	Branch.x=0;
 	Branch.y=0;
 	Branch.course=-1;
