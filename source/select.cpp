@@ -11,8 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void load_file_list(const char* path);
-static void set_genres();
+void load_file_list(const char* path),set_genres();
 
 std::vector<LIST_T> List;
 GENRE_T Genre[GENRE_MAX];
@@ -34,6 +33,9 @@ void load_file_main(void *arg) {
 	PTMSYSM_CheckNew3DS(&New);
 	load_combo();
 	newfont();
+	List.clear();
+	if(New)List.reserve(LIST_MAX);
+	else List.reserve(4096);
 	load_file_list(DEFAULT_DIR);
 	set_genres();
 	SongNumber=SongCount;
@@ -94,7 +96,8 @@ inline void load_file_list(const char* path) {
 
 				if (strstr(dp->d_name,".tja")!=NULL&&strstr(dp->d_name,"_gd.bin")==NULL) {
 
-					LIST_T item{};
+					List.emplace_back();
+					LIST_T& item = List.back();
 					strlcpy(item.tja,dp->d_name,sizeof(item.tja));
 					strlcpy(item.path,path,sizeof(item.path));
 					item.genre=GENRE_MAX+1;
@@ -102,7 +105,6 @@ inline void load_file_list(const char* path) {
 						conv_tja(item);
 						load_tja_head_simple(&item);
 					}
-					List.push_back(item);
 					loadend=1;
 					++SongCount;
 				}
@@ -123,7 +125,7 @@ inline void load_file_list(const char* path) {
 	closedir(dir);
 }
 
-static void set_genres() {
+void set_genres() {
 
 	for (int i=0;i<GenreCount;++i) {
 		for (int j=SongNumber;j<SongCount;++j) {
