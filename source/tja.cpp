@@ -739,21 +739,10 @@ void conv_tja(LIST_T Song){
 		fclose(fp);
 	}
 }
+
 void sort_measure_insertion(MEASURE_T t[],int array_size){	//create_timeでソート
 
-	for(int i=1;i<array_size;++i){
-
-		MEASURE_T temp=t[i];
-		if(t[i-1].create_time>temp.create_time){
-
-			int j=i;
-			do {
-				t[j]=t[j-1];
-				--j;
-			} while(j>0&&t[j-1].create_time>temp.create_time);
-			t[j]=temp;
-		}
-	}
+	std::sort(t, t + array_size, [](const MEASURE_T& a, const MEASURE_T& b) {return std::tie(a.create_time,a.command) < std::tie(b.create_time,b.command);});
 }
 
 double calc_first_measure_time(){	//最初に到達する小節の所要時間を計算
