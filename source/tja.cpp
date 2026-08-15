@@ -744,7 +744,7 @@ void sort_measure_insertion(MEASURE_T t[],int array_size){	//create_timeでソ�
 
 	std::sort(t, t + array_size, [](const MEASURE_T& a, const MEASURE_T& b) {
 		bool a_issection=(a.command==COMMAND_SECTION); bool b_issection=(b.command==COMMAND_SECTION);
-		return std::tie(a.create_time,a.command,a_issection) < std::tie(b.create_time,b.command,b_issection);});
+		return std::tie(a.create_time,a_issection,a.command) < std::tie(b.create_time,b_issection,b.command);});
 }
 
 double calc_first_measure_time(){	//最初に到達する小節の所要時間を計算
