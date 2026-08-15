@@ -674,6 +674,24 @@ void white_tja(LIST_T Song){
 		swkbdInit(&swkbd,SWKBD_TYPE_NORMAL,1,-1);
 		swkbdSetInitialText(&swkbd,tja_text);
 		swkbdSetFeatures(&swkbd,SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
+		SwkbdDictWord word[16];
+		swkbdSetDictWord(&words[0], "#", "#BPMCHANGE {float}");
+		swkbdSetDictWord(&words[1], "#", "#SCROLL {float}");
+		swkbdSetDictWord(&words[2], "#", "#GOGOSTART");
+		swkbdSetDictWord(&words[3], "#", "#GOGOEND");
+		swkbdSetDictWord(&words[4], "#", "#MEASURE {float}/{float}");
+		swkbdSetDictWord(&words[5], "#", "#BARLINEON");
+		swkbdSetDictWord(&words[6], "#", "#BARLINEOFF");
+		swkbdSetDictWord(&words[7], "#", "#DELAY {float}");
+		swkbdSetDictWord(&words[8], "#", "#BRANCHSTART (r/p/s),{int},{int}");
+		swkbdSetDictWord(&words[9], "#", "#BRANCHEND");
+		swkbdSetDictWord(&words[10], "#", "#N");
+		swkbdSetDictWord(&words[11], "#", "#E");
+		swkbdSetDictWord(&words[12], "#", "#M");
+		swkbdSetDictWord(&words[13], "#", "#LEVELHOLD");
+		swkbdSetDictWord(&words[14], "#", "#JPOSSCROLL {float} {int} (0/1)");
+		swkbdSetDictWord(&words[15], "#", "#SUDDEN {float} {float}");
+		swkbdSetDictionary(&swkbd, words, sizeof(words)/sizeof(SwkbdDictWord));
 		swkbdInputText(&swkbd,tja_text,sizeof(tja_text));
 		dst=tja_text;
 		while(*dst){
