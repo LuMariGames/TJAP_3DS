@@ -742,9 +742,7 @@ void conv_tja(LIST_T Song){
 
 void sort_measure_insertion(MEASURE_T t[],int array_size){	//create_timeでソート
 
-	std::sort(t, t + array_size, [](const MEASURE_T& a, const MEASURE_T& b) {
-		bool a_issection=(a.command==COMMAND_SECTION); bool b_issection=(b.command==COMMAND_SECTION);
-		return std::tie(a.create_time,a_issection,a.command) < std::tie(b.create_time,b_issection,b.command);});
+	std::sort(t, t + array_size, [](const MEASURE_T& a, const MEASURE_T& b) {return std::tie(a.create_time,a.command) < std::tie(b.create_time,b.command);});
 }
 
 double calc_first_measure_time(){	//最初に到達する小節の所要時間を計算
@@ -1095,12 +1093,11 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[i].create_time=Measure[i].pop_time;
 				break;
 			case COMMAND_BRANCHSTART:
-				Measure[i].create_time=Measure[i].judge_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
+				Measure[i].judge_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
 				break;
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
-				Measure[i].create_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
 				Measure[i].judge_time=Measure[i].pop_time;
 				break;
 			}
