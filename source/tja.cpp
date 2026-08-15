@@ -674,7 +674,7 @@ void white_tja(LIST_T Song){
 		swkbdInit(&swkbd,SWKBD_TYPE_NORMAL,1,-1);
 		swkbdSetInitialText(&swkbd,tja_text);
 		swkbdSetFeatures(&swkbd,SWKBD_PREDICTIVE_INPUT | SWKBD_MULTILINE);
-		SwkbdDictWord word[16];
+		SwkbdDictWord words[16];
 		swkbdSetDictWord(&words[0], "#", "#BPMCHANGE {float}");
 		swkbdSetDictWord(&words[1], "#", "#SCROLL {float}");
 		swkbdSetDictWord(&words[2], "#", "#GOGOSTART");
