@@ -742,7 +742,9 @@ void conv_tja(LIST_T Song){
 
 void sort_measure_insertion(MEASURE_T t[],int array_size){	//create_timeでソート
 
-	std::sort(t, t + array_size, [](const MEASURE_T& a, const MEASURE_T& b) {return std::tie(a.create_time,a.command,(a.command==COMMAND_SECTION)) < std::tie(b.create_time,b.command,(b.command==COMMAND_SECTION));});
+	std::sort(t, t + array_size, [](const MEASURE_T& a, const MEASURE_T& b) {
+		bool a_issection=(a.command==COMMAND_SECTION); bool b_issection=(b.command==COMMAND_SECTION);
+		return std::tie(a.create_time,a.command,a_issection) < std::tie(b.create_time,b.command,b_issection);});
 }
 
 double calc_first_measure_time(){	//最初に到達する小節の所要時間を計算
