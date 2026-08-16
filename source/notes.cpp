@@ -398,7 +398,10 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					tp=strchr(start, ',');
 					count=1;
 					while(start!=NULL){
-						if(tp!=NULL)start=tp+1;
+						if(tp!=NULL){
+							*tp = '\0';
+							start=tp+1;
+						}
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
 						}
@@ -406,7 +409,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						count++;
 					}
 					if(tp!=NULL){
-						play_songs(tp);
+						play_songs(start);
 						strlcpy(Header.title,Command.value_s.data(),strlen(Command.value_s.data())+1);
 						set_tja_header(&Header);
 					}
