@@ -395,14 +395,14 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					char* start=Command.value_s.data();
 					char* tp;
-					tp=strchr(start, ",");
+					tp=strchr(start, ',');
 					count=1;
 					while(start!=NULL){
 						if(tp!=NULL)start=tp+1;
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
 						}
-						tp=strchr(start,",");
+						tp=strchr(start,',');
 						count++;
 					}
 					if(tp!=NULL){
