@@ -771,10 +771,10 @@ int main(){
 				//init_main_music();
 				if(Option.player==3&&fp_read==NULL)istjaloaded=false;
 				if (istjaloaded){
-					get_tja_header(&TJA_Header);
 					init_score();
 					if (!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
 					else load_tja_notes(course,SelectedSong);
+					get_tja_header(&TJA_Header);
 					init_notes(TJA_Header);
 					time_ini();
 					offset = TJA_Header.offset+Option.offset;
