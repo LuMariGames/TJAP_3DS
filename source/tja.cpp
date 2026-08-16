@@ -869,7 +869,7 @@ void load_tja_notes(int course,LIST_T Song){
 					continue;
 				}
 
-				if(strstr(tja_notes[tja_cnt],",")==NULL && tja_notes[tja_cnt][0]!='#'){
+				if(strstr(tja_notes[tja_cnt],"#NEXTSONG ")==tja_notes[tja_cnt]||(strstr(tja_notes[tja_cnt],",")==NULL&&tja_notes[tja_cnt][0]!='#')){
 					isNoComma=true;
 
 					if(FirstMultiMeasure==-1){
@@ -899,7 +899,7 @@ void load_tja_notes(int course,LIST_T Song){
 						yscroll=Command.val[1];
 						break;
 					case COMMAND_DELAY:
-						if(FirstMeasureTime==(PreJudge-2.52397982728522*Option.musicspeed))Current_Header.offset-=Command.val[0];
+						if(FirstMultiMeasure==0)Current_Header.offset-=Command.val[0];
 						else delay=Command.val[0];
 						break;
 					case COMMAND_SUDDEN:
