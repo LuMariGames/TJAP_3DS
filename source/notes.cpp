@@ -400,10 +400,12 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					while(start!=NULL){
 						if(tp!=NULL){
 							*tp = '\0';
-							start=tp+1;
 						}
 						if(count==4){
 							break;          // 目的のものが取れたのでループを抜ける
+						}
+						if(tp!=NULL){
+							start=tp+1;
 						}
 						tp=strchr(start,',');
 						count++;
