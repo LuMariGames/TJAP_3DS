@@ -899,7 +899,7 @@ void load_tja_notes(int course,LIST_T Song){
 						yscroll=Command.val[1];
 						break;
 					case COMMAND_DELAY:
-						if(FirstMultiMeasure==0)Current_Header.offset-=Command.val[0];
+						if(FirstMeasureTime==PreJudge)Current_Header.offset-=Command.val[0];
 						else delay=Command.val[0];
 						break;
 					case COMMAND_SUDDEN:
