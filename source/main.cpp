@@ -110,7 +110,6 @@ double DonMeasure = 0.0;
 
 inline int time_count() {
 	if(!isMusicStart&&!isNotesStart)return 0;
-	if(!isPause)DonMeasure+=clocktime*(NowBPM/240.0);
 	u8 tc;
 	if(plusimg_player&&isGOGO)tc=((int)floor(DonMeasure*24)%12);
 	else {
@@ -1127,7 +1126,10 @@ int main(){
 			if(cnt == 0){
 				FirstMeasureTime = get_FirstMeasureTime();
 			}
-			if(cnt>=0)CurrentTimeMain = get_current_time(TIME_MAINGAME);
+			if(cnt>=0){
+				if(!isPause)DonMeasure+=(get_current_time(TIME_MAINGAME)-CurrentTimeMain)*(NowBPM/240.0);
+				CurrentTimeMain = get_current_time(TIME_MAINGAME);
+			}
 			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
 				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,(uint8_t)(memtch_x/2),(uint8_t)(memtch_y/2)};
 				if(ghostnum<81919)++ghostnum;
