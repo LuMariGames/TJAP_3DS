@@ -1123,6 +1123,7 @@ int main(){
 
 			if(cnt == 0){
 				FirstMeasureTime = get_FirstMeasureTime();
+				CurrentTimeMain = 0;
 			}
 			if(cnt>=0){
 				DonMeasure+=(get_current_time(TIME_MAINGAME)-CurrentTimeMain)*(NowBPM/240.0);
