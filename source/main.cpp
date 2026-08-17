@@ -294,8 +294,8 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_4],9,45);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_5],9,51);
 	C2D_SpriteSetCenterRaw(&sprites[SPRITE_BALLOON_6],9,59);
-	C2D_SpriteScale(&sprites[SPRITE_LANE_EXPERT],NOTES_AREA/sprites[SPRITE_LANE_EXPERT].image.subtex.width,46.0/sprites[SPRITE_LANE_EXPERT].image.subtex.height);
-	C2D_SpriteScale(&sprites[SPRITE_LANE_MASTER],NOTES_AREA/sprites[SPRITE_LANE_MASTER].image.subtex.width,46.0/sprites[SPRITE_LANE_MASTER].image.subtex.height);
+	C2D_SpriteScale(&sprites[SPRITE_LANE_EXPERT],NOTES_AREA/sprites[SPRITE_LANE_EXPERT].image.subtex->width,46.0/sprites[SPRITE_LANE_EXPERT].image.subtex->height);
+	C2D_SpriteScale(&sprites[SPRITE_LANE_MASTER],NOTES_AREA/sprites[SPRITE_LANE_MASTER].image.subtex->width,46.0/sprites[SPRITE_LANE_MASTER].image.subtex->height);
 
 	C2D_SpriteFromSheet(&sprites[SPRITE_TOUCH],otherspsh,0);
 	C2D_SpriteSetCenter(&sprites[SPRITE_TOUCH],0.5f,0.5f);
