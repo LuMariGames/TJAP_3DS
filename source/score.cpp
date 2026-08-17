@@ -359,9 +359,9 @@ void draw_gauge(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
 void draw_gauge_result(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
-	int diff=50,scores=Gauge.score;
+	int diff=50;
 	double x_start=123-diff,x_end=250-diff;
-	double gauge=1.0 *(scores/200)* 200/Gauge.soul;
+	double gauge=1.0 *(Gauge.score/200)* 200/Gauge.soul;
 	if(gauge>1.0)gauge=1.0;
 
 	//赤
