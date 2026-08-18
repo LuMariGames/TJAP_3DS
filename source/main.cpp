@@ -1189,7 +1189,7 @@ int main(){
 					if(fp_write!=NULL){
 						fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 						fwrite(write_data,sizeof(ghostdata),ghostnum,fp_write);
-						write_data[ghostnum]={2147483647,0,0};
+						write_data[ghostnum]={2147483647,0,0,0,0};
 						fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 						fclose(fp_write);
 					}
@@ -1222,7 +1222,7 @@ int main(){
 				if(fp_write!=NULL){
 					fwrite(&Option,sizeof(OPTION_T),1,fp_write);
 					fwrite(write_data,sizeof(ghostdata),ghostnum,fp_write);
-					write_data[ghostnum]={2147483647,0,0};
+					write_data[ghostnum]={2147483647,0,0,0,0};
 					fwrite(&write_data[ghostnum],sizeof(ghostdata),1,fp_write);
 					fclose(fp_write);
 				}
