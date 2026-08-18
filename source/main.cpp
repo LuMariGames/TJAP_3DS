@@ -738,6 +738,7 @@ int main(){
 
 			draw_select_text(0,225,"Chart Loading...");
 			C3D_FrameEnd(0);
+			memtch_x=0,memtch_y=0;
 			if (Option.edit == 1){
 				white_tja(SelectedSong);
 				set_SelectedId();
