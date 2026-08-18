@@ -1132,7 +1132,8 @@ int main(){
 				CurrentTimeMain = get_current_time(TIME_MAINGAME);
 			}
 			if(Option.player!=3&&(isDon!=0||isKatsu!=0)){
-				write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,(uint8_t)(memtch_x/2),(uint8_t)(memtch_y/2)};
+				if(touch_cnt)write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,(uint8_t)(memtch_x/2),(uint8_t)(memtch_y/2)};
+				else write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0,0};
 				if(ghostnum<81919)++ghostnum;
 			}
 			if(course==COURSE_DAN)dcd=dan_condition();
