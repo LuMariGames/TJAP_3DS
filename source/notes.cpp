@@ -1534,7 +1534,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	isHBSCROLL=TJA_Header.isHBS;
 	isgamemode=TJA_Header.gamemode;
 	bpm=TJA_Header.bpm;
-	if(TJA_Header.course==COURSE_DAN)offset=TJA_Header.offset*-1.0;
+	if(TJA_Header.course==COURSE_DAN)offset=TJA_Header.offset;
 	else offset=0;
 	NowBPM=bpm;
 	for(int i=0,j=(int)(sizeof(balloon[0])/sizeof(balloon[0][0]));i<j;++i){
