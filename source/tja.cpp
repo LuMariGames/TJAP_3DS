@@ -815,7 +815,7 @@ void load_tja_notes(int course,LIST_T Song){
 	if((fp=fopen(abs_path,"r"))!=NULL){
 
 		tja_cnt=0;
-		int MeasureCount=0,CurrentCourse=-1;
+		int MeasureCount=0,CurrentCourse=-1,NextSongCnt=0;
 		double PreJudge=0,FirstMeasureTime=0;
 
 		FirstMeasureTime=(240.0/bpm * measure)*(NOTES_JUDGE_RANGE/NOTES_AREA)-240.0/bpm * measure;
@@ -899,7 +899,7 @@ void load_tja_notes(int course,LIST_T Song){
 						yscroll=Command.val[1];
 						break;
 					case COMMAND_DELAY:
-						if(FirstMultiMeasure==0)Current_Header.offset-=Command.val[0];
+						if(NextSongCnt<2)Current_Header.offset-=Command.val[0];
 						else delay=Command.val[0];
 						break;
 					case COMMAND_SUDDEN:
@@ -913,6 +913,9 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_LYRIC:
 						ly=Command.value_s;
+						break;
+					case COMMAND_NEXTSONG:
+						++NextSongCnt;
 						break;
 					case COMMAND_BARLINEON:
 						isDispBarLine=true;
