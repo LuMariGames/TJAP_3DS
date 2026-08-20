@@ -36,7 +36,7 @@ BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
-isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,CourseMode,
+isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
 NotesNumber;	//何番目のノーツか
 bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
@@ -61,8 +61,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	bool isLoadLoop=false;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes=OffSetTime=((CourseMode==COURSE_DAN)?Measure[stme].judge_time+offset:Measure[stme].create_time);
-	if(cnt>=0)CurrentTimeNotes=get_current_time(TIME_NOTES)-OffSetTime;
+	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time;
+	if(cnt>=0)CurrentTimeNotes=get_current_time(TIME_NOTES)+OffSetTime;
 	if(cnt==0)Branch.course=Measure[stme].branch;
 	//snprintf(get_buffer(),BUFFER_SIZE,"fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f",get_FirstMeasureTime(),CurrentTimeNotes,CurrentTimeNotes-Measure[0].create_time,Measure[stme].create_time);
 	//draw_debug(0,185,get_buffer());
@@ -1534,9 +1534,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	isHBSCROLL=TJA_Header.isHBS;
 	isgamemode=TJA_Header.gamemode;
 	bpm=TJA_Header.bpm;
-	CourseMode=TJA_Header.course;
-	if(CourseMode==COURSE_DAN)offset=TJA_Header.offset;
-	else offset=0;
+	offset=TJA_Header.offset+Option.offset;
 	NowBPM=bpm;
 	for(int i=0,j=(int)(sizeof(balloon[0])/sizeof(balloon[0][0]));i<j;++i){
 		balloon[0][i]=TJA_Header.balloon[0][i];
