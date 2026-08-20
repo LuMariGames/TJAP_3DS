@@ -869,7 +869,7 @@ void load_tja_notes(int course,LIST_T Song){
 					continue;
 				}
 
-				if(strstr(tja_notes[tja_cnt],"#NEXTSONG ")==tja_notes[tja_cnt]||(strstr(tja_notes[tja_cnt],",")==NULL&&tja_notes[tja_cnt][0]!='#')){
+				if(strstr(tja_notes[tja_cnt],"#NEXTSONG ")!=tja_notes[tja_cnt]||(strstr(tja_notes[tja_cnt],",")==NULL&&tja_notes[tja_cnt][0]!='#')){
 					isNoComma=true;
 
 					if(FirstMultiMeasure==-1){
