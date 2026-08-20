@@ -61,7 +61,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	bool isLoadLoop=false;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
-	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time;
+	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time+offset;
 	if(cnt>=0)CurrentTimeNotes=get_current_time(TIME_NOTES)+OffSetTime;
 	if(cnt==0)Branch.course=Measure[stme].branch;
 	//snprintf(get_buffer(),BUFFER_SIZE,"fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f",get_FirstMeasureTime(),CurrentTimeNotes,CurrentTimeNotes-Measure[0].create_time,Measure[stme].create_time);
@@ -1534,7 +1534,8 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	isHBSCROLL=TJA_Header.isHBS;
 	isgamemode=TJA_Header.gamemode;
 	bpm=TJA_Header.bpm;
-	offset=TJA_Header.offset+Option.offset;
+	if(TJA_Header.course==COURSE_DAN)offset=TJA_Header.offset*-1.0;
+	else offset=0;
 	NowBPM=bpm;
 	for(int i=0,j=(int)(sizeof(balloon[0])/sizeof(balloon[0][0]));i<j;++i){
 		balloon[0][i]=TJA_Header.balloon[0][i];
