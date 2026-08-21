@@ -150,8 +150,17 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 	// 1. ファイルオープン
 	C3D_Tex *tex = new C3D_Tex;
 	Tex3DS_SubTexture *subtex = new Tex3DS_SubTexture;
+	u32 w_pow2 = GetNextPowerOf2(width);
+	u32 h_pow2 = GetNextPowerOf2(height);
 	if(filename==NULL){
-		goto err;
+		subtex->width = width;
+		subtex->height = height;
+		subtex->left = ((float)img_x / (float)w_pow2);
+		subtex->top = 1.f - ((float)img_y / (float)h_pow2);
+		subtex->right = (float)(subtex->width + img_x) / (float)w_pow2;
+		subtex->bottom = 1.f - ((float)(subtex->height + img_y) / (float)h_pow2);
+		texture->subtex = subtex;
+		return true;
 	}
 	FILE *f = fopen(filename, "rb");
 	if (!f) return false;
@@ -204,8 +213,8 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 	spng_ctx_free(ctx);
 	fclose(f);
 
-	u32 w_pow2 = GetNextPowerOf2(w);
-	u32 h_pow2 = GetNextPowerOf2(h);
+	w_pow2 = GetNextPowerOf2(w);
+	h_pow2 = GetNextPowerOf2(h);
 
 	if (rgba) {
 		C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGBA8);
@@ -270,18 +279,6 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 	delete tex;
 	delete subtex;
 	return false;
-
-err:
-	u32 w_pow2 = GetNextPowerOf2(width);
-	u32 h_pow2 = GetNextPowerOf2(height);
-	subtex->width = width;
-	subtex->height = height;
-	subtex->left = ((float)img_x / (float)w_pow2);
-	subtex->top = 1.f - ((float)img_y / (float)h_pow2);
-	subtex->right = (float)(subtex->width + img_x) / (float)w_pow2;
-	subtex->bottom = 1.f - ((float)(subtex->height + img_y) / (float)h_pow2);
-	texture->subtex = subtex;
-	return true;
 }
 
 inline static void load_sprites(){
