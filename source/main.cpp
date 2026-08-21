@@ -148,20 +148,6 @@ u32 GetNextPowerOf2(u32 v) {
 
 bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsigned int width, unsigned int height, float img_x, float img_y) {
 	// 1. ファイルオープン
-	C3D_Tex *tex = new C3D_Tex;
-	Tex3DS_SubTexture *subtex = new Tex3DS_SubTexture;
-	u32 w_pow2 = GetNextPowerOf2(width);
-	u32 h_pow2 = GetNextPowerOf2(height);
-	if(filename==NULL){
-		subtex->width = width;
-		subtex->height = height;
-		subtex->left = ((float)img_x / (float)w_pow2);
-		subtex->top = 1.f - ((float)img_y / (float)h_pow2);
-		subtex->right = (float)(subtex->width + img_x) / (float)w_pow2;
-		subtex->bottom = 1.f - ((float)(subtex->height + img_y) / (float)h_pow2);
-		texture->subtex = subtex;
-		return true;
-	}
 	FILE *f = fopen(filename, "rb");
 	if (!f) return false;
 
@@ -213,8 +199,12 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 	spng_ctx_free(ctx);
 	fclose(f);
 
-	w_pow2 = GetNextPowerOf2(w);
-	h_pow2 = GetNextPowerOf2(h);
+	// 6. C3D テクスチャ構造体の確保
+	C3D_Tex *tex = new C3D_Tex;
+	Tex3DS_SubTexture *subtex = new Tex3DS_SubTexture;
+
+	u32 w_pow2 = GetNextPowerOf2(w);
+	u32 h_pow2 = GetNextPowerOf2(h);
 
 	if (rgba) {
 		C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGBA8);
@@ -256,12 +246,7 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 			}
 		}
 	}
-
-	C3D_TexFlush(tex);
-	tex->border = 0x00000000;
-	C3D_TexSetWrap(tex, GPU_CLAMP_TO_BORDER, GPU_CLAMP_TO_BORDER);
-	free(image);
-
+		
 	subtex->width = width;
 	subtex->height = height;
 	subtex->left = ((float)img_x / (float)w_pow2);
@@ -269,7 +254,12 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 	subtex->right = (float)(subtex->width + img_x) / (float)w_pow2;
 	subtex->bottom = 1.f - ((float)(subtex->height + img_y) / (float)h_pow2);
 
-	if(subtex->left<1.0f&&subtex->top>0.0f) {
+	C3D_TexFlush(tex);
+	tex->border = 0x00000000;
+	C3D_TexSetWrap(tex, GPU_CLAMP_TO_BORDER, GPU_CLAMP_TO_BORDER);
+	free(image);
+
+	if (subtex->left < 1.0f && subtex->top > 0.0f) {
 		texture->tex = tex;
 		texture->subtex = subtex;
 		return true;
@@ -333,59 +323,73 @@ inline static void load_sprites(){
 		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,0,0);
 		sprites[SPRITE_DON].params.pos.w = 32; sprites[SPRITE_DON].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DON],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_KATSU].image,NULL,true,32,32,32,0);
+		loadPNGAsC2DImage(&sprites[SPRITE_KATSU].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,32,0);
+		C3D_TexDelete(sprites[SPRITE_KATSU].image.tex);
 		sprites[SPRITE_KATSU].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_KATSU].params.pos.w = 32; sprites[SPRITE_KATSU].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_KATSU],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_START].image,NULL,true,32,32,64,0);
+		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_START].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,64,0);
+		C3D_TexDelete(sprites[SPRITE_ROLL_START].image.tex);
 		sprites[SPRITE_ROLL_START].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_ROLL_START].params.pos.w = 32; sprites[SPRITE_ROLL_START].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_START],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BALLOON].image,NULL,true,64,32,0,32);
+		loadPNGAsC2DImage(&sprites[SPRITE_BALLOON].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,32,0,32);
+		C3D_TexDelete(sprites[SPRITE_BALLOON].image.tex);
 		sprites[SPRITE_BALLOON].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BALLOON].params.pos.w = 64; sprites[SPRITE_BALLOON].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BALLOON],0.203125f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_INT].image,NULL,true,16,32,72,32);
+		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_INT].image,"sdmc:/tjafiles/theme/def/notes.png",true,16,32,72,32);
+		C3D_TexDelete(sprites[SPRITE_ROLL_INT].image.tex);
 		sprites[SPRITE_ROLL_INT].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_ROLL_INT].params.pos.w = 16; sprites[SPRITE_ROLL_INT].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_INT],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_END].image,NULL,true,32,32,128,0);
+		loadPNGAsC2DImage(&sprites[SPRITE_ROLL_END].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,128,0);
+		C3D_TexDelete(sprites[SPRITE_ROLL_END].image.tex);
 		sprites[SPRITE_ROLL_END].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_ROLL_END].params.pos.w = 32; sprites[SPRITE_ROLL_END].params.pos.h = 32;
 		C2D_SpriteSetCenter(&sprites[SPRITE_ROLL_END],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_INT].image,NULL,true,16,64,104,0);
+		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_INT].image,"sdmc:/tjafiles/theme/def/notes.png",true,16,64,104,0);
+		C3D_TexDelete(sprites[SPRITE_BIG_ROLL_INT].image.tex);
 		sprites[SPRITE_BIG_ROLL_INT].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BIG_ROLL_INT].params.pos.w = 16; sprites[SPRITE_BIG_ROLL_INT].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_INT],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_DON].image,NULL,true,64,64,192,0);
+		loadPNGAsC2DImage(&sprites[SPRITE_BIG_DON].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,192,0);
+		C3D_TexDelete(sprites[SPRITE_BIG_DON].image.tex);
 		sprites[SPRITE_BIG_DON].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BIG_DON].params.pos.w = 64; sprites[SPRITE_BIG_DON].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_DON],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_KATSU].image,NULL,true,64,64,128,64);
+		loadPNGAsC2DImage(&sprites[SPRITE_BIG_KATSU].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,128,64);
+		C3D_TexDelete(sprites[SPRITE_BIG_KATSU].image.tex);
 		sprites[SPRITE_BIG_KATSU].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BIG_KATSU].params.pos.w = 64; sprites[SPRITE_BIG_KATSU].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_KATSU],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_START].image,NULL,true,64,64,192,64);
+		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_START].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,192,64);
+		C3D_TexDelete(sprites[SPRITE_BIG_ROLL_START].image.tex);
 		sprites[SPRITE_BIG_ROLL_START].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BIG_ROLL_START].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_START].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_START],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_END].image,NULL,true,64,64,64,64);
+		loadPNGAsC2DImage(&sprites[SPRITE_BIG_ROLL_END].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,64,64);
+		C3D_TexDelete(sprites[SPRITE_BIG_ROLL_END].image.tex);
 		sprites[SPRITE_BIG_ROLL_END].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BIG_ROLL_END].params.pos.w = 64; sprites[SPRITE_BIG_ROLL_END].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BIG_ROLL_END],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_BOMB].image,NULL,true,64,64,0,64);
+		loadPNGAsC2DImage(&sprites[SPRITE_BOMB].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,0,64);
+		C3D_TexDelete(sprites[SPRITE_BOMB].image.tex);
 		sprites[SPRITE_BOMB].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_BOMB].params.pos.w = 64; sprites[SPRITE_BOMB].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_BOMB],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_POTATO].image,NULL,true,64,64,0,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_POTATO].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,0,128);
+		C3D_TexDelete(sprites[SPRITE_POTATO].image.tex);
 		sprites[SPRITE_POTATO].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_POTATO].params.pos.w = 64; sprites[SPRITE_POTATO].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_POTATO],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_TIMEBOMB].image,NULL,true,64,64,64,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_TIMEBOMB].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,64,128);
+		C3D_TexDelete(sprites[SPRITE_TIMEBOMB].image.tex);
 		sprites[SPRITE_TIMEBOMB].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_TIMEBOMB].params.pos.w = 64; sprites[SPRITE_TIMEBOMB].params.pos.h = 64;
 		C2D_SpriteSetCenter(&sprites[SPRITE_TIMEBOMB],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_DENDEN].image,NULL,true,64,128,192,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DENDEN].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,128,192,128);
+		C3D_TexDelete(sprites[SPRITE_DENDEN].image.tex);
 		sprites[SPRITE_DENDEN].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_DENDEN].params.pos.w = 64; sprites[SPRITE_DENDEN].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN],0.5f,0.5f);
@@ -394,27 +398,31 @@ inline static void load_sprites(){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,0,0);
 		sprites[SPRITE_DONCHAN_0].params.pos.w = 256; sprites[SPRITE_DONCHAN_0].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_0],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_1].image,NULL,true,256,128,256,0);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_1].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,256,0);
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_1].image.tex);
 		sprites[SPRITE_DONCHAN_1].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_1].params.pos.w = 256; sprites[SPRITE_DONCHAN_1].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_1],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_2].image,NULL,true,256,128,0,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_2].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,0,128);
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_2].image.tex);
 		sprites[SPRITE_DONCHAN_2].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_2].params.pos.w = 256; sprites[SPRITE_DONCHAN_2].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_2],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_3].image,NULL,true,256,128,256,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_3].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,256,128);
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_3].image.tex);
 		sprites[SPRITE_DONCHAN_3].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		sprites[SPRITE_DONCHAN_3].params.pos.w = 256; sprites[SPRITE_DONCHAN_3].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DONCHAN_3],0.5f,0.5f);
 
-		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,NULL,true,256,128,512,128);
+		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_4].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,512,128);
 		plusimg_player = loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_5].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,768,128);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/bg.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_TOP_2].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,86,0,0);
 		sprites[SPRITE_TOP_2].params.pos.w = 400; sprites[SPRITE_TOP_2].params.pos.h = 86;
 		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_2],0.5f,0.5f);
-		loadPNGAsC2DImage(&sprites[SPRITE_TOP_3].image,NULL,false,400,96,0,144);
+		loadPNGAsC2DImage(&sprites[SPRITE_TOP_3].image,"sdmc:/tjafiles/theme/def/bg.png",false,400,96,0,144);
+		C3D_TexDelete(sprites[SPRITE_TOP_3].image.tex);
 		sprites[SPRITE_TOP_3].image.tex=sprites[SPRITE_TOP_2].image.tex;
 		sprites[SPRITE_TOP_3].params.pos.w = 400; sprites[SPRITE_TOP_3].params.pos.h = 96;
 		C2D_SpriteSetCenter(&sprites[SPRITE_TOP_3],0.5f,0.5f);
@@ -441,6 +449,7 @@ inline static void load_sprites(){
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_2],dg_x,dg_y);
 	C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_3],dg_x,dg_y);
 	if(plusimg_player){
+		C3D_TexDelete(sprites[SPRITE_DONCHAN_4].image.tex);
 		sprites[SPRITE_DONCHAN_4].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
 		C3D_TexDelete(sprites[SPRITE_DONCHAN_5].image.tex);
 		sprites[SPRITE_DONCHAN_5].image.tex=sprites[SPRITE_DONCHAN_0].image.tex;
