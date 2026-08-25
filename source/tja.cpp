@@ -900,6 +900,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
+						Measure[MeasureCount].command=-1;
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
