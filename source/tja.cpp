@@ -719,7 +719,7 @@ void conv_tja(LIST_T Song){
 
 		tja_cnt=0;
 		memset(tja_notes,0,sizeof(tja_notes));
-		while(fgets(tja_notes[tja_cnt],NOTES_MEASURE_MAX,fp)!=NULL || tja_cnt<MEASURE_MAX){
+		while(fgets(tja_notes[tja_cnt],NOTES_MEASURE_MAX,fp)!=NULL||tja_cnt<MEASURE_MAX){
 
 			++tja_cnt;
 		}
@@ -772,7 +772,7 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 
 	for(int i=0;i<MEASURE_MAX;++i){
 
-		if(Measure[i].flag&&(Measure[i].command==-1||Measure[i].command==COMMAND_DELAY)){
+		if(Measure[i].flag&&Measure[i].command==-1){
 
 			if(tmp==-1){	//初回
 				tmp=i;
