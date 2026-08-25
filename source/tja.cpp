@@ -772,15 +772,15 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 
 	for(int i=0;i<MEASURE_MAX;++i){
 
-		if(Measure[i].flag && Measure[i].command==-1){
+		if(Measure[i].flag&&(Measure[i].command==-1||Measure[i].command==COMMAND_DELAY)){
 
 			if(tmp==-1){	//初回
 				tmp=i;
 				continue;
 			}
 			if(Measure[i].judge_time<Measure[tmp].judge_time)tmp=i;
-			if((Measure[i].branch<=COMMAND_N)&&(Measure[i].firstmeasure==-1 || Measure[i].firstmeasure==i))++tmp2;
-			if(Option.measure>tmp2 &&(Measure[i].branch<=COMMAND_N)&&(Measure[i].firstmeasure==-1 || Measure[i].firstmeasure==i))stme=i;
+			if((Measure[i].branch<=COMMAND_N)&&(Measure[i].firstmeasure==-1||Measure[i].firstmeasure==i))++tmp2;
+			if(Option.measure>tmp2&&(Measure[i].branch<=COMMAND_N)&&(Measure[i].firstmeasure==-1||Measure[i].firstmeasure==i))stme=i;
 			else if(Option.measure<=0)stme=tmp;
 		}
 		if(Measure[i].command==COMMAND_END){
@@ -900,7 +900,6 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
-						Measure[MeasureCount].command=-1;
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
