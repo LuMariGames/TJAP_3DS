@@ -887,7 +887,6 @@ void load_tja_notes(int course,LIST_T Song){
 
 					get_command_value(tja_notes[tja_cnt],&Command);
 					Measure[MeasureCount].command=Command.knd;
-					Measure[MeasureCount].isDispBarLine=false;
 					switch(Command.knd){
 					case COMMAND_BPMCHANGE:
 						NextBpm=Command.val[0];
@@ -985,6 +984,7 @@ void load_tja_notes(int course,LIST_T Song){
 
 				if(tja_notes[tja_cnt][0]=='#'){
 
+					Measure[MeasureCount].isDispBarLine=false;
 					if(MeasureCount>0){
 						Measure[MeasureCount].judge_time=Measure[MeasureCount-1].judge_time;
 						Measure[MeasureCount].create_time=Measure[MeasureCount-1].create_time;
