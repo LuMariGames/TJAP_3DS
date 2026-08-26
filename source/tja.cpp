@@ -887,6 +887,7 @@ void load_tja_notes(int course,LIST_T Song){
 
 					get_command_value(tja_notes[tja_cnt],&Command);
 					Measure[MeasureCount].command=Command.knd;
+					Measure[MeasureCount].isDispBarLine=false;
 					switch(Command.knd){
 					case COMMAND_BPMCHANGE:
 						NextBpm=Command.val[0];
