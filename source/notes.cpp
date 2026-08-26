@@ -368,8 +368,10 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	int16_t barline_x=0;
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
-		if(0<=cnt&&Measure[i].isDispBarLine&&(Measure[i].branch==Branch.course||Measure[i].branch==-1))
-			barline_x=NOTES_JUDGE_X+NOTES_AREA*Measure[i].scroll*(Measure[i].judge_time-CurrentTimeNotes)*(Measure[i].bpm*conbpm);
+		if(0<=cnt&&Measure[i].command==-1&&Measure[i].isDispBarLine&&(Measure[i].branch==Branch.course||Measure[i].branch==-1)){
+			if(!get_isPause())barline_x=NOTES_JUDGE_X+NOTES_AREA*Measure[i].scroll*(Measure[i].judge_time-CurrentTimeNotes)*(Measure[i].bpm*conbpm);
+			else barline_x=NOTES_JUDGE_X+NOTES_AREA*Measure[i].scroll*(Measure[i].judge_time-(CurrentTimeNotes-clocktime))*(Measure[i].bpm*conbpm);
+		}
 		else barline_x=0;
 		if((Measure[i].branch==Branch.course||Measure[i].branch==-1)&&Measure[i].flag){
 			bool NotFalse=false;
