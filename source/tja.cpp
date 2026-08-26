@@ -984,7 +984,6 @@ void load_tja_notes(int course,LIST_T Song){
 
 				if(tja_notes[tja_cnt][0]=='#'){
 
-					Measure[MeasureCount].isDispBarLine=false;
 					if(MeasureCount>0){
 						Measure[MeasureCount].judge_time=Measure[MeasureCount-1].judge_time;
 						Measure[MeasureCount].create_time=Measure[MeasureCount-1].create_time;
@@ -1078,8 +1077,9 @@ void load_tja_notes(int course,LIST_T Song){
 							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time;
 							if(!Current_Header.isHBS)Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-(isSudden?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[Measure[MeasureCount].firstmeasure+i].bpm) *(NOTES_AREA * ((fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll)>fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll))?fabs(Measure[Measure[MeasureCount].firstmeasure+i].scroll):fabs(Measure[Measure[MeasureCount].firstmeasure+i].yscroll)))));
 							percent=(double)Measure[Measure[MeasureCount].firstmeasure+i].notes_count/(double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
+
+							Measure[Measure[MeasureCount].firstmeasure+i].isDispBarLine=false;	//最初の小節は小節線をオフにしない
 						}
-						Measure[Measure[MeasureCount].firstmeasure+i].isDispBarLine=false;	//最初の小節は小節線をオフにしない
 					}
 					PreJudge=Measure[MeasureCount].judge_time;
 				}
