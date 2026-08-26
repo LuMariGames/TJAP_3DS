@@ -61,9 +61,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	bool isLoadLoop=false;
 
 	//最初の小節のcreate_timeがマイナスだった時用に調整
+	if(cnt==0){
+		Branch.course=Measure[stme].branch;
+	}
 	double CurrentTimeNotes=OffSetTime=Measure[stme].create_time;
 	if(cnt>=0)CurrentTimeNotes=get_current_time(TIME_NOTES)+OffSetTime;
-	if(cnt==0)Branch.course=Measure[stme].branch;
 	//snprintf(get_buffer(),BUFFER_SIZE,"fmt:%.4f ctm:%.2f ct:%.2f 0ct:%.4f",get_FirstMeasureTime(),CurrentTimeNotes,CurrentTimeNotes-Measure[0].create_time,Measure[stme].create_time);
 	//draw_debug(0,185,get_buffer());
 
@@ -134,7 +136,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			if(isNotesLoad==false||Branch.wait)break;
 
 			//小節線
-			int BarLineId=find_line_id();
+			int BarLineId=-1; //find_line_id();
 			if(BarLineId!=-1&&Measure[MeasureCount].isDispBarLine&&Measure[MeasureCount].branch==Branch.course){
 				BarLine[BarLineId].flag=true;
 				BarLine[BarLineId].scroll=Measure[MeasureCount].scroll*Option.speed;
@@ -363,8 +365,12 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
 	double MaxJudgeTime=0.0;
 	int NowMeasure=0,count=1;
+	int16_t barline_x=0;
 
 	for(int i=0,j=MaxMeasureCount;i<j;++i){	//判定時に発動する命令
+		if(0<=cnt&&Measure[i].isDispBarLine&&(Measure[i].branch==Branch.course||Measure[i].branch==-1))
+			barline_x=NOTES_JUDGE_X+NOTES_AREA*Measure[i].scroll*(Measure[i].judge_time-CurrentTimeNotes)*(Measure[i].bpm*conbpm);
+		else barline_x=0;
 		if((Measure[i].branch==Branch.course||Measure[i].branch==-1)&&Measure[i].flag){
 			bool NotFalse=false;
 			if(Measure[i].command!=-1&&Measure[i].judge_time<=CurrentTimeNotes){
@@ -430,24 +436,12 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			MaxJudgeTime=Measure[i].judge_time;
 			NowMeasure=i;
 		}
+		if((barline_x>=64||barline_x<=400)||(Measure[i].scroll!=0.f||Measure[i].bpm!=0.0))
+			C2D_DrawRectSolid(barline_x,86,0,1,46,C2D_Color32f(1,1,1,1));
 	}
 	send_gogotime(isGOGOTime);
 	if(cnt<0)return;
 
-	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
-		if(BarLine[i].flag){
-			if(!get_isPause())BarLine[i].x=NOTES_JUDGE_X+NOTES_AREA*BarLine[i].scroll*(Measure[BarLine[i].measure].judge_time-CurrentTimeNotes)*(Measure[BarLine[i].measure].bpm*conbpm);
-			if(((BarLine[i].x<64||BarLine[i].x>400)||(BarLine[i].scroll==0.f||Measure[BarLine[i].measure].bpm==0))&&
-				Measure[BarLine[i].measure].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))BarLine[i].flag=BarLine[i].isDisp=false;
-			else if(BarLine[i].x<62||BarLine[i].x>400)BarLine[i].isDisp=false;
-			else BarLine[i].isDisp=true;
-			if(BarLine[i].isDisp){
-				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
-				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
-				//draw_debug(BarLine[i].x-10,133,buf_notes);
-			}
-		}
-	}
 	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
 	if(!Option.isStelth)notes_draw(CurrentTimeNotes,sprites);
 	draw_emblem(sprites);
