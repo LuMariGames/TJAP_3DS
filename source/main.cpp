@@ -1172,7 +1172,7 @@ int main(){
 				}
 				if (CurrentTimeMain>=0&&!isNotesStart)isNotesStart = true;
 			}
-			else if (playcnt==cnt&&isPlayMain==false){
+			if (playcnt==cnt&&isPlayMain==false){
 				isPlayMain = true;
 				playcnt=INT_MAX;
 			}
