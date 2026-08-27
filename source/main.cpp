@@ -753,10 +753,9 @@ int main(){
 			}*/
 			else {
 				char abs_path[521];
+				bool jirodan=true;
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
-				befOption = Option;
-				fp_write=NULL;
-				fp_read=NULL;
+				befOption = Option; fp_write=NULL; fp_read=NULL;
 				if (Option.player==3){
 					fp_read = fopen(abs_path,"rb");
 					read_data.count = -59;
@@ -772,9 +771,12 @@ int main(){
 				if(Option.player==3&&fp_read==NULL)istjaloaded=false;
 				if (istjaloaded){
 					init_score();
+					get_tja_header(&TJA_Header);
+					if(TJA_Header.course==COURSE_DAN&&TJA_Header.offset==0.0)jirodan=false;
 					if (!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
 					else load_tja_notes(course,SelectedSong);
 					get_tja_header(&TJA_Header);
+					if(!jirodan&&TJA_Header.offset==0.0)jirodan=true;
 					init_notes(TJA_Header);
 					time_ini();
 					offset = TJA_Header.offset+Option.offset;
@@ -806,7 +808,7 @@ int main(){
 					}
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
-					if(playcnt==INT_MAX)play_main_music(&isPlayMain,SelectedSong);
+					if(jirodan==true)play_main_music(&isPlayMain,SelectedSong);
 					notes_cnt = 0,scene_state = SCENE_LOADSCRE,DonMeasure = 0.0;
 					time_ini();
 					aptSetSleepAllowed(false);
