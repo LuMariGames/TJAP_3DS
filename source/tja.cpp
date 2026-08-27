@@ -798,7 +798,7 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 void load_tja_notes(int course,LIST_T Song){
 
 	int FirstMultiMeasure=-1,	//複数行の小節の最初の小節id 複数出ない場合は-1
-		NotesCount=0,BranchCourse=-1,NextSongCount=0;
+		NotesCount=0,BranchCourse=-1,NextSongCount=0,
 		BeforeBranchFirstMultiMeasure=-1,BeforeBranchNotesCount=0;
 	bool isStart=false,isEnd=false,isDispBarLine=true,isNoComma=false,isCourseMatch=false,isSudden=false,
 		BeforeBranchIsDispBarLine=true,BeforeBranchIsNoComma=false,BeforeBranchIsDummy=false,isDummy=false,BeforeBranchIsSudden=false;
