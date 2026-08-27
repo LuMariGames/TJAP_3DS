@@ -776,7 +776,7 @@ int main(){
 					if (!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
 					else load_tja_notes(course,SelectedSong);
 					get_tja_header(&TJA_Header);
-					if(!jirodan&&TJA_Header.offset==0.0)jirodan=true;
+					if(jirodan==false&&TJA_Header.offset==0.0)jirodan=true;
 					init_notes(TJA_Header);
 					time_ini();
 					offset = TJA_Header.offset+Option.offset;
