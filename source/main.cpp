@@ -772,11 +772,12 @@ int main(){
 				if (istjaloaded){
 					init_score();
 					get_tja_header(&TJA_Header);
-					if(TJA_Header.course==COURSE_DAN&&TJA_Header.offset==0.0)jirodan=false;
+					double preset=TJA_Header.offset;
+					if(TJA_Header.course==COURSE_DAN)jirodan=false;
 					if (!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
 					else load_tja_notes(course,SelectedSong);
 					get_tja_header(&TJA_Header);
-					if(jirodan==false&&TJA_Header.offset==0.0)jirodan=true;
+					if(jirodan==false&&TJA_Header.offset==preset)jirodan=true;
 					init_notes(TJA_Header);
 					time_ini();
 					offset = TJA_Header.offset+Option.offset;
