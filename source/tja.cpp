@@ -787,6 +787,10 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 			edme=tmp2;
 			break;
 		}
+		if(Measure[i].command==COMMAND_NEXTSONG){
+			stme=i+1;
+			break;
+		}
 	}
 	return Measure[stme].judge_time-Measure[stme].create_time;
 }
