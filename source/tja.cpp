@@ -787,10 +787,6 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 			edme=tmp2;
 			break;
 		}
-		if(Measure[i].command==COMMAND_NEXTSONG){
-			stme=i+1;
-			break;
-		}
 	}
 	return Measure[stme].judge_time-Measure[stme].create_time;
 }
@@ -907,7 +903,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
-						if(NextSongCount==1)Current_Header.offset-=Command.val[0];
+						if(NextSongCount==1)Current_Header.offset+=Command.val[0];
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
