@@ -907,7 +907,6 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_DELAY:
 						delay=Command.val[0];
-						if(NextSongCount<=1)Current_Header.offset-=Command.val[0];
 						break;
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
