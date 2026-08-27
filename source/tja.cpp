@@ -788,7 +788,7 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 			break;
 		}
 	}
-	if(fabs(Measure[stme].judge_time-Measure[stme].create_time)<2.00)
+	if((Measure[stme].judge_time-Measure[stme].create_time)>2.00)
 		return Measure[stme].judge_time-Measure[stme].create_time;
 	else return Measure[stme].judge_time-Measure[0].create_time;
 }
