@@ -370,7 +370,7 @@ bool load_tja_head(int course,LIST_T Song){
 					else if(strcmp(temp,"Dan")==0 || strcmp(temp,"dan")==0)  course=COURSE_DAN;
 					else if(strcmp(temp,"ENDLESSDAN")==0)  course=COURSE_ENDLESSDAN;
 
-					if(Current_Header.course==course){
+					if(Current_Header.course==course||(Current_Header.course==ENDLESSDAN&&course<=COURSE_EDIT)){
 						isCourseMatch=true;
 					}
 					else isCourseMatch=false;
