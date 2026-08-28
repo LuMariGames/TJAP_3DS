@@ -631,6 +631,7 @@ int main(){
 				if (isAniBg)C3D_TexDelete(sprites[SPRITES_NUMER-1].image.tex);
 				isAniBg = false;
 				aptSetSleepAllowed(true);
+				init_score();
 			}
 
 			if (keyhold&KEY_L&&keyhold&KEY_R&&(key&KEY_L || key&KEY_R))bottaikoview = !bottaikoview;
@@ -752,6 +753,7 @@ int main(){
 				scene_state = SCENE_SELECTSONG;
 			}*/
 			else {
+				get_SelectedId(&SelectedSong,&course);
 				rerandom:
 				char abs_path[521];
 				bool jirodan=true;
@@ -801,6 +803,7 @@ int main(){
 					}
 				}
 				else if (!istjaloaded){
+					get_SelectedId(&SelectedSong,&course);
 					get_RandomId(&SelectedSong,&course);
 					goto rerandom;
 				}
@@ -1053,7 +1056,7 @@ int main(){
 			}
 			draw_score(sprites);
 			draw_title();
-			if (course == COURSE_DAN)draw_condition();
+			if (course == COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)draw_condition();
 
 			//下画面
 			if (katsu_cnt>0)C2D_TargetClear(bottom,C2D_Color32(0x73,0xF7,0xEF,0xFF));
@@ -1131,9 +1134,9 @@ int main(){
 				else khdcnt = 0;
 				if (Option.player!=3&&key&KEY_DUP)toggle_auto();
 				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS&&
-					TJA_Header.course!=COURSE_DAN&&TJA_Header.course==COURSE_ENDLESSDAN)min_measure();
+					TJA_Header.course!=COURSE_DAN&&TJA_Header.course!=COURSE_ENDLESSDAN)min_measure();
 				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS&&
-					TJA_Header.course!=COURSE_DAN&&TJA_Header.course==COURSE_ENDLESSDAN)plus_measure();
+					TJA_Header.course!=COURSE_DAN&&TJA_Header.course!=COURSE_ENDLESSDAN)plus_measure();
 			}
 
 			if(cnt == 0){
@@ -1149,7 +1152,7 @@ int main(){
 				else write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0,0};
 				if(ghostnum<81919)++ghostnum;
 			}
-			if(course==COURSE_DAN)dcd=dan_condition();
+			if(course==COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)dcd=dan_condition();
 			if(TotalFailedCount!=dcd&&0<dcd){
 				play_sound(SOUND_FAILED);
 				TotalFailedCount=dcd;
