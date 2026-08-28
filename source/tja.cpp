@@ -370,7 +370,8 @@ bool load_tja_head(int course,LIST_T Song){
 					else if(strcmp(temp,"Dan")==0 || strcmp(temp,"dan")==0)  course=COURSE_DAN;
 					else if(strcmp(temp,"ENDLESSDAN")==0)  course=COURSE_ENDLESSDAN;
 
-					if(Current_Header.course==course||(Current_Header.course==COURSE_ENDLESSDAN&&course<=COURSE_EDIT)){
+					if((Current_Header.course!=COURSE_ENDLESSDAN&&Current_Header.course==course)||
+						(Current_Header.course==COURSE_ENDLESSDAN&&course<=COURSE_EDIT)){
 						isCourseMatch=true;
 					}
 					else isCourseMatch=false;
@@ -846,7 +847,8 @@ void load_tja_notes(int course,LIST_T Song){
 				else if(strcmp(temp,"Dan")==   0 || strcmp(temp,"dan")==0)   CurrentCourse=COURSE_DAN;
 
 				free(temp);
-				if(course==CurrentCourse||(course==COURSE_ENDLESSDAN&&CurrentCourse<=COURSE_EDIT))isCourseMatch=true;
+				if((course!=COURSE_ENDLESSDAN&&course==CurrentCourse)||
+					(course==COURSE_ENDLESSDAN&&CurrentCourse<=COURSE_EDIT))isCourseMatch=true;
 				continue;
 			}
 
