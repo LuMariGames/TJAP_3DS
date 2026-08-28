@@ -481,7 +481,7 @@ void get_SelectedId(LIST_T* TMP,int* arg) {
 void get_RandomId(LIST_T* TMP,int* arg) {
 
 	bool genrecheck=false;
-	int min,max,select;
+	int min=0,max=0,select=0;
 	for (int i=0;i<SongCount;++i) {
 		if(List[i-1].genre!=List[i].genre&&List[i].genre==List[SelectedId].genre){
 			min=i;
