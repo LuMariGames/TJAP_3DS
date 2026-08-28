@@ -96,7 +96,7 @@ bool load_tja_head(int course,LIST_T Song){
 	//Current_Header.side=3;
 	Current_Header.scoremode=3;
 	if(course==COURSE_DAN){
-		init_dan_conditions()
+		init_dan_conditions();
 	}
 
 	int cnt=-1;
