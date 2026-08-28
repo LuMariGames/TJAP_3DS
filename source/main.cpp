@@ -752,8 +752,10 @@ int main(){
 				scene_state = SCENE_SELECTSONG;
 			}*/
 			else {
+rerandom:
 				char abs_path[521];
 				bool jirodan=true;
+				if(course==COURSE_ENDLESSDAN)get_SelectedId(&SelectedSong,&course);
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 				befOption = Option; fp_write=NULL; fp_read=NULL;
 				if (Option.player==3){
@@ -770,7 +772,8 @@ int main(){
 				//init_main_music();
 				if(Option.player==3&&fp_read==NULL)istjaloaded=false;
 				if (istjaloaded){
-					init_score();
+					if(course!=COURSE_ENDLESSDAN)init_score();
+					else init_randan_score();
 					get_tja_header(&TJA_Header);
 					double preset=TJA_Header.offset;
 					if (!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
@@ -782,11 +785,11 @@ int main(){
 					offset = TJA_Header.offset+Option.offset;
 					TotalFailedCount=0,dcd=0,notes_cnt=-1,BeforeCombo=-1,measure=Option.measure;
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
-					FirstMeasureTime=INT_MAX,playcnt=INT_MAX,CurrentTimeMain=-2147483640,ghostnum = 0;
+					FirstMeasureTime=INT_MAX,playcnt=INT_MAX,CurrentTimeMain=-2147483640,ghostnum=0;
 				}
 
 				tmp = check_wave(SelectedSong);
-				if (!istjaloaded){
+				if (!istjaloaded&&course!=COURSE_ENDLESSDAN){
 					warning = WARNING_TJA_NOT_EXIST;
 					scene_state = SCENE_WARNING;
 					select_ini();
@@ -795,6 +798,9 @@ int main(){
 						set_option(&befOption);
 						fclose(fp_read);
 					}
+				}
+				else if (!istjaloaded){
+					goto rerandom;
 				}
 				else if (tmp == -1){
 					cnt = -150;
