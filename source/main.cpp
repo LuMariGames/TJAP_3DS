@@ -1053,7 +1053,7 @@ int main(){
 			}
 			draw_score(sprites);
 			draw_title();
-			if (course == COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)draw_condition();
+			if (course == COURSE_DAN)draw_condition();
 
 			//下画面
 			if (katsu_cnt>0)C2D_TargetClear(bottom,C2D_Color32(0x73,0xF7,0xEF,0xFF));
@@ -1149,7 +1149,7 @@ int main(){
 				else write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0,0};
 				if(ghostnum<81919)++ghostnum;
 			}
-			if(course==COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)dcd=dan_condition();
+			if(course==COURSE_DAN)dcd=dan_condition();
 			if(TotalFailedCount!=dcd&&0<dcd){
 				play_sound(SOUND_FAILED);
 				TotalFailedCount=dcd;
