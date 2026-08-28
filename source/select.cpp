@@ -478,6 +478,29 @@ void get_SelectedId(LIST_T* TMP,int* arg) {
 	*arg=course;
 }
 
+void get_RandomId(LIST_T* TMP,int* arg) {
+
+	bool genrecheck=false;
+	int min,max,select;
+	for (int i=0;i<SongCount;++i) {
+		if(List[i-1].genre!=List[i].genre&&List[i].genre==List[SelectedId].genre)min=i;
+		else if(List[i-1].genre!=List[i].genre&&List[i-1].genre==List[SelectedId].genre)max=i;
+	}
+	srand(time(NULL));
+	select=min+(rand()%(max-min));
+	for (int i=0;i<5;++i) {
+		TMP->course[i]=List[select].course[i];
+		TMP->course_exist[i]=List[select].course_exist[i];
+		TMP->level[i]=List[select].level[i];
+	}
+	strlcpy(TMP->tja,List[select].tja,strlen(List[select].tja)+1);
+	strlcpy(TMP->path,List[select].path,strlen(List[select].path)+1);
+	strlcpy(TMP->title,List[select].title,strlen(List[select].title)+1);
+	strlcpy(TMP->subtitle,List[select].subtitle,strlen(List[select].subtitle)+1);
+	strlcpy(TMP->wave,List[select].wave,strlen(List[select].wave)+1);
+	*arg=course;
+}
+
 void set_SelectedId() {
 	load_tja_head_simple(&List[SelectedId]);
 }
