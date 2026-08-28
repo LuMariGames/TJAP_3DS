@@ -877,6 +877,7 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 		break;
 
 	case 6:		//段位道場
+	case 7:		//エンドレス段位
 		Gauge.nice=Gauge.perfect/2.0;
 		if(level<=7){
 			Gauge.bad=Gauge.perfect*8.0/5.0;
@@ -939,6 +940,7 @@ void draw_emblem(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_TOWER].image,&sprites[SPRITE_EMBLEM_TOWER].params,NULL);
 		break;
 	case COURSE_DAN:
+	case COURSE_ENDLESSDAN:
 		C2D_DrawRectSolid(0,86,0,62,58,C2D_Color32f(14.0/255.0,88.0/255.0,129.0/255.0,1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_DAN].image,&sprites[SPRITE_EMBLEM_DAN].params,NULL);
 		break;
