@@ -1056,7 +1056,7 @@ int main(){
 			}
 			draw_score(sprites);
 			draw_title();
-			if (course == COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)draw_condition();
+			if (course == COURSE_DAN)draw_condition();
 
 			//下画面
 			if (katsu_cnt>0)C2D_TargetClear(bottom,C2D_Color32(0x73,0xF7,0xEF,0xFF));
