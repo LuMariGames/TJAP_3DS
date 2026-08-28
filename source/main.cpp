@@ -477,6 +477,7 @@ inline static void load_sprites(){
 int touch_x,touch_y,touch_cnt,PreTouch_x,PreTouch_y,	//タッチ用
 memtch_x,memtch_y;
 LIST_T SelectedSong;
+TJA_HEADER_T TJA_Header;
 
 int main(){
 
@@ -486,7 +487,6 @@ int main(){
 	C3D_RenderTarget* top = C2D_CreateScreenTarget(GFX_TOP,GFX_LEFT);
 	C3D_RenderTarget* bottom = C2D_CreateScreenTarget(GFX_BOTTOM,GFX_LEFT);
 
-	TJA_HEADER_T TJA_Header;
 	OPTION_T Option, befOption;
 	SKIN_T Skin;
 
