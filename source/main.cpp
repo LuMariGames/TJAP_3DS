@@ -17,7 +17,7 @@
 #include "vorbis.h"
 #include "spng.h"
 
-extern int course,courselife,TotalBadCount,combo,loadend;
+extern int courselife,TotalBadCount,combo,loadend;
 extern float NowBPM;
 extern bool isGOGO;
 typedef struct {
@@ -752,7 +752,7 @@ int main(){
 				scene_state = SCENE_SELECTSONG;
 			}*/
 			else {
-rerandom:
+				rerandom:
 				char abs_path[521];
 				bool jirodan=true;
 				if(course==COURSE_ENDLESSDAN)get_RandomId(&SelectedSong,&course);
@@ -1128,8 +1128,10 @@ rerandom:
 				else if (keyhold&KEY_DRIGHT)++khdcnt;
 				else khdcnt = 0;
 				if (Option.player!=3&&key&KEY_DUP)toggle_auto();
-				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS&&TJA_Header.course!=COURSE_DAN)min_measure();
-				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS&&TJA_Header.course!=COURSE_DAN)plus_measure();
+				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS&&
+					TJA_Header.course!=COURSE_DAN&&TJA_Header.course==COURSE_ENDLESSDAN)min_measure();
+				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS&&
+					TJA_Header.course!=COURSE_DAN&&TJA_Header.course==COURSE_ENDLESSDAN)plus_measure();
 			}
 
 			if(cnt == 0){
@@ -1145,7 +1147,7 @@ rerandom:
 				else write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0,0};
 				if(ghostnum<81919)++ghostnum;
 			}
-			if(course==COURSE_DAN)dcd=dan_condition();
+			if(course==COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)dcd=dan_condition();
 			if(TotalFailedCount!=dcd&&0<dcd){
 				play_sound(SOUND_FAILED);
 				TotalFailedCount=dcd;
@@ -1217,9 +1219,10 @@ rerandom:
 				}
 			}
 			if ((get_notes_finish()&&!ndspChnIsPlaying(CHANNEL))||(courselife==0&&course==COURSE_TOWER)){
-				scene_state = SCENE_RESULT;
+				if(TJA_Header.course==COURSE_ENDLESSDAN&&0>=dcd)scene_state = SCENE_MAINLOAD;
+				else scene_state = SCENE_RESULT;
 				get_tja_header(&TJA_Header);
-				TJA_Header.title= &SelectedSong.title[0];
+				TJA_Header.title=&SelectedSong.title[0];
 				set_tja_header(&TJA_Header);
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
@@ -1280,7 +1283,7 @@ rerandom:
 }
 
 void play_songs(char* ptr) {
-	if(course!=COURSE_DAN){
+	if(TJA_Header.course!=COURSE_DAN){
 		return;
 	}
 	else if(0<dcd){
