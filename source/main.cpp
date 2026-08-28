@@ -729,7 +729,7 @@ int main(){
 
 				if (get_isGameStart()){
 					scene_state = SCENE_MAINLOAD; cnt = -1;
-					if(course==COURSE_ENDLESSDAN)init_dan_conditions()
+					if(course==COURSE_ENDLESSDAN)init_dan_conditions();
 				}
 			}
 			isPause = false;
