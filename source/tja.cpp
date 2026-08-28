@@ -114,7 +114,7 @@ bool load_tja_head(int course,LIST_T Song){
 				continue;
 			}
 
-			if(isCourseMatch&&Current_Header.course!=course&&Current_Header.course==COURSE_ENDLESSDAN){
+			if(isCourseMatch&&Current_Header.course!=course&&course==COURSE_ENDLESSDAN){
 				exam[0][0]=(char*)""; exam[0][1]=(char*)""; exam[0][2]=(char*)""; exam[0][3]=(char*)"";
 				exam[1][0]=(char*)""; exam[1][1]=(char*)""; exam[1][2]=(char*)""; exam[1][3]=(char*)"";
 				exam[2][0]=(char*)""; exam[2][1]=(char*)""; exam[2][2]=(char*)""; exam[2][3]=(char*)"";
