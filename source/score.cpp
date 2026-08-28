@@ -61,6 +61,30 @@ void init_score(){
 	TotalCount=0;
 }
 
+void init_randan_score(){
+
+	isGOGO=false;
+	get_tja_header(&TJA_Header);
+	init=TJA_Header.scoreinit;
+	diff=TJA_Header.scorediff;
+	DiffMul=0;
+	scoremode=TJA_Header.scoremode;
+	HitScore=0;
+	ScoreDiff=0;
+	BaseCeilingPoint=0;
+	CurrentScore=0;
+	CurrentRollCount=0;
+	CurrentTotalRollCount=0;
+	CurrentPerfectCount=0;
+	CurrentNiceCount=0;
+	CurrentBadCount=0;
+	Precision=0;
+	CurrentPrecision=0;
+	CurrentBalloonCount=0;
+	CurrentDaiNotes=0;
+	init_guage_structure();
+}
+
 void update_score(int knd){
 
 	int PreScore=TotalScore;
