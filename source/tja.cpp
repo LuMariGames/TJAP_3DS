@@ -368,6 +368,7 @@ bool load_tja_head(int course,LIST_T Song){
 					else if(strcmp(temp,"Edit")==0 || strcmp(temp,"edit")==0)  course=COURSE_EDIT;
 					else if(strcmp(temp,"Tower")==0 || strcmp(temp,"tower")==0)  course=COURSE_TOWER;
 					else if(strcmp(temp,"Dan")==0 || strcmp(temp,"dan")==0)  course=COURSE_DAN;
+					else if(strcmp(temp,"ENDLESSDAN")==0)  course=COURSE_ENDLESSDAN;
 
 					if(Current_Header.course==course){
 						isCourseMatch=true;
@@ -610,6 +611,7 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 					else if(strcmp(temp,"Edit")==0 || strcmp(temp,"edit")==0)  course=COURSE_EDIT;
 					else if(strcmp(temp,"Tower")==0 || strcmp(temp,"tower")==0)  course=COURSE_TOWER;
 					else if(strcmp(temp,"Dan")==0 || strcmp(temp,"dan")==0)  course=COURSE_DAN;
+					else if(strcmp(temp,"ENDLESSDAN")==0)  course=COURSE_ENDLESSDAN;
 					List->course[course]=true;
 					List->course_exist[course]=true;
 				}
