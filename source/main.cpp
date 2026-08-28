@@ -755,7 +755,7 @@ int main(){
 rerandom:
 				char abs_path[521];
 				bool jirodan=true;
-				if(course==COURSE_ENDLESSDAN)get_SelectedId(&SelectedSong,&course);
+				if(course==COURSE_ENDLESSDAN)get_RandomId(&SelectedSong,&course);
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 				befOption = Option; fp_write=NULL; fp_read=NULL;
 				if (Option.player==3){
