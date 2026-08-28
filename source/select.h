@@ -3,9 +3,9 @@
 
 typedef struct {
 
-	int level[7],x,y,tmp,genre;
+	int level[8],x,y,tmp,genre;
 	char title[256],subtitle[256],path[256],tja[256],wave[256];
-	bool course[7],course_exist[5];
+	bool course[8],course_exist[8];
 } LIST_T;
 
 typedef struct {
