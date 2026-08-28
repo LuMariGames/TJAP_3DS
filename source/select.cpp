@@ -484,7 +484,10 @@ void get_RandomId(LIST_T* TMP,int* arg) {
 	int min,max,select;
 	for (int i=0;i<SongCount;++i) {
 		if(List[i-1].genre!=List[i].genre&&List[i].genre==List[SelectedId].genre)min=i;
-		else if(List[i-1].genre!=List[i].genre&&List[i-1].genre==List[SelectedId].genre)max=i;
+		else if(List[i-1].genre!=List[i].genre&&genrecheck){
+			max=i;
+			genrecheck=false;
+		}
 	}
 	srand(time(NULL));
 	select=min+(rand()%(max-min));
