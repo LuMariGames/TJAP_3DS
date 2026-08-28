@@ -229,6 +229,14 @@ void disp_file_list() {
 			int level;
 			isCursorGenre=false;
 
+			if (List[i].course[COURSE_ENDLESSDAN]) {
+
+				if ((n+g+cursor-1)==course_cursor) course=COURSE_ENDLESSDAN;
+				draw_select_text(80,(n+g+cursor) * 20+60,Text[get_lang()][TEXT_DAN]);
+				++n;
+				++course_count;
+			}
+
 			if (List[i].course[COURSE_DAN]) {
 
 				if ((n+g+cursor-1)==course_cursor) course=COURSE_DAN;
