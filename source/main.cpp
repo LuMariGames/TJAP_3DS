@@ -771,7 +771,9 @@ int main(){
 				//init_main_music();
 				if(Option.player==3&&fp_read==NULL)istjaloaded=false;
 				if (istjaloaded){
-					if(course!=COURSE_ENDLESSDAN)init_score();
+					if(course!=COURSE_ENDLESSDAN){
+						BeforeCombo=-1; init_score();
+					}
 					else init_randan_score();
 					get_tja_header(&TJA_Header);
 					double preset=TJA_Header.offset;
@@ -782,7 +784,7 @@ int main(){
 					init_notes(TJA_Header);
 					time_ini();
 					offset = TJA_Header.offset+Option.offset;
-					TotalFailedCount=0,dcd=0,notes_cnt=-1,BeforeCombo=-1,measure=Option.measure;
+					TotalFailedCount=0,dcd=0,notes_cnt=-1,measure=Option.measure;
 					isNotesStart = false,isMusicStart = false,isPlayMain = false;
 					FirstMeasureTime=INT_MAX,playcnt=INT_MAX,CurrentTimeMain=-2147483640,ghostnum=0;
 				}
