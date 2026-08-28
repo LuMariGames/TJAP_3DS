@@ -581,6 +581,8 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 	case 3:	//おに
 	case 4:
 	case 5:	//太鼓タワー
+	case 7: //エンドレス段位
+	default:
 		if(level==10)BaseCeilingPoint=1200000;
 		else BaseCeilingPoint=650000+level*50000;
 		if(scoremode==3)BaseCeilingPoint=1000000;
