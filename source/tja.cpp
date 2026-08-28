@@ -87,7 +87,7 @@ bool load_tja_head(int course,LIST_T Song){
 	//Current_Header.demostart=0;
 	//Current_Header.side=3;
 	Current_Header.scoremode=3;
-	if(course==COURSE_DAN||course==COURSE_ENDLESSDAN){
+	if(course==COURSE_DAN){
 		exam[0][0]=(char*)""; exam[0][1]=(char*)""; exam[0][2]=(char*)""; exam[0][3]=(char*)"";
 		exam[1][0]=(char*)""; exam[1][1]=(char*)""; exam[1][2]=(char*)""; exam[1][3]=(char*)"";
 		exam[2][0]=(char*)""; exam[2][1]=(char*)""; exam[2][2]=(char*)""; exam[2][3]=(char*)"";
@@ -114,6 +114,12 @@ bool load_tja_head(int course,LIST_T Song){
 				continue;
 			}
 
+			if(isCourseMatch&&Current_Header.course!=course&&Current_Header.course==COURSE_ENDLESSDAN){
+				exam[0][0]=(char*)""; exam[0][1]=(char*)""; exam[0][2]=(char*)""; exam[0][3]=(char*)"";
+				exam[1][0]=(char*)""; exam[1][1]=(char*)""; exam[1][2]=(char*)""; exam[1][3]=(char*)"";
+				exam[2][0]=(char*)""; exam[2][1]=(char*)""; exam[2][2]=(char*)""; exam[2][3]=(char*)"";
+				exam[3][0]=(char*)""; exam[3][1]=(char*)""; exam[3][2]=(char*)""; exam[3][3]=(char*)"";
+			}
 			if(isCourseMatch && Current_Header.style==1 && strstr(buf,"#START")==buf){
 				isSTART=true;
 				delete[] temp;
