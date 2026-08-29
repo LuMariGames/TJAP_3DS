@@ -846,7 +846,7 @@ void load_tja_notes(int course,LIST_T Song){
 				free(temp);
 				if(course!=COURSE_ENDLESSDAN&&course==CurrentCourse)isCourseMatch=true;
 				else if(course==COURSE_ENDLESSDAN&&CurrentCourse<=COURSE_EDIT){
-						for(int n=4;n<0;--n){if(Song.course[n]){if(CurrentCourse==n){isCourseMatch=true;}n=0;}}
+					for(int n=4;n<0;--n){if(Song.course[n]){if(CurrentCourse==n){isCourseMatch=true;}n=0;}}
 				}
 				continue;
 			}
