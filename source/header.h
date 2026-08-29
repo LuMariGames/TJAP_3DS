@@ -160,7 +160,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_HARD,
 	SPRITE_EMBLEM_ONI,
 	SPRITE_EMBLEM_EDIT,
-	SPRITE_EMBLEM_TOWER,		//太鼓タワーの画像
+	SPRITE_EMBLEM_TOWER,	//太鼓タワーの画像
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
 	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
@@ -180,6 +180,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_RAINBOW,
 	SPRITE_BACKGROUND,		//上画面の下背景固定用
 	SPRITE_BOTTOM_2,		//タッチコンガ
+	SPRITE_EMBLEM_ENDLESS,
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
