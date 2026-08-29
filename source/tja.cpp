@@ -369,9 +369,7 @@ bool load_tja_head(int course,LIST_T Song){
 						isCourseMatch=true;
 					}
 					else if(Current_Header.course==COURSE_ENDLESSDAN&&course<=COURSE_EDIT){
-						for(int n=4;n<0;--n){
-							if(Song.course[n])course=n; isCourseMatch=true; n=0;
-						}
+						for(int n=4;n<0;--n){if(Song.course[n]){course=n; isCourseMatch=true; n=0;}}
 					}
 					else isCourseMatch=false;
 				}
