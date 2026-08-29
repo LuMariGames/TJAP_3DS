@@ -318,6 +318,8 @@ inline static void load_sprites(){
 	C2D_SpriteSetPos(&sprites[SPRITE_BACKGROUND],TOP_WIDTH * 0.5,192);
 	C2D_SpriteFromSheet(&sprites[SPRITE_BOTTOM_2],otherspsh,9);
 	C2D_SpriteSetCenter(&sprites[SPRITE_BOTTOM_2],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_EMBLEM_ENDLESS],otherspsh,10);
+	C2D_SpriteSetCenter(&sprites[SPRITE_EMBLEM_ENDLESS],0.5f,0.5f);
 
 	if(exist_file("sdmc:/tjafiles/theme/def/notes.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,0,0);
@@ -461,6 +463,7 @@ inline static void load_sprites(){
 		C2D_SpriteSetPos(&sprites[SPRITE_DONCHAN_5],dg_x,dg_y);
 	}
 	for (int i = 0; i<7; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_EASY+i],31,113);
+	C2D_SpriteSetPos(&sprites[SPRITE_EMBLEM_ENDLESS],31,113);
 
 	C3D_TexSetFilter(sprites[SPRITE_DON].image.tex,GPU_LINEAR,GPU_LINEAR);
 	C3D_TexSetFilter(sprites[SPRITE_KATSU].image.tex,GPU_LINEAR,GPU_LINEAR);
