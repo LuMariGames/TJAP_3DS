@@ -940,9 +940,12 @@ void draw_emblem(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_TOWER].image,&sprites[SPRITE_EMBLEM_TOWER].params,NULL);
 		break;
 	case COURSE_DAN:
-	case COURSE_ENDLESSDAN:
 		C2D_DrawRectSolid(0,86,0,62,58,C2D_Color32f(14.0/255.0,88.0/255.0,129.0/255.0,1));
 		C2D_DrawImage(sprites[SPRITE_EMBLEM_DAN].image,&sprites[SPRITE_EMBLEM_DAN].params,NULL);
+		break;
+	case COURSE_ENDLESSDAN:
+		C2D_DrawRectSolid(0,86,0,62,58,C2D_Color32f(1,195.0/255.0,6.0/255.0,1));
+		C2D_DrawImage(sprites[SPRITE_EMBLEM_ENDLESS].image,&sprites[SPRITE_EMBLEM_ENDLESS].params,NULL);
 		break;
 	default:
 		C2D_DrawRectSolid(0,86,0,62,58,C2D_Color32f(1,51.0/255.0,0,1));
