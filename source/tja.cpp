@@ -351,7 +351,6 @@ bool load_tja_head(int course,LIST_T Song){
 				continue;
 			}
 
-
 			if(strstr(buf,"COURSE:")==buf){ //譜面モードを切り替えるタグ、「かんたん」から「おに裏」に加え「太鼓タワー」と「段位道場」に変えれる
 				if(buf[7]!='\n' && buf[7]!='\r'){
 					strlcpy(temp,buf+7,strlen(buf)-8);
@@ -369,7 +368,7 @@ bool load_tja_head(int course,LIST_T Song){
 						isCourseMatch=true;
 					}
 					else if(Current_Header.course==COURSE_ENDLESSDAN&&course<=COURSE_EDIT){
-						for(int n=4;n<0;--n){if(Song.course[n]){if(course==n){isCourseMatch=true;}n=0;}}
+						for(int n=4;n<0;--n){if(Song.course[n]){if(course==n){isCourseMatch=true;}else{isCourseMatch=false;}n=0;}}
 					}
 					else isCourseMatch=false;
 				}
@@ -846,7 +845,7 @@ void load_tja_notes(int course,LIST_T Song){
 				free(temp);
 				if(course!=COURSE_ENDLESSDAN&&course==CurrentCourse)isCourseMatch=true;
 				else if(course==COURSE_ENDLESSDAN&&CurrentCourse<=COURSE_EDIT){
-					for(int n=4;n<0;--n){if(Song.course[n]){if(CurrentCourse==n){isCourseMatch=true;}n=0;}}
+					for(int n=4;n<0;--n){if(Song.course[n]){if(CurrentCourse==n){isCourseMatch=true;}else{isCourseMatch=false;}n=0;}}
 				}
 				continue;
 			}
