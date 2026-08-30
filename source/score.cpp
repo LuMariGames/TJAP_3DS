@@ -542,6 +542,7 @@ int dan_condition(){
 			(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"m")==0&&counts[i]<Cdn[0][3]))++isBadCondition;
 		}
 	}
+	if(isSpecial()&&TotalBadCount>0)isBadCondition=9;
 	return isBadCondition;
 }
 
