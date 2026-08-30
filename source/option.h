@@ -283,7 +283,7 @@ enum Text_knd {
 	TEXT_PLAY,
 };
 
-int get_lang();
+int get_lang(),get_special();
 bool get_isauto(),get_ismeasure();
 float mspeed();
 void draw_option(u16 px, u16 py, unsigned int key , C2D_Sprite sprites[SPRITES_NUMER]),
