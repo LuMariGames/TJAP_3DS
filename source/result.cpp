@@ -13,14 +13,14 @@ void draw_result() {
 	get_tja_header(&Tja);
 	get_result(&result);
 	
-	float size = 0.7,width,height;
+	float size = 0.7f,width,height;
 
-	draw_result_text(50,10,0.6,Tja.title,0xffffff,true);
-	draw_result_text(50,30,0.48,Tja.subtitle,0xffffff,true);
-	if (Tja.course != 6) draw_result_text(0,0,1,"\0",0xffffff);
-	else if (result.dcon < 0) draw_result_text(50,48,0.8,"合格",0xfad132);
-	else if (result.dcon == 0) draw_result_text(50,48,0.8,"合格",0xfd3104);
-	else draw_result_text(50,48,0.8,"不合格",0x02a6fd);
+	draw_result_text(50,10,0.6f,Tja.title,0xffffff,true);
+	draw_result_text(50,30,0.48f,Tja.subtitle,0xffffff,true);
+	if (Tja.course<6) draw_result_text(0,0,1.f,"");
+	else if (result.dcon < 0) draw_result_text(50,48,0.8f,"合格",0xfad132);
+	else if (result.dcon == 0) draw_result_text(50,48,0.8f,"合格",0xfd3104);
+	else draw_result_text(50,48,0.8f,"不合格",0x02a6fd);
 
 	int iniX=100,iniY = 100,x2 = 300,YSense = 20,count = 0;
 	draw_result_text(iniX,iniY + YSense * count,size,Text[get_lang()][TEXT_SCORE]);
