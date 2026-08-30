@@ -645,7 +645,7 @@ int main(){
 				draw_select_text(0,20,"Togetoge - The creator of TJAPlayer for 3DS.\nTomo-Tg - Found a problem.");
 
 				draw_select_text(0,60,"Library / 使用したライブラリ");
-				draw_select_text(0,80,"lodepng, citro2d, citro3d, libctru, vorbisidec,\nlibogg, mpg123, jansson");
+				draw_select_text(0,80,"spng, citro2d, citro3d, libctru, vorbisidec,\nlibogg, mpg123, jansson");
 				draw_select_text(0,224,Text[Option.lang][TEXT_LANDR]);
 				if (tp.px != 0&&tp.py != 0){
 
