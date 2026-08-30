@@ -497,7 +497,8 @@ int main(){
 	mintime1=0,mintime2=0,mintime3=0,BeforeCombo=-1,don_cnt=0,katsu_cnt=0,tch_cnt=0,ghostnum=0;
 	double FirstMeasureTime = INT_MAX,offset = 0,CurrentTimeMain = -1000;
 	bool bottaikoview = false;
-	FILE *fp_write, *fp_read;
+	FILE *fp_write;
+	FILE *fp_read;
 
 	load_option();
 	get_option(&Option);
@@ -1032,7 +1033,7 @@ int main(){
 			C2D_DrawImage(sprites[SPRITE_TOP].image,&sprites[SPRITE_TOP].params,NULL);
 
 			//ダンサー表示
-			if (!isAniBg&&dance&&course != COURSE_DAN){
+			if (!isAniBg&&dance&&course<COURSE_DAN){
 				//ダンサーのコマ数調整
 				mintime1 = SPRITE_DANCER_0+Skin.d1anime[dancer_time_count(Skin.d1total)];
 				mintime2 = SPRITE_DANCER_0+Skin.d2anime[dancer_time_count(Skin.d2total)]+Skin.d1num;
@@ -1199,7 +1200,7 @@ int main(){
 				case 1:
 					scene_state = SCENE_RESULT;
 					get_tja_header(&TJA_Header);
-					strlcpy(TJA_Header.title,SelectedSong.title,strlen(SelectedSong.title)+1);
+					TJA_Header.title=SelectedSong.title;
 					set_tja_header(&TJA_Header);
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 					cnt = -1;
@@ -1233,7 +1234,7 @@ int main(){
 				if(TJA_Header.course==COURSE_ENDLESSDAN&&0>=dcd)scene_state = SCENE_MAINLOAD;
 				else scene_state = SCENE_RESULT;
 				get_tja_header(&TJA_Header);
-				strlcpy(TJA_Header.title,SelectedSong.title,strlen(SelectedSong.title)+1);
+				TJA_Header.title=SelectedSong.title;
 				set_tja_header(&TJA_Header);
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
