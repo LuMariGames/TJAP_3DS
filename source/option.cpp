@@ -604,6 +604,9 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 int get_lang(){
 	return Option.lang;
 }
+int get_special(){
+	return Option.special;
+}
 void toggle_auto(){
 	Option.isAuto = !Option.isAuto;
 }
