@@ -1198,6 +1198,9 @@ int main(){
 				switch (Option.special){
 				case 1:
 					scene_state = SCENE_RESULT;
+					get_tja_header(&TJA_Header);
+					TJA_Header.title=SelectedSong.title;
+					set_tja_header(&TJA_Header);
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 					cnt = -1;
 					fp_write=NULL;
@@ -1230,7 +1233,7 @@ int main(){
 				if(TJA_Header.course==COURSE_ENDLESSDAN&&0>=dcd)scene_state = SCENE_MAINLOAD;
 				else scene_state = SCENE_RESULT;
 				get_tja_header(&TJA_Header);
-				TJA_Header.title=&SelectedSong.title[0];
+				TJA_Header.title=SelectedSong.title;
 				set_tja_header(&TJA_Header);
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
@@ -1267,7 +1270,7 @@ int main(){
 			break;
 		case SCENE_RESULT:
 
-			if (cnt<=0&&!Option.dispFps&&TotalBadCount<=0)play_sound((get_isauto()? 38 : 37));
+			if (cnt<=0&&!Option.dispFps&&TotalBadCount<=0)play_sound((get_isauto()?38:37));
 			stopPlayback();
 			draw_gauge_result(sprites);
 			draw_result();
