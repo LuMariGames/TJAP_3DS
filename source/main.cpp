@@ -1294,6 +1294,9 @@ int main(){
 	exit(0);
 }
 
+bool isSpecial(){
+	return (get_special()>0);
+}
 void play_songs(char* ptr) {
 	if(course!=COURSE_DAN){
 		return;
