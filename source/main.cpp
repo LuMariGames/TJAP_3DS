@@ -1274,6 +1274,7 @@ int main(){
 			if (cnt<=0&&!Option.dispFps&&TotalBadCount<=0)play_sound((get_isauto()?38:37));
 			stopPlayback();
 			draw_gauge_result(sprites);
+			draw_result();
 			if (key&KEY_START){
 				cnt = -1;
 				scene_state = SCENE_SELECTSONG;
