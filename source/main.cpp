@@ -1199,7 +1199,7 @@ int main(){
 				case 1:
 					scene_state = SCENE_RESULT;
 					get_tja_header(&TJA_Header);
-					TJA_Header.title=SelectedSong.title;
+					strlcpy(TJA_Header.title,SelectedSong.title,strlen(SelectedSong.title)+1);
 					set_tja_header(&TJA_Header);
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 					cnt = -1;
@@ -1233,7 +1233,7 @@ int main(){
 				if(TJA_Header.course==COURSE_ENDLESSDAN&&0>=dcd)scene_state = SCENE_MAINLOAD;
 				else scene_state = SCENE_RESULT;
 				get_tja_header(&TJA_Header);
-				TJA_Header.title=SelectedSong.title;
+				strlcpy(TJA_Header.title,SelectedSong.title,strlen(SelectedSong.title)+1);
 				set_tja_header(&TJA_Header);
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
