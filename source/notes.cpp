@@ -395,14 +395,18 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					char* start=Command.value_s.data();
 					char* tp;
+					int init=0,diff=0;
 					tp=strchr(start, ',');
 					count=1;
 					while(start!=NULL){
 						if(tp!=NULL){
 							*tp = '\0';
 						}
-						if(count==4){
-							break;          // 目的のものが取れたのでループを抜ける
+						if(count==4)play_songs(start);
+						else if(count==5)init=atoi(start);
+						else if(count==6){
+							diff=atoi(start);
+							break;
 						}
 						if(tp!=NULL){
 							start=tp+1;
@@ -411,7 +415,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						count++;
 					}
 					if(tp!=NULL){
-						play_songs(start);
+						update_init_score(init,diff);
 						strlcpy(Header.title,Command.value_s.data(),strlen(Command.value_s.data())+1);
 						set_tja_header(&Header);
 					}
