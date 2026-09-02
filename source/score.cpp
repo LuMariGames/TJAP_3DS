@@ -911,6 +911,9 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 void update_balloon_count(int arg){
 	CurrentBalloonCount=arg;
 }
+void update_score(int aftrinit, int aftrdiff){
+	init=aftrinit; diff=aftrdiff;
+}
 
 void draw_emblem(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
 
