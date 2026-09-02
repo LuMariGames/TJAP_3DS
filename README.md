@@ -11,7 +11,9 @@ TJAP_3DSは、[togetg](https://github.com/togetg)氏制作の[TJAPlayer for 3DS]
 
 ### コースモード  
 CS7のモード、不可を出さずにノルマクリアを目指せ！「太鼓タワー」  
-AC15から常連モード、条件を達成しないとノルマ失敗！？「段位道場」  
+AC15からのモード、条件を達成しないとノルマ失敗！？「段位道場」  
+更に！TJAHandlerにある「エンドレス」モードの実装  
+指定された条件をこなしつつランダムで選ばれる曲達を連続クリアせよ！  
 
 ### 技術的な部分  
 右から来る常識を覆す「マイナススクロール」  
@@ -70,15 +72,15 @@ An attack from the DS series! "Den-Den Note" (Summoned with 'P')
 
 |命令文 / commands|Supported?|Comment|
 |---|---|---|
-|`BPMCHANGE`, `SCROLL`, `GOGOTIME(GOGOSTART, GOGOEND)`|✅|v2.2.3にて複素数スクロールに対応|
+|`BPMCHANGE`, `SCROLL`,<br>`GOGOSTART`, `GOGOEND`|✅|v2.2.3にて複素数スクロールに対応|
 |`SECTION`, `BRANCHSTART`, `BRANCHEND`|⚠️|譜面分岐開始時の挙動がまだ不安定|
-|`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`, `DELAY`, `MEASURE`|✅||
-|`BMSCROLL`|❌||
-|`HBSCROLL`, `SUDDEN`, `NEXTSONG`|⚠️|一部動作が無効|
+|`LEVELHOLD`, `BARLINEON`, `BARLINEOFF`,<br>`DELAY`, `MEASURE`, `SUDDEN`, `LYRIC`,<br>`JPOSSCROLL`, `DUMMYSTART`, `DUMMYEND`|✅||
+|`BMSCROLL`, `SENOTECHANGE`|❌||
+|`HBSCROLL`, `NEXTSONG`|⚠️|一部動作が無効|
 
 |metadata|Supported?|Comment|
 |---|---|---|
-|`COURSE:0~5`, `LEVEL`, `TITLE`, `OFFSET`|✅||
-|`WAVE`, `BALLOON`, `SONGVOL`, `EXAM1~4`|✅|個別条件は非対応なので注意|
-|`COURSE:6`|⚠️|`NEXTSONG`が非対応の為TNDEやOptk等で作られた段位は出来ない。|
-|`DEMOSTART`, `SEVOL`|❌||
+|`COURSE:0~6`, `LEVEL`, `TITLE`, `OFFSET`,<br>`SCOREINIT`, `SCOREDIFF`, `SCOREMODE`|✅||
+|`WAVE`, `BALLOON`, `SONGVOL`, `EXAM1~4`,<br>`STYLE`|✅|個別条件は非対応なので注意|
+|`COURSE:7`|⚠️||
+|`DEMOSTART`, `SEVOL`, `MAKER`|❌|スルーされます|
