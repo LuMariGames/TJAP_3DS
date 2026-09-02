@@ -149,6 +149,13 @@ bool load_tja_head(int course,LIST_T Song){
 				}
 				continue;
 			}
+			if(Option.lang==1&&strstr(buf,"TITLEEN:")==buf){
+				if(buf[8]!='\n' && buf[8]!='\r'){
+					strlcpy(temp,buf+8,strlen(buf)-9);
+					Current_Header.title=temp;
+				}
+				continue;
+			}
 			if(Option.lang==2&&strstr(buf,"TITLEES:")==buf){
 				if(buf[8]!='\n' && buf[8]!='\r'){
 					strlcpy(temp,buf+8,strlen(buf)-9);
@@ -182,6 +189,21 @@ bool load_tja_head(int course,LIST_T Song){
 				continue;
 			}
 			if(Option.lang==0&&strstr(buf,"SUBTITLEJA:")==buf){
+				if(buf[11]!='\n' && buf[11]!='\r'){
+
+					strlcpy(temp,buf+11,strlen(buf)-12);
+					if(strstr(temp,"--")==temp)Current_Header.subtitle_state=1;
+					else if(strstr(temp,"++")==temp)Current_Header.subtitle_state=2;
+					else Current_Header.subtitle_state=0;
+
+					if(Current_Header.subtitle_state!=0){
+						strlcpy(temp,buf+11+2,strlen(buf)-12-2);
+					}
+					Current_Header.subtitle=temp;
+				}
+				continue;
+			}
+			if(Option.lang==1&&strstr(buf,"SUBTITLEEN:")==buf){
 				if(buf[11]!='\n' && buf[11]!='\r'){
 
 					strlcpy(temp,buf+11,strlen(buf)-12);
@@ -571,6 +593,12 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 				}
 				continue;
 			}
+			if(Option.lang==1&&strstr(buf,"TITLEEN:")==buf){
+				if(buf[8]!='\n' && buf[8]!='\r'){
+					strlcpy(List->title,buf+8,strlen(buf)-9);
+				}
+				continue;
+			}
 			if(Option.lang==2&&strstr(buf,"TITLEES:")==buf){
 				if(buf[8]!='\n' && buf[8]!='\r'){
 					strlcpy(List->title,buf+8,strlen(buf)-9);
@@ -578,6 +606,12 @@ bool load_tja_head_simple(LIST_T *List){		//選曲用のヘッダ取得
 				continue;
 			}
 			if(Option.lang==0&&strstr(buf,"SUBTITLEJA:")==buf){
+				if(buf[11]!='\n' && buf[11]!='\r'){
+					strlcpy(List->subtitle,buf+11,strlen(buf)-12);
+				}
+				continue;
+			}
+			if(Option.lang==1&&strstr(buf,"SUBTITLEEN:")==buf){
 				if(buf[11]!='\n' && buf[11]!='\r'){
 					strlcpy(List->subtitle,buf+11,strlen(buf)-12);
 				}
