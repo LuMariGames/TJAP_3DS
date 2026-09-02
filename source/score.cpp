@@ -911,7 +911,7 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 void update_balloon_count(int arg){
 	CurrentBalloonCount=arg;
 }
-void update_score(int aftrinit, int aftrdiff){
+void update_init_score(int aftrinit, int aftrdiff){
 	init=aftrinit; diff=aftrdiff;
 }
 
