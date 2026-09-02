@@ -41,7 +41,9 @@ Tokkun, "Tokushu" with perfect
 
 ### Course mode
 CS7 mode, aim to clear the quota without making no! "Taiko Tower"  
-Regular mode from AC15, quota failure if you don't meet the conditions!? "Dani Dojo"  
+Mode from AC15, if you don't achieve the conditions, the quota will fail!? " Dan-i Dojo"
+Moreover! Implementation of "Endless" mode in TJAHandler
+Continuously clear randomly selected songs while completing the specified conditions!
 
 ### Technical part
 "Negative scroll" that overturns the common sense coming from the right  
