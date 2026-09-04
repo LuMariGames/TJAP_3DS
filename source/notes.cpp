@@ -76,7 +76,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			Branch.next=false;
 		}
 
-		while(Measure[MeasureCount].create_time<=CurrentTimeNotes&&!Branch.wait){
+		while((Measure[MeasureCount].create_time<=CurrentTimeNotes||isHBSCROLL)&&!Branch.wait){
 
 			NotesCount=0;
 			if(Measure[MeasureCount].branch!=Branch.course&&Measure[MeasureCount].branch!=-1){
@@ -110,14 +110,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						break;
 					case COMMAND_BRANCHEND:
 						Branch.course=-1;
-						break;
-					case COMMAND_JPOSSCROLL:
-						judgedata.time=Command.val[0]*1000*(1.0/Option.musicspeed);
-						if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
-							judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
-							judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
-						}
-						else NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
@@ -420,6 +412,16 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						set_tja_header(&Header);
 					}
 					restart_time(TIME_NOTES);
+					break;
+				}
+				case COMMAND_JPOSSCROLL: {
+					get_command_value(tja_notes[Measure[i].notes],&Command);
+					judgedata.time=Command.val[0]*1000*(1.0/Option.musicspeed);
+					if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
+						judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
+						judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
+					}
+					else NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
 					break;
 				}
 				default:
