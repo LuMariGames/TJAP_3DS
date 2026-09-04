@@ -1137,9 +1137,9 @@ int main(){
 				else if (keyhold&KEY_DRIGHT)++khdcnt;
 				else khdcnt = 0;
 				if (Option.player!=3&&key&KEY_DUP)toggle_auto();
-				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&!TJA_Header.isHBS&&
+				if ((key&KEY_DLEFT||khdcnt<-60)&&Option.player!=3&&
 					TJA_Header.course!=COURSE_DAN&&TJA_Header.course!=COURSE_ENDLESSDAN)min_measure();
-				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&!TJA_Header.isHBS&&
+				if ((key&KEY_DRIGHT||khdcnt>60)&&(Option.measure<get_edme())&&Option.player!=3&&
 					TJA_Header.course!=COURSE_DAN&&TJA_Header.course!=COURSE_ENDLESSDAN)plus_measure();
 			}
 
@@ -1235,6 +1235,7 @@ int main(){
 				else scene_state = SCENE_RESULT;
 				get_tja_header(&TJA_Header);
 				TJA_Header.title=SelectedSong.title;
+				TJA_Header.subtitle=SelectedSong.subtitle;
 				set_tja_header(&TJA_Header);
 				char abs_path[521];
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
