@@ -5,7 +5,7 @@ typedef struct {
 
 	int level[8],x,y,tmp,genre;
 	char title[256],subtitle[256],path[256],tja[256],wave[256];
-	bool course[8],course_exist[8];
+	bool course[8]={false},course_exist[8]={false};
 } LIST_T;
 
 typedef struct {
