@@ -352,6 +352,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		}
 	}
 
+	if(cnt<0)return;
 	if(MaxMeasureCount<MeasureCount)MaxMeasureCount=MeasureCount;
 	double MaxJudgeTime=0.0;
 	int NowMeasure=0,count=1;
@@ -438,7 +439,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 		}
 	}
 	send_gogotime(isGOGOTime);
-	if(cnt<0)return;
 
 	for(int i=0,j=BARLINE_MAX-1;i<j;++i){
 		if(BarLine[i].flag){
