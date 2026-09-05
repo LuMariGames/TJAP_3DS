@@ -390,11 +390,11 @@ bool load_tja_head(int course,LIST_T Song){
 						isCourseMatch=true;
 					}
 					else if(Current_Header.course==COURSE_ENDLESSDAN&&course<=COURSE_EDIT){
-						if(Song.course[COURSE_EDIT]&&CurrentCourse==COURSE_EDIT)isCourseMatch=true;
-						else if(Song.course[COURSE_ONI]&&CurrentCourse==COURSE_ONI)isCourseMatch=true;
-						else if(Song.course[COURSE_HARD]&&CurrentCourse==COURSE_HARD)isCourseMatch=true;
-						else if(Song.course[COURSE_NORMAL]&&CurrentCourse==COURSE_NORMAL)isCourseMatch=true;
-						else if(Song.course[COURSE_EASY]&&CurrentCourse==COURSE_EASY)isCourseMatch=true;
+						if(Song.course[COURSE_EDIT]&&course==COURSE_EDIT)isCourseMatch=true;
+						else if(Song.course[COURSE_ONI]&&course==COURSE_ONI)isCourseMatch=true;
+						else if(Song.course[COURSE_HARD]&&course==COURSE_HARD)isCourseMatch=true;
+						else if(Song.course[COURSE_NORMAL]&&course==COURSE_NORMAL)isCourseMatch=true;
+						else if(Song.course[COURSE_EASY]&&course==COURSE_EASY)isCourseMatch=true;
 					}
 					else isCourseMatch=false;
 				}
