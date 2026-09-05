@@ -996,6 +996,7 @@ void load_tja_notes(int course,LIST_T Song){
 				}
 				else {
 
+					if(NextSongCount==1)++NextSongCount;
 					if(isNoComma || NotesCount!=0){	//複数小節
 
 						Measure[MeasureCount].start_measure_count=NotesCount;
