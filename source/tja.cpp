@@ -99,12 +99,13 @@ bool load_tja_head(int course,LIST_T Song){
 		init_dan_conditions();
 	}
 
-	int cnt=-1;
+	int cnt=-1,MaxCourse=-1;
 	char abs_path[512];
 
 	snprintf(abs_path,sizeof(abs_path),"%s/%s",Song.path,Song.tja);
 	if((fp=fopen(abs_path,"r"))!=NULL){
 
+		for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
 		char* temp=NULL;
 		while(fgets(buf,512,fp)!=NULL){
 
@@ -390,11 +391,7 @@ bool load_tja_head(int course,LIST_T Song){
 						isCourseMatch=true;
 					}
 					else if(Current_Header.course==COURSE_ENDLESSDAN&&course<=COURSE_EDIT){
-						if(Song.course[COURSE_EDIT]&&course==COURSE_EDIT)isCourseMatch=true;
-						else if(!Song.course[COURSE_EDIT]&&Song.course[COURSE_ONI]&&course==COURSE_ONI)isCourseMatch=true;
-						else if(!Song.course[COURSE_ONI]&&Song.course[COURSE_HARD]&&course==COURSE_HARD)isCourseMatch=true;
-						else if(!Song.course[COURSE_HARD]&&Song.course[COURSE_NORMAL]&&course==COURSE_NORMAL)isCourseMatch=true;
-						else if(!Song.course[COURSE_NORMAL]&&Song.course[COURSE_EASY]&&course==COURSE_EASY)isCourseMatch=true;
+						if(course==MaxCourse)isCourseMatch=true;
 					}
 					else isCourseMatch=false;
 				}
@@ -856,12 +853,13 @@ void load_tja_notes(int course,LIST_T Song){
 	if((fp=fopen(abs_path,"r"))!=NULL){
 
 		tja_cnt=0;
-		int MeasureCount=0,CurrentCourse=-1;
+		int MeasureCount=0,CurrentCourse=-1,MaxCourse=-1;
 		double PreJudge=0,FirstMeasureTime=0;
 
 		FirstMeasureTime=(240.0/bpm * measure)*(NOTES_JUDGE_RANGE/NOTES_AREA)-240.0/bpm * measure;
 		PreJudge=FirstMeasureTime;
 
+		for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
 		while((fgets(tja_notes[tja_cnt],NOTES_MEASURE_MAX,fp)!=NULL || tja_cnt<MEASURE_MAX)&&
 			isEnd==false){
 
@@ -883,11 +881,7 @@ void load_tja_notes(int course,LIST_T Song){
 				free(temp);
 				if(course!=COURSE_ENDLESSDAN&&course==CurrentCourse)isCourseMatch=true;
 				else if(course==COURSE_ENDLESSDAN&&CurrentCourse<=COURSE_EDIT){
-					if(Song.course[COURSE_EDIT]&&CurrentCourse==COURSE_EDIT)isCourseMatch=true;
-					else if(!Song.course[COURSE_EDIT]&&Song.course[COURSE_ONI]&&CurrentCourse==COURSE_ONI)isCourseMatch=true;
-					else if(!Song.course[COURSE_ONI]&&Song.course[COURSE_HARD]&&CurrentCourse==COURSE_HARD)isCourseMatch=true;
-					else if(!Song.course[COURSE_HARD]&&Song.course[COURSE_NORMAL]&&CurrentCourse==COURSE_NORMAL)isCourseMatch=true;
-					else if(!Song.course[COURSE_NORMAL]&&Song.course[COURSE_EASY]&&CurrentCourse==COURSE_EASY)isCourseMatch=true;
+					if(CurrentCourse==MaxCourse)isCourseMatch=true;
 				}
 				continue;
 			}
