@@ -465,7 +465,7 @@ void draw_option_text(float x,float y,const char* text,bool state,float* width,f
 
 void get_SelectedId(LIST_T* TMP,int* arg) {
 
-	for (int i=0;i<5;++i) {
+	for (int i=0;i<8;++i) {
 		TMP->course[i]=List[SelectedId].course[i];
 		TMP->course_exist[i]=List[SelectedId].course_exist[i];
 		TMP->level[i]=List[SelectedId].level[i];
@@ -494,7 +494,7 @@ void get_RandomId(LIST_T* TMP,int* arg) {
 	}
 	srand(time(NULL));
 	select=min+(rand()%(max-min));
-	for (int i=0;i<5;++i) {
+	for (int i=0;i<8;++i) {
 		TMP->course[i]=List[select].course[i];
 		TMP->course_exist[i]=List[select].course_exist[i];
 		TMP->level[i]=List[select].level[i];
