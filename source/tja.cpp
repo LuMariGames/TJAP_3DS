@@ -853,7 +853,7 @@ void load_tja_notes(int course,LIST_T Song){
 	if((fp=fopen(abs_path,"r"))!=NULL){
 
 		tja_cnt=0;
-		int MeasureCount=0,CurrentCourse=-1,MaxCourse=-1;
+		int MeasureCount=0,CurrentCourse=-1,MaxCourse=COURSE_EDIT;
 		double PreJudge=0,FirstMeasureTime=0;
 
 		FirstMeasureTime=(240.0/bpm * measure)*(NOTES_JUDGE_RANGE/NOTES_AREA)-240.0/bpm * measure;
