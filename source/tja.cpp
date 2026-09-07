@@ -1146,7 +1146,6 @@ void load_tja_notes(int course,LIST_T Song){
 			switch(Measure[i].command){
 			case COMMAND_END:
 			case COMMAND_LEVELHOLD:
-			case COMMAND_BRANCHEND:
 				Measure[i].create_time=Measure[i].judge_time;
 				break;
 			case COMMAND_NEXTSONG:
@@ -1162,6 +1161,7 @@ void load_tja_notes(int course,LIST_T Song){
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
+			case COMMAND_BRANCHEND:
 				Measure[i].judge_time=Measure[i].pop_time;
 				break;
 			}
