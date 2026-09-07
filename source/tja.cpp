@@ -1170,8 +1170,6 @@ void load_tja_notes(int course,LIST_T Song){
 		calc_base_score(Measure,tja_notes);
 		fclose(fp);
 		MainFirstMeasureTime=calc_first_measure_time();
-		if(!Current_Header.isHBS)sort_measure_insertion(Measure,MeasureMaxNumber);
-		stme=get_MeasureId_From_OriginalId(stme);
 	}
 }
 
