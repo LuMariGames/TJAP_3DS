@@ -809,6 +809,8 @@ int main(){
 				else if (!istjaloaded){
 					get_SelectedId(&SelectedSong,&course);
 					get_RandomId(&SelectedSong,&course);
+					if(isAniBg)C3D_TexDelete(sprites[SPRITES_NUMER-1].image.tex);
+					isAniBg=false;
 					goto rerandom;
 				}
 				else if (tmp == -1){
