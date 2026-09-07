@@ -635,7 +635,7 @@ int main(){
 				if (isAniBg)C3D_TexDelete(sprites[SPRITES_NUMER-1].image.tex);
 				isAniBg = false;
 				aptSetSleepAllowed(true);
-				init_score();
+				BeforeCombo=-1; init_score();
 			}
 
 			if (keyhold&KEY_L&&keyhold&KEY_R&&(key&KEY_L || key&KEY_R))bottaikoview = !bottaikoview;
@@ -783,7 +783,7 @@ int main(){
 					else init_randan_score();
 					get_tja_header(&TJA_Header);
 					double preset=TJA_Header.offset;
-					if (!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
+					if (course!=COURSE_ENDLESSDAN&&!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
 					else load_tja_notes(course,SelectedSong);
 					get_tja_header(&TJA_Header);
 					if(TJA_Header.course==COURSE_DAN&&TJA_Header.offset!=preset)jirodan=false;
@@ -1107,6 +1107,7 @@ int main(){
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
+					BeforeCombo=-1; init_score();
 					if(fp_read!=NULL){
 						Option = befOption;
 						set_option(&befOption);
@@ -1227,6 +1228,7 @@ int main(){
 					isPlayMain = true;
 					stopPlayback();
 					scene_state = SCENE_MAINLOAD;
+					BeforeCombo=-1; init_score();
 					break;
 				}
 			}
