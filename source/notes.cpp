@@ -109,7 +109,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						}
 						break;
 					case COMMAND_BRANCHEND:
-						Branch.course=-1;
+						Branch.wait=true;
 						break;
 					case COMMAND_LEVELHOLD:
 						isLevelHold=true;
@@ -372,6 +372,11 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 				}
 				case COMMAND_SECTION: {
 					init_branch_section();
+					break;
+				}
+				case COMMAND_BRANCHEND: {
+					Branch.course=-1;
+					Branch.wait=false;
 					break;
 				}
 				case COMMAND_BRANCHSTART: {
