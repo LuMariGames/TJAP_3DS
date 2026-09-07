@@ -853,13 +853,12 @@ void load_tja_notes(int course,LIST_T Song){
 	if((fp=fopen(abs_path,"r"))!=NULL){
 
 		tja_cnt=0;
-		int MeasureCount=0,CurrentCourse=-1,MaxCourse=COURSE_EDIT;
+		int MeasureCount=0,CurrentCourse=-1,MaxCourse=-1;
 		double PreJudge=0,FirstMeasureTime=0;
 
 		FirstMeasureTime=(240.0/bpm * measure)*(NOTES_JUDGE_RANGE/NOTES_AREA)-240.0/bpm * measure;
 		PreJudge=FirstMeasureTime;
 
-		for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
 		while((fgets(tja_notes[tja_cnt],NOTES_MEASURE_MAX,fp)!=NULL || tja_cnt<MEASURE_MAX)&&
 			isEnd==false){
 
