@@ -33,7 +33,7 @@ void load_file_main(void *arg) {
 	u8 Model;
 	PTMSYSM_CheckNew3DS(&New);
 	CFGU_GetSystemModel(&Model);
-	if(!New&&(Model==CFG_MODEL_N2DSXL||Model==CFG_MODEL_N3DSXL||Model==CFG_MODEL_N3DS))isEmu=true,New=true;
+	if(!New&&(Model==CFG_MODEL_N2DSXL||Model==CFG_MODEL_N3DSXL||Model==CFG_MODEL_N3DS))isEmu=true;
 	load_combo();
 	newfont();
 	List.clear();
