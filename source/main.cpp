@@ -535,8 +535,7 @@ int main(){
 
 			snprintf(get_buffer(),BUFFER_SIZE,"TJAPlayer for 3DS v%s",VERSION);
 			draw_select_text(120,70,get_buffer());
-			if(isEmu) draw_select_text(120,100,"Now Loading...(Emu Mode)");
-			else draw_select_text(120,100,"Now Loading...");
+			draw_select_text(120,100,"Now Loading...");
 			if (loadend>0)draw_select_text(0,225,"SELECT to Skip ");
 
 			if (tp.px != 0&&tp.py != 0){	//タッチ位置の取得
