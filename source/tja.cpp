@@ -834,8 +834,8 @@ void load_tja_notes(int course,LIST_T Song){
 	int FirstMultiMeasure=-1,	//複数行の小節の最初の小節id 複数出ない場合は-1
 		NotesCount=0,BranchCourse=-1,NextSongCount=0,
 		BeforeBranchFirstMultiMeasure=-1,BeforeBranchNotesCount=0;
-	bool isStart=false,isEnd=false,isDispBarLine=true,isNoComma=false,isCourseMatch=false,isSudden=false,
-		BeforeBranchIsDispBarLine=true,BeforeBranchIsNoComma=false,BeforeBranchIsDummy=false,isDummy=false,BeforeBranchIsSudden=false;
+	bool isStart=false,isEnd=false,isDispBarLine=true,isNoComma=false,isCourseMatch=false,
+		BeforeBranchIsDispBarLine=true,BeforeBranchIsNoComma=false,BeforeBranchIsDummy=false,isDummy=false;
 	FILE *fp;
 	COMMAND_T Command;
 	OPTION_T Option;
@@ -950,7 +950,6 @@ void load_tja_notes(int course,LIST_T Song){
 					case COMMAND_SUDDEN:
 						sudntime=Command.val[0];
 						movetime=Command.val[1];
-						isSudden=true;
 						break;
 					case COMMAND_JPOSSCROLL:
 						Beforejpostime=jpostime=Command.val[0];
@@ -1022,8 +1021,8 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].isDummy=isDummy;
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
 				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time;
-				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time-(isSudden?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll)))));
-				if(isSudden)Measure[MeasureCount].move_time=movetime;
+				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time-((sudntime!=0.0)?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll)))));
+				Measure[MeasureCount].move_time=movetime;
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
 				Measure[MeasureCount].lyric=ly;
@@ -1054,7 +1053,6 @@ void load_tja_notes(int course,LIST_T Song){
 						BeforeBranchPercent=percent;
 						BeforeBranchSudnTime=sudntime;
 						BeforeBranchMoveTime=movetime;
-						BeforeBranchIsSudden=isSudden;
 						BeforeBranchIsDummy=isDummy;
 						Beforely=ly;
 						if(tja_cnt==0)Measure[MeasureCount].judge_time=0;	//ノーツの前に分岐はすぐに判定
@@ -1079,7 +1077,6 @@ void load_tja_notes(int course,LIST_T Song){
 						percent=BeforeBranchPercent;
 						sudntime=BeforeBranchSudnTime;
 						movetime=BeforeBranchMoveTime;
-						isSudden=BeforeBranchIsSudden;
 						isDummy=BeforeBranchIsDummy;
 						ly=Beforely;
 						break;
@@ -1114,14 +1111,14 @@ void load_tja_notes(int course,LIST_T Song){
 						
 						if(tja_notes[Measure[MeasureCount].notes][0]!='#'){	//複数行小節の最初の小節以外
 
-							sudntime=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-Measure[Measure[MeasureCount].firstmeasure+i].create_time;
+							double sudnti2=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-Measure[Measure[MeasureCount].firstmeasure+i].create_time;
 							Measure[Measure[MeasureCount].firstmeasure+i].judge_time =
 								Measure[Measure[MeasureCount].firstmeasure+i-1].judge_time +
 								(240.0/Measure[Measure[MeasureCount].firstmeasure+i-1].bpm * Measure[Measure[MeasureCount].firstmeasure+i-1].measure)
 								* Measure[Measure[MeasureCount].firstmeasure+i-1].notes_count/Measure[Measure[MeasureCount].firstmeasure].max_notes;	//delayはとりあえず放置
 
 							Measure[Measure[MeasureCount].firstmeasure+i].pop_time   =Measure[Measure[MeasureCount].firstmeasure+i].judge_time;
-							Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-sudntime;
+							Measure[Measure[MeasureCount].firstmeasure+i].create_time=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-sudnti2;
 							percent=(double)Measure[Measure[MeasureCount].firstmeasure+i].notes_count/(double)Measure[Measure[MeasureCount].firstmeasure].max_notes;
 							Measure[Measure[MeasureCount].firstmeasure+i].isDispBarLine=false;	//最初の小節は小節線をオフにしない
 						}
