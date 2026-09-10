@@ -226,7 +226,7 @@ inline int changeFile(const char* ep_file,struct playbackInfo_t* playbackInfo,bo
 	s32 prio;
 	static Thread thread = NULL;
 
-	if (New) {
+	if (New||isEmu) {
 		Decode_CoreID = 2;
 		APT_SetAppCpuTimeLimit(0);
 	}
