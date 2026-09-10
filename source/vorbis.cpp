@@ -17,7 +17,7 @@ void setVorbis(struct decoder_fn* decoder){
 	decoder->init = &initVorbis;
 	decoder->rate = &rateVorbis;
 	decoder->channels = &channelVorbis;
-	decoder->buffSize=vorbis_buffer_size=(DEFAULT_BUFFER_SIZE*(New?0.5:1)/(12*isEmu));
+	decoder->buffSize=vorbis_buffer_size=(DEFAULT_BUFFER_SIZE*(New?0.5:1)*(isEmu?(1.0/12.0):1));
 	decoder->decode = &decodeVorbis;
 	decoder->exit = &exitVorbis;
 }
