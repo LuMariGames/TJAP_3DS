@@ -533,7 +533,8 @@ int main(){
 		switch (scene_state){
 		case SCENE_SELECTLOAD:	//ロード画面
 
-			snprintf(get_buffer(),BUFFER_SIZE,"TJAPlayer for 3DS v%s",VERSION);
+			if(isEmu)snprintf(get_buffer(),BUFFER_SIZE,"TJAPlayer for 3DS(Emu) v%s",VERSION);
+			else snprintf(get_buffer(),BUFFER_SIZE,"TJAPlayer for 3DS v%s",VERSION);
 			draw_select_text(120,70,get_buffer());
 			draw_select_text(120,100,"Now Loading...");
 			if (loadend>0)draw_select_text(0,225,"SELECT to Skip ");
