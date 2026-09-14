@@ -193,7 +193,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 
 					Notes[id].judge_time=Measure[MeasureCount].judge_time+NoteTime;
 					Notes[id].move_time=Measure[MeasureCount].move_time;
-					Notes[id].create_time=Measure[MeasureCount].create_time+NoteTime;
+					if(!isHBSCROLL)Notes[id].create_time=Measure[MeasureCount].create_time+NoteTime;
 					Notes[id].num=Measure[MeasureCount].notes;
 					Notes[id].scroll=Measure[MeasureCount].scroll*Option.speed;
 					Notes[id].yscroll=Measure[MeasureCount].yscroll*Option.speed;
