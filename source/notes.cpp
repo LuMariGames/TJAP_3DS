@@ -542,7 +542,7 @@ void draw_judge(double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 		//アニメーション
 		if(CurrentTimeNotes-JudgeMakeTime<0.05){
 			JudgeY=73+(CurrentTimeNotes-JudgeMakeTime)*140;
-			for(int i=0;i<20;++i)C2D_SpriteSetScale(&sprites[SPRITE_COMBO_0+i],1.0f,1.5f-(CurrentTimeNotes-JudgeMakeTime)*10);
+			for(int i=0;i<20;++i)C2D_SpriteSetScale(&sprites[SPRITE_COMBO_0+i],1.0f,1.25f-(CurrentTimeNotes-JudgeMakeTime)*5);
 		}
 		else {
 			JudgeY=80;
