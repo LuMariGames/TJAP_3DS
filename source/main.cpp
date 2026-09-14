@@ -1088,6 +1088,11 @@ int main(){
 				C2D_SpriteSetPos(&sprites[SPRITE_TOUCH],memtch_x,memtch_y);
 				C2D_DrawImage(sprites[SPRITE_TOUCH].image,&sprites[SPRITE_TOUCH].params,NULL);
 			}
+			if(course==COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)dcd=dan_condition();
+			if(TotalFailedCount!=dcd&&0<dcd){
+				play_sound(SOUND_FAILED);
+				TotalFailedCount=dcd;
+			}
 
 			if ((key&KEY_SELECT||key&KEY_START)&&(!isPlayMain||ndspChnIsPlaying(CHANNEL))){
 				togglePlayback();
@@ -1158,11 +1163,6 @@ int main(){
 				if(touch_cnt)write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,(uint8_t)(memtch_x/2),(uint8_t)(memtch_y/2)};
 				else write_data[ghostnum]={(int32_t)cnt,(uint8_t)isDon,(uint8_t)isKatsu,0,0};
 				if(ghostnum<81919)++ghostnum;
-			}
-			if(course==COURSE_DAN||TJA_Header.course==COURSE_ENDLESSDAN)dcd=dan_condition();
-			if(TotalFailedCount!=dcd&&0<dcd){
-				play_sound(SOUND_FAILED);
-				TotalFailedCount=dcd;
 			}
 
 			//譜面が先
