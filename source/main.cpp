@@ -438,7 +438,7 @@ inline static void load_sprites(){
 	}
 
 	for (int i = 0; i<20; ++i)C2D_SpriteSetCenter(&sprites[SPRITE_COMBO_0+i],0.5f,1.0f);
-	for (int i = 0; i<4; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT+i],NOTES_JUDGE_X,109);
+	for (int i = 0; i<4; ++i)C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT+i],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 
 	C2D_SpriteSetCenter(&sprites[SPRITE_EFFECT_GOGO],0.5-(17.0/90.0),0.5f);
 	C2D_SpriteSetPos(&sprites[SPRITE_TOP],TOP_WIDTH * 0.5,TOP_HEIGHT * 0.5);
@@ -772,7 +772,7 @@ int main(){
 					set_option(&Option);
 				}
 				init_tja();
-				NOTES_JUDGE_X = 93.0f;
+				NOTES_JUDGE_X = 93.f,NOTES_JUDGE_Y = 109.f;
 				istjaloaded = load_tja_head(course,SelectedSong);
 				//init_main_music();
 				if(Option.player==3&&fp_read==NULL)istjaloaded=false;
@@ -815,7 +815,7 @@ int main(){
 				}
 				else if (tmp == -1){
 					cnt = -150;
-					NOTES_JUDGE_X = 93.0f;
+					NOTES_JUDGE_X = 93.f,NOTES_JUDGE_Y = 109.f;
 					snprintf(abs_path,sizeof(abs_path),"%s/%s",SelectedSong.path,TJA_Header.bg);
 					if (!isAniBg&&exist_file(abs_path)){
 						isAniBg = true;
