@@ -559,33 +559,33 @@ void draw_judge(double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 		case PERFECT:			//良
 			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_PERFECT].image,&sprites[SPRITE_EFFECT_PERFECT].params,&Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT],NOTES_JUDGE_X,JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT],NOTES_JUDGE_X,JudgeY+(109.f-NOTES_JUDGE_Y));
 			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image,&sprites[SPRITE_JUDGE_PERFECT].params,NULL);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
 			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_PERFECT].image,&sprites[SPRITE_EFFECT_SPECIAL_PERFECT].params,&Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT],NOTES_JUDGE_X,JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT],NOTES_JUDGE_X,JudgeY+(109.f-NOTES_JUDGE_Y));
 			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image,&sprites[SPRITE_JUDGE_PERFECT].params,NULL);
 			break;
 
 		case NICE:				//可
 			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_NICE],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_NICE].image,&sprites[SPRITE_EFFECT_NICE].params,&Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE],NOTES_JUDGE_X,JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE],NOTES_JUDGE_X,JudgeY+(109.f-NOTES_JUDGE_Y));
 			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image,&sprites[SPRITE_JUDGE_NICE].params,NULL);
 			break;
 
 		case SPECIAL_NICE:		//特可
 			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_NICE],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_NICE].image,&sprites[SPRITE_EFFECT_SPECIAL_NICE].params,&Tint);
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE],NOTES_JUDGE_X,JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE],NOTES_JUDGE_X,JudgeY+(109.f-NOTES_JUDGE_Y));
 			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image,&sprites[SPRITE_JUDGE_NICE].params,NULL);
 			break;
 
 		case BAD:				//不可
-			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD],NOTES_JUDGE_X,JudgeY);
+			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_BAD],NOTES_JUDGE_X,JudgeY+(109.f-NOTES_JUDGE_Y));
 			C2D_DrawImage(sprites[SPRITE_JUDGE_BAD].image,&sprites[SPRITE_JUDGE_BAD].params,NULL);
 			break;
 		}
