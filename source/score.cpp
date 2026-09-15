@@ -442,7 +442,7 @@ void draw_lane(C2D_Sprite (&sprites)[SPRITES_NUMER],int kcnt,int dcnt){
 	C2D_DrawRectangle(64,86,0,336,46,C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00),C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00));
 	C2D_DrawRectangle(64,86,0,336,46,C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00),C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00));
 	C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_CIRCLE],NOTES_JUDGE_X,NOTES_JUDGE_Y);
-	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO],NOTES_JUDGE_X,92+(109.f-NOTES_JUDGE_Y));
+	C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_GOGO],NOTES_JUDGE_X,92+(NOTES_JUDGE_Y-109.f));
 	C2D_DrawImage(sprites[SPRITE_JUDGE_CIRCLE].image,&sprites[SPRITE_JUDGE_CIRCLE].params,NULL);
 	if(isGOGO==true){
 		C2D_ImageTint Tint;
