@@ -1242,6 +1242,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 		Command->val[0]=0;
 		Command->val[1]=0;
 		Command->val[2]=0;
+		Command->val[3]=0;
 
 		if(strcmp(command,"START")==0)Command->knd=COMMAND_START;
 		else if(strcmp(command,"END")==0)Command->knd=COMMAND_END;
@@ -1336,15 +1337,20 @@ void get_command_value(char* buf,COMMAND_T *Command){
 			tp=strtok(value," ");
 			Command->val[0]=strtod(tp,NULL);
 			tp=strtok(NULL," ");
-			Command->val[1]=strtod(tp,NULL);
+			char* nextPtr;
+			char* endPtr;
+			Command->val[1]=strtod(tp,&nextPtr);
+			Command->val[2]=strtod(nextPtr,&endPtr);
+			if(nextPtr == endPtr)Command->val[2]=0;
 			tp=strtok(NULL," ");
-			Command->val[2]=strtod(tp,NULL);
-			if(Command->val[2]>=1)Command->val[2]=JPOSMAG;
-			else Command->val[2]=JPOSMAG * -1.0;
+			Command->val[3]=strtod(tp,NULL);
+			if(Command->val[3]>=1)Command->val[3]=JPOSMAG;
+			else Command->val[3]=JPOSMAG*-1.0;
 			if(Option.fixroll){
 				Command->val[0]=0;
 				Command->val[1]=0;
 				Command->val[2]=0;
+				Command->val[3]=0;
 			}
 		}
 		/*else if(strcmp(command,"BMSCROLL")==0)Command->knd=COMMAND_BMSCROLL;
