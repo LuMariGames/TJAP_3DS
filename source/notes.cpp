@@ -456,7 +456,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			else if(BarLine[i].x<62||BarLine[i].x>400)BarLine[i].isDisp=false;
 			else BarLine[i].isDisp=true;
 			if(BarLine[i].isDisp){
-				C2D_DrawRectSolid(BarLine[i].x,86,0,1,46,C2D_Color32f(1,1,1,1));
+				C2D_DrawRectSolid(BarLine[i].x,86.f+(NOTES_JUDGE_Y-109.f),0,1,46,C2D_Color32f(1,1,1,1));
 				//snprintf(buf_notes,sizeof(buf_notes),"%d",Measure[BarLine[i].measure].branch);
 				//draw_debug(BarLine[i].x-10,133,buf_notes);
 			}
