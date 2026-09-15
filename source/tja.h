@@ -4,8 +4,8 @@
 
 typedef struct {
 
-	double val[3];
-	int knd,data[3],test;
+	double val[4];
+	int knd,data[4],test;
 	std::string command_s,notes,value_s;
 } COMMAND_T;
 
