@@ -10,7 +10,7 @@
 
 struct {
 	int time;
-	float move;
+	float movex,movey;
 } judgedata;
 
 Thread judgemove;
@@ -42,10 +42,11 @@ bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLev
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
-	float movx=judgedata.move;
+	float movx=judgedata.movex,movy=judgedata.movey;
 	for(int i=0,j=judgedata.time;i<j;++i){
 		while(get_isPause())svcSleepThread(100000);
 		NOTES_JUDGE_X+=movx;
+		NOTES_JUDGE_Y+=movy;
 		svcSleepThread(1000000);
 	}
 	return;
@@ -422,10 +423,14 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					get_command_value(tja_notes[Measure[i].notes],&Command);
 					judgedata.time=Command.val[0]*1000*(1.0/Option.musicspeed);
 					if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
-						judgedata.move=(Command.val[1]*Command.val[2])/judgedata.time;
+						judgedata.movex=(Command.val[1]*Command.val[3])/judgedata.time;
+						judgedata.movey=(Command.val[2]*Command.val[3])/judgedata.time;
 						judgemove=threadCreate(change_judge,(void*)(""),8192,0x3e,0,true);
 					}
-					else NOTES_JUDGE_X+=Command.val[1]*Command.val[2];
+					else {
+						NOTES_JUDGE_X+=Command.val[1]*Command.val[3];
+						NOTES_JUDGE_Y+=Command.val[2]*Command.val[3];
+					}
 					break;
 				}
 				default:
@@ -552,28 +557,28 @@ void draw_judge(double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]){
 		switch(JudgeDispknd){
 
 		case PERFECT:			//良
-			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT],NOTES_JUDGE_X,109);
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_PERFECT],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_PERFECT].image,&sprites[SPRITE_EFFECT_PERFECT].params,&Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT],NOTES_JUDGE_X,JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image,&sprites[SPRITE_JUDGE_PERFECT].params,NULL);
 			break;
 
 		case SPECIAL_PERFECT:	//特良
-			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT],NOTES_JUDGE_X,109);
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_PERFECT],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_PERFECT].image,&sprites[SPRITE_EFFECT_SPECIAL_PERFECT].params,&Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_PERFECT],NOTES_JUDGE_X,JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_PERFECT].image,&sprites[SPRITE_JUDGE_PERFECT].params,NULL);
 			break;
 
 		case NICE:				//可
-			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_NICE],NOTES_JUDGE_X,109);
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_NICE],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_NICE].image,&sprites[SPRITE_EFFECT_NICE].params,&Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE],NOTES_JUDGE_X,JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image,&sprites[SPRITE_JUDGE_NICE].params,NULL);
 			break;
 
 		case SPECIAL_NICE:		//特可
-			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_NICE],NOTES_JUDGE_X,109);
+			C2D_SpriteSetPos(&sprites[SPRITE_EFFECT_SPECIAL_NICE],NOTES_JUDGE_X,NOTES_JUDGE_Y);
 			C2D_DrawImage(sprites[SPRITE_EFFECT_SPECIAL_NICE].image,&sprites[SPRITE_EFFECT_SPECIAL_NICE].params,&Tint);
 			C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_NICE],NOTES_JUDGE_X,JudgeY);
 			C2D_DrawImage(sprites[SPRITE_JUDGE_NICE].image,&sprites[SPRITE_JUDGE_NICE].params,NULL);
@@ -904,21 +909,21 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			if(isHBSCROLL&&currentTime<Notes[i].judge_time&&Notes[i+1].flag){
 				Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
-				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
+				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
 			}
 			else if(isHBSCROLL&&currentTime<Notes[i].judge_time){
 				Notes[i].hb_time=Notes[i].judge_time;
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
-				Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
+				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
 			}
 			else {
 				if(Notes[i].move_time==0||(Notes[i].judge_time-Notes[i].move_time)<=currentTime){
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
-					Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
+					Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
 				}
 				else {
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].move_time)*(Notes[i].bpm*conbpm);
-					Notes[i].y=109.f+NOTES_AREA*Notes[i].yscroll*(Notes[i].move_time)*(Notes[i].bpm*conbpm);
+					Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].move_time)*(Notes[i].bpm*conbpm);
 				}
 			}
 			if(Notes[i].x<=-128.f)Notes[i].x=-128.f;
@@ -951,7 +956,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			case NOTES_TIMEBOMB:
 				if(Notes[i].judge_time<=currentTime){
 					Notes[i].x=NOTES_JUDGE_X;
-					Notes[i].y=109.f;
+					Notes[i].y=NOTES_JUDGE_Y;
 				}
 				if(Notes[i].roll_id!=-1){
 					BalloonNotes[Notes[i].roll_id].start_id=i;
