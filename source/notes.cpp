@@ -754,14 +754,15 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 	
 			if(isDon>sd&&CurrentJudgeNotes[0]!=-1){	//ドン
 	
-				if(CurrentJudgeNotesLag[0]<=Option.judge_range_perfect){			//良
+				if(isBomb&&CurrentJudgeNotesLag[0]<=Option.judge_range_bad){
+					delete_notes(CurrentJudgeNotes[0]);
+					update_score(BOMB);
+				}
+				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_perfect){			//良
 					delete_notes(CurrentJudgeNotes[0]);
 					if(isBig){
 						make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 						update_score(SPECIAL_PERFECT);
-					}
-					else if(isBomb){
-						update_score(BAD);
 					}
 					else {
 						make_judge(PERFECT,CurrentTimeNotes);
@@ -773,9 +774,6 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 					if(isBig){
 						make_judge(SPECIAL_NICE,CurrentTimeNotes);
 						update_score(SPECIAL_NICE);
-					}
-					else if(isBomb){
-						update_score(BAD);
 					}
 					else {
 						make_judge(NICE,CurrentTimeNotes);
@@ -794,14 +792,15 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 	
 			if(isKatsu>sk&&CurrentJudgeNotes[1]!=-1){	//カツ
 	
-				if(CurrentJudgeNotesLag[1]<=Option.judge_range_perfect){			//良
+				if(isBomb&&CurrentJudgeNotesLag[0]<=Option.judge_range_bad){
+					delete_notes(CurrentJudgeNotes[0]);
+					update_score(BOMB);
+				}
+				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_perfect){			//良
 					delete_notes(CurrentJudgeNotes[1]);
 					if(isBig){
 						make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 						update_score(SPECIAL_PERFECT);
-					}
-					else if(isBomb){
-						update_score(BAD);
 					}
 					else {
 						make_judge(PERFECT,CurrentTimeNotes);
@@ -813,9 +812,6 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 					if(isBig){
 						make_judge(SPECIAL_NICE,CurrentTimeNotes);
 						update_score(SPECIAL_NICE);
-					}
-					else if(isBomb){
-						update_score(BAD);
 					}
 					else {
 						make_judge(NICE,CurrentTimeNotes);
@@ -1510,6 +1506,7 @@ void draw_condition(){
 		else if(strcmp(exam[j][0],"h")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_HIT],&width,&height);
 		else if(strcmp(exam[j][0],"c")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_MAXCOMBO],&width,&height);
 		else if(strcmp(exam[j][0],"g")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_GAUGE],&width,&height);
+		else if(strcmp(exam[j][0],"jm")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_BOMB],&width,&height);
 		tx+=width;
 		draw_condition_text(50+tx,148+18*j,exam[j][1],&width,&height);
 		tx+=width;
