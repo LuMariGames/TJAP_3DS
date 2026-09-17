@@ -520,7 +520,7 @@ int dan_condition(){
 		(strcmp(exam[2][0],types[i])==0&&strcmp(exam[2][3],"l")==0&&counts[i]>=Cdn[1][2])||
 		(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"l")==0&&counts[i]>=Cdn[1][3])){
 			isBadCondition=0;
-			i=7;
+			i=99;
 		}
 	}
 
@@ -539,7 +539,7 @@ int dan_condition(){
 			(strcmp(exam[2][0],types[i])==0&&strcmp(exam[2][3],"m")==0&&counts[i]<Cdn[1][2])||
 			(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"m")==0&&counts[i]<Cdn[1][3]))){
 				isBadCondition=0;
-				i=7;
+				i=99;
 			}
 		}
 		for(int i=0;i<9;++i){
