@@ -792,8 +792,8 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 	
 			if(isKatsu>sk&&CurrentJudgeNotes[1]!=-1){	//カツ
 	
-				if(isBomb&&CurrentJudgeNotesLag[0]<=Option.judge_range_bad){
-					delete_notes(CurrentJudgeNotes[0]);
+				if(isBomb&&CurrentJudgeNotesLag[1]<=Option.judge_range_bad){
+					delete_notes(CurrentJudgeNotes[1]);
 					update_score(BOMB);
 				}
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_perfect){			//良
