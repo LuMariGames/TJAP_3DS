@@ -17,6 +17,7 @@ enum Judge_Knd {
 	ROLL_END,
 	BALLOON,
 	BALLOON_BREAK,
+	BOMB,
 };
 
 void init_score(),init_randan_score(),debug_score(),update_score(int knd),send_gogotime(bool temp),init_branch_section();
