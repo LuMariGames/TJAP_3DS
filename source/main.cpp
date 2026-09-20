@@ -320,6 +320,8 @@ inline static void load_sprites(){
 	C2D_SpriteSetCenter(&sprites[SPRITE_BOTTOM_2],0.5f,0.5f);
 	C2D_SpriteFromSheet(&sprites[SPRITE_EMBLEM_ENDLESS],otherspsh,10);
 	C2D_SpriteSetCenter(&sprites[SPRITE_EMBLEM_ENDLESS],0.5f,0.5f);
+	C2D_SpriteFromSheet(&sprites[SPRITE_PURPLE],otherspsh,11);
+	C2D_SpriteSetCenter(&sprites[SPRITE_PURPLE],0.5f,0.5f);
 
 	if(exist_file("sdmc:/tjafiles/theme/def/notes.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DON].image,"sdmc:/tjafiles/theme/def/notes.png",true,32,32,0,0);
@@ -395,6 +397,11 @@ inline static void load_sprites(){
 		sprites[SPRITE_DENDEN].image.tex=sprites[SPRITE_DON].image.tex;
 		sprites[SPRITE_DENDEN].params.pos.w = 64; sprites[SPRITE_DENDEN].params.pos.h = 128;
 		C2D_SpriteSetCenter(&sprites[SPRITE_DENDEN],0.5f,0.5f);
+		loadPNGAsC2DImage(&sprites[SPRITE_PURPLE].image,"sdmc:/tjafiles/theme/def/notes.png",true,64,64,128,128);
+		C3D_TexDelete(sprites[SPRITE_PURPLE].image.tex);
+		sprites[SPRITE_PURPLE].image.tex=sprites[SPRITE_DON].image.tex;
+		sprites[SPRITE_PURPLE].params.pos.w = 64; sprites[SPRITE_PURPLE].params.pos.h = 64;
+		C2D_SpriteSetCenter(&sprites[SPRITE_PURPLE],0.5f,0.5f);
 	}
 	if(exist_file("sdmc:/tjafiles/theme/def/donchan.png")){
 		loadPNGAsC2DImage(&sprites[SPRITE_DONCHAN_0].image,"sdmc:/tjafiles/theme/def/donchan.png",true,256,128,0,0);
