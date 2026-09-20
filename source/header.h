@@ -178,11 +178,11 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_POTATO_2,
 	SPRITE_TIMEBOMB,		//時爆弾音符の画像
 	SPRITE_DENDEN,			//でんでん音符の画像
-	SPRITE_PURPLE,			//紫音符の画像
 	SPRITE_RAINBOW,
 	SPRITE_BACKGROUND,		//上画面の下背景固定用
 	SPRITE_BOTTOM_2,		//タッチコンガ
 	SPRITE_EMBLEM_ENDLESS,
+	SPRITE_PURPLE,			//紫音符の画像
 	SPRITE_DANCER_0,		//踊り子の画像
 };
 
