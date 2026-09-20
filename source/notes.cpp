@@ -803,7 +803,8 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				CurrentJudgeNotes[0]=-1;
 				++sd;
 			}
-			else if(KaDon!=2&&isKatsu>sk&&CurrentJudgeNotes[1]!=-1){	//カツ
+			else ++sd;
+			if(KaDon!=2&&isKatsu>sk&&CurrentJudgeNotes[1]!=-1){	//カツ
 
 				if(isPurple&&KaDon!=1&&CurrentJudgeNotesLag[1]<=Option.judge_range_bad)KaDon=2;
 				else if(isBomb&&CurrentJudgeNotesLag[1]<=Option.judge_range_bad){
@@ -845,10 +846,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				CurrentJudgeNotes[1]=-1;
 				++sk;
 			}
-			else {
-				++sd;
-				++sk;
-			}
+			else ++sk;
 		}
 
 		if(JudgeRollState!=-1){	//連打
