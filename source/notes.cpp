@@ -1011,11 +1011,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			case NOTES_PURPLE:
 				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					if(!Notes[i].isDummy)update_score(THROUGH);
-					Notes[i].isThrough=true;
-				}
-				else if(KaDon!=0){
-					Notes[i].x=NOTES_JUDGE_X;
-					Notes[i].y=NOTES_JUDGE_Y;
+					Notes[i].isThrough=true; KaDon=0;
 				}
 				break;
 			case NOTES_BOMB:
