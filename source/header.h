@@ -62,6 +62,7 @@ enum NOTES_KND {
 	NOTES_KATSU,		//カツ
 	NOTES_BIGDON,		//ドン(大)
 	NOTES_BIGKATSU,		//カツ(大)
+	NOTES_PURPLE,		//カドン(OpenTaiko)
 	NOTES_ROLL,		//連打開始
 	NOTES_BIGROLL,		//連打(大)開始
 	NOTES_BALLOON,		//風船開始
@@ -71,7 +72,6 @@ enum NOTES_KND {
 	NOTES_BALLOONEND,	//風船終了
 	NOTES_BOMB,		//爆弾音符
 	NOTES_TIMEBOMB,		//時爆弾音符(OpenTaiko)
-	NOTES_PURPLE,		//カドン(OpenTaiko)
 	NOTES_DENDEN,		//でんでん音符開始
 	NOTES_PTTBORDER,	//お芋音符の5000点ボーダー
 };
