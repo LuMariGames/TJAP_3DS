@@ -655,8 +655,8 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 
 			if(knd != 0){
 
-				if(knd==NOTES_DON||knd==NOTES_KATSU||knd==NOTES_BIGDON||knd==NOTES_BIGKATSU){
-					if((knd==NOTES_BIGDON||knd==NOTES_BIGKATSU)&& scoremode != 3)special=2.0;
+				if(knd==NOTES_DON||knd==NOTES_KATSU||knd==NOTES_BIGDON||knd==NOTES_BIGKATSU||knd==NOTES_PURPLE){
+					if((knd==NOTES_BIGDON||knd==NOTES_BIGKATSU)&&scoremode != 3)special=2.0;
 					else special=1.0;
 					++combo;
 					init_cnt+=1*gogo*special;
