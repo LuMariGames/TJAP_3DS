@@ -43,7 +43,7 @@ double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
 
 void change_judge(void *arg){
 	float movx=judgedata.movex,movy=judgedata.movey;
-	for(int i=0,j=judgedata.time;i<j;++i){
+	for(int i=0;i<judgedata.time;++i){
 		while(get_isPause())svcSleepThread(100000);
 		NOTES_JUDGE_X+=movx;
 		NOTES_JUDGE_Y+=movy;
@@ -1568,6 +1568,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	OPTION_T Option;
 	get_option(&Option);
 
+	judgedata.time=0;
 	Notes.clear();
 	Notes.resize(2048);
 	init_notes_structure();
