@@ -1380,7 +1380,7 @@ double get_StartTime(){
 
 	OPTION_T Option;
 	get_option(&Option);
-	return((Option.measure>0)?((Current_Header.offset+Option.offset)* -1.0+(Measure[stme].create_time-(240.0 * NOTES_JUDGE_RANGE)/(Current_Header.bpm * NOTES_AREA))): 0);
+	return((Option.measure>0)?((Current_Header.offset+Option.offset)* -1.0+(Measure[stme].create_time-(240.0 * NOTES_JUDGE_RANGE)/(Current_Header.bpm * NOTES_AREA))):std::fmod(Current_Header.offset,clocktime));
 }
 int get_edme(){
 	return edme;
