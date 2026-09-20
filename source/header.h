@@ -43,7 +43,7 @@ constexpr double clocktime=1120379.0/67027964.0;
 #define BOTTOM_WIDTH  320
 #define BOTTOM_HEIGHT 240
 
-#define SPRITES_NUMER 168
+#define SPRITES_NUMER 172
 
 #define NOTES_MAX 2048
 #define BARLINE_MAX 512
