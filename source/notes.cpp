@@ -759,7 +759,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 			if((isDon>sd&&Notes[CurrentJudgeNotes[0]].knd==NOTES_BOMB)||(isKatsu>sk&&Notes[CurrentJudgeNotes[1]].knd==NOTES_BOMB))isBomb=true;
 			else isBomb=false;
 			if(Notes[CurrentJudgeNotes[0]].knd==NOTES_PURPLE&&Notes[CurrentJudgeNotes[0]].knd==Notes[CurrentJudgeNotes[1]].knd)isPurple=true;
-			else {isPurple=false;KaDon=0}
+			else {isPurple=false;KaDon=0;}
 	
 			if(KaDon!=1&&isDon>sd&&CurrentJudgeNotes[0]!=-1){	//ドン
 	
@@ -846,8 +846,8 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				++sk;
 			}
 			else {
-				++dc;
-				++kc;
+				++sd;
+				++sk;
 			}
 		}
 
