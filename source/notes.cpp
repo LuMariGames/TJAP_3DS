@@ -36,7 +36,7 @@ BALLOON_T BalloonNotes[BALLOON_MAX];
 BRANCH_T Branch;
 
 int MeasureCount,MinMeasureCount,MaxMeasureCount,RollState,NotesCount,JudgeDispknd,JudgeRollState,BalloonBreakCount,
-isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,
+isBalloonBreakDisp=0,PreNotesKnd,isDendenCH,KaDon,
 NotesNumber;	//何番目のノーツか
 bool isNotesLoad=true,isJudgeDisp=false,isPttBorder=false,isGOGOTime=false,isLevelHold=false,isHBSCROLL=false;
 double JudgeMakeTime,JudgeY,JudgeEffectCnt,OffSetTime;
@@ -662,6 +662,11 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
 					make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 					break;
+				case NOTES_PURPLE:
+					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
+					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
+					make_judge(PERFECT,CurrentTimeNotes);
+					break;
 				}
 				if(Notes[i].knd==NOTES_BIGDON||Notes[i].knd==NOTES_BIGKATSU)update_score(SPECIAL_PERFECT);
 				else if(Notes[i].knd==NOTES_DON||Notes[i].knd==NOTES_KATSU)update_score(PERFECT);
@@ -719,10 +724,11 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 			//判定すべきノーツを検索
 			for(int i=Notes.size()-1;i>=0;--i){
 	
-				if(!Notes[i].isDummy&&Notes[i].flag){
+				if(Notes[i].flag&&!Notes[i].isDummy&&!Notes[i].isThrough){
 	
 					if(Notes[i].knd==NOTES_DON ||
 						Notes[i].knd==NOTES_BIGDON ||
+						Notes[i].knd==NOTES_PURPLE ||
 						Notes[i].knd==NOTES_BOMB){	//ドン
 	
 						if(CurrentJudgeNotesLag[0]>fabs(Notes[i].judge_time-CurrentTimeNotes)||
@@ -734,6 +740,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 					}
 					if(Notes[i].knd==NOTES_KATSU ||
 						Notes[i].knd==NOTES_BIGKATSU ||
+						Notes[i].knd==NOTES_PURPLE ||
 						Notes[i].knd==NOTES_BOMB){	//カツ
 	
 						if(CurrentJudgeNotesLag[1]>fabs(Notes[i].judge_time-CurrentTimeNotes)||
@@ -746,17 +753,21 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				}
 			}
 	
-			bool isBig,isBomb;
+			bool isBig,isBomb,isPurple;
 			if((isDon>sd&&Notes[CurrentJudgeNotes[0]].knd==NOTES_BIGDON)||(isKatsu>sk&&Notes[CurrentJudgeNotes[1]].knd==NOTES_BIGKATSU))isBig=true;
 			else isBig=false;
 			if((isDon>sd&&Notes[CurrentJudgeNotes[0]].knd==NOTES_BOMB)||(isKatsu>sk&&Notes[CurrentJudgeNotes[1]].knd==NOTES_BOMB))isBomb=true;
 			else isBomb=false;
+			if(Notes[CurrentJudgeNotes[0]].knd==NOTES_PURPLE&&Notes[CurrentJudgeNotes[0]].knd==Notes[CurrentJudgeNotes[1]].knd)isPurple=true;
+			else {isPurple=false;KaDon=0}
 	
-			if(isDon>sd&&CurrentJudgeNotes[0]!=-1){	//ドン
+			if(KaDon!=1&&isDon>sd&&CurrentJudgeNotes[0]!=-1){	//ドン
 	
-				if(isBomb&&CurrentJudgeNotesLag[0]<=Option.judge_range_bad){
+				if(isPurple&&KaDon!=2&&CurrentJudgeNotesLag[0]<=Option.judge_range_bad)KaDon=1;
+				else if(isBomb&&CurrentJudgeNotesLag[0]<=Option.judge_range_bad){
 					delete_notes(CurrentJudgeNotes[0]);
 					update_score(BOMB);
+					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_perfect){			//良
 					delete_notes(CurrentJudgeNotes[0]);
@@ -768,6 +779,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 						make_judge(PERFECT,CurrentTimeNotes);
 						update_score(PERFECT);
 					}
+					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_nice){	//可
 					delete_notes(CurrentJudgeNotes[0]);
@@ -779,22 +791,25 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 						make_judge(NICE,CurrentTimeNotes);
 						update_score(NICE);
 					}
+					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_bad){	//不可
 					make_judge(BAD,CurrentTimeNotes);
 					delete_notes(CurrentJudgeNotes[0]);
 					update_score(BAD);
+					KaDon=0;
 				}
 				CurrentJudgeNotesLag[0]=-1;
 				CurrentJudgeNotes[0]=-1;
 				++sd;
 			}
-	
-			if(isKatsu>sk&&CurrentJudgeNotes[1]!=-1){	//カツ
-	
-				if(isBomb&&CurrentJudgeNotesLag[1]<=Option.judge_range_bad){
+			else if(KaDon!=2&&isKatsu>sk&&CurrentJudgeNotes[1]!=-1){	//カツ
+
+				if(isPurple&&KaDon!=1&&CurrentJudgeNotesLag[1]<=Option.judge_range_bad)KaDon=2;
+				else if(isBomb&&CurrentJudgeNotesLag[1]<=Option.judge_range_bad){
 					delete_notes(CurrentJudgeNotes[1]);
 					update_score(BOMB);
+					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_perfect){			//良
 					delete_notes(CurrentJudgeNotes[1]);
@@ -806,6 +821,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 						make_judge(PERFECT,CurrentTimeNotes);
 						update_score(PERFECT);
 					}
+					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_nice){	//可
 					delete_notes(CurrentJudgeNotes[1]);
@@ -817,15 +833,21 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 						make_judge(NICE,CurrentTimeNotes);
 						update_score(NICE);
 					}
+					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_bad){	//不可
 					make_judge(BAD,CurrentTimeNotes);
 					delete_notes(CurrentJudgeNotes[1]);
 					update_score(BAD);
+					KaDon=0;
 				}
 				CurrentJudgeNotesLag[1]=-1;
 				CurrentJudgeNotes[1]=-1;
 				++sk;
+			}
+			else {
+				++dc;
+				++kc;
 			}
 		}
 
@@ -984,6 +1006,16 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					if(!Notes[i].isDummy)update_score(THROUGH);
 					Notes[i].isThrough=true;
+				}
+				break;
+			case NOTES_PURPLE:
+				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+					if(!Notes[i].isDummy)update_score(THROUGH);
+					Notes[i].isThrough=true;
+				}
+				else if(KaDon!=0){
+					Notes[i].x=NOTES_JUDGE_X;
+					Notes[i].y=NOTES_JUDGE_Y;
 				}
 				break;
 			case NOTES_BOMB:
@@ -1206,6 +1238,11 @@ inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRIT
 				sprites[SPRITE_BOMB].params.pos.y=Notes[i].y;
 				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_BOMB].image,&sprites[SPRITE_BOMB].params,&DummyTint);
 				break;
+			case NOTES_PURPLE:
+				sprites[SPRITE_PURPLE].params.pos.x=Notes[i].x;
+				sprites[SPRITE_PURPLE].params.pos.y=Notes[i].y;
+				if(Notes[i].x>-64.f&&Notes[i].x<464.f&&Notes[i].y<304.f&&Notes[i].y>-64.f)C2D_DrawImage(sprites[SPRITE_PURPLE].image,&sprites[SPRITE_PURPLE].params,&DummyTint);
+				break;
 			}
 		}
 	}
@@ -1239,6 +1276,7 @@ int ctoi(char c){
 	case '9':return NOTES_POTATO;
 	case 'C':return NOTES_BOMB;
 	case 'D':return NOTES_TIMEBOMB;
+	case 'G':return NOTES_PURPLE;
 	case 'P':return NOTES_DENDEN;
 	default:return 0;
 	}
