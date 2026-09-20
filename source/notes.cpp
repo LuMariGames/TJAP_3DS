@@ -669,7 +669,7 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 					break;
 				}
 				if(Notes[i].knd==NOTES_BIGDON||Notes[i].knd==NOTES_BIGKATSU)update_score(SPECIAL_PERFECT);
-				else if(Notes[i].knd==NOTES_DON||Notes[i].knd==NOTES_KATSU)update_score(PERFECT);
+				else if(Notes[i].knd==NOTES_DON||Notes[i].knd==NOTES_KATSU||Notes[i].knd==NOTES_PURPLE)update_score(PERFECT);
 				delete_notes(i);
 			}
 		}
