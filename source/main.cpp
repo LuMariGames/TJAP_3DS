@@ -210,8 +210,8 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 		C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGBA8);
 		memset(tex->data, 0, tex->size);
 		
-		for (u32 x = 0; x < w; x++) {
-			for (u32 y = 0; y < h; y++) {
+		for (u32 y = 0; y < h; y++) {
+			for (u32 x = 0; x < w; x++) {
 				u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 4;
 				u32 src_pos = (y * w + x) * 4;
 				
@@ -231,8 +231,8 @@ bool loadPNGAsC2DImage(C2D_Image *texture, const char* filename, bool rgba, unsi
 		C3D_TexInit(tex, w_pow2, h_pow2, GPU_RGB8);
 		memset(tex->data, 0, tex->size);
 
-		for (u32 x = 0; x < w; x++) {
-			for (u32 y = 0; y < h; y++) {
+		for (u32 y = 0; y < h; y++) {
+			for (u32 x = 0; x < w; x++) {
 				u32 dst_pos = ((((y >> 3) * (w_pow2 >> 3) + (x >> 3)) << 6) + ((x & 1) | ((y & 1) << 1) | ((x & 2) << 1) | ((y & 2) << 2) | ((x & 4) << 2) | ((y & 4) << 3))) * 3;
 				u32 src_pos = (y * w + x) * 3;
 				
