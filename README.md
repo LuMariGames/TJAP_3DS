@@ -29,7 +29,7 @@ DSシリーズからの襲来！「でんでん音符」('P'で呼び出し可�
 (ここに記載している情報以外は元作品とほぼ同じなので詳しくは元の[Readme](https://github.com/togetg/TJAPlayer_for_3DS/blob/master/README.md)をご確認下さい。)  
 
 # TJAP_3DS (English)
-TJAP_3DS is a fork of [TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS) produced by Mr. [togetg](https://github.com/togetg)  
+TJAP_3DS is a fork of [TJAPlayer for 3DS](https://github.com/togetg/TJAPlayer_for_3DS) produced by [togetg](https://github.com/togetg)  
 New options such as Tokkun and fixed scroll and skin changes,  
 And it is a personally improved software added to the Taiko Tower, Dani Dojo and the large volume.  
 
@@ -41,8 +41,8 @@ Tokkun, "Tokushu" with perfect
 
 ### Course mode
 CS7 mode, aim to clear the quota without making no! "Taiko Tower"  
-Mode from AC15, if you don't achieve the conditions, the quota will fail!? " Dan-i Dojo"
-Moreover! Implementation of "Endless" mode in TJAHandler
+Mode from AC15, if you don't achieve the conditions, the quota will fail!? " Dan-i Dojo"  
+Moreover! Implementation of "Endless" mode in TJAHandler  
 Continuously clear randomly selected songs while completing the specified conditions!
 
 ### Technical part
