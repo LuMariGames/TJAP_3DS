@@ -1609,6 +1609,7 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	BalloonCount[3]=0;
 	BalloonBreakCount=0;
 	isDendenCH=-1;
+	KaDon=0;
 	isBalloonBreakDisp=0;
 	isPttBorder=false;
 	isGOGOTime=false;
