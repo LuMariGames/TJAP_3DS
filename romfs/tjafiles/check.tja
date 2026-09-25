@@ -1,10 +1,10 @@
 TITLE:tjafilesフォルダに譜面と音源を入れて下さい。
-BPM:120
-OFFSET:0
+TITLEEN:Please place the tja files in the tjafiles folder.
+TITLEES:Por favor, coloque los archivos tja en la carpeta tjafiles.
 
 COURSE:9
-LEVEL:1
+LEVEL:0
 
 #START
-0000,
+0,
 #END
