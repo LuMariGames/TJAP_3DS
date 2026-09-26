@@ -94,8 +94,10 @@ inline void load_file_list(const char* path) {
 			strlcpy(filename,path,sizeof(filename));
 			strcat(filename,"/");
 			strcat(filename,dp->d_name);
+			struct stat st;
+			stat(filename,&st);
 
-			if (dp->d_type!=DT_DIR) {
+			if ((st.st_mode & S_IFMT)!=S_IFDIR) {
 
 				if (strstr(dp->d_name,".tja")!=NULL&&strstr(dp->d_name,"_gd.bin")==NULL) {
 
