@@ -322,7 +322,7 @@ void draw_score(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED+n]);
 			}
 			else {
-				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED+n],59-(56*(double)i/j),110+(sprites[SPRITE_COMBO_0_RED+n].image.subtex->height/2.0));
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED+n],52-(56*(double)i/j),110+(sprites[SPRITE_COMBO_0_RED+n].image.subtex->height/2.0));
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED+n]);
 			}
 		}
