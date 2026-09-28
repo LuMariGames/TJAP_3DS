@@ -303,21 +303,26 @@ void draw_score(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 	int j;
 
 	//コンボ
-	for(j=0;j<5;++j){
+	for(j=0;j<7;++j){
 		if(combo/powi(10,j)==0)break;
 	}
-	for(int i=0;i<5;++i){
+	for(int i=0;i<7;++i){
 
-		if(combo>=10&&combo/powi(10,i)> 0){
+		if(combo>=10&&combo/powi(10,i)>0){
 
-			int n=combo/powi(10,i)% 10;
+			int n=combo/powi(10,i)%10;
+			if(combo>9999999)n=9;
 
 			if(combo<100){
 				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0+n],24+j*7-i*14,110+(sprites[SPRITE_COMBO_0+n].image.subtex->height/2.0));
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0+n]);
 			}
-			else {
+			else if(combo<1000){
 				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED+n],24+j*7-i*14,110+(sprites[SPRITE_COMBO_0_RED+n].image.subtex->height/2.0));
+				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED+n]);
+			}
+			else {
+				C2D_SpriteSetPos(&sprites[SPRITE_COMBO_0_RED+n],52-(28*(double)i/j),110+(sprites[SPRITE_COMBO_0_RED+n].image.subtex->height/2.0));
 				C2D_DrawSprite(&sprites[SPRITE_COMBO_0_RED+n]);
 			}
 		}
