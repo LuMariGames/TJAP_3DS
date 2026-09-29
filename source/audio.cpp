@@ -9,7 +9,7 @@
 #define AUDIO_BUFFER_SIZE 4096
 #define STACKSIZE (4 * 1024)
 #define SOUND_NUMBER 5
-#define SNUM 41
+#define SNUM 71
 
 typedef struct {
 	float rate;
@@ -195,7 +195,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[36][30] = {
+	char sound_address[66][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
@@ -211,6 +211,20 @@ void load_combo() {
 		"romfs:/combo/1200combo.ogg",
 		"romfs:/combo/1300combo.ogg",
 		"romfs:/combo/1400combo.ogg",
+		"romfs:/combo/1500combo.ogg",
+		"romfs:/combo/1600combo.ogg",
+		"romfs:/combo/1700combo.ogg",
+		"romfs:/combo/1800combo.ogg",
+		"romfs:/combo/1900combo.ogg",
+		"romfs:/combo/2000combo.ogg",
+		"romfs:/combo/3000combo.ogg",
+		"romfs:/combo/4000combo.ogg",
+		"romfs:/combo/5000combo.ogg",
+		"romfs:/combo/6000combo.ogg",
+		"romfs:/combo/7000combo.ogg",
+		"romfs:/combo/8000combo.ogg",
+		"romfs:/combo/9000combo.ogg",
+		"romfs:/combo/10000combo.ogg",
 		"romfs:/combo/comboover.ogg",
 		"romfs:/combo/50meka.ogg",
 		"romfs:/combo/100meka.ogg",
@@ -227,6 +241,20 @@ void load_combo() {
 		"romfs:/combo/1200meka.ogg",
 		"romfs:/combo/1300meka.ogg",
 		"romfs:/combo/1400meka.ogg",
+		"romfs:/combo/1500meka.ogg",
+		"romfs:/combo/1600meka.ogg",
+		"romfs:/combo/1700meka.ogg",
+		"romfs:/combo/1800meka.ogg",
+		"romfs:/combo/1900meka.ogg",
+		"romfs:/combo/2000meka.ogg",
+		"romfs:/combo/3000meka.ogg",
+		"romfs:/combo/4000meka.ogg",
+		"romfs:/combo/5000meka.ogg",
+		"romfs:/combo/6000meka.ogg",
+		"romfs:/combo/7000meka.ogg",
+		"romfs:/combo/8000meka.ogg",
+		"romfs:/combo/9000meka.ogg",
+		"romfs:/combo/10000meka.ogg",
 		"romfs:/combo/mekaover.ogg",
 		"romfs:/combo/fullcombo.ogg",
 		"romfs:/combo/fullmeka.ogg",
@@ -296,12 +324,12 @@ void load_combo() {
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-	sound[39].mix[0] = 0.8f;
-	sound[39].mix[1] = 0.8f;
-	sound[39].audiochannel = 0;
-	sound[40].mix[0] = 0.8f;
-	sound[40].mix[1] = 0.8f;
-	sound[40].audiochannel = 1;
+	sound[69].mix[0] = 0.8f;
+	sound[69].mix[1] = 0.8f;
+	sound[69].audiochannel = 0;
+	sound[70].mix[0] = 0.8f;
+	sound[70].mix[1] = 0.8f;
+	sound[70].audiochannel = 1;
 }
 
 int play_sound(int id) {
