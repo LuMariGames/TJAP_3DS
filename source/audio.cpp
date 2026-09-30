@@ -9,7 +9,7 @@
 #define AUDIO_BUFFER_SIZE 4096
 #define STACKSIZE (4 * 1024)
 #define SOUND_NUMBER 5
-#define SNUM 71
+#define SNUM 69
 
 typedef struct {
 	float rate;
@@ -195,7 +195,7 @@ void sd_load_sound() {
 
 void load_combo() {
 
-	char sound_address[66][30] = {
+	char sound_address[64][30] = {
 		"romfs:/combo/50combo.ogg",
 		"romfs:/combo/100combo.ogg",
 		"romfs:/combo/200combo.ogg",
@@ -266,7 +266,7 @@ void load_combo() {
 		memset(&sound[i], 0, sizeof(sound[i]));
 		sound[i].mix[0] = 1.0f;
 		sound[i].mix[1] = 1.0f;
-		FILE * file = fopen(sound_address[i - SOUND_NUMBER], "rb");
+		FILE * file = fopen(sound_address[i-SOUND_NUMBER], "rb");
 		if (file == 0) {
 			printf("no file\n");
 			while (1);
@@ -320,17 +320,16 @@ void load_combo() {
 		waveBuf[i].nsamples = sound[i].nsamples;
 		waveBuf[i].looping = sound[i].loop;
 		waveBuf[i].status = NDSP_WBUF_FREE;
-		DSP_FlushDataCache(sound[i].data, sound[i].size);
 		//linearFree(&sound[j].ovf);
 		ov_clear(&sound[i].ovf);
 		fclose(file);
 	}
-	sound[69].mix[0] = 0.8f;
-	sound[69].mix[1] = 0.8f;
-	sound[69].audiochannel = 0;
-	sound[70].mix[0] = 0.8f;
-	sound[70].mix[1] = 0.8f;
-	sound[70].audiochannel = 1;
+	sound[67].mix[0] = 0.8f;
+	sound[67].mix[1] = 0.8f;
+	sound[67].audiochannel = 0;
+	sound[68].mix[0] = 0.8f;
+	sound[68].mix[1] = 0.8f;
+	sound[68].audiochannel = 1;
 }
 
 int play_sound(int id) {
