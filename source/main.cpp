@@ -1271,11 +1271,12 @@ int main(){
 			}
 
 			//コンボボイス
-			ComboCnt = ((combo<11000)?combo:11000);
-			if (ComboCnt>2000)ComboCnt=2000+(ComboCnt-2000)*0.1;
+			ComboCnt = combo;
+			if(combo>2000)ComboCnt=2000+(combo-2000)*0.1;
 			if (!Option.dispFps&&(int)(ComboCnt*0.01)!=BeforeCombo&&combo>=50){
-				play_sound(ComboCnt*0.01+(get_isauto()?35:5));
 				BeforeCombo = ComboCnt*0.01;
+				if(ComboCnt>2900)ComboCnt=2900;
+				play_sound(ComboCnt*0.01+(get_isauto()?35:5));
 			}
 			if (combo<50){
 				BeforeCombo = -1;
