@@ -1285,7 +1285,7 @@ int main(){
 			break;
 		case SCENE_RESULT:
 
-			if (cnt<=0&&!Option.dispFps&&TotalBadCount<=0)play_sound((get_isauto()?38:37));
+			if (cnt<=0&&!Option.dispFps&&TotalBadCount<=0)play_sound((get_isauto()?66:65));
 			stopPlayback();
 			draw_gauge_result(sprites);
 			draw_result();
