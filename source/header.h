@@ -164,7 +164,7 @@ enum SPRITE_NOTES_KND {	//スプライト用
 	SPRITE_EMBLEM_TOWER,	//太鼓タワーの画像
 	SPRITE_EMBLEM_DAN,		//段位道場の画像
 	SPRITE_TOP_2,			//背景①,上画面上部に居るどんちゃんの後ろに表示する画像
-	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像(少し下にずれているので注意)
+	SPRITE_TOP_3,			//背景②,上画面下部に表示する画像
 	SPRITE_DONCHAN_0,		//どんちゃんの画像,GOGOでは無い1
 	SPRITE_DONCHAN_1,		//どんちゃんの画像,GOGOでは無い2
 	SPRITE_DONCHAN_2,		//どんちゃんの画像,GOGOである1
