@@ -1212,7 +1212,12 @@ int main(){
 					get_tja_header(&TJA_Header);
 					TJA_Header.title=SelectedSong.title;
 					set_tja_header(&TJA_Header);
-					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
+					if(course==COURSE_ENDLESSDAN){
+						int MaxCourse=-1;
+						for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
+						snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,MaxCourse);
+					}
+					else snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 					cnt = -1;
 					fp_write=NULL;
 					if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0&&ghostnum>0){
@@ -1249,7 +1254,12 @@ int main(){
 				TJA_Header.subtitle=SelectedSong.subtitle;
 				set_tja_header(&TJA_Header);
 				char abs_path[521];
-				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
+				if(course==COURSE_ENDLESSDAN){
+					int MaxCourse=-1;
+					for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
+					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,MaxCourse);
+				}
+				else snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 				fp_write=NULL;
 				if(!befOption.isAuto&&!Option.isAuto&&Option.player!=3&&Option.random==0&&ghostnum>0){
 					fp_write = fopen(abs_path,"wb");
