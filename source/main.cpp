@@ -770,12 +770,16 @@ int main(){
 				bool jirodan=true;
 				snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
 				befOption = Option; fp_write=NULL; fp_read=NULL;
-				if (Option.player==3){
+				if (course!=COURSE_ENDLESSDAN&&Option.player==3){
 					fp_read = fopen(abs_path,"rb");
 					read_data.count = -59;
 					read_data.don=0,read_data.katsu=0;
 					befOption = Option;
 					if(fp_read!=NULL)fread(&Option,sizeof(OPTION_T),1,fp_read);
+					set_option(&Option);
+				}
+				else if(course==COURSE_ENDLESSDAN){
+					Option.player=0;
 					set_option(&Option);
 				}
 				init_tja();
