@@ -1214,7 +1214,7 @@ int main(){
 					set_tja_header(&TJA_Header);
 					if(course==COURSE_ENDLESSDAN){
 						int MaxCourse=-1;
-						for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
+						for(int i=0;i<5;++i){if(SelectedSong.course[i])MaxCourse=i;}
 						snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,MaxCourse);
 					}
 					else snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
@@ -1256,7 +1256,7 @@ int main(){
 				char abs_path[521];
 				if(course==COURSE_ENDLESSDAN){
 					int MaxCourse=-1;
-					for(int i=0;i<5;++i){if(Song.course[i])MaxCourse=i;}
+					for(int i=0;i<5;++i){if(SelectedSong.course[i])MaxCourse=i;}
 					snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,MaxCourse);
 				}
 				else snprintf(abs_path,sizeof(abs_path),"%s/%s_%d_gd.bin",SelectedSong.path,SelectedSong.tja,course);
