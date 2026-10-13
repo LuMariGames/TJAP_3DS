@@ -365,7 +365,7 @@ void draw_score(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 	}
 }
 
-void draw_gauge(C2D_Sprite  (&sprites)[SPRITES_NUMER]){
+void draw_gauge(C2D_Sprite (&sprites)[SPRITES_NUMER]){
 
 	courselife=Gauge.score;
 	if(Gauge.score>Gauge.soul)Gauge.score=Gauge.soul;
@@ -451,6 +451,11 @@ void draw_lane(C2D_Sprite (&sprites)[SPRITES_NUMER],int kcnt,int dcnt){
 		}
 	}
 
+	if(isGOGO==true){
+		C2D_DrawRectangle(64,86,0,151.2,46,C2D_Color32(0xff,0x00,0x00,0x28),C2D_Color32(0xff,0x00,0x00,0x47),C2D_Color32(0xff,0x00,0x00,0x28),C2D_Color32(0xff,0x00,0x00,0x47));
+		C2D_DrawRectangle(215.2,86,0,107.52,46,C2D_Color32(0xff,0x00,0x00,0x47),C2D_Color32(0xff,0x53,0x9d,0x66),C2D_Color32(0xff,0x00,0x00,0x47),C2D_Color32(0xff,0x53,0x9d,0x66));
+		C2D_DrawRectangle(322.72,86,0,77.28,46,C2D_Color32(0xff,0x53,0x9d,0x66),C2D_Color32(0xff,0x53,0x9d,0x00),C2D_Color32(0xff,0x53,0x9d,0x66),C2D_Color32(0xff,0x53,0x9d,0x00));
+	}
 	C2D_DrawRectangle(64,86,0,336,46,C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00),C2D_Color32f(0,169.0/255.0,253.0/255.0,kcnt/60.0),C2D_Color32(0x00,0xA9,0xFD,0x00));
 	C2D_DrawRectangle(64,86,0,336,46,C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00),C2D_Color32f(253.0/255.0,0,0,dcnt/60.0),C2D_Color32(0xFD,0x00,0x00,0x00));
 	C2D_SpriteSetPos(&sprites[SPRITE_JUDGE_CIRCLE],NOTES_JUDGE_X,NOTES_JUDGE_Y);
