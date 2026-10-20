@@ -1285,7 +1285,7 @@ int main(){
 			}
 
 			//コンボボイス
-			/*ComboCnt = combo;
+			ComboCnt = combo;
 			if(combo>2000)ComboCnt=2000+(combo-2000)*0.1;
 			if (!Option.dispFps&&(int)(ComboCnt*0.01)!=BeforeCombo&&combo>=50){
 				BeforeCombo = ComboCnt*0.01;
@@ -1294,7 +1294,7 @@ int main(){
 			}
 			if (combo<50){
 				BeforeCombo = -1;
-			}*/
+			}
 			aptSetSleepAllowed(isPause);
 			break;
 		case SCENE_RESULT:
