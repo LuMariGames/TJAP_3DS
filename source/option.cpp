@@ -595,6 +595,20 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 			Option.edit = opv;
 		}
 		XCnt = 0,++YCnt;
+
+		//判定調整
+		x = XSense * XCnt,y = YSense * YCnt,++XCnt;
+		draw_option_text(x,y,Text[Option.lang][TEXT_JUDGE],true,&width,&height);
+		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
+		snprintf(get_buffer(),BUFFER_SIZE,"%d",Option.judgedelay);
+		draw_option_text(x,y,get_buffer(),true,&width,&height);
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
+			Option.judgedelay = input_number_keyboard(2,false,true);
+		}
+		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
+		draw_option_text(x,y,Text[Option.lang][TEXT_RESET],true,&width,&height);
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.judgedelay = 0;
+		XCnt = 0,++YCnt;
 		break;
 	}
 
