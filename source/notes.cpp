@@ -1043,7 +1043,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			delete_notes(i);
 		}
 	}
-	notes_judge(currentTime,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
+	notes_judge(currentTime-(0.005*Option.judgedelay),isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
 }
 
 inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]){
