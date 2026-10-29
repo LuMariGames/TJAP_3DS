@@ -918,24 +918,24 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	OPTION_T Option;
 	get_option(&Option);
-	const float currentTime = (float)CurrentTimeNotes;
+	const float currentTime = (float)CurrentTimeNotes+(0.005*Option.judgedelay);
 
 	for(int i=Notes.size()-1,j=0;i>=j;--i){	//計算
 		if(Notes[i].flag){
-			if(isHBSCROLL&&currentTime<Notes[i].judge_time&&Notes[i+1].flag){
+			if(isHBSCROLL&&CurrentTimeNotes<Notes[i].judge_time&&Notes[i+1].flag){
 				Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
-				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
-				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
+				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
+				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 			}
-			else if(isHBSCROLL&&currentTime<Notes[i].judge_time){
+			else if(isHBSCROLL&&CurrentTimeNotes<Notes[i].judge_time){
 				Notes[i].hb_time=Notes[i].judge_time;
-				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
-				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-currentTime)*(NowBPM*conbpm);
+				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
+				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 			}
 			else {
-				if(Notes[i].move_time==0||(Notes[i].judge_time-Notes[i].move_time)<=currentTime){
-					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
-					Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-currentTime)*(Notes[i].bpm*conbpm);
+				if(Notes[i].move_time==0||(Notes[i].judge_time-Notes[i].move_time)<=CurrentTimeNotes){
+					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-CurrentTimeNotes)*(Notes[i].bpm*conbpm);
+					Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-CurrentTimeNotes)*(Notes[i].bpm*conbpm);
 				}
 				else {
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].move_time)*(Notes[i].bpm*conbpm);
@@ -989,7 +989,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				}
 				if(Notes[i].judge_time<=currentTime){
 					if(Notes[BalloonNotes[Notes[i].roll_id].start_id].knd==NOTES_TIMEBOMB){
-						make_judge(BAD,CurrentTimeNotes);
+						make_judge(BAD,currentTime);
 						update_score(BAD);
 					}
 					isPttBorder=false;
@@ -1024,7 +1024,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	for(int i=0,j=Notes.size()-1;i<j;++i){	//連打のバグ回避のためノーツの削除は一番最後
 
-		if(Notes[i].flag&&(Notes[i].judge_time<=(CurrentTimeNotes-Option.judge_range_bad))&&
+		if(Notes[i].flag&&(Notes[i].judge_time<=(currentTime-Option.judge_range_bad))&&
 			((Notes[i].x<=-64.f)||(Notes[i].x>=464.f)||(Notes[i].y>=304.f)||(Notes[i].y<=-64.f)||(Notes[i].scroll==0.f&&Notes[i].yscroll==0.f))&&
 			Notes[i].knd!=NOTES_ROLL&&Notes[i].knd!=NOTES_BIGROLL){
 
@@ -1043,7 +1043,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 			delete_notes(i);
 		}
 	}
-	notes_judge(currentTime-(0.005*Option.judgedelay),isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
+	notes_judge(currentTime,isDon,isKatsu,cnt,((Branch.course==-1)?0:Branch.course-11));
 }
 
 inline void notes_draw(const double CurrentTimeNotes,C2D_Sprite (&sprites)[SPRITES_NUMER]){
