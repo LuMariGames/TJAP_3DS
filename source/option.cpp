@@ -822,6 +822,7 @@ void get_option(OPTION_T *TMP){
 	TMP->measure = Option.measure;
 	TMP->edit = Option.edit;
 	TMP->musicspeed = Option.musicspeed;
+	TMP->judgedelay = Option.judgedelay;
 	strcpy(TMP->SongTitle,Option.SongTitle);
 	black = Option.blacktext;
 }
