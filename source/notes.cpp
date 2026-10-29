@@ -465,7 +465,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 	if(!get_isPause())notes_calc(isDon,isKatsu,bpm,CurrentTimeNotes,cnt,sprites);
 	if(!Option.isStelth)notes_draw(CurrentTimeNotes,sprites);
 	draw_emblem(sprites);
-	draw_judge(CurrentTimeNotes,sprites);
+	draw_judge(CurrentTimeNotes-(0.005*Option.judgedelay),sprites);
 
 	//割れた風船
 	C2D_ImageTint Tint;
@@ -648,24 +648,24 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				switch(Notes[i].knd){
 				case NOTES_DON:
 					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
-					make_judge(PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_BIGDON:
 					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
-					make_judge(SPECIAL_PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_KATSU:
 					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
-					make_judge(PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_BIGKATSU:
 					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
-					make_judge(SPECIAL_PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 					break;
 				case NOTES_PURPLE:
 					play_sound(((isgamemode==0)?SOUND_DON:SOUND_KONGA));
 					play_sound(((isgamemode==0)?SOUND_KATSU:SOUND_CLAP));
-					make_judge(PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(PERFECT,CurrentTimeNotes);
 					break;
 				}
 				if(Notes[i].knd==NOTES_BIGDON||Notes[i].knd==NOTES_BIGKATSU)update_score(SPECIAL_PERFECT);
@@ -772,11 +772,11 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_perfect){			//良
 					delete_notes(CurrentJudgeNotes[0]);
 					if(isBig){
-						make_judge(SPECIAL_PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 						update_score(SPECIAL_PERFECT);
 					}
 					else {
-						make_judge(PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(PERFECT,CurrentTimeNotes);
 						update_score(PERFECT);
 					}
 					KaDon=0;
@@ -784,17 +784,17 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_nice){	//可
 					delete_notes(CurrentJudgeNotes[0]);
 					if(isBig){
-						make_judge(SPECIAL_NICE,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(SPECIAL_NICE,CurrentTimeNotes);
 						update_score(SPECIAL_NICE);
 					}
 					else {
-						make_judge(NICE,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(NICE,CurrentTimeNotes);
 						update_score(NICE);
 					}
 					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[0]<=Option.judge_range_bad){	//不可
-					make_judge(BAD,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(BAD,CurrentTimeNotes);
 					delete_notes(CurrentJudgeNotes[0]);
 					update_score(BAD);
 					KaDon=0;
@@ -815,11 +815,11 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_perfect){			//良
 					delete_notes(CurrentJudgeNotes[1]);
 					if(isBig){
-						make_judge(SPECIAL_PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(SPECIAL_PERFECT,CurrentTimeNotes);
 						update_score(SPECIAL_PERFECT);
 					}
 					else {
-						make_judge(PERFECT,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(PERFECT,CurrentTimeNotes);
 						update_score(PERFECT);
 					}
 					KaDon=0;
@@ -827,17 +827,17 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_nice){	//可
 					delete_notes(CurrentJudgeNotes[1]);
 					if(isBig){
-						make_judge(SPECIAL_NICE,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(SPECIAL_NICE,CurrentTimeNotes);
 						update_score(SPECIAL_NICE);
 					}
 					else {
-						make_judge(NICE,CurrentTimeNotes-(0.005*Option.judgedelay));
+						make_judge(NICE,CurrentTimeNotes);
 						update_score(NICE);
 					}
 					KaDon=0;
 				}
 				else if(CurrentJudgeNotesLag[1]<=Option.judge_range_bad){	//不可
-					make_judge(BAD,CurrentTimeNotes-(0.005*Option.judgedelay));
+					make_judge(BAD,CurrentTimeNotes);
 					delete_notes(CurrentJudgeNotes[1]);
 					update_score(BAD);
 					KaDon=0;
