@@ -1013,8 +1013,12 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				}
 				break;
 			case NOTES_BOMB:
-			case NOTES_REST:
 				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+					Notes[i].isThrough=true;
+				}
+				break;
+			case NOTES_REST:
+				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					Notes[i].isThrough=true;
 				}
 				break;
