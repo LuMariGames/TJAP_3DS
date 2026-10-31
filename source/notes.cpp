@@ -922,12 +922,12 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	for(int i=Notes.size()-1,j=0;i>=j;--i){	//計算
 		if(Notes[i].flag){
-			if(isHBSCROLL&&currentTime<Notes[i].judge_time&&Notes[i+1].flag){
+			if(isHBSCROLL&&CurrentTimeNotes<Notes[i].judge_time&&Notes[i+1].flag){
 				Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 			}
-			else if(isHBSCROLL&&currentTime<Notes[i].judge_time){
+			else if(isHBSCROLL&&CurrentTimeNotes<Notes[i].judge_time){
 				Notes[i].hb_time=Notes[i].judge_time;
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
