@@ -9,7 +9,7 @@ typedef struct {
 } NOTES_T;
 
 typedef struct {
-	float create_time,scroll,x;
+	float create_time,scroll,yscroll,x,y;
 	int measure;
 	bool flag,isDisp;
 
