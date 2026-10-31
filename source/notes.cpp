@@ -77,7 +77,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			Branch.next=false;
 		}
 
-		while((Measure[MeasureCount].create_time<=CurrentTimeNotes||isHBSCROLL)&&!Branch.wait){
+		while((Measure[MeasureCount].create_time<=CurrentTimeNotes+(0.005*Option.judgedelay)||isHBSCROLL)&&!Branch.wait){
 
 			NotesCount=0;
 			if(Measure[MeasureCount].branch!=Branch.course&&Measure[MeasureCount].branch!=-1){
@@ -922,12 +922,12 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 
 	for(int i=Notes.size()-1,j=0;i>=j;--i){	//計算
 		if(Notes[i].flag){
-			if(isHBSCROLL&&CurrentTimeNotes<Notes[i].judge_time&&Notes[i+1].flag){
+			if(isHBSCROLL&&currentTime<Notes[i].judge_time&&Notes[i+1].flag){
 				Notes[i].hb_time=((Notes[i].judge_time-Notes[i+1].judge_time)*(Notes[i+1].bpm/NowBPM))+Notes[i+1].hb_time;
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 			}
-			else if(isHBSCROLL&&CurrentTimeNotes<Notes[i].judge_time){
+			else if(isHBSCROLL&&currentTime<Notes[i].judge_time){
 				Notes[i].hb_time=Notes[i].judge_time;
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
@@ -1013,12 +1013,8 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				}
 				break;
 			case NOTES_BOMB:
-				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
-					Notes[i].isThrough=true;
-				}
-				break;
 			case NOTES_REST:
-				if(CurrentTimeNotes-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
+				if(currentTime-Notes[i].judge_time>(Option.judge_range_bad)&&!Notes[i].isThrough){
 					Notes[i].isThrough=true;
 				}
 				break;
