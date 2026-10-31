@@ -793,6 +793,10 @@ int main(){
 					}
 					else init_randan_score();
 					get_tja_header(&TJA_Header);
+					if(TJA_Header.isHBS){
+						Option.judgedelay=0;
+						set_option(&Option);
+					}
 					double preset=TJA_Header.offset;
 					if (course!=COURSE_ENDLESSDAN&&!SelectedSong.course_exist[course])load_tja_notes(-1,SelectedSong);
 					else load_tja_notes(course,SelectedSong);
@@ -858,7 +862,9 @@ int main(){
 			}
 			break;
 		case SCENE_LOADSCRE:
-
+			
+			snprintf(get_buffer(),BUFFER_SIZE,"%s: RESET.",Text[Option.lang][TEXT_JUDGE]);
+			draw_select_text(0,0,get_buffer());
 			draw_select_text(0,225,"Loading completed.");
 			if (tp.px != 0&&tp.py != 0){	//タッチ位置の取得
 
