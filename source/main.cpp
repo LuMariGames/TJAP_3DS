@@ -864,7 +864,7 @@ int main(){
 		case SCENE_LOADSCRE:
 			
 			snprintf(get_buffer(),BUFFER_SIZE,"%s: RESET.",Text[Option.lang][TEXT_JUDGE]);
-			draw_select_text(0,0,get_buffer());
+			if(befOption.judgedelay!=Option.judgedelay&&Option.judgedelay==0)draw_select_text(0,0,get_buffer());
 			draw_select_text(0,225,"Loading completed.");
 			if (tp.px != 0&&tp.py != 0){	//タッチ位置の取得
 
