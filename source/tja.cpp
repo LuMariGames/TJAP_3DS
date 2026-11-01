@@ -826,7 +826,7 @@ double calc_first_measure_time(){	//最初に到達する小節の所要時間�
 			break;
 		}
 	}
-	return 2.0;
+	return 2.0-Current_Header.offset;
 }
 
 void load_tja_notes(int course,LIST_T Song){
