@@ -1585,7 +1585,8 @@ void init_notes(TJA_HEADER_T TJA_Header){
 	isHBSCROLL=TJA_Header.isHBS;
 	isgamemode=TJA_Header.gamemode;
 	bpm=TJA_Header.bpm;
-	offset=TJA_Header.offset;
+	offset=TJA_Header.offset+Option.offset;
+	if(offset>0)offset=0.0;
 	NowBPM=bpm;
 	for(int i=0,j=(int)(sizeof(balloon[0])/sizeof(balloon[0][0]));i<j;++i){
 		balloon[0][i]=TJA_Header.balloon[0][i];
