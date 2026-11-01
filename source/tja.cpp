@@ -1381,7 +1381,7 @@ double get_StartTime(){
 	OPTION_T Option;
 	get_option(&Option);
 	if(Current_Header.course==COURSE_DAN)return 0.0;
-	return((Option.measure>0)?((Measure[stme].judge_time-2.0-(240.0*NOTES_JUDGE_RANGE)/(Current_Header.bpm*NOTES_AREA))):fmod(Current_Header.offset,clocktime));
+	return((Option.measure>0)?((Current_Header.offset+Option.offset)*-1.0+(Measure[stme].judge_time-2.0-(240.0*NOTES_JUDGE_RANGE)/(Current_Header.bpm*NOTES_AREA))):fmod(Current_Header.offset,clocktime));
 }
 int get_edme(){
 	return edme;
