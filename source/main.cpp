@@ -1199,7 +1199,7 @@ int main(){
 					isPlayMain = true;
 					isMusicStart = true;
 				}
-				if (CurrentTimeMain>=(-1.0)* offset&&!isNotesStart)isNotesStart = true;
+				if (CurrentTimeMain>=0&&!isNotesStart)isNotesStart = true;
 			}
 			else if (measure>0&&(!isNotesStart || !isMusicStart)){
 
