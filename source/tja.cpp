@@ -928,7 +928,7 @@ void load_tja_notes(int course,LIST_T Song){
 				get_command_value(tja_notes[tja_cnt],&Command);
 				Measure[MeasureCount].command=Command.knd;
 
-				if(tja_notes[tja_cnt][0]=='#'){
+				if(Measure[MeasureCount].command!=-1){
 
 					//get_command_value(tja_notes[tja_cnt],&Command);
 					//Measure[MeasureCount].command=Command.knd;
@@ -1030,7 +1030,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].branch=BranchCourse;
 				Measure[MeasureCount].lyric=ly;
 
-				if(tja_notes[tja_cnt][0]=='#'){
+				if(Measure[MeasureCount].command!=-1){
 
 					if(MeasureCount>0){
 						Measure[MeasureCount].judge_time=Measure[MeasureCount-1].judge_time;
@@ -1104,7 +1104,7 @@ void load_tja_notes(int course,LIST_T Song){
 					delay=0;
 				}
 
-				if(isNoComma==false && NotesCount!=0 && tja_notes[tja_cnt][0]!='#'){	//複数行小節の最後の行
+				if(isNoComma==false&&NotesCount!=0&&tja_notes[tja_cnt][0]!='#'){	//複数行小節の最後の行
 
 					Measure[Measure[MeasureCount].firstmeasure].max_notes=NotesCount+1;
 					FirstMultiMeasure=-1;
