@@ -90,7 +90,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			while(isNotesLoad&&tja_notes[Measure[MeasureCount].notes][NotesCount]!=','&&tja_notes[Measure[MeasureCount].notes][NotesCount]!='\n'&&tja_notes[Measure[MeasureCount].notes][NotesCount]!='/'){
 
 				//生成時に発動する命令
-				if(NotesCount==0&&tja_notes[Measure[MeasureCount].notes][0]=='#'&&(Measure[MeasureCount].branch==Branch.course||Measure[MeasureCount].branch==-1)){
+				if(NotesCount==0&&(Measure[MeasureCount].branch==Branch.course||Measure[MeasureCount].branch==-1)){
 
 					get_command_value(tja_notes[Measure[MeasureCount].notes],&Command);
 					Command.notes=tja_notes[Measure[MeasureCount].notes];
@@ -116,10 +116,12 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						isLevelHold=true;
 						break;
 					}
-					NotesCount=0;
-					++MeasureCount;
-					if(Branch.wait)break;
-					else continue;
+					if(Command.knd!=-1){
+						NotesCount=0;
+						++MeasureCount;
+						if(Branch.wait)break;
+						else continue;
+					}
 				}
 				++NotesCount;
 			}
