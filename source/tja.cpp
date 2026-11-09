@@ -911,7 +911,10 @@ void load_tja_notes(int course,LIST_T Song){
 					continue;
 				}
 
-				if(strstr(tja_notes[tja_cnt],",")==NULL&&tja_notes[tja_cnt][0]!='#'){
+				get_command_value(tja_notes[tja_cnt],&Command);
+				Measure[MeasureCount].command=Command.knd;
+
+				if(strstr(tja_notes[tja_cnt],",")==NULL&&Measure[MeasureCount].command==-1){
 					isNoComma=true;
 
 					if(FirstMultiMeasure==-1){
@@ -924,9 +927,6 @@ void load_tja_notes(int course,LIST_T Song){
 					isNoComma=false;
 					Measure[MeasureCount].original_id=MeasureCount;
 				}
-
-				get_command_value(tja_notes[tja_cnt],&Command);
-				Measure[MeasureCount].command=Command.knd;
 
 				if(Measure[MeasureCount].command!=-1){
 
@@ -942,6 +942,12 @@ void load_tja_notes(int course,LIST_T Song){
 					case COMMAND_SCROLL:
 						scroll=Command.val[0];
 						yscroll=Command.val[1];
+						break;
+					case COMMAND_EXAMa:
+					case COMMAND_EXAMb:
+					case COMMAND_EXAMc:
+					case COMMAND_EXAMd:
+						NextSongCount=2;
 						break;
 					case COMMAND_NEXTSONG:
 						++NextSongCount;
