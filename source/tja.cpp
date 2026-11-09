@@ -1373,6 +1373,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 void change_condition(int i,char* masre){
 
 	char* temp;
+	temp=new char[512];
 	int cnt=0;
 	switch(i){
 	case 0:
