@@ -1104,7 +1104,7 @@ void load_tja_notes(int course,LIST_T Song){
 					delay=0;
 				}
 
-				if(isNoComma==false&&NotesCount!=0&&tja_notes[tja_cnt][0]!='#'){	//複数行小節の最後の行
+				if(isNoComma==false&&NotesCount!=0&&Measure[MeasureCount].command==-1){	//複数行小節の最後の行
 
 					Measure[Measure[MeasureCount].firstmeasure].max_notes=NotesCount+1;
 					FirstMultiMeasure=-1;
@@ -1128,7 +1128,7 @@ void load_tja_notes(int course,LIST_T Song){
 					}
 					PreJudge=Measure[MeasureCount].judge_time;
 				}
-				else if(tja_notes[tja_cnt][0]!='#'){
+				else if(Measure[MeasureCount].command==-1){
 					percent=1;
 				}
 
