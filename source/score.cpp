@@ -11,6 +11,9 @@ extern char *exam[4][4];
 bool isGOGO;
 uint64_t combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,
 TotalPerfectCount,TotalNiceCount,TotalBadCount,TotalScore,TotalRollCount,TotalBombCount,
+
+BefTotalBadCount,BefTotalNiceCount,BefTotalPerfectCount,BefTotalScore,BefTotalRollCount,BefTotalCount,BefMaxComboCount,BefTotalGaugeCount,BefTotalBombCount,
+
 TotalCount,MaxComboCount,CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,
 CurrentTotalRollCount,CurrentRollCount,CurrentScore,CurrentDaiNotes;
 int CurrentBalloonCount;
@@ -519,50 +522,40 @@ void send_gogotime(bool arg){
 	isGOGO=arg;
 }
 
-int dan_condition(){
+int isBadCondition=-1;
+
+int dan_condition(int m,int j,bool ind){
 	int isBadCondition=-1;//ここで何回条件に反しているかをリセットする
 	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
 	uint64_t counts[]={TotalBadCount,TotalNiceCount,TotalPerfectCount,TotalScore,TotalRollCount,TotalCount,MaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount};
 
-	for(int i=0;i<9;++i){
-		if((strcmp(exam[0][0],types[i])==0&&strcmp(exam[0][3],"l")==0&&counts[i]>=Cdn[1][0])||
-		(strcmp(exam[1][0],types[i])==0&&strcmp(exam[1][3],"l")==0&&counts[i]>=Cdn[1][1])||
-		(strcmp(exam[2][0],types[i])==0&&strcmp(exam[2][3],"l")==0&&counts[i]>=Cdn[1][2])||
-		(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"l")==0&&counts[i]>=Cdn[1][3])){
-			isBadCondition=0;
-			i=99;
-		}
-	}
-
-	for(int i=0;i<9;++i){
-		if((strcmp(exam[0][0],types[i])==0&&strcmp(exam[0][3],"l")==0&&counts[i]>=Cdn[0][0])||
-		(strcmp(exam[1][0],types[i])==0&&strcmp(exam[1][3],"l")==0&&counts[i]>=Cdn[0][1])||
-		(strcmp(exam[2][0],types[i])==0&&strcmp(exam[2][3],"l")==0&&counts[i]>=Cdn[0][2])||
-		(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"l")==0&&counts[i]>=Cdn[0][3]))++isBadCondition;
-	}
-
-	if(get_notes_finish()==true){ //条件に以上(例:exam[3]="m")がある場合、曲が終わるまで判定しない
+	for(int n=m;n<=j;++n){
 		for(int i=0;i<9;++i){
-			if(isBadCondition==-1 &&
-			((strcmp(exam[0][0],types[i])==0&&strcmp(exam[0][3],"m")==0&&counts[i]<Cdn[1][0])||
-			(strcmp(exam[1][0],types[i])==0&&strcmp(exam[1][3],"m")==0&&counts[i]<Cdn[1][1])||
-			(strcmp(exam[2][0],types[i])==0&&strcmp(exam[2][3],"m")==0&&counts[i]<Cdn[1][2])||
-			(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"m")==0&&counts[i]<Cdn[1][3]))){
+			if((strcmp(exam[n][0],types[i])==0&&strcmp(exam[n][3],"l")==0&&counts[i]>=Cdn[1][n])){
 				isBadCondition=0;
 				i=99;
 			}
 		}
 		for(int i=0;i<9;++i){
-			if((strcmp(exam[0][0],types[i])==0&&strcmp(exam[0][3],"m")==0&&counts[i]<Cdn[0][0])||
-			(strcmp(exam[1][0],types[i])==0&&strcmp(exam[1][3],"m")==0&&counts[i]<Cdn[0][1])||
-			(strcmp(exam[2][0],types[i])==0&&strcmp(exam[2][3],"m")==0&&counts[i]<Cdn[0][2])||
-			(strcmp(exam[3][0],types[i])==0&&strcmp(exam[3][3],"m")==0&&counts[i]<Cdn[0][3]))++isBadCondition;
+			if((strcmp(exam[n][0],types[i])==0&&strcmp(exam[n][3],"l")==0&&counts[i]>=Cdn[0][n]))++isBadCondition;
+		}
+
+		if(ind||get_notes_finish()==true){ //条件に以上(例:exam[3]="m")がある場合、曲が終わるまで判定しない
+			for(int i=0;i<9;++i){
+				if(isBadCondition==-1&&
+				((strcmp(exam[n][0],types[i])==0&&strcmp(exam[n][3],"m")==0&&counts[i]<Cdn[1][n]))){
+					isBadCondition=0;
+					i=99;
+				}
+			}
+			for(int i=0;i<9;++i){
+				if((strcmp(exam[n][0],types[i])==0&&strcmp(exam[n][3],"m")==0&&counts[i]<Cdn[0][n]))++isBadCondition;
+			}
 		}
 	}
 	if(isSpecial()&&TotalBadCount>0)isBadCondition=9;
 	return isBadCondition;
 }
-
 
 int round_down(int arg){
 	int temp=arg % 10;
@@ -982,5 +975,5 @@ void get_result(RESULT_T* Result){
 	Result->roll=TotalRollCount;
 	Result->combo=MaxComboCount;
 	Result->score=TotalScore;
-	if(TJA_Header.course==COURSE_DAN)Result->dcon=dan_condition();
+	if(TJA_Header.course==COURSE_DAN)Result->dcon=dan_condition(0,3,true);
 }

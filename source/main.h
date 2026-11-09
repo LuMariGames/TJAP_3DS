@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-void draw_debug(float x, float y, const char *text),set_isPause(),debug_touch(int x, int y),play_songs(char* ptr);
+void draw_debug(float x, float y, const char *text),set_isPause(),debug_touch(int x, int y),play_songs(char* ptr),set_result_scene();
 bool get_isPause(),get_isMusicStart(),isSpecial();
 char* get_buffer();
 int powi(int x, int y),pause_window(touchPosition tp, unsigned int key),

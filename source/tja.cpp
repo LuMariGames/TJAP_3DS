@@ -925,10 +925,13 @@ void load_tja_notes(int course,LIST_T Song){
 					Measure[MeasureCount].original_id=MeasureCount;
 				}
 
+				get_command_value(tja_notes[tja_cnt],&Command);
+				Measure[MeasureCount].command=Command.knd;
+
 				if(tja_notes[tja_cnt][0]=='#'){
 
-					get_command_value(tja_notes[tja_cnt],&Command);
-					Measure[MeasureCount].command=Command.knd;
+					//get_command_value(tja_notes[tja_cnt],&Command);
+					//Measure[MeasureCount].command=Command.knd;
 					switch(Command.knd){
 					case COMMAND_BPMCHANGE:
 						NextBpm=Command.val[0];
@@ -1360,8 +1363,77 @@ void get_command_value(char* buf,COMMAND_T *Command){
 		free(command);
 		free(value);
 	}
+	else if(strstr(buf,"EXAM1:")==buf)Command->knd=COMMAND_EXAMa;
+	else if(strstr(buf,"EXAM2:")==buf)Command->knd=COMMAND_EXAMb;
+	else if(strstr(buf,"EXAM3:")==buf)Command->knd=COMMAND_EXAMc;
+	else if(strstr(buf,"EXAM4:")==buf)Command->knd=COMMAND_EXAMd;
 	else Command->knd=-1;
 }
+
+void change_condition(int i,char* masre){
+
+	char* temp;
+	int cnt=0;
+	switch(i){
+	case 0:
+		if(masre[6]!='\n' && masre[6]!='\r'){
+			strlcpy(temp,masre+6,strlen(masre)-7);
+			char *a=strtok(temp,",");
+			exam[0][0]=a;
+			cnt=1;
+			while((a=strtok(NULL,","))){
+				exam[0][cnt]=a;
+				if(cnt==1)Cdn[0][0]=atoi(a);
+				else if(cnt==2)Cdn[1][0]=atoi(a);
+				++cnt;
+			}
+		}
+		break;
+	case 1:
+		if(masre[6]!='\n' && masre[6]!='\r'){
+			strlcpy(temp,masre+6,strlen(masre)-7);
+			char *b=strtok(temp,",");
+			exam[1][0]=b;
+			cnt=1;
+			while((b=strtok(NULL,","))){
+				exam[1][cnt]=b;
+				if(cnt==1)Cdn[0][1]=atoi(b);
+				else if(cnt==2)Cdn[1][1]=atoi(b);
+				++cnt;
+			}
+		}
+		break;
+	case 2:
+		if(masre[6]!='\n' && masre[6]!='\r'){
+			strlcpy(temp,masre+6,strlen(masre)-7);
+			char *c=strtok(temp,",");
+			exam[2][0]=c;
+			cnt=1;
+			while((c=strtok(NULL,","))){
+				exam[2][cnt]=c;
+				if(cnt==1)Cdn[0][2]=atoi(c);
+				else if(cnt==2)Cdn[1][2]=atoi(c);
+				++cnt;
+			}
+		}
+		break;
+	case 3:
+		if(masre[6]!='\n' && masre[6]!='\r'){
+			strlcpy(temp,masre+6,strlen(masre)-7);
+			char *d=strtok(temp,",");
+			exam[3][0]=d;
+			cnt=1;
+			while((d=strtok(NULL,","))){
+				exam[3][cnt]=d;
+				if(cnt==1)Cdn[0][3]=atoi(d);
+				else if(cnt==2)Cdn[1][3]=atoi(d);
+				++cnt;
+			}
+		}
+		break;
+	}
+}
+
 double get_FirstMeasureTime(){
 	return MainFirstMeasureTime;
 }

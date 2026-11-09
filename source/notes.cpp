@@ -434,6 +434,26 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					}
 					break;
 				}
+				case COMMAND_EXAMa: {
+					if(0<dan_condition(0,0,true)){play_sound(SOUND_FAILED);set_result_scene();}
+					change_condition(0,tja_notes[Measure[i].notes]);
+					break;
+				}
+				case COMMAND_EXAMb: {
+					if(0<dan_condition(1,1,true)){play_sound(SOUND_FAILED);set_result_scene();}
+					change_condition(1,tja_notes[Measure[i].notes]);
+					break;
+				}
+				case COMMAND_EXAMc: {
+					if(0<dan_condition(2,2,true)){play_sound(SOUND_FAILED);set_result_scene();}
+					change_condition(2,tja_notes[Measure[i].notes]);
+					break;
+				}
+				case COMMAND_EXAMd: {
+					if(0<dan_condition(3,3,true)){play_sound(SOUND_FAILED);set_result_scene();}
+					change_condition(3,tja_notes[Measure[i].notes]);
+					break;
+				}
 				default:
 					break;
 				}

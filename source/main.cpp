@@ -1331,6 +1331,7 @@ int main(){
 bool isSpecial(){
 	return (get_special()>0);
 }
+void set_result_scene(){scene_state = SCENE_RESULT;}
 void play_songs(char* ptr) {
 	if(course!=COURSE_DAN){
 		return;
@@ -1346,6 +1347,7 @@ void play_songs(char* ptr) {
 	path_play_main_music(&isPlayMain,abs_path);
 	isPlayMain=false;
 }
+
 bool get_isPause(){
 	return isPause;
 }
