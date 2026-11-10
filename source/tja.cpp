@@ -1382,6 +1382,7 @@ void get_command_value(char* buf,COMMAND_T *Command){
 
 void change_condition(int i,char* masre){
 
+	change_indconditions(i);
 	char* temp;
 	temp=new char[512];
 	int cnt=0;
