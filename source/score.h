@@ -20,7 +20,7 @@ enum Judge_Knd {
 	BOMB,
 };
 
-void init_score(),init_randan_score(),debug_score(),update_score(int knd),send_gogotime(bool temp),init_branch_section();
+void init_score(),init_randan_score(),debug_score(),update_score(int knd),send_gogotime(bool temp),init_branch_section(),change_indconditions(int n);
 int dan_condition(int m=0,int j=3,bool ind=false),round_down(int arg),start_branch(int knd, double x, double y);
 void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&tja_notes)[MEASURE_MAX][NOTES_MEASURE_MAX]),update_init_score(int aftrinit, int aftrdiff);
 void draw_lane(C2D_Sprite (&sprites)[SPRITES_NUMER], int kcnt, int dcnt),draw_gauge(C2D_Sprite (&sprites)[SPRITES_NUMER]),draw_score(C2D_Sprite (&sprites)[SPRITES_NUMER]);
