@@ -11,9 +11,7 @@ extern char *exam[4][4];
 bool isGOGO;
 uint64_t combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,
 TotalPerfectCount,TotalNiceCount,TotalBadCount,TotalScore,TotalRollCount,TotalBombCount,
-
 BefTotalBadCount,BefTotalNiceCount,BefTotalPerfectCount,BefTotalScore,BefTotalRollCount,BefTotalCount,BefMaxComboCount,BefTotalGaugeCount,BefTotalBombCount,
-
 TotalCount,MaxComboCount,CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,
 CurrentTotalRollCount,CurrentRollCount,CurrentScore,CurrentDaiNotes;
 int CurrentBalloonCount;
@@ -37,30 +35,19 @@ void init_score(){
 	isGOGO=false;
 	combo=0;
 	get_tja_header(&TJA_Header);
-	init=TJA_Header.scoreinit;
-	diff=TJA_Header.scorediff;
-	DiffMul=0;
-	scoremode=TJA_Header.scoremode;
-	HitScore=0;
-	ScoreDiff=0;
-	BaseCeilingPoint=0;
-	CurrentScore=0;
-	TotalScore=0;
-	CurrentRollCount=0;
-	CurrentTotalRollCount=0;
-	TotalRollCount=0;
-	TotalPerfectCount=0;
-	TotalNiceCount=0;
-	TotalBadCount=0;
-	TotalBombCount=0;
-	CurrentPerfectCount=0;
-	CurrentNiceCount=0;
-	CurrentBadCount=0;
-	Precision=0;
-	CurrentPrecision=0;
-	CurrentBalloonCount=0;
-	CurrentDaiNotes=0;
-	MaxComboCount=0;
+	init=TJA_Header.scoreinit; diff=TJA_Header.scorediff;
+	DiffMul=0; scoremode=TJA_Header.scoremode;
+	BefTotalBadCount=0; BefTotalNiceCount=0; BefTotalPerfectCount=0;
+	BefTotalScore=0; BefTotalRollCount=0; BefTotalCount=0;
+	BefMaxComboCount=0; BefTotalGaugeCount=0; BefTotalBombCount=0;
+	HitScore=0; ScoreDiff=0; BaseCeilingPoint=0;
+	CurrentScore=0; TotalScore=0;
+	CurrentRollCount=0; CurrentTotalRollCount=0;
+	TotalRollCount=0; TotalPerfectCount=0; TotalNiceCount=0;
+	TotalBadCount=0; TotalBombCount=0;
+	CurrentPerfectCount=0; CurrentNiceCount=0; CurrentBadCount=0;
+	Precision=0; CurrentPrecision=0; CurrentBalloonCount=0;
+	CurrentDaiNotes=0; MaxComboCount=0;
 	init_guage_structure();
 	TotalCount=0;
 }
@@ -69,22 +56,12 @@ void init_randan_score(){
 
 	isGOGO=false;
 	get_tja_header(&TJA_Header);
-	init=TJA_Header.scoreinit;
-	diff=TJA_Header.scorediff;
-	DiffMul=0;
-	scoremode=TJA_Header.scoremode;
-	HitScore=0;
-	ScoreDiff=0;
-	BaseCeilingPoint=0;
-	CurrentScore=0;
-	CurrentRollCount=0;
-	CurrentTotalRollCount=0;
-	CurrentPerfectCount=0;
-	CurrentNiceCount=0;
-	CurrentBadCount=0;
-	Precision=0;
-	CurrentPrecision=0;
-	CurrentBalloonCount=0;
+	init=TJA_Header.scoreinit; diff=TJA_Header.scorediff;
+	DiffMul=0; scoremode=TJA_Header.scoremode;
+	HitScore=0; ScoreDiff=0; BaseCeilingPoint=0;
+	CurrentScore=0; CurrentRollCount=0; CurrentTotalRollCount=0;
+	CurrentPerfectCount=0; CurrentNiceCount=0; CurrentBadCount=0;
+	Precision=0; CurrentPrecision=0; CurrentBalloonCount=0;
 	CurrentDaiNotes=0;
 	init_guage_structure();
 }
@@ -527,7 +504,8 @@ int isBadCondition=-1;
 int dan_condition(int m,int j,bool ind){
 	int isBadCondition=-1;//ここで何回条件に反しているかをリセットする
 	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
-	uint64_t counts[]={TotalBadCount,TotalNiceCount,TotalPerfectCount,TotalScore,TotalRollCount,TotalCount,MaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount};
+	uint64_t counts[]={TotalBadCount-BefTotalBadCount,TotalNiceCount-BefTotalNiceCount,TotalPerfectCount-BefTotalPerfectCount,TotalScore-BefTotalScore,TotalRollCount-BefTotalRollCount,TotalCount-BefTotalCount,MaxComboCount-BefMaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount-BefTotalBombCount};
+	uint64_t* befcounts[]={&BefTotalBadCount,&BefTotalNiceCount,&BefTotalPerfectCount,&BefTotalScore,&BefTotalRollCount,&BefTotalCount,&BefMaxComboCount,&BefTotalGaugeCount,&BefTotalBombCount};
 
 	for(int n=m;n<=j;++n){
 		for(int i=0;i<9;++i){
@@ -554,6 +532,7 @@ int dan_condition(int m,int j,bool ind){
 		}
 	}
 	if(isSpecial()&&TotalBadCount>0)isBadCondition=9;
+	if(ind){for(int n=m;n<=j;++n){for(int i=0;i<9;++i){if((strcmp(exam[n][0],types[i])==0)){*(befcounts[i])+=counts[i];}}}}
 	return isBadCondition;
 }
 
@@ -975,5 +954,5 @@ void get_result(RESULT_T* Result){
 	Result->roll=TotalRollCount;
 	Result->combo=MaxComboCount;
 	Result->score=TotalScore;
-	if(TJA_Header.course==COURSE_DAN)Result->dcon=dan_condition(0,3,true);
+	if(TJA_Header.course==COURSE_DAN)Result->dcon=dan_condition(0,3,false);
 }
