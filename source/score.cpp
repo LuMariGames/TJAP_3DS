@@ -959,5 +959,5 @@ void get_result(RESULT_T* Result){
 	Result->roll=TotalRollCount;
 	Result->combo=MaxComboCount;
 	Result->score=TotalScore;
-	if(TJA_Header.course==COURSE_DAN)Result->dcon=dan_condition(0,3,false);
+	if(TJA_Header.course==COURSE_DAN)Result->dcon=dan_condition(0,3,true);
 }
