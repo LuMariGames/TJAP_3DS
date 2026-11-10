@@ -1118,7 +1118,7 @@ void load_tja_notes(int course,LIST_T Song){
 
 					for(int i=1,j=MeasureCount-Measure[MeasureCount].firstmeasure+1;i<j;++i){	//judge_timeの調整
 						
-						if(tja_notes[Measure[MeasureCount].notes][0]!='#'){	//複数行小節の最初の小節以外
+						if(Measure[MeasureCount].command==-1){	//複数行小節の最初の小節以外
 
 							double sudnti2=Measure[Measure[MeasureCount].firstmeasure+i].judge_time-Measure[Measure[MeasureCount].firstmeasure+i].create_time;
 							Measure[Measure[MeasureCount].firstmeasure+i].judge_time =
