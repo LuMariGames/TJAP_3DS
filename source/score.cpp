@@ -505,7 +505,6 @@ int dan_condition(int m,int j,bool ind){
 	int isBadCondition=-1;//ここで何回条件に反しているかをリセットする
 	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
 	uint64_t counts[]={TotalBadCount-BefTotalBadCount,TotalNiceCount-BefTotalNiceCount,TotalPerfectCount-BefTotalPerfectCount,TotalScore-BefTotalScore,TotalRollCount-BefTotalRollCount,TotalCount-BefTotalCount,MaxComboCount-BefMaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount-BefTotalBombCount};
-	uint64_t* befcounts[]={&BefTotalBadCount,&BefTotalNiceCount,&BefTotalPerfectCount,&BefTotalScore,&BefTotalRollCount,&BefTotalCount,&BefMaxComboCount,&BefTotalGaugeCount,&BefTotalBombCount};
 
 	for(int n=m;n<=j;++n){
 		for(int i=0;i<9;++i){
@@ -532,8 +531,14 @@ int dan_condition(int m,int j,bool ind){
 		}
 	}
 	if(isSpecial()&&TotalBadCount>0)isBadCondition=9;
-	if(ind){for(int n=m;n<=j;++n){for(int i=0;i<9;++i){if((strcmp(exam[n][0],types[i])==0)){*(befcounts[i])+=counts[i];}}}}
 	return isBadCondition;
+}
+
+void change_indconditions(int n){
+	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
+	uint64_t counts[]={TotalBadCount-BefTotalBadCount,TotalNiceCount-BefTotalNiceCount,TotalPerfectCount-BefTotalPerfectCount,TotalScore-BefTotalScore,TotalRollCount-BefTotalRollCount,TotalCount-BefTotalCount,MaxComboCount-BefMaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount-BefTotalBombCount};
+	uint64_t* befcounts[]={&BefTotalBadCount,&BefTotalNiceCount,&BefTotalPerfectCount,&BefTotalScore,&BefTotalRollCount,&BefTotalCount,&BefMaxComboCount,&BefTotalGaugeCount,&BefTotalBombCount};
+	for(int i=0;i<9;++i){if(strcmp(exam[n][0],types[i])==0){*(befcounts[i])+=counts[i];}}
 }
 
 int round_down(int arg){
