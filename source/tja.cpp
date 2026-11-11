@@ -1167,10 +1167,6 @@ void load_tja_notes(int course,LIST_T Song){
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
-			case COMMAND_EXAMa:
-			case COMMAND_EXAMb:
-			case COMMAND_EXAMc:
-			case COMMAND_EXAMd:
 				Measure[i].judge_time=Measure[i].pop_time;
 				break;
 			case COMMAND_BRANCHEND:
