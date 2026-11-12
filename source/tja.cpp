@@ -1155,17 +1155,16 @@ void load_tja_notes(int course,LIST_T Song){
 			case COMMAND_BRANCHSTART:
 				Measure[i].judge_time=Measure[i].pop_time-(240.0/(Measure[i].bpm*fabs(Measure[i].scroll)))*Measure[i].measure;
 				break;
+			case COMMAND_EXAMa:
+			case COMMAND_EXAMb:
+			case COMMAND_EXAMc:
+			case COMMAND_EXAMd:
+				if(NextSongCount>=1){Measure[i].judge_time=Measure[i].pop_time-2.52397982728522*Option.musicspeed; break;}
 			case COMMAND_JPOSSCROLL:
 			case COMMAND_SECTION:
 			case COMMAND_GOGOSTART:
 			case COMMAND_GOGOEND:
 				Measure[i].judge_time=Measure[i].pop_time;
-				break;
-			case COMMAND_EXAMa:
-			case COMMAND_EXAMb:
-			case COMMAND_EXAMc:
-			case COMMAND_EXAMd:
-				Measure[i].judge_time=Measure[i].pop_time-2.52397982728522*Option.musicspeed;
 				break;
 			case COMMAND_BRANCHEND:
 				Measure[i].judge_time=Measure[i].create_time;
