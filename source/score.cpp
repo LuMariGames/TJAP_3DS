@@ -591,16 +591,14 @@ void calc_base_score(MEASURE_T (&Measure)[MEASURE_MAX],char (&notes)[MEASURE_MAX
 	while(isEND==false&&i<MEASURE_MAX&&Measure[i].flag==true){	//小節
 
 		NotesCount=0;
-
 		if(Measure[i].branch != -1&&Measure[i].branch != COMMAND_M){
 
 			++i;
 			continue;
 		}
 
-		if(NotesCount==0&&notes[Measure[i].notes][0]=='#'){
-
-			get_command_value(notes[Measure[i].notes],&Command);
+		get_command_value(notes[Measure[i].notes],&Command);
+		if(NotesCount==0&&Command.knd!=-1){
 
 			switch(Command.knd){
 			case COMMAND_GOGOSTART:
