@@ -541,6 +541,14 @@ void change_indconditions(int n){
 	for(int i=0;i<9;++i){if(strcmp(exam[n][0],types[i])==0){*(befcounts[i])+=counts[i];}}
 }
 
+float get_conditions(int n){
+	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
+	uint64_t counts[]={TotalBadCount-BefTotalBadCount,TotalNiceCount-BefTotalNiceCount,TotalPerfectCount-BefTotalPerfectCount,TotalScore-BefTotalScore,TotalRollCount-BefTotalRollCount,TotalCount-BefTotalCount,MaxComboCount-BefMaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount-BefTotalBombCount};
+	float ans=0.f;
+	for(int i=0;i<9;++i){if(strcmp(exam[n][0],types[i])==0){ans=(float)counts[i]/Cdn[0][n];}}
+	return ans;
+}
+
 int round_down(int arg){
 	int temp=arg % 10;
 	return arg-temp;
