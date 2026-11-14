@@ -191,7 +191,7 @@ const char Text[3][64][128] = {
 		"2P",
 		"Búsqueda de canciones",
 		"Modo editor",
-		"Modo compatibilidad",
+		"Modo compatible",
 		"Ajuste juicio",
 		"Presione los botones L y R para regresar.",
 		"PLAY",
