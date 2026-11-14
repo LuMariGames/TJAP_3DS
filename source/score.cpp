@@ -550,6 +550,7 @@ float get_conditions(int n){
 		else if(strcmp(exam[n][3],"m")==0){ans=(float)counts[i]/Cdn[0][n];}
 	}}
 	if(ans<0.f)ans=0.f;
+	if(ans>1.f)ans=1.f;
 	return ans;
 }
 
