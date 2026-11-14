@@ -61,7 +61,7 @@ const char Text[3][64][128] = {
 		"2P",
 		"楽曲検索",
 		"編集ﾓｰﾄﾞ",
-		"EDIT",
+		"互換モード",
 		"判定調整",
 		"LとRボタン同時押しで戻る",
 		"PLAY",
@@ -126,7 +126,7 @@ const char Text[3][64][128] = {
 		"2P",
 		"Song search",
 		"Editor Mode",
-		"EDIT",
+		"Comp mode",
 		"Judge adjustment",
 		"Press the L and R buttons to return.",
 		"PLAY",
@@ -191,7 +191,7 @@ const char Text[3][64][128] = {
 		"2P",
 		"Búsqueda de canciones",
 		"Modo editor",
-		"EDIT",
+		"Modo compatibilidad",
 		"Ajuste juicio",
 		"Presione los botones L y R para regresar.",
 		"PLAY",
@@ -202,7 +202,8 @@ typedef struct {
 
 	int lang,buffer_size,rollspeed,special,player,edit,measure;
 	bool isAuto,isStelth,isSwap,dispFps,fixroll,exse;
-	int8_t judgedelay,padding;
+	int8_t judgedelay;
+	bool tjapsup;
 	float speed,random,offset,blacktext,musicspeed,judge_range_perfect,judge_range_nice,judge_range_bad;
 	char SongTitle[256] = "\0";
 	int KEY_A, KEY_B, KEY_DRIGHT, KEY_DLEFT, KEY_DUP, KEY_DDOWN, KEY_R, KEY_L, KEY_X, KEY_Y,
@@ -282,7 +283,7 @@ enum Text_knd {
 	TEXT_2P,
 	TEXT_SEARCH,
 	TEXT_EDITOR_MODE,
-	TEXT_EDITOR,
+	TEXT_TJASUPPORT_MODE,
 	TEXT_JUDGE,
 	TEXT_LANDR,
 	TEXT_PLAY,
