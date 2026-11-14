@@ -8,13 +8,13 @@
 extern int gaugelife;
 extern uint64_t Cdn[2][4];
 extern char *exam[4][4];
-bool isGOGO;
+bool isGOGO,goldcond=true;
 uint64_t combo,init,diff,DiffMul,scoremode,HitScore,ScoreDiff,courselife,
 TotalPerfectCount,TotalNiceCount,TotalBadCount,TotalScore,TotalRollCount,TotalBombCount,
 BefTotalBadCount,BefTotalNiceCount,BefTotalPerfectCount,BefTotalScore,BefTotalRollCount,BefTotalCount,BefMaxComboCount,BefTotalGaugeCount,BefTotalBombCount,
 TotalCount,MaxComboCount,CurrentPerfectCount,CurrentNiceCount,CurrentBadCount,
 CurrentTotalRollCount,CurrentRollCount,CurrentScore,CurrentDaiNotes;
-int CurrentBalloonCount;
+int CurrentBalloonCount,isBadCondition=-1;
 double BaseCeilingPoint,tmp,Precision,CurrentPrecision;
 TJA_HEADER_T TJA_Header;
 char buf_score[160];
@@ -32,7 +32,7 @@ void init_guage_structure(){
 
 void init_score(){
 
-	isGOGO=false;
+	isGOGO=false; goldcond=true;
 	combo=0;
 	get_tja_header(&TJA_Header);
 	init=TJA_Header.scoreinit; diff=TJA_Header.scorediff;
@@ -49,7 +49,7 @@ void init_score(){
 	Precision=0; CurrentPrecision=0; CurrentBalloonCount=0;
 	CurrentDaiNotes=0; MaxComboCount=0;
 	init_guage_structure();
-	TotalCount=0;
+	TotalCount=0; isBadCondition=-1;
 }
 
 void init_randan_score(){
@@ -499,10 +499,9 @@ void send_gogotime(bool arg){
 	isGOGO=arg;
 }
 
-int isBadCondition=-1;
-
 int dan_condition(int m,int j,bool ind){
-	int isBadCondition=-1;//ここで何回条件に反しているかをリセットする
+	if(goldcond)isBadCondition=-1;//ここで何回条件に反しているかをリセットする
+	else isBadCondition=0;
 	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
 	uint64_t counts[]={TotalBadCount-BefTotalBadCount,TotalNiceCount-BefTotalNiceCount,TotalPerfectCount-BefTotalPerfectCount,TotalScore-BefTotalScore,TotalRollCount-BefTotalRollCount,TotalCount-BefTotalCount,MaxComboCount-BefMaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount-BefTotalBombCount};
 
@@ -538,7 +537,11 @@ void change_indconditions(int n){
 	const char* types[]={"jb","jg","jp","s","r","h","c","g","jm"};
 	uint64_t counts[]={TotalBadCount-BefTotalBadCount,TotalNiceCount-BefTotalNiceCount,TotalPerfectCount-BefTotalPerfectCount,TotalScore-BefTotalScore,TotalRollCount-BefTotalRollCount,TotalCount-BefTotalCount,MaxComboCount-BefMaxComboCount,(uint64_t)(Gauge.score/Gauge.soul*100.0),TotalBombCount-BefTotalBombCount};
 	uint64_t* befcounts[]={&BefTotalBadCount,&BefTotalNiceCount,&BefTotalPerfectCount,&BefTotalScore,&BefTotalRollCount,&BefTotalCount,&BefMaxComboCount,&BefTotalGaugeCount,&BefTotalBombCount};
-	for(int i=0;i<9;++i){if(strcmp(exam[n][0],types[i])==0){*(befcounts[i])+=counts[i];}}
+	for(int i=0;i<9;++i){if(strcmp(exam[n][0],types[i])==0){
+		if(strcmp(exam[n][3],"l")==0&&counts[i]>=Cdn[1][n]){goldcond=false;}
+		else if(strcmp(exam[n][3],"m")==0&&counts[i]<Cdn[1][n]){goldcond=false;}
+		*(befcounts[i])+=counts[i];
+	}}
 }
 
 float get_conditions(int n){
