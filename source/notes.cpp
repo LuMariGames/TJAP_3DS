@@ -1576,6 +1576,7 @@ void draw_condition(){
 		}
 		if(strcmp(exam[j][3],"m")== 0)draw_condition_text(50+tx,148+18*j,Text[get_lang()][TEXT_NUM_UP],&width,&height);
 		else if(strcmp(exam[j][3],"l")== 0)draw_condition_text(50+tx,148+18*j,Text[get_lang()][TEXT_NUM_DOWN],&width,&height);
+		tx+=width;
 		switch(dan_condition(j,j,true)){
 		case -1:
 			C2D_DrawRectangle(50,162+18*j,0,tx*get_conditions(j),4,C2D_Color32(0xFF,0x55,0x00,0x80),C2D_Color32(0xFF,0xFF,0x00,0x80),C2D_Color32(0xFF,0x55,0x00,0x80),C2D_Color32(0xFF,0xFF,0x00,0x80));
