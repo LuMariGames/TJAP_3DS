@@ -46,8 +46,8 @@ constexpr double clocktime=1120379.0/67027964.0;
 #define SPRITES_NUMER 172
 
 #define NOTES_MAX 2048
-#define BARLINE_MAX 512
-#define ROLL_MAX 512
+#define BARLINE_MAX 1024
+#define ROLL_MAX 1024
 #define BALLOON_MAX 512
 
 #define LIST_MAX 16384		//選曲リストの最大数
