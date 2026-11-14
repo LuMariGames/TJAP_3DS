@@ -1553,8 +1553,22 @@ void draw_condition(){
 	float width=0,height=0,tx=0;
 	C2D_DrawRectSolid(40,144,0,320,76,C2D_Color32f(0,0,0,0.75f));
 
-	for(int j=0;j<4;++j){
+	for(int j=0;j<=4;++j){
 
+		if(j>0){
+			switch(dan_condition(j-1,j-1,true)){
+			case -1:
+				C2D_DrawRectangle(50,148+18*j-1,0,tx*get_conditions(j-1),16,C2D_Color32(0xFF,0x55,0x00,0x80),C2D_Color32(0xFF,0xFF,0x00,0x80),C2D_Color32(0xFF,0x55,0x00,0x80),C2D_Color32(0xFF,0xFF,0x00,0x80));
+				break;
+			case 0:
+				C2D_DrawRectSolid(50,148+18*j-1,0,tx*get_conditions(j-1),16,C2D_Color32(0xFD,0xA1,0xB8,0x80));
+				break;
+			case 1:
+				C2D_DrawRectSolid(50,148+18*j-1,0,tx*get_conditions(j-1),16,C2D_Color32(0xFF,0xD6,0x00,0x80));
+				break;
+			}
+		}
+		else if(j==4){break;}
 		tx=0;
 		if(strcmp(exam[j][0],"jb")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_BAD],&width,&height);
 		else if(strcmp(exam[j][0],"jg")== 0)draw_condition_text(50,148+18*j,Text[get_lang()][TEXT_NUM_NICE],&width,&height);
