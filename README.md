@@ -18,6 +18,7 @@ AC15からのモード、条件を達成しないとノルマ失敗！？「段�
 ### 技術的な部分  
 右から来る常識を覆す「マイナススクロール」  
 見た目を自由に変更！「カスタムスキン」  
+前なら動かない譜面も動かす！「互換モード」  
 v1.5.3からはバッファサイズを撤廃し、より高音質で楽しめる様に！  
 
 ### 新しく増えた音符達  
@@ -48,6 +49,7 @@ Continuously clear randomly selected songs while completing the specified condit
 ### Technical part
 "Negative scroll" that overturns the common sense coming from the right  
 Feel free to change the appearance! "Custom skin"  
+Now even sheet music that wouldn't move before will move! "Comp Mode"  
 Starting with v1.5.3, the buffer size has been eliminated, allowing you to enjoy higher quality music!  
 
 ### Newly added notes  
