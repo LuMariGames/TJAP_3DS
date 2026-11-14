@@ -307,6 +307,20 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		}
 		XCnt = 0,++YCnt;
 
+		//判定調整
+		x = XSense * XCnt,y = YSense * YCnt,++XCnt;
+		draw_option_text(x,y,Text[Option.lang][TEXT_JUDGE],true,&width,&height);
+		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
+		snprintf(get_buffer(),BUFFER_SIZE,"%d",Option.judgedelay);
+		draw_option_text(x,y,get_buffer(),true,&width,&height);
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
+			Option.judgedelay = input_number_keyboard(2,false,true);
+		}
+		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
+		draw_option_text(x,y,Text[Option.lang][TEXT_RESET],true,&width,&height);
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.judgedelay = 0;
+		XCnt = 0,++YCnt;
+
 		//fps
 		/*x = XSense * XCnt,y = YSense * YCnt,++XCnt;
 		draw_option_text(x,y,Text[Option.lang][TEXT_DISP_FPS],true,&width,&height);
@@ -587,8 +601,7 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		x = XSense * XCnt,y = YSense * YCnt,++XCnt;
 		draw_option_text(x,y,Text[Option.lang][TEXT_EDITOR_MODE],true,&width,&height);
 		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
-		if (Option.edit == 1)draw_option_text(x,y,Text[Option.lang][TEXT_EDITOR],true,&width,&height);
-		//else if (Option.edit == 2)draw_option_text(x,y,Text[Option.lang][TEXT_CONV],true,&width,&height); //v2.3.0から自動でSJIS解読するのでコメント行き
+		if (Option.edit == 1)draw_option_text(x,y,Text[Option.lang][TEXT_ON],true,&width,&height);
 		else draw_option_text(x,y,Text[Option.lang][TEXT_OFF],true,&width,&height);
 		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
 			opv = ++Option.edit % 2;
@@ -596,18 +609,15 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 		}
 		XCnt = 0,++YCnt;
 
-		//判定調整
+		//互換モード
 		x = XSense * XCnt,y = YSense * YCnt,++XCnt;
-		draw_option_text(x,y,Text[Option.lang][TEXT_JUDGE],true,&width,&height);
+		draw_option_text(x,y,Text[Option.lang][TEXT_TJASUPPORT_MODE],true,&width,&height);
 		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
-		snprintf(get_buffer(),BUFFER_SIZE,"%d",Option.judgedelay);
-		draw_option_text(x,y,get_buffer(),true,&width,&height);
-		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH){
-			Option.judgedelay = input_number_keyboard(2,false,true);
-		}
+		draw_option_text(x,y,Text[Option.lang][TEXT_OFF],Option.tjapsup == false,&width,&height);
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.tjapsup = false;
 		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
-		draw_option_text(x,y,Text[Option.lang][TEXT_RESET],true,&width,&height);
-		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.judgedelay = 0;
+		draw_option_text(x,y,Text[Option.lang][TEXT_ON],Option.tjapsup == true,&width,&height);
+		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.tjapsup = true;
 		XCnt = 0,++YCnt;
 		break;
 	}
