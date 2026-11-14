@@ -958,7 +958,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 				Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 				Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].hb_time-CurrentTimeNotes)*(NowBPM*conbpm);
 			}
-			else if(Notes[i].create_time<=currentTime){
+			else {
 				if(Notes[i].move_time==0||(Notes[i].judge_time-Notes[i].move_time)<=CurrentTimeNotes){
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].judge_time-CurrentTimeNotes)*(Notes[i].bpm*conbpm);
 					Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].judge_time-CurrentTimeNotes)*(Notes[i].bpm*conbpm);
@@ -967,7 +967,7 @@ void notes_calc(int isDon,int isKatsu,double bpm,double CurrentTimeNotes,int cnt
 					Notes[i].x=NOTES_JUDGE_X+NOTES_AREA*Notes[i].scroll*(Notes[i].move_time)*(Notes[i].bpm*conbpm);
 					Notes[i].y=NOTES_JUDGE_Y+NOTES_AREA*Notes[i].yscroll*(Notes[i].move_time)*(Notes[i].bpm*conbpm);
 				}
-			} else {continue;}
+			}
 			if(Notes[i].x<=-128.f)Notes[i].x=-128.f;
 			else if(Notes[i].x>=512.f)Notes[i].x=512.f;
 			if(Notes[i].y<=-128.f)Notes[i].y=-128.f;
