@@ -77,7 +77,8 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 			Branch.next=false;
 		}
 
-		while((Option.tjapsup||isHBSCROLL||Measure[MeasureCount].create_time<=CurrentTimeNotes+(0.005*Option.judgedelay))&&!Branch.wait){
+		//while((Option.tjapsup||isHBSCROLL||Measure[MeasureCount].create_time<=CurrentTimeNotes+(0.005*Option.judgedelay))&&!Branch.wait){
+		while(!Branch.wait){
 
 			NotesCount=0;
 			if(Measure[MeasureCount].branch!=Branch.course&&Measure[MeasureCount].branch!=-1){
