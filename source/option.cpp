@@ -608,17 +608,6 @@ void draw_option(u16 px,u16 py,unsigned int key,C2D_Sprite sprites[SPRITES_NUMER
 			Option.edit = opv;
 		}
 		XCnt = 0,++YCnt;
-
-		//互換モード
-		x = XSense * XCnt,y = YSense * YCnt,++XCnt;
-		draw_option_text(x,y,Text[Option.lang][TEXT_TJASUPPORT_MODE],true,&width,&height);
-		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
-		draw_option_text(x,y,Text[Option.lang][TEXT_OFF],Option.tjapsup == false,&width,&height);
-		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.tjapsup = false;
-		x = XSense * XCnt + gap,y = YSense * YCnt,++XCnt;
-		draw_option_text(x,y,Text[Option.lang][TEXT_ON],Option.tjapsup == true,&width,&height);
-		if ((y < py && y + height > py && x < px && x + width > px)&& key & KEY_TOUCH)Option.tjapsup = true;
-		XCnt = 0,++YCnt;
 		break;
 	}
 
@@ -673,7 +662,6 @@ void init_option(){
 	Option.judge_range_nice = DEFAULT_JUDGE_RANGE_NICE;
 	Option.judge_range_bad = DEFAULT_JUDGE_RANGE_BAD;
 	Option.measure = 0;
-	Option.tjapsup = false;
 	init_button_mapping();
 
 	option_page = 1;
@@ -834,7 +822,6 @@ void get_option(OPTION_T *TMP){
 	TMP->edit = Option.edit;
 	TMP->musicspeed = Option.musicspeed;
 	TMP->judgedelay = Option.judgedelay;
-	TMP->tjapsup = Option.tjapsup;
 	strcpy(TMP->SongTitle,Option.SongTitle);
 	black = Option.blacktext;
 }
