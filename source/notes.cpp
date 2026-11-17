@@ -113,9 +113,6 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					case COMMAND_BRANCHEND:
 						Branch.wait=true;
 						break;
-					case COMMAND_LEVELHOLD:
-						isLevelHold=true;
-						break;
 					}
 					if(Command.knd!=-1){
 						NotesCount=0;
@@ -377,6 +374,9 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 					init_branch_section();
 					break;
 				}
+				case COMMAND_LEVELHOLD:
+					isLevelHold=true;
+					break;
 				case COMMAND_BRANCHEND: {
 					Branch.course=-1;
 					Branch.wait=false;
