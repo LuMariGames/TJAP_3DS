@@ -420,12 +420,13 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						strlcpy(Header.title,Command.value_s.data(),strlen(Command.value_s.data())+1);
 						set_tja_header(&Header);
 					}
+					change_time(TIME_NOTES,Measure[i].judge_time-CurrentTimeNotes);
 					restart_time(TIME_NOTES);
 					break;
 				}
 				case COMMAND_JPOSSCROLL: {
 					get_command_value(tja_notes[Measure[i].notes],&Command);
-					judgedata.time=Command.val[0]*1000*(1.0/Option.musicspeed);
+					judgedata.time=(Command.val[0]-(CurrentTimeNotes-Measure[i].judge_time))*1000*(1.0/Option.musicspeed);
 					if(judgedata.time>0&&Measure[MeasureCount].create_time>OffSetTime){
 						judgedata.movex=(Command.val[1]*Command.val[3])/judgedata.time;
 						judgedata.movey=(Command.val[2]*Command.val[3])/judgedata.time;
