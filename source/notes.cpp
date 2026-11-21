@@ -420,7 +420,7 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						strlcpy(Header.title,Command.value_s.data(),strlen(Command.value_s.data())+1);
 						set_tja_header(&Header);
 					}
-					change_time(TIME_NOTES,Measure[i].judge_time-CurrentTimeNotes);
+					change_time(TIME_NOTES,CurrentTimeNotes-Measure[i].judge_time);
 					restart_time(TIME_NOTES);
 					break;
 				}
