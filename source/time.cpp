@@ -40,14 +40,17 @@ void restart_time(int id) {
 void stop_time(int id) {
 
 	isStop[id] = 1;
-	Time[id] += clocktime;
+	change_time(id,clocktime);
 	cnt[id] = 0;
 }
 void home_time(int id) {
 
 	isStop[id] = 1;
-	Time[id] += 0.0651;
+	change_time(id,0.0651);
 	cnt[id] = 0;
+}
+void change_time(int id,double addtime){
+	Time[id] += addtime;
 }
 
 void toggle_time(int id) {
