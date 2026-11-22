@@ -507,7 +507,8 @@ int dan_condition(int m,int j,bool ind){
 
 	for(int n=m;n<=j;++n){
 		for(int i=0;i<9;++i){
-			if((strcmp(exam[n][0],types[i])==0&&strcmp(exam[n][3],"l")==0&&counts[i]>=Cdn[1][n])){
+			if(isBadCondition==-1&&
+			(strcmp(exam[n][0],types[i])==0&&strcmp(exam[n][3],"l")==0&&counts[i]>=Cdn[1][n])){
 				isBadCondition=0;
 				i=99;
 			}
