@@ -843,7 +843,6 @@ int main(){
 					notes_cnt = 0,scene_state = SCENE_LOADSCRE,DonMeasure = 0.0;
 					time_ini();
 					if(jirodan==true)play_main_music(&isPlayMain,SelectedSong);
-					else change_time(TIME_NOTES,-TJA_Header.offset);
 					aptSetSleepAllowed(false);
 				}
 				else {
@@ -1172,6 +1171,7 @@ int main(){
 			if(cnt == 0){
 				FirstMeasureTime = get_FirstMeasureTime();
 				CurrentTimeMain = 0;
+				change_time(TIME_NOTES,-TJA_Header.offset);
 			}
 			if(cnt>=0){
 				DonMeasure+=(get_current_time(TIME_MAINGAME)-CurrentTimeMain)*(NowBPM/240.0);
