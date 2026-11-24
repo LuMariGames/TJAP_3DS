@@ -1517,6 +1517,10 @@ void draw_notes_text(float x,float y,const char *text,float *width,float *height
 	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x,y-2,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
 	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x+2,y,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
 	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x,y+2,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
+	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x-1,y-1,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
+	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x+1,y-1,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
+	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x-1,y+1,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
+	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x+1,y+1,1.0f,size,size,C2D_Color32f(0,0,0,1.0f));
 	C2D_DrawText(&NotesText,C2D_WithColor|C2D_AlignRight,x,y,1.0f,size,size,C2D_Color32f(1,1,1,1.0f));
 }
 
