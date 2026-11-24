@@ -841,6 +841,7 @@ int main(){
 					else if (exist_file(abs_path)==0)isAniBg = false;
 					tja_to_notes(isDon,isKatsu,notes_cnt,sprites);
 					if(jirodan==true)play_main_music(&isPlayMain,SelectedSong);
+					else change_time(TIME_NOTES,-TJA_Header.offset);
 					notes_cnt = 0,scene_state = SCENE_LOADSCRE,DonMeasure = 0.0;
 					time_ini();
 					aptSetSleepAllowed(false);
