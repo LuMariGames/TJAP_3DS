@@ -239,6 +239,16 @@ void notes_main(int isDon,int isKatsu,char (&tja_notes)[MEASURE_MAX][NOTES_MEASU
 						RollState=NOTES_BALLOON;
 						roll_id=make_balloon_start(id);
 						if(roll_id!=-1){
+							int branch=((Branch.course==-1)?0:Branch.course-11);
+							BalloonNotes[roll_id].current_hit=0;
+							if(balloon[branch][BalloonCount[branch]]>0)BalloonNotes[roll_id].need_hit=balloon[branch][BalloonCount[branch]];
+							else BalloonNotes[roll_id].need_hit=5;
+							if(branch==0)++BalloonCount[0];
+							else {
+								++BalloonCount[1];
+								++BalloonCount[2];
+								++BalloonCount[3];
+							}
 							Notes[id].roll_id=roll_id;
 							Notes[id].flag=true;
 						}
@@ -653,18 +663,6 @@ inline void notes_judge(const float CurrentTimeNotes,int isDon,int isKatsu,int c
 			break;
 		}
 	}
-	if(JBS!=JudgeBalloonState&&JudgeBalloonState!=-1){
-		BalloonNotes[JudgeBalloonState].current_hit=0;
-		if(balloon[branch][BalloonCount[branch]]>0)BalloonNotes[JudgeBalloonState].need_hit=balloon[branch][BalloonCount[branch]];
-		else BalloonNotes[JudgeBalloonState].need_hit=5;
-		if(branch==0)++BalloonCount[0];
-		else {
-			++BalloonCount[1];
-			++BalloonCount[2];
-			++BalloonCount[3];
-		}
-	}
-	JBS=JudgeBalloonState;
 
 	if(Option.isAuto){	//オート
 
