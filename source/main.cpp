@@ -843,7 +843,7 @@ int main(){
 					notes_cnt = 0,scene_state = SCENE_LOADSCRE,DonMeasure = 0.0;
 					time_ini();
 					if(jirodan==true)play_main_music(&isPlayMain,SelectedSong);
-					else change_time(TIME_NOTES,(2.52397982728522-TJA_Header.offset));
+					else change_time(TIME_NOTES,(2.4762480002554-TJA_Header.offset));
 					aptSetSleepAllowed(false);
 				}
 				else {
