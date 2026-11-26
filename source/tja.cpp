@@ -94,7 +94,7 @@ bool load_tja_head(int course,LIST_T Song){
 	Current_Header.isHBS=false;
 	//Current_Header.demostart=0;
 	//Current_Header.side=3;
-	Current_Header.scoremode=3;
+	Current_Header.scoremode=-1;
 	if(course==COURSE_DAN){
 		init_dan_conditions();
 	}
@@ -530,6 +530,8 @@ bool load_tja_head(int course,LIST_T Song){
 			delete[] temp;
 		}
 		fclose(fp);
+		if(Current_Header.scorediff==-1&&Current_Header.scoremode==-1)Current_Header.scoremode=3;
+		else Current_Header.scoremode=2;
 		return isSTART;
 	}
 	else {
