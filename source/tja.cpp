@@ -958,7 +958,7 @@ void load_tja_notes(int course,LIST_T Song){
 						break;
 					case COMMAND_JPOSSCROLL:
 						Beforejpostime=jpostime=Command.val[0];
-						jposmove=Command.val[1]*Command.val[2];
+						jposmove=(fabs(Command.val[1])+fabs(Command.val[2]))*Command.val[3];
 						break;
 					case COMMAND_LYRIC:
 						ly=Command.value_s;
@@ -1026,7 +1026,7 @@ void load_tja_notes(int course,LIST_T Song){
 				Measure[MeasureCount].isDummy=isDummy;
 				Measure[MeasureCount].judge_time=240.0/bpm*measure*percent+PreJudge+delay;
 				Measure[MeasureCount].pop_time=Measure[MeasureCount].judge_time;
-				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time-((sudntime!=0.0)?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll):fabs(yscroll)))));
+				Measure[MeasureCount].create_time=Measure[MeasureCount].judge_time-((sudntime!=0.0)?sudntime:(240.0*NOTES_JUDGE_RANGE)/(fabs(Measure[MeasureCount].bpm)*(NOTES_AREA*((fabs(scroll)>fabs(yscroll))?fabs(scroll/(1.0+fabs(NOTES_JUDGE_X-93.f)/NOTES_AREA)):fabs(yscroll/(1.0+fabs(NOTES_JUDGE_Y-109.f)/NOTES_AREA))))));
 				Measure[MeasureCount].move_time=movetime;
 				Measure[MeasureCount].isDispBarLine=isDispBarLine;
 				Measure[MeasureCount].branch=BranchCourse;
@@ -1097,7 +1097,7 @@ void load_tja_notes(int course,LIST_T Song){
 					}
 					else if(!isNoComma&&Beforejpostime>0.0&&jpostime<=Measure[MeasureCount].judge_time-PreJudge){
 						NOTES_JUDGE_X+=jposmove*(jpostime/Beforejpostime);
-						jpostime=0;
+						jpostime=0.0;
 						Beforejpostime=-1;
 					}
 					if(!isNoComma)PreJudge=Measure[MeasureCount].judge_time;

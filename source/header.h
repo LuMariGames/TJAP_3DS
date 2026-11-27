@@ -35,7 +35,7 @@
 extern float NOTES_JUDGE_X,NOTES_JUDGE_Y;	//判定枠の中心のX座標
 extern bool New,isEmu;
 constexpr double clocktime=1120379.0/67027964.0;
-#define JPOSMAG 338.0/948.0
+#define JPOSMAG 338.0/960.0
 #define NOTES_JUDGE_RANGE 327.0	//判定枠の中心から小節生成位置の距離(右端+20)
 
 #define TOP_WIDTH  400
